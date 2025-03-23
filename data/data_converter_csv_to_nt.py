@@ -173,7 +173,7 @@ for index, row in df_main.iterrows():
         except:
             player_year = 0
         player_nation = country_abrv
-        player_club = club_name_to_club_id[club_original_name]
+        player_club = club_name_to_club_id[row['Squad']]
 
         player_uri = URIRef(ns_player + player_id)
         g.add((player_uri, ns_rel.name, Literal(player_name)))
