@@ -161,6 +161,7 @@ for index, row in df_main.iterrows():
     # players
     player_name = row['Player']
     player_exists, player_id = check_player_exists(player_name)
+    player_uri = URIRef(ns_player + player_id)
 
     if not player_exists:
         # player_id
@@ -169,7 +170,7 @@ for index, row in df_main.iterrows():
         # player_year --> 'Born'
         # player_nation --> 'Nation' (country_abrv)
         # player_club --> 'Squad' (club_name_to_club_id)
-        player_pos = row['Pos']
+        player_pos = row['Pos'].split(',')
         try:
             player_year = int(row['Born'])
         except:
@@ -177,12 +178,15 @@ for index, row in df_main.iterrows():
         player_nation = country_abrv
         player_club = club_name_to_club_id[row['Squad']]
 
-        player_uri = URIRef(ns_player + player_id)
         g.add((player_uri, ns_rel.name, Literal(player_name)))
-        g.add((player_uri, ns_rel.position, Literal(player_pos)))
+        for pos in player_pos:
+            g.add((player_uri, ns_rel.position, Literal(pos)))
         g.add((player_uri, ns_rel.born, Literal(player_year)))
         g.add((player_uri, ns_rel.nation, URIRef(ns_country + player_nation)))
         g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club)))
+    else:
+        player_club_2 = club_name_to_club_id[row['Squad']]
+        g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club_2)))
 
 g.serialize(destination="football_rdf_data.nt", format="nt", encoding="utf-8")
 g.serialize(destination="football_rdf_data.n3", format="turtle", encoding="utf-8")
