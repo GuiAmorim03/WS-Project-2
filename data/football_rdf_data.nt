@@ -1,0 +1,995 @@
+<http://football.org/club/OLM> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/country/SVN> <http://football.org/rel/name> "Slovenia" .
+<http://football.org/club/MNC> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/382.png" .
+<http://football.org/club/FUL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/370.png" .
+<http://football.org/country/DEN> <http://football.org/rel/name> "Denmark" .
+<http://football.org/country/CZE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cze.png" .
+<http://football.org/club/LPA> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/country/ENG> <http://football.org/rel/name> "England" .
+<http://football.org/club/NICE> <http://football.org/rel/alternateColor> "e2d3d7" .
+<http://football.org/club/BET> <http://football.org/rel/stadium> "Benito Villamarín" .
+<http://football.org/club/INT> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/TOG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/tog.png" .
+<http://football.org/club/EMP> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/2574.png" .
+<http://football.org/club/FUL> <http://football.org/rel/stadium> "Craven Cottage" .
+<http://football.org/club/CRW> <http://football.org/rel/stadium> "CHI Memorial Stadium" .
+<http://football.org/club/BRE> <http://football.org/rel/city> "Brentford" .
+<http://football.org/club/SEV> <http://football.org/rel/city> "Sevilla" .
+<http://football.org/club/CAG> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/NFO> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/GEN> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/3263.png" .
+<http://football.org/club/BHA> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/LEI> <http://football.org/rel/color> "0202fb" .
+<http://football.org/club/LAZ> <http://football.org/rel/color> "74bde7" .
+<http://football.org/country/PER> <http://football.org/rel/name> "Peru" .
+<http://football.org/club/BOU> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/ASSE> <http://football.org/rel/city> "Saint-Etienne" .
+<http://football.org/club/BHA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/331.png" .
+<http://football.org/club/WOB> <http://football.org/rel/name> "VfL Wolfsburg" .
+<http://football.org/club/BOC> <http://football.org/rel/city> "Bochum" .
+<http://football.org/club/LEI> <http://football.org/rel/alternateColor> "000000" .
+<http://football.org/club/FCU> <http://football.org/rel/city> "Berlin" .
+<http://football.org/club/AUX> <http://football.org/rel/color> "ffffff" .
+<http://football.org/country/LTU> <http://football.org/rel/name> "Lithuania" .
+<http://football.org/club/RAY> <http://football.org/rel/city> "Madrid" .
+<http://football.org/club/UDI> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/118.png" .
+<http://football.org/club/ATH> <http://football.org/rel/name> "Athletic Club" .
+<http://football.org/country/HUN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/hun.png" .
+<http://football.org/club/EVE> <http://football.org/rel/name> "Everton" .
+<http://football.org/club/MUN> <http://football.org/rel/stadium> "Allianz Arena" .
+<http://football.org/club/VFB> <http://football.org/rel/stadium> "MHPArena" .
+<http://football.org/country/EQG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/eqg.png" .
+<http://football.org/country/BDI> <http://football.org/rel/name> "Burundi" .
+<http://football.org/club/SOU> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/376.png" .
+<http://football.org/club/BOU> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/349.png" .
+<http://football.org/club/STP> <http://football.org/rel/name> "St. Pauli" .
+<http://football.org/club/VAL> <http://football.org/rel/name> "Valencia" .
+<http://football.org/country/CYP> <http://football.org/rel/name> "Cyprus" .
+<http://football.org/club/ASSE> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/country/NIR> <http://football.org/rel/name> "Northern Ireland" .
+<http://football.org/club/MON> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/174.png" .
+<http://football.org/club/SEV> <http://football.org/rel/stadium> "Ramón Sánchez-Pizjuán" .
+<http://football.org/club/LAZ> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/country/MAD> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mad.png" .
+<http://football.org/club/GIR> <http://football.org/rel/name> "Girona" .
+<http://football.org/country/CPV> <http://football.org/rel/name> "Cape Verde Islands" .
+<http://football.org/club/BOU> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/DOR> <http://football.org/rel/name> "Borussia Dortmund" .
+<http://football.org/country/MLT> <http://football.org/rel/name> "Malta" .
+<http://football.org/club/ALA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/96.png" .
+<http://football.org/club/SCF> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/UDI> <http://football.org/rel/name> "Udinese" .
+<http://football.org/country/GUF> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/10532.png" .
+<http://football.org/club/MIL> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/country/SCO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sco.png" .
+<http://football.org/club/VEN> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/17530.png" .
+<http://football.org/country/KOR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/kors.png" .
+<http://football.org/country/BEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ben.png" .
+<http://football.org/club/SEV> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/GEN> <http://football.org/rel/color> "08305d" .
+<http://football.org/club/VEN> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/FIO> <http://football.org/rel/city> "Firenze" .
+<http://football.org/club/FCA> <http://football.org/rel/alternateColor> "03915c" .
+<http://football.org/country/ALG> <http://football.org/rel/name> "Algeria" .
+<http://football.org/country/SVK> <http://football.org/rel/name> "Slovakia" .
+<http://football.org/country/VEN> <http://football.org/rel/name> "Venezuela" .
+<http://football.org/club/GET> <http://football.org/rel/stadium> "Estadio Coliseum" .
+<http://football.org/country/ARG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/arg.png" .
+<http://football.org/club/DOR> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/SOU> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/league/it> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/KSV> <http://football.org/rel/city> "Kiel" .
+<http://football.org/club/VFB> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/country/CIV> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/civ.png" .
+<http://football.org/club/KSV> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/7884.png" .
+<http://football.org/club/ATA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/105.png" .
+<http://football.org/club/BOL> <http://football.org/rel/name> "Bologna" .
+<http://football.org/club/MON> <http://football.org/rel/name> "Monza" .
+<http://football.org/club/MON> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/LEC> <http://football.org/rel/city> "Lecce" .
+<http://football.org/club/NAN> <http://football.org/rel/alternateColor> "011F68" .
+<http://football.org/club/JUV> <http://football.org/rel/name> "Juventus" .
+<http://football.org/club/LEG> <http://football.org/rel/stadium> "Butarque" .
+<http://football.org/club/TSG> <http://football.org/rel/alternateColor> "000055" .
+<http://football.org/country/SUR> <http://football.org/rel/name> "Suriname" .
+<http://football.org/country/GAM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gam.png" .
+<http://football.org/club/VER> <http://football.org/rel/stadium> "Stadio Marcantonio Bentegodi" .
+<http://football.org/club/BRE> <http://football.org/rel/name> "Brest" .
+<http://football.org/club/GEN> <http://football.org/rel/name> "Genoa" .
+<http://football.org/club/BRE> <http://football.org/rel/alternateColor> "f8ced9" .
+<http://football.org/country/RUS> <http://football.org/rel/name> "Russia" .
+<http://football.org/country/ISR> <http://football.org/rel/name> "Israel" .
+<http://football.org/club/GET> <http://football.org/rel/alternateColor> "C8142F" .
+<http://football.org/country/TUN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/tun.png" .
+<http://football.org/club/VLL> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/country/DOM> <http://football.org/rel/name> "Dominican Republic" .
+<http://football.org/club/GET> <http://football.org/rel/city> "Getafe" .
+<http://football.org/club/LYON> <http://football.org/rel/name> "Lyon" .
+<http://football.org/club/BHA> <http://football.org/rel/stadium> "American Express Stadium" .
+<http://football.org/club/VAL> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/EMP> <http://football.org/rel/city> "Empoli" .
+<http://football.org/club/ATA> <http://football.org/rel/stadium> "Gewiss Stadium" .
+<http://football.org/club/COMO> <http://football.org/rel/stadium> "Giuseppe Sinigaglia" .
+<http://football.org/club/HDH> <http://football.org/rel/city> "Heidenheim" .
+<http://football.org/country/CTA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/10528.png" .
+<http://football.org/club/ATA> <http://football.org/rel/city> "Bergamo" .
+<http://football.org/club/BHA> <http://football.org/rel/name> "Brighton & Hove Albion" .
+<http://football.org/country/TOG> <http://football.org/rel/name> "Togo" .
+<http://football.org/country/BDI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bdi.png" .
+<http://football.org/club/MUN> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/WOB> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/BRE> <http://football.org/rel/stadium> "Stade Francis-le Blé" .
+<http://football.org/country/TUR> <http://football.org/rel/name> "Turkey" .
+<http://football.org/club/RMA> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/BEL> <http://football.org/rel/name> "Belgium" .
+<http://football.org/club/TOU> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/179.png" .
+<http://football.org/club/BRE> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/FCA> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/LAZ> <http://football.org/rel/alternateColor> "ffef32" .
+<http://football.org/country/ALG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/alg.png" .
+<http://football.org/club/VIL> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/SOU> <http://football.org/rel/name> "Southampton" .
+<http://football.org/club/PAR> <http://football.org/rel/alternateColor> "ffdd30" .
+<http://football.org/country/VEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ven.png" .
+<http://football.org/club/KSV> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/MIL> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/BOL> <http://football.org/rel/stadium> "Renato Dall'Ara" .
+<http://football.org/country/GRE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gre.png" .
+<http://football.org/club/LILL> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/NAP> <http://football.org/rel/city> "Napoli" .
+<http://football.org/country/PHI> <http://football.org/rel/name> "Philippines" .
+<http://football.org/club/GIR> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/9812.png" .
+<http://football.org/club/BAR> <http://football.org/rel/city> "Barcelona" .
+<http://football.org/club/CHE> <http://football.org/rel/color> "144992" .
+<http://football.org/club/EMP> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/CAG> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/FCA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/3841.png" .
+<http://football.org/country/SCO> <http://football.org/rel/name> "Scotland" .
+<http://football.org/country/MEX> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mex.png" .
+<http://football.org/club/BOC> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/VEN> <http://football.org/rel/color> "000000" .
+<http://football.org/country/SEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sen.png" .
+<http://football.org/club/BHA> <http://football.org/rel/color> "0606fa" .
+<http://football.org/club/MON> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/4007.png" .
+<http://football.org/club/NAP> <http://football.org/rel/color> "0677d2" .
+<http://football.org/club/BRE> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/IPS> <http://football.org/rel/city> "Ipswich" .
+<http://football.org/club/VAL> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/STR> <http://football.org/rel/color> "0000bf" .
+<http://football.org/club/TOT> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/367.png" .
+<http://football.org/club/VFB> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/134.png" .
+<http://football.org/club/WOB> <http://football.org/rel/stadium> "Volkswagen Arena" .
+<http://football.org/club/LILL> <http://football.org/rel/color> "c2051b" .
+<http://football.org/club/INT> <http://football.org/rel/city> "Milano" .
+<http://football.org/country/SVK> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/svk.png" .
+<http://football.org/club/HAC> <http://football.org/rel/city> "Le Havre" .
+<http://football.org/club/COMO> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/2572.png" .
+<http://football.org/club/FUL> <http://football.org/rel/name> "Fulham" .
+<http://football.org/club/TSG> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/7911.png" .
+<http://football.org/country/IRL> <http://football.org/rel/name> "Republic of Ireland" .
+<http://football.org/club/ATA> <http://football.org/rel/name> "Atalanta" .
+<http://football.org/club/NFO> <http://football.org/rel/name> "Nottingham Forest" .
+<http://football.org/club/BOC> <http://football.org/rel/name> "VfL Bochum" .
+<http://football.org/club/FIO> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/109.png" .
+<http://football.org/club/NICE> <http://football.org/rel/city> "Nice" .
+<http://football.org/club/RAY> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/MLT> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mlt.png" .
+<http://football.org/country/CHI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/chi.png" .
+<http://football.org/club/M05> <http://football.org/rel/alternateColor> "000055" .
+<http://football.org/club/RAY> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/CRW> <http://football.org/rel/name> "Chattanooga Red Wolves" .
+<http://football.org/club/JUV> <http://football.org/rel/alternateColor> "ffef32" .
+<http://football.org/club/EVE> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/368.png" .
+<http://football.org/club/PAR> <http://football.org/rel/color> "19161D" .
+<http://football.org/club/BMG> <http://football.org/rel/city> "Mönchengladbach" .
+<http://football.org/country/UKR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ukr.png" .
+<http://football.org/club/GET> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/NAP> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/country/MKD> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mkd.png" .
+<http://football.org/club/B04> <http://football.org/rel/city> "Leverkusen" .
+<http://football.org/club/AVL> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/ALA> <http://football.org/rel/color> "0000ff" .
+<http://football.org/club/MON> <http://football.org/rel/name> "AS Monaco" .
+<http://football.org/club/ANG> <http://football.org/rel/city> "Angers" .
+<http://football.org/club/STR> <http://football.org/rel/stadium> "Stade de la Meinau" .
+<http://football.org/club/LEI> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/country/NZL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png" .
+<http://football.org/club/BOL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/107.png" .
+<http://football.org/club/HAC> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/3236.png" .
+<http://football.org/club/FIO> <http://football.org/rel/color> "4c1d84" .
+<http://football.org/club/WHU> <http://football.org/rel/alternateColor> "000000" .
+<http://football.org/club/CHE> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/363.png" .
+<http://football.org/club/ALA> <http://football.org/rel/city> "Vitoria-Gasteiz" .
+<http://football.org/club/NEW> <http://football.org/rel/alternateColor> "cd1937" .
+<http://football.org/club/ARS> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/359.png" .
+<http://football.org/club/MUN> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/132.png" .
+<http://football.org/club/TOU> <http://football.org/rel/city> "Toulouse" .
+<http://football.org/club/MIL> <http://football.org/rel/color> "e4002b" .
+<http://football.org/country/MKD> <http://football.org/rel/name> "North Macedonia" .
+<http://football.org/country/POL> <http://football.org/rel/name> "Poland" .
+<http://football.org/country/MLI> <http://football.org/rel/name> "Mali" .
+<http://football.org/country/BFA> <http://football.org/rel/name> "Burkina Faso" .
+<http://football.org/country/MSR> <http://football.org/rel/name> "Montserrat" .
+<http://football.org/club/ARS> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/ROMA> <http://football.org/rel/alternateColor> "eae9e7" .
+<http://football.org/club/OLM> <http://football.org/rel/alternateColor> "011F68" .
+<http://football.org/club/BMG> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/MIL> <http://football.org/rel/city> "Milano" .
+<http://football.org/club/ESP> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/DEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/den.png" .
+<http://football.org/club/SVW> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/STP> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/country/GUF> <http://football.org/rel/name> "French Guiana" .
+<http://football.org/club/OSA> <http://football.org/rel/stadium> "El Sadar" .
+<http://football.org/club/RBL> <http://football.org/rel/stadium> "Red Bull Arena" .
+<http://football.org/club/HDH> <http://football.org/rel/color> "DA0308" .
+<http://football.org/club/M05> <http://football.org/rel/stadium> "MEWA ARENA" .
+<http://football.org/club/SGE> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/NICE> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/TOR> <http://football.org/rel/city> "Torino" .
+<http://football.org/club/SCF> <http://football.org/rel/color> "DA0308" .
+<http://football.org/club/ARS> <http://football.org/rel/color> "e20520" .
+<http://football.org/club/RBL> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/TSG> <http://football.org/rel/color> "003399" .
+<http://football.org/club/MUN> <http://football.org/rel/color> "dc052d" .
+<http://football.org/club/TOT> <http://football.org/rel/stadium> "Tottenham Hotspur Stadium" .
+<http://football.org/country/GLP> <http://football.org/rel/flag> "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Flag_of_Guadeloupe_%28local%29_variant.svg/220px-Flag_of_Guadeloupe_%28local%29_variant.svg.png" .
+<http://football.org/country/WAL> <http://football.org/rel/name> "Wales" .
+<http://football.org/club/RBL> <http://football.org/rel/alternateColor> "740c14" .
+<http://football.org/club/BRE> <http://football.org/rel/name> "Brentford" .
+<http://football.org/club/SEV> <http://football.org/rel/name> "Sevilla" .
+<http://football.org/country/AUT> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/aut.png" .
+<http://football.org/club/VEN> <http://football.org/rel/city> "Venezia" .
+<http://football.org/club/AVL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/362.png" .
+<http://football.org/club/VLL> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/NAN> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/RCL> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/country/ESP> <http://football.org/rel/name> "Spain" .
+<http://football.org/club/FCA> <http://football.org/rel/name> "FC Augsburg" .
+<http://football.org/club/RSO> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/89.png" .
+<http://football.org/club/LPA> <http://football.org/rel/city> "Las Palmas de Gran Canaria" .
+<http://football.org/league/es> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/WOB> <http://football.org/rel/color> "81f733" .
+<http://football.org/country/CRC> <http://football.org/rel/name> "Costa Rica" .
+<http://football.org/club/M05> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/2950.png" .
+<http://football.org/country/IRN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/irn.png" .
+<http://football.org/club/TOU> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/M05> <http://football.org/rel/city> "Mainz" .
+<http://football.org/country/WAL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/wal.png" .
+<http://football.org/club/NAN> <http://football.org/rel/stadium> "La Beaujoire-Louis-Fonteneau" .
+<http://football.org/club/STR> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/180.png" .
+<http://football.org/club/RCL> <http://football.org/rel/city> "Lens" .
+<http://football.org/club/ASSE> <http://football.org/rel/color> "51cc5f" .
+<http://football.org/club/MNC> <http://football.org/rel/alternateColor> "e6ff00" .
+<http://football.org/country/PAN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/pan.png" .
+<http://football.org/club/RSO> <http://football.org/rel/city> "San Sebastián" .
+<http://football.org/club/FUL> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/TOR> <http://football.org/rel/color> "9f0000" .
+<http://football.org/club/ALA> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/GLP> <http://football.org/rel/name> "Guadalupe" .
+<http://football.org/club/SCF> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/126.png" .
+<http://football.org/club/LEI> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/country/ISR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/isr.png" .
+<http://football.org/club/BOL> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/MNC> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/HDH> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/6418.png" .
+<http://football.org/club/SGE> <http://football.org/rel/city> "Frankfurt" .
+<http://football.org/club/OSA> <http://football.org/rel/city> "Pamplona" .
+<http://football.org/club/OSA> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/NED> <http://football.org/rel/name> "Netherlands" .
+<http://football.org/club/MAN> <http://football.org/rel/stadium> "Old Trafford" .
+<http://football.org/club/IPS> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/country/ZIM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/4214.png" .
+<http://football.org/club/LEG> <http://football.org/rel/city> "Leganés, Madrid" .
+<http://football.org/club/VLL> <http://football.org/rel/color> "7a2d9d" .
+<http://football.org/club/REIM> <http://football.org/rel/city> "Reims" .
+<http://football.org/club/COMO> <http://football.org/rel/alternateColor> "FFFFFF" .
+<http://football.org/club/SGE> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/125.png" .
+<http://football.org/club/RCL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/175.png" .
+<http://football.org/club/IPS> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/EMP> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/ANG> <http://football.org/rel/color> "1a1a1a" .
+<http://football.org/country/MSR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/msr.png" .
+<http://football.org/club/RSO> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/UDI> <http://football.org/rel/city> "Udine" .
+<http://football.org/club/LIV> <http://football.org/rel/alternateColor> "132257" .
+<http://football.org/club/LYON> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/PSG> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/EMP> <http://football.org/rel/name> "Empoli" .
+<http://football.org/club/REIM> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/3243.png" .
+<http://football.org/country/SUR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sur.png" .
+<http://football.org/club/MNC> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/country/CHI> <http://football.org/rel/name> "Chile" .
+<http://football.org/country/CTA> <http://football.org/rel/name> "Central African Republic" .
+<http://football.org/club/MON> <http://football.org/rel/color> "E91514" .
+<http://football.org/country/POR> <http://football.org/rel/name> "Portugal" .
+<http://football.org/country/ZIM> <http://football.org/rel/name> "Zimbabwe" .
+<http://football.org/country/ALB> <http://football.org/rel/name> "Albania" .
+<http://football.org/club/MLL> <http://football.org/rel/name> "Mallorca" .
+<http://football.org/club/COMO> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/LPA> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/IRL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/irl.png" .
+<http://football.org/country/BRA> <http://football.org/rel/name> "Brazil" .
+<http://football.org/club/UDI> <http://football.org/rel/stadium> "Bluenergy Stadium" .
+<http://football.org/club/SEV> <http://football.org/rel/color> "ffffff" .
+<http://football.org/country/GNB> <http://football.org/rel/name> "Guinea-Bissau" .
+<http://football.org/club/MAN> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/360.png" .
+<http://football.org/club/WHU> <http://football.org/rel/city> "London" .
+<http://football.org/country/MAR> <http://football.org/rel/name> "Morocco" .
+<http://football.org/country/GAB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gab.png" .
+<http://football.org/club/ATH> <http://football.org/rel/color> "C8142F" .
+<http://football.org/club/VAL> <http://football.org/rel/alternateColor> "004996" .
+<http://football.org/country/MNE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mtg.png" .
+<http://football.org/club/MUN> <http://football.org/rel/city> "München" .
+<http://football.org/country/MLI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mli.png" .
+<http://football.org/club/STR> <http://football.org/rel/city> "Strasbourg" .
+<http://football.org/club/ROMA> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/ASSE> <http://football.org/rel/name> "Saint-Étienne" .
+<http://football.org/club/HDH> <http://football.org/rel/stadium> "Voith-Arena" .
+<http://football.org/club/CRW> <http://football.org/rel/color> "7C2629" .
+<http://football.org/club/TOT> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/HDH> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/LIV> <http://football.org/rel/city> "Liverpool" .
+<http://football.org/club/SCF> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/country/ARG> <http://football.org/rel/name> "Argentina" .
+<http://football.org/country/EST> <http://football.org/rel/name> "Estonia" .
+<http://football.org/club/ATM> <http://football.org/rel/color> "ca3624" .
+<http://football.org/club/MON> <http://football.org/rel/city> "Montpellier" .
+<http://football.org/club/MLL> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/ESP> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/esp.png" .
+<http://football.org/club/LPA> <http://football.org/rel/stadium> "Estadio Gran Canaria" .
+<http://football.org/club/NICE> <http://football.org/rel/color> "ef2f24" .
+<http://football.org/club/CRW> <http://football.org/rel/alternateColor> "000000" .
+<http://football.org/club/ATA> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/RAY> <http://football.org/rel/name> "Rayo Vallecano" .
+<http://football.org/club/FCU> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/ARS> <http://football.org/rel/stadium> "Emirates Stadium" .
+<http://football.org/club/OLM> <http://football.org/rel/name> "Marseille" .
+<http://football.org/club/REN> <http://football.org/rel/city> "Rennes" .
+<http://football.org/club/ATH> <http://football.org/rel/alternateColor> "0000ff" .
+<http://football.org/club/VER> <http://football.org/rel/city> "Verona" .
+<http://football.org/club/WOB> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/country/PHI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/phi.png" .
+<http://football.org/club/SEV> <http://football.org/rel/alternateColor> "d81022" .
+<http://football.org/country/EQG> <http://football.org/rel/name> "Equatorial Guinea" .
+<http://football.org/country/UZB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png" .
+<http://football.org/club/RMA> <http://football.org/rel/name> "Real Madrid" .
+<http://football.org/country/EST> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/est.png" .
+<http://football.org/club/OLM> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/country/IDN> <http://football.org/rel/name> "Indonesia" .
+<http://football.org/country/KEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ken.png" .
+<http://football.org/club/VER> <http://football.org/rel/color> "00239c" .
+<http://football.org/club/EMP> <http://football.org/rel/stadium> "Stadio Carlo Castellani – Computer Gross Arena" .
+<http://football.org/club/MAN> <http://football.org/rel/color> "da020e" .
+<http://football.org/club/OSA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/97.png" .
+<http://football.org/club/BET> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/HAI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/hai.png" .
+<http://football.org/club/NAP> <http://football.org/rel/name> "Napoli" .
+<http://football.org/club/LYON> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/167.png" .
+<http://football.org/country/LBY> <http://football.org/rel/name> "Libya" .
+<http://football.org/club/LILL> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/BAR> <http://football.org/rel/name> "Barcelona" .
+<http://football.org/club/B04> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/country/SUI> <http://football.org/rel/name> "Switzerland" .
+<http://football.org/club/VER> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/ATM> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/LEG> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/REIM> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/WHU> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/country/PUR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/pur.png" .
+<http://football.org/club/CEL> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/HDH> <http://football.org/rel/alternateColor> "003399" .
+<http://football.org/country/ROU> <http://football.org/rel/name> "Romania" .
+<http://football.org/club/PAR> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/NFO> <http://football.org/rel/city> "Nottingham" .
+<http://football.org/club/REIM> <http://football.org/rel/stadium> "Stade Auguste-Delaune II" .
+<http://football.org/country/ECU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png" .
+<http://football.org/club/TOU> <http://football.org/rel/name> "Toulouse" .
+<http://football.org/club/TOU> <http://football.org/rel/stadium> "Stadium de Toulouse" .
+<http://football.org/club/TSG> <http://football.org/rel/stadium> "PreZero Arena" .
+<http://football.org/club/IPS> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/373.png" .
+<http://football.org/club/RMA> <http://football.org/rel/stadium> "Santiago Bernabéu" .
+<http://football.org/club/TSG> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/country/ISL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/isl.png" .
+<http://football.org/club/BHA> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/country/FRA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/fra.png" .
+<http://football.org/club/RCL> <http://football.org/rel/alternateColor> "004c37" .
+<http://football.org/club/ATH> <http://football.org/rel/stadium> "San Mamés" .
+<http://football.org/club/VEN> <http://football.org/rel/stadium> "Pier Luigi Penzo" .
+<http://football.org/club/ATH> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/93.png" .
+<http://football.org/club/ATM> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/MON> <http://football.org/rel/stadium> "Stade Louis-II" .
+<http://football.org/league/eng> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/RSO> <http://football.org/rel/name> "Real Sociedad" .
+<http://football.org/club/PSG> <http://football.org/rel/name> "Paris Saint-Germain" .
+<http://football.org/club/BRE> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/STP> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/270.png" .
+<http://football.org/club/SOU> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/ATA> <http://football.org/rel/color> "1157bf" .
+<http://football.org/club/CRY> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/TOT> <http://football.org/rel/city> "London" .
+<http://football.org/club/NEW> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/361.png" .
+<http://football.org/country/GUI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gui.png" .
+<http://football.org/club/BRE> <http://football.org/rel/stadium> "Gtech Community Stadium" .
+<http://football.org/club/CEL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/85.png" .
+<http://football.org/club/BMG> <http://football.org/rel/name> "Borussia Monchengladbach" .
+<http://football.org/club/CAG> <http://football.org/rel/color> "282846" .
+<http://football.org/club/CRY> <http://football.org/rel/color> "0202fb" .
+<http://football.org/club/ANG> <http://football.org/rel/name> "Angers" .
+<http://football.org/club/CRY> <http://football.org/rel/stadium> "Selhurst Park" .
+<http://football.org/club/VIL> <http://football.org/rel/color> "ffff00" .
+<http://football.org/country/CRC> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/crc.png" .
+<http://football.org/club/LAZ> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/ATM> <http://football.org/rel/stadium> "Riyadh Air Metropolitano" .
+<http://football.org/country/URU> <http://football.org/rel/name> "Uruguay" .
+<http://football.org/club/OLM> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/176.png" .
+<http://football.org/club/REIM> <http://football.org/rel/color> "ef2f24" .
+<http://football.org/club/RBL> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/RBL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/11420.png" .
+<http://football.org/country/SUI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sui.png" .
+<http://football.org/country/ANG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ang.png" .
+<http://football.org/club/HDH> <http://football.org/rel/name> "1. FC Heidenheim 1846" .
+<http://football.org/club/REIM> <http://football.org/rel/name> "Stade de Reims" .
+<http://football.org/club/BRE> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/BRE> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/6997.png" .
+<http://football.org/club/LYON> <http://football.org/rel/alternateColor> "1a1a1a" .
+<http://football.org/club/RCL> <http://football.org/rel/name> "Lens" .
+<http://football.org/club/ATM> <http://football.org/rel/name> "Atlético Madrid" .
+<http://football.org/club/PSG> <http://football.org/rel/stadium> "Parc des Princes" .
+<http://football.org/country/IDN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/idn.png" .
+<http://football.org/club/NAP> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/114.png" .
+<http://football.org/club/VEN> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/LEI> <http://football.org/rel/name> "Leicester City" .
+<http://football.org/club/LEC> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/FIO> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/SGE> <http://football.org/rel/name> "Eintracht Frankfurt" .
+<http://football.org/country/CAN> <http://football.org/rel/name> "Canada" .
+<http://football.org/club/VLL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/95.png" .
+<http://football.org/club/NEW> <http://football.org/rel/stadium> "St. James' Park" .
+<http://football.org/club/COMO> <http://football.org/rel/city> "Como" .
+<http://football.org/club/PAR> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/LBY> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/lby.png" .
+<http://football.org/country/SLE> <http://football.org/rel/name> "Sierra Leone" .
+<http://football.org/country/NOR> <http://football.org/rel/name> "Norway" .
+<http://football.org/club/SVW> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/137.png" .
+<http://football.org/club/LPA> <http://football.org/rel/name> "Las Palmas" .
+<http://football.org/country/SRB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sba.png" .
+<http://football.org/club/SCF> <http://football.org/rel/city> "Freiburg im Breisgau" .
+<http://football.org/country/ZAM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/zam.png" .
+<http://football.org/club/NEW> <http://football.org/rel/name> "Newcastle United" .
+<http://football.org/club/DOR> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/BAR> <http://football.org/rel/color> "00529f" .
+<http://football.org/club/LEC> <http://football.org/rel/stadium> "Stadio Ettore Giardiniero - Via del Mare" .
+<http://football.org/club/FCU> <http://football.org/rel/color> "DA0308" .
+<http://football.org/club/BMG> <http://football.org/rel/alternateColor> "03915c" .
+<http://football.org/club/MUN> <http://football.org/rel/alternateColor> "1a1a1a" .
+<http://football.org/club/NAN> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/165.png" .
+<http://football.org/country/PAR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/par.png" .
+<http://football.org/club/WOB> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/138.png" .
+<http://football.org/club/GEN> <http://football.org/rel/city> "Genova" .
+<http://football.org/club/ASSE> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/SVW> <http://football.org/rel/stadium> "Weserstadion" .
+<http://football.org/club/MON> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/ZAM> <http://football.org/rel/name> "Zambia" .
+<http://football.org/club/JUV> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/GER> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ger.png" .
+<http://football.org/club/RCL> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/FCU> <http://football.org/rel/alternateColor> "d4d4d4" .
+<http://football.org/club/VFB> <http://football.org/rel/alternateColor> "DA0308" .
+<http://football.org/club/BOU> <http://football.org/rel/color> "f42727" .
+<http://football.org/club/AVL> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/country/MTQ> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/marq.png" .
+<http://football.org/country/CIV> <http://football.org/rel/name> "Ivory Coast" .
+<http://football.org/club/BRE> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/country/MOZ> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/moz.png" .
+<http://football.org/club/ANG> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/7868.png" .
+<http://football.org/club/UDI> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/INT> <http://football.org/rel/name> "Internazionale" .
+<http://football.org/country/NGA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nga.png" .
+<http://football.org/club/M05> <http://football.org/rel/name> "Mainz" .
+<http://football.org/country/CMR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/crm.png" .
+<http://football.org/country/TUN> <http://football.org/rel/name> "Tunisia" .
+<http://football.org/club/BOL> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/PAR> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/115.png" .
+<http://football.org/club/FCU> <http://football.org/rel/stadium> "An der alten Försterei" .
+<http://football.org/country/CMR> <http://football.org/rel/name> "Cameroon" .
+<http://football.org/club/B04> <http://football.org/rel/name> "Bayer Leverkusen" .
+<http://football.org/club/VIL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/102.png" .
+<http://football.org/club/ESP> <http://football.org/rel/alternateColor> "C8142F" .
+<http://football.org/club/B04> <http://football.org/rel/stadium> "BayArena" .
+<http://football.org/club/LPA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/98.png" .
+<http://football.org/country/BEL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bel.png" .
+<http://football.org/country/IRQ> <http://football.org/rel/name> "Iraq" .
+<http://football.org/club/TSG> <http://football.org/rel/name> "TSG Hoffenheim" .
+<http://football.org/club/KSV> <http://football.org/rel/color> "0754ba" .
+<http://football.org/club/PSG> <http://football.org/rel/color> "011F68" .
+<http://football.org/club/VAL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/94.png" .
+<http://football.org/club/DOR> <http://football.org/rel/color> "ffee00" .
+<http://football.org/club/HAC> <http://football.org/rel/alternateColor> "ededed" .
+<http://football.org/club/LILL> <http://football.org/rel/city> "Lille" .
+<http://football.org/country/IRQ> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/irq.png" .
+<http://football.org/club/GEN> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/country/KSA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png" .
+<http://football.org/club/SEV> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/243.png" .
+<http://football.org/club/DOR> <http://football.org/rel/stadium> "SIGNAL IDUNA PARK" .
+<http://football.org/club/CRW> <http://football.org/rel/city> "East Ridge, Tennessee" .
+<http://football.org/club/CRW> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/RMA> <http://football.org/rel/alternateColor> "f28800" .
+<http://football.org/club/LEC> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/113.png" .
+<http://football.org/country/LUX> <http://football.org/rel/name> "Luxembourg" .
+<http://football.org/country/NIR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nir.png" .
+<http://football.org/club/PSG> <http://football.org/rel/city> "Paris" .
+<http://football.org/club/ANG> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/LEC> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/CAN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/can.png" .
+<http://football.org/club/LYON> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/country/NZL> <http://football.org/rel/name> "New Zealand" .
+<http://football.org/country/LTU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ltu.png" .
+<http://football.org/club/VFB> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/RAY> <http://football.org/rel/stadium> "Estadio de Vallecas" .
+<http://football.org/club/HAC> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/TOT> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/CHE> <http://football.org/rel/alternateColor> "ffeeee" .
+<http://football.org/club/BOC> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/BOC> <http://football.org/rel/alternateColor> "aac4f2" .
+<http://football.org/country/DOM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/dom.png" .
+<http://football.org/club/VER> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/CRY> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/384.png" .
+<http://football.org/club/RMA> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/country/CRO> <http://football.org/rel/name> "Croatia" .
+<http://football.org/country/RUS> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/rus.png" .
+<http://football.org/club/VIL> <http://football.org/rel/alternateColor> "6cace4" .
+<http://football.org/club/ESP> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/88.png" .
+<http://football.org/country/SVN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/svn.png" .
+<http://football.org/country/POL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/pol.png" .
+<http://football.org/club/ANG> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/LPA> <http://football.org/rel/alternateColor> "3366CC" .
+<http://football.org/club/LEC> <http://football.org/rel/color> "e4002b" .
+<http://football.org/club/PSG> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/HAC> <http://football.org/rel/stadium> "Stade Océane" .
+<http://football.org/club/MNC> <http://football.org/rel/color> "99c5ea" .
+<http://football.org/club/DOR> <http://football.org/rel/city> "Dortmund" .
+<http://football.org/club/WHU> <http://football.org/rel/stadium> "London Stadium" .
+<http://football.org/club/M05> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/OSA> <http://football.org/rel/name> "Osasuna" .
+<http://football.org/club/TOR> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/239.png" .
+<http://football.org/country/KOR> <http://football.org/rel/name> "South Korea" .
+<http://football.org/club/TOR> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/STR> <http://football.org/rel/name> "Strasbourg" .
+<http://football.org/country/FRA> <http://football.org/rel/name> "France" .
+<http://football.org/club/EMP> <http://football.org/rel/color> "005bdd" .
+<http://football.org/club/LYON> <http://football.org/rel/city> "Lyon" .
+<http://football.org/club/IPS> <http://football.org/rel/color> "0000fa" .
+<http://football.org/club/RAY> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/101.png" .
+<http://football.org/club/LIV> <http://football.org/rel/name> "Liverpool" .
+<http://football.org/club/BAR> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/NOR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nor.png" .
+<http://football.org/club/BMG> <http://football.org/rel/stadium> "Borussia-Park" .
+<http://football.org/club/SVW> <http://football.org/rel/name> "Werder Bremen" .
+<http://football.org/club/TOU> <http://football.org/rel/color> "560080" .
+<http://football.org/club/EVE> <http://football.org/rel/alternateColor> "132257" .
+<http://football.org/club/MUN> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/ATM> <http://football.org/rel/city> "Madrid" .
+<http://football.org/club/MLL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/84.png" .
+<http://football.org/club/MON> <http://football.org/rel/name> "Montpellier" .
+<http://football.org/club/VFB> <http://football.org/rel/name> "VfB Stuttgart" .
+<http://football.org/club/ROMA> <http://football.org/rel/city> "Roma" .
+<http://football.org/club/FCA> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/UDI> <http://football.org/rel/alternateColor> "ffef32" .
+<http://football.org/club/MON> <http://football.org/rel/color> "011F68" .
+<http://football.org/club/ESP> <http://football.org/rel/color> "3366CC" .
+<http://football.org/country/GHA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gha.png" .
+<http://football.org/country/COL> <http://football.org/rel/name> "Colombia" .
+<http://football.org/club/CAG> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/2925.png" .
+<http://football.org/club/CEL> <http://football.org/rel/city> "Vigo" .
+<http://football.org/club/REN> <http://football.org/rel/name> "Stade Rennais" .
+<http://football.org/club/LEC> <http://football.org/rel/name> "Lecce" .
+<http://football.org/club/AVL> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/REN> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/VER> <http://football.org/rel/name> "Hellas Verona" .
+<http://football.org/club/AVL> <http://football.org/rel/name> "Aston Villa" .
+<http://football.org/club/BOC> <http://football.org/rel/color> "000055" .
+<http://football.org/club/AVL> <http://football.org/rel/stadium> "Villa Park" .
+<http://football.org/club/ESP> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/LEC> <http://football.org/rel/alternateColor> "08305d" .
+<http://football.org/club/MON> <http://football.org/rel/city> "Monaco" .
+<http://football.org/country/SWE> <http://football.org/rel/name> "Sweden" .
+<http://football.org/club/LYON> <http://football.org/rel/stadium> "Groupama Stadium" .
+<http://football.org/club/GEN> <http://football.org/rel/stadium> "Luigi Ferraris" .
+<http://football.org/club/MNC> <http://football.org/rel/city> "Manchester" .
+<http://football.org/club/LILL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/166.png" .
+<http://football.org/country/TUR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/tur.png" .
+<http://football.org/club/VEN> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/UDI> <http://football.org/rel/color> "19161D" .
+<http://football.org/country/USA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/usa.png" .
+<http://football.org/country/MTQ> <http://football.org/rel/name> "Martinique" .
+<http://football.org/club/EVE> <http://football.org/rel/stadium> "Goodison Park" .
+<http://football.org/country/ECU> <http://football.org/rel/name> "Ecuador" .
+<http://football.org/club/TOR> <http://football.org/rel/stadium> "Olimpico Grande Torino" .
+<http://football.org/club/SCF> <http://football.org/rel/name> "SC Freiburg" .
+<http://football.org/club/MON> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/NFO> <http://football.org/rel/stadium> "The City Ground" .
+<http://football.org/club/STR> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/NFO> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/393.png" .
+<http://football.org/club/EVE> <http://football.org/rel/city> "Liverpool" .
+<http://football.org/club/CRY> <http://football.org/rel/alternateColor> "ffdd00" .
+<http://football.org/club/SGE> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/LIV> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/INT> <http://football.org/rel/stadium> "Stadio Giuseppe Meazza" .
+<http://football.org/club/NAP> <http://football.org/rel/stadium> "Diego Armando Maradona" .
+<http://football.org/club/TOU> <http://football.org/rel/alternateColor> "ffff00" .
+<http://football.org/league/de> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/CRY> <http://football.org/rel/city> "London" .
+<http://football.org/country/MOZ> <http://football.org/rel/name> "Mozambique" .
+<http://football.org/club/MNC> <http://football.org/rel/name> "Manchester City" .
+<http://football.org/club/RCL> <http://football.org/rel/color> "E91514" .
+<http://football.org/club/ROMA> <http://football.org/rel/stadium> "Stadio Olimpico" .
+<http://football.org/club/SVW> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/REN> <http://football.org/rel/color> "ef2f24" .
+<http://football.org/club/STP> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/NEW> <http://football.org/rel/city> "Newcastle-upon-Tyne" .
+<http://football.org/club/MAN> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/JUV> <http://football.org/rel/stadium> "Allianz Stadium" .
+<http://football.org/club/ATH> <http://football.org/rel/city> "Bilbao" .
+<http://football.org/club/BAR> <http://football.org/rel/stadium> "Estadi Olímpic Lluís Companys" .
+<http://football.org/club/ESP> <http://football.org/rel/name> "Espanyol" .
+<http://football.org/country/PER> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/per.png" .
+<http://football.org/club/B04> <http://football.org/rel/alternateColor> "f9fbfc" .
+<http://football.org/league/fr> <http://football.org/rel/name> "Ligue 1" .
+<http://football.org/club/GIR> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/COMO> <http://football.org/rel/name> "Como" .
+<http://football.org/club/SEV> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/MON> <http://football.org/rel/stadium> "U-Power Stadium" .
+<http://football.org/country/KEN> <http://football.org/rel/name> "Kenya" .
+<http://football.org/club/REN> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/169.png" .
+<http://football.org/club/COMO> <http://football.org/rel/color> "3933FF" .
+<http://football.org/club/ROMA> <http://football.org/rel/name> "AS Roma" .
+<http://football.org/club/MIL> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/103.png" .
+<http://football.org/club/AUX> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/club/BOC> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/121.png" .
+<http://football.org/country/ISL> <http://football.org/rel/name> "Iceland" .
+<http://football.org/club/BRE> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/337.png" .
+<http://football.org/club/SOU> <http://football.org/rel/alternateColor> "f1ee13" .
+<http://football.org/country/USA> <http://football.org/rel/name> "United States" .
+<http://football.org/country/CRO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cro.png" .
+<http://football.org/club/TSG> <http://football.org/rel/city> "Sinsheim" .
+<http://football.org/league/de> <http://football.org/rel/name> "Bundesliga" .
+<http://football.org/club/ESP> <http://football.org/rel/stadium> "RCDE Stadium" .
+<http://football.org/club/BOL> <http://football.org/rel/city> "Bologna" .
+<http://football.org/club/GET> <http://football.org/rel/name> "Getafe" .
+<http://football.org/country/ROU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/rom.png" .
+<http://football.org/club/NFO> <http://football.org/rel/alternateColor> "132257" .
+<http://football.org/club/BET> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/SVW> <http://football.org/rel/color> "03915c" .
+<http://football.org/club/AVL> <http://football.org/rel/city> "Birmingham" .
+<http://football.org/country/EGY> <http://football.org/rel/name> "Egypt" .
+<http://football.org/club/BAR> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/83.png" .
+<http://football.org/country/HAI> <http://football.org/rel/name> "Haiti" .
+<http://football.org/club/VFB> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/NFO> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/GIR> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/NAN> <http://football.org/rel/city> "Nantes" .
+<http://football.org/club/BAR> <http://football.org/rel/alternateColor> "2f2f2f" .
+<http://football.org/club/NAP> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/FIO> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/VER> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/JUV> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/111.png" .
+<http://football.org/club/ATM> <http://football.org/rel/alternateColor> "c3c3c3" .
+<http://football.org/country/JAM> <http://football.org/rel/name> "Jamaica" .
+<http://football.org/club/MAN> <http://football.org/rel/name> "Manchester United" .
+<http://football.org/club/BMG> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/BET> <http://football.org/rel/city> "Sevilla" .
+<http://football.org/club/STP> <http://football.org/rel/stadium> "Millerntor-Stadion" .
+<http://football.org/club/FIO> <http://football.org/rel/name> "Fiorentina" .
+<http://football.org/club/LEI> <http://football.org/rel/stadium> "King Power Stadium" .
+<http://football.org/club/VIL> <http://football.org/rel/stadium> "Estadio de la Cerámica" .
+<http://football.org/country/ANG> <http://football.org/rel/name> "Angola" .
+<http://football.org/club/REIM> <http://football.org/rel/alternateColor> "0000bf" .
+<http://football.org/club/LAZ> <http://football.org/rel/city> "Roma" .
+<http://football.org/country/KVX> <http://football.org/rel/name> "Kosovo" .
+<http://football.org/club/CRY> <http://football.org/rel/name> "Crystal Palace" .
+<http://football.org/club/GEN> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/country/KSA> <http://football.org/rel/name> "Saudi Arabia" .
+<http://football.org/club/INT> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/110.png" .
+<http://football.org/club/CRY> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/ALA> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/country/BRA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bra.png" .
+<http://football.org/club/MLL> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/RBL> <http://football.org/rel/name> "RB Leipzig" .
+<http://football.org/club/LIV> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/country/JAM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/jam.png" .
+<http://football.org/club/RSO> <http://football.org/rel/alternateColor> "ffdd00" .
+<http://football.org/club/BOU> <http://football.org/rel/city> "Bournemouth" .
+<http://football.org/club/REN> <http://football.org/rel/stadium> "Roazhon Park" .
+<http://football.org/league/eng> <http://football.org/rel/name> "Premier League" .
+<http://football.org/club/SVW> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/LEG> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/HUN> <http://football.org/rel/name> "Hungary" .
+<http://football.org/club/STP> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/GIR> <http://football.org/rel/stadium> "Municipal de Montilivi" .
+<http://football.org/club/INT> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/OSA> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/COMO> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/BET> <http://football.org/rel/name> "Real Betis" .
+<http://football.org/club/CEL> <http://football.org/rel/color> "6cace4" .
+<http://football.org/club/AUX> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/172.png" .
+<http://football.org/club/SGE> <http://football.org/rel/stadium> "Deutsche Bank Park" .
+<http://football.org/club/MLL> <http://football.org/rel/city> "Palma de Mallorca" .
+<http://football.org/club/SGE> <http://football.org/rel/alternateColor> "272726" .
+<http://football.org/club/VIL> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/FCA> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/RMA> <http://football.org/rel/city> "Madrid" .
+<http://football.org/club/VIL> <http://football.org/rel/city> "Villarreal" .
+<http://football.org/club/AUX> <http://football.org/rel/stadium> "Stade de l'Abbé-Deschamps" .
+<http://football.org/club/RSO> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/WOB> <http://football.org/rel/alternateColor> "1a1a1a" .
+<http://football.org/club/LAZ> <http://football.org/rel/name> "Lazio" .
+<http://football.org/country/AUS> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/aus.png" .
+<http://football.org/club/KSV> <http://football.org/rel/alternateColor> "f9fbfc" .
+<http://football.org/club/SOU> <http://football.org/rel/stadium> "St. Mary's Stadium" .
+<http://football.org/club/FUL> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/RSO> <http://football.org/rel/color> "3366CC" .
+<http://football.org/club/NICE> <http://football.org/rel/stadium> "Allianz Riviera" .
+<http://football.org/club/BOU> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/LYON> <http://football.org/rel/color> "ffffff" .
+<http://football.org/country/ALB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/alb.png" .
+<http://football.org/country/GAB> <http://football.org/rel/name> "Gabon" .
+<http://football.org/club/NICE> <http://football.org/rel/name> "Nice" .
+<http://football.org/country/CYP> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cyp.png" .
+<http://football.org/country/GNB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gnb.png" .
+<http://football.org/club/VAL> <http://football.org/rel/stadium> "Mestalla" .
+<http://football.org/club/VLL> <http://football.org/rel/city> "Valladolid" .
+<http://football.org/club/SOU> <http://football.org/rel/color> "ED1A3B" .
+<http://football.org/country/GUI> <http://football.org/rel/name> "Guinea" .
+<http://football.org/club/TOR> <http://football.org/rel/name> "Torino" .
+<http://football.org/club/ATA> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/HDH> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/FCA> <http://football.org/rel/city> "Augsburg" .
+<http://football.org/club/RCL> <http://football.org/rel/stadium> "Stade Félix Bollaert-Delélis" .
+<http://football.org/club/WHU> <http://football.org/rel/name> "West Ham United" .
+<http://football.org/club/LAZ> <http://football.org/rel/stadium> "Stadio Olimpico" .
+<http://football.org/country/FIN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/fin.png" .
+<http://football.org/club/MIL> <http://football.org/rel/stadium> "Stadio Giuseppe Meazza" .
+<http://football.org/club/B04> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/131.png" .
+<http://football.org/club/VLL> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/IPS> <http://football.org/rel/alternateColor> "cd1937" .
+<http://football.org/club/ASSE> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/PAR> <http://football.org/rel/city> "Parma" .
+<http://football.org/club/M05> <http://football.org/rel/color> "DA0308" .
+<http://football.org/country/BIH> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bih.png" .
+<http://football.org/club/BOC> <http://football.org/rel/stadium> "Vonovia Ruhrstadion" .
+<http://football.org/club/STP> <http://football.org/rel/city> "Hamburg" .
+<http://football.org/club/NEW> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/BMG> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/268.png" .
+<http://football.org/club/FIO> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/POR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/por.png" .
+<http://football.org/league/fr> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/EMP> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/LILL> <http://football.org/rel/name> "Lille" .
+<http://football.org/club/NEW> <http://football.org/rel/color> "000000" .
+<http://football.org/country/COD> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png" .
+<http://football.org/club/INT> <http://football.org/rel/color> "00239c" .
+<http://football.org/club/CHE> <http://football.org/rel/city> "London" .
+<http://football.org/club/TSG> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/ANG> <http://football.org/rel/stadium> "Stade Raymond Kopa" .
+<http://football.org/club/LIV> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/364.png" .
+<http://football.org/club/LIV> <http://football.org/rel/color> "d11317" .
+<http://football.org/country/CZE> <http://football.org/rel/name> "Czechia" .
+<http://football.org/country/CPV> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png" .
+<http://football.org/club/GET> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/2922.png" .
+<http://football.org/club/WHU> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/371.png" .
+<http://football.org/club/MON> <http://football.org/rel/alternateColor> "004c37" .
+<http://football.org/club/VFB> <http://football.org/rel/city> "Stuttgart" .
+<http://football.org/club/NEW> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/WHU> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/NAN> <http://football.org/rel/color> "ffff00" .
+<http://football.org/club/LAZ> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/112.png" .
+<http://football.org/country/NED> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ned.png" .
+<http://football.org/country/ITA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ita.png" .
+<http://football.org/club/CEL> <http://football.org/rel/name> "Celta Vigo" .
+<http://football.org/club/LILL> <http://football.org/rel/stadium> "Decathlon Arena - Stade Pierre-Mauroy" .
+<http://football.org/country/EGY> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/egy.png" .
+<http://football.org/club/MAN> <http://football.org/rel/alternateColor> "144992" .
+<http://football.org/club/TOR> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/country/JOR> <http://football.org/rel/name> "Jordan" .
+<http://football.org/club/LEG> <http://football.org/rel/alternateColor> "32cd32" .
+<http://football.org/club/OSA> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/RBL> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/country/ARM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/fifa.armenia.png" .
+<http://football.org/club/VAL> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/MUN> <http://football.org/rel/name> "Bayern Munich" .
+<http://football.org/country/ITA> <http://football.org/rel/name> "Italy" .
+<http://football.org/club/CRW> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/MLL> <http://football.org/rel/color> "C8142F" .
+<http://football.org/country/IRN> <http://football.org/rel/name> "Iran" .
+<http://football.org/club/ASSE> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/178.png" .
+<http://football.org/league/es> <http://football.org/rel/name> "La Liga" .
+<http://football.org/club/BET> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/244.png" .
+<http://football.org/club/ESP> <http://football.org/rel/city> "Barcelona" .
+<http://football.org/club/AUX> <http://football.org/rel/alternateColor> "1a1a1a" .
+<http://football.org/league/it> <http://football.org/rel/name> "Serie A" .
+<http://football.org/club/CHE> <http://football.org/rel/name> "Chelsea" .
+<http://football.org/club/VAL> <http://football.org/rel/city> "Valencia" .
+<http://football.org/country/AUT> <http://football.org/rel/name> "Austria" .
+<http://football.org/club/VEN> <http://football.org/rel/name> "Venezia" .
+<http://football.org/club/FCA> <http://football.org/rel/stadium> "WWK Arena" .
+<http://football.org/country/ARM> <http://football.org/rel/name> "Armenia" .
+<http://football.org/country/JPN> <http://football.org/rel/name> "Japan" .
+<http://football.org/club/SCF> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/CEL> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/OLM> <http://football.org/rel/color> "ffffff" .
+<http://football.org/country/JPN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png" .
+<http://football.org/club/GIR> <http://football.org/rel/city> "Girona" .
+<http://football.org/club/BOU> <http://football.org/rel/stadium> "Vitality Stadium" .
+<http://football.org/club/JUV> <http://football.org/rel/city> "Torino" .
+<http://football.org/club/GIR> <http://football.org/rel/color> "C60000" .
+<http://football.org/club/PAR> <http://football.org/rel/stadium> "Ennio Tardini" .
+<http://football.org/country/COD> <http://football.org/rel/name> "Congo DR" .
+<http://football.org/club/NAP> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/ROMA> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/VLL> <http://football.org/rel/stadium> "José Zorrilla" .
+<http://football.org/club/SVW> <http://football.org/rel/city> "Bremen" .
+<http://football.org/club/CAG> <http://football.org/rel/stadium> "Unipol Domus" .
+<http://football.org/club/SCF> <http://football.org/rel/stadium> "Europa-Park Stadion" .
+<http://football.org/country/BIH> <http://football.org/rel/name> "Bosnia and Herzegovina" .
+<http://football.org/club/MON> <http://football.org/rel/stadium> "Stade de la Mosson-Mondial 98" .
+<http://football.org/club/KSV> <http://football.org/rel/name> "Holstein Kiel" .
+<http://football.org/club/NICE> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/2502.png" .
+<http://football.org/club/GET> <http://football.org/rel/color> "0000ff" .
+<http://football.org/club/VER> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/119.png" .
+<http://football.org/club/RSO> <http://football.org/rel/stadium> "Reale Arena" .
+<http://football.org/country/MAD> <http://football.org/rel/name> "Madagascar" .
+<http://football.org/club/GEN> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/RMA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/86.png" .
+<http://football.org/club/CHE> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/country/PAN> <http://football.org/rel/name> "Panama" .
+<http://football.org/club/MLL> <http://football.org/rel/alternateColor> "ccff00" .
+<http://football.org/club/GET> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/KSV> <http://football.org/rel/stadium> "Holstein-Stadion" .
+<http://football.org/club/AUX> <http://football.org/rel/city> "Auxerre" .
+<http://football.org/club/FIO> <http://football.org/rel/stadium> "Artemio Franchi" .
+<http://football.org/club/JUV> <http://football.org/rel/color> "000000" .
+<http://football.org/club/LEI> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/375.png" .
+<http://football.org/club/KSV> <http://football.org/rel/league> <http://football.org/league/de> .
+<http://football.org/club/ROMA> <http://football.org/rel/color> "990a2c" .
+<http://football.org/club/ALA> <http://football.org/rel/alternateColor> "c3c3c3" .
+<http://football.org/club/MON> <http://football.org/rel/color> "C8142F" .
+<http://football.org/country/MEX> <http://football.org/rel/name> "Mexico" .
+<http://football.org/country/CGO> <http://football.org/rel/name> "Congo" .
+<http://football.org/club/LEI> <http://football.org/rel/city> "Leicester" .
+<http://football.org/club/ARS> <http://football.org/rel/city> "London" .
+<http://football.org/club/FUL> <http://football.org/rel/alternateColor> "d11317" .
+<http://football.org/club/MIL> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/country/GEO> <http://football.org/rel/name> "Georgia" .
+<http://football.org/country/GHA> <http://football.org/rel/name> "Ghana" .
+<http://football.org/club/ALA> <http://football.org/rel/name> "Alavés" .
+<http://football.org/club/CEL> <http://football.org/rel/stadium> "Estadio Abanca-Balaídos" .
+<http://football.org/country/PAR> <http://football.org/rel/name> "Paraguay" .
+<http://football.org/club/M05> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/CAG> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/MON> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/STR> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/PSG> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/BRE> <http://football.org/rel/color> "ef2f24" .
+<http://football.org/club/OLM> <http://football.org/rel/city> "Marseille" .
+<http://football.org/club/MON> <http://football.org/rel/city> "Monza" .
+<http://football.org/club/NAN> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/CAG> <http://football.org/rel/city> "Cagliari" .
+<http://football.org/country/URU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/uru.png" .
+<http://football.org/club/RAY> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/TOR> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/JOR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/jor.png" .
+<http://football.org/club/NICE> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/HAC> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/country/MNE> <http://football.org/rel/name> "Montenegro" .
+<http://football.org/club/ARS> <http://football.org/rel/name> "Arsenal" .
+<http://football.org/club/BRE> <http://football.org/rel/city> "Brest" .
+<http://football.org/club/AUX> <http://football.org/rel/name> "AJ Auxerre" .
+<http://football.org/country/CGO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cgo.png" .
+<http://football.org/club/MNC> <http://football.org/rel/stadium> "Etihad Stadium" .
+<http://football.org/club/RMA> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/MON> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/STR> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/country/SEN> <http://football.org/rel/name> "Senegal" .
+<http://football.org/club/SGE> <http://football.org/rel/color> "ffffff" .
+<http://football.org/country/SLE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sle.png" .
+<http://football.org/club/HAC> <http://football.org/rel/name> "Le Havre AC" .
+<http://football.org/country/UKR> <http://football.org/rel/name> "Ukraine" .
+<http://football.org/club/RAY> <http://football.org/rel/alternateColor> "cd0000" .
+<http://football.org/club/PSG> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/160.png" .
+<http://football.org/club/MON> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/274.png" .
+<http://football.org/club/OLM> <http://football.org/rel/stadium> "Orange Vélodrome" .
+<http://football.org/club/B04> <http://football.org/rel/color> "DA0308" .
+<http://football.org/club/LILL> <http://football.org/rel/alternateColor> "e2d3d7" .
+<http://football.org/club/REN> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/MAN> <http://football.org/rel/city> "Manchester" .
+<http://football.org/club/TOT> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/FCU> <http://football.org/rel/name> "1. FC Union Berlin" .
+<http://football.org/club/LIV> <http://football.org/rel/stadium> "Anfield" .
+<http://football.org/club/TOU> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/FCU> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/598.png" .
+<http://football.org/club/STP> <http://football.org/rel/color> "442e23" .
+<http://football.org/club/AUX> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/UDI> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/DOR> <http://football.org/rel/alternateColor> "272726" .
+<http://football.org/country/FIN> <http://football.org/rel/name> "Finland" .
+<http://football.org/club/HAC> <http://football.org/rel/color> "011F68" .
+<http://football.org/club/CRW> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/20000.png" .
+<http://football.org/club/BHA> <http://football.org/rel/alternateColor> "ffdd00" .
+<http://football.org/country/UZB> <http://football.org/rel/name> "Uzbekistan" .
+<http://football.org/club/TOT> <http://football.org/rel/alternateColor> "9bafd8" .
+<http://football.org/club/BOL> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/club/VIL> <http://football.org/rel/name> "Villarreal" .
+<http://football.org/country/GRE> <http://football.org/rel/name> "Greece" .
+<http://football.org/club/SOU> <http://football.org/rel/city> "Southampton" .
+<http://football.org/club/BET> <http://football.org/rel/color> "288A00" .
+<http://football.org/club/EVE> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/club/BOL> <http://football.org/rel/color> "04043d" .
+<http://football.org/club/ROMA> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/104.png" .
+<http://football.org/club/ATA> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/CHE> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/country/SWE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/swe.png" .
+<http://football.org/club/WOB> <http://football.org/rel/city> "Wolfsburg" .
+<http://football.org/club/REN> <http://football.org/rel/alternateColor> "ffffff" .
+<http://football.org/club/ALA> <http://football.org/rel/stadium> "Mendizorroza" .
+<http://football.org/club/OSA> <http://football.org/rel/color> "cd0000" .
+<http://football.org/club/ANG> <http://football.org/rel/league> <http://football.org/league/fr> .
+<http://football.org/country/GER> <http://football.org/rel/name> "Germany" .
+<http://football.org/club/DOR> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/124.png" .
+<http://football.org/club/NAN> <http://football.org/rel/name> "Nantes" .
+<http://football.org/club/LEG> <http://football.org/rel/name> "Leganés" .
+<http://football.org/club/MIL> <http://football.org/rel/name> "AC Milan" .
+<http://football.org/club/BRE> <http://football.org/rel/color> "f42727" .
+<http://football.org/club/CHE> <http://football.org/rel/stadium> "Stamford Bridge" .
+<http://football.org/club/GIR> <http://football.org/rel/alternateColor> "004996" .
+<http://football.org/country/COM> <http://football.org/rel/name> "Comoros" .
+<http://football.org/club/EVE> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/country/NGA> <http://football.org/rel/name> "Nigeria" .
+<http://football.org/club/BET> <http://football.org/rel/alternateColor> "ccff00" .
+<http://football.org/club/BOU> <http://football.org/rel/name> "AFC Bournemouth" .
+<http://football.org/club/INT> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/country/AUS> <http://football.org/rel/name> "Australia" .
+<http://football.org/club/LEG> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/17534.png" .
+<http://football.org/country/ENG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/eng.png" .
+<http://football.org/country/BFA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bka.png" .
+<http://football.org/club/FUL> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/country/COL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/col.png" .
+<http://football.org/club/ATH> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/club/AVL> <http://football.org/rel/color> "660e36" .
+<http://football.org/club/BMG> <http://football.org/rel/color> "ffffff" .
+<http://football.org/club/IPS> <http://football.org/rel/name> "Ipswich Town" .
+<http://football.org/club/TOT> <http://football.org/rel/name> "Tottenham Hotspur" .
+<http://football.org/club/FUL> <http://football.org/rel/city> "London" .
+<http://football.org/club/REIM> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/club/WHU> <http://football.org/rel/color> "7c2c3b" .
+<http://football.org/country/LUX> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/lux.png" .
+<http://football.org/club/BAR> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/country/PUR> <http://football.org/rel/name> "Puerto Rico" .
+<http://football.org/club/RBL> <http://football.org/rel/city> "Leipzig" .
+<http://football.org/club/ARS> <http://football.org/rel/alternateColor> "132257" .
+<http://football.org/club/ATM> <http://football.org/rel/logo> "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png" .
+<http://football.org/club/MLL> <http://football.org/rel/stadium> "Estadi Mallorca Son Moix" .
+<http://football.org/club/ARS> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/country/SRB> <http://football.org/rel/name> "Serbia" .
+<http://football.org/club/IPS> <http://football.org/rel/stadium> "Portman Road" .
+<http://football.org/club/LPA> <http://football.org/rel/color> "ffff00" .
+<http://football.org/country/KVX> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/18272.png" .
+<http://football.org/club/ASSE> <http://football.org/rel/stadium> "Stade Geoffroy-Guichard" .
+<http://football.org/club/NFO> <http://football.org/rel/color> "c8102e" .
+<http://football.org/country/COM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/com.png" .
+<http://football.org/club/ATH> <http://football.org/rel/league> <http://football.org/league/es> .
+<http://football.org/club/LEG> <http://football.org/rel/color> "6cace4" .
+<http://football.org/club/FCU> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/club/JUV> <http://football.org/rel/league> <http://football.org/league/it> .
+<http://football.org/club/VLL> <http://football.org/rel/name> "Real Valladolid" .
+<http://football.org/club/CAG> <http://football.org/rel/name> "Cagliari" .
+<http://football.org/country/GAM> <http://football.org/rel/name> "Gambia" .
+<http://football.org/country/BEN> <http://football.org/rel/name> "Benin" .
+<http://football.org/club/MAN> <http://football.org/rel/league> <http://football.org/league/eng> .
+<http://football.org/club/BHA> <http://football.org/rel/city> "Falmer" .
+<http://football.org/club/EVE> <http://football.org/rel/color> "0606fa" .
+<http://football.org/country/GEO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/geo.png" .
+<http://football.org/club/PAR> <http://football.org/rel/name> "Parma" .
+<http://football.org/club/B04> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/country/MAR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mar.png" .
+<http://football.org/club/CEL> <http://football.org/rel/alternateColor> "004996" .
