@@ -104,7 +104,7 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 175,Lens,Lens,RCL,Lens,Lens,E91514,004c37,https://a.espncdn.com/i/teamlogos/soccer/500/175.png,2325,fra.lens
 176,Marseille,Marseille,OLM,Marseille,Marseille,ffffff,011F68,https://a.espncdn.com/i/teamlogos/soccer/500/176.png,2333,fra.marseille
 177,Metz,Metz,METZ,Metz,Metz,8C3140,e6c168,https://a.espncdn.com/i/teamlogos/soccer/500/177.png,2981,fra.metz
-178,Saint-Etienne,Saint-Etienne,ASSE,Saint-Etienne,St. Etienne,51cc5f,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/178.png,2324,fra.st_etienne
+178,Saint-Etienne,Saint-Étienne,ASSE,Saint-Etienne,St. Etienne,51cc5f,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/178.png,2324,fra.st_etienne
 179,Toulouse,Toulouse,TOU,Toulouse,Toulouse,560080,ffff00,https://a.espncdn.com/i/teamlogos/soccer/500/179.png,42,fra.toulouse
 180,Strasbourg,Strasbourg,STR,Strasbourg,Strasbourg,0000bf,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/180.png,2980,fra.strasbourg
 182,Chicago Fire FC,Chicago Fire FC,CHI,Chicago Fire FC,Chicago,7ccdef,ff0000,https://a.espncdn.com/i/teamlogos/soccer/500/182.png,1452,usa.chicago
@@ -233,7 +233,7 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 357,Leeds United,Leeds United,LEE,Leeds United,Leeds,ffffff,ffff00,https://a.espncdn.com/i/teamlogos/soccer/500/357.png,190,eng.leeds
 358,Bolton Wanderers,Bolton Wanderers,BOL,Bolton Wanderers,Bolton,ffffff,1a1a1a,https://a.espncdn.com/i/teamlogos/soccer/500/358.png,256,eng.bolton
 359,Arsenal,Arsenal,ARS,Arsenal,Arsenal,e20520,132257,https://a.espncdn.com/i/teamlogos/soccer/500/359.png,2267,eng.arsenal
-360,Manchester United,Manchester United,MAN,Manchester United,Man United,da020e,144992,https://a.espncdn.com/i/teamlogos/soccer/500/360.png,0,eng.man_utd
+360,Manchester United,Manchester United,MAN,Manchester United,Man United,da020e,144992,https://a.espncdn.com/i/teamlogos/soccer/500/360.png,250,eng.man_utd
 361,Newcastle United,Newcastle United,NEW,Newcastle United,Newcastle,000000,cd1937,https://a.espncdn.com/i/teamlogos/soccer/500/361.png,4684,eng.newcastle
 362,Aston Villa,Aston Villa,AVL,Aston Villa,Aston Villa,660e36,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/362.png,307,eng.aston_villa
 363,Chelsea,Chelsea,CHE,Chelsea,Chelsea,144992,ffeeee,https://a.espncdn.com/i/teamlogos/soccer/500/363.png,249,eng.chelsea
@@ -264,7 +264,7 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 390,Milton Keynes Dons,Milton Keynes Dons,MKD,Milton Keynes Dons,MK Dons,ffffff,ff4f00,https://a.espncdn.com/i/teamlogos/soccer/500/390.png,3082,eng.wimbledon
 391,Millwall,Millwall,MIL,Millwall,Millwall,091453,007066,https://a.espncdn.com/i/teamlogos/soccer/500/391.png,3341,eng.millwall
 392,Birmingham City,Birmingham City,BIR,Birmingham City,Birmingham,0000fa,fe5442,https://a.espncdn.com/i/teamlogos/soccer/500/392.png,5461,eng.birmingham
-393,Nottingham Forest,Nottingham Forest,NFO,Nottingham Forest,Nottm Forest,c8102e,132257,https://a.espncdn.com/i/teamlogos/soccer/500/393.png,131,eng.nottm_forest
+393,Nottingham Forest,Nottingham Forest,NFO,Nottingham Forest,Nott'ham Forest,c8102e,132257,https://a.espncdn.com/i/teamlogos/soccer/500/393.png,131,eng.nottm_forest
 394,Preston North End,Preston North End,PNE,Preston North End,Preston,ffffff,87cced,https://a.espncdn.com/i/teamlogos/soccer/500/394.png,201,eng.preston
 395,Watford,Watford,WAT,Watford,Watford,ffff00,1D428A,https://a.espncdn.com/i/teamlogos/soccer/500/395.png,203,eng.watford
 396,Crewe Alexandra,Crewe Alexandra,CAX,Crewe Alexandra,Crewe,C8142F,FECD32,https://a.espncdn.com/i/teamlogos/soccer/500/396.png,6258,eng.crewe

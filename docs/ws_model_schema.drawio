@@ -142,14 +142,14 @@
         <mxCell id="8C8Kz3gRhh6Y5mMte7SM-41" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#82b366;strokeWidth=4;" parent="1" vertex="1">
           <mxGeometry x="-187.5" y="170" width="155" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="8C8Kz3gRhh6Y5mMte7SM-44" value="&lt;div&gt;city&lt;/div&gt;&lt;div&gt;stadium name&lt;/div&gt;" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;strokeWidth=5;align=center;fontStyle=0;fontSize=20;fontColor=#7B24FF;" parent="1" vertex="1">
-          <mxGeometry x="-280" y="360" width="340" height="180" as="geometry" />
+        <mxCell id="8C8Kz3gRhh6Y5mMte7SM-44" value="&lt;div&gt;city&lt;/div&gt;&lt;div&gt;country&lt;/div&gt;&lt;div&gt;stadium name&lt;/div&gt;" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;strokeWidth=5;align=center;fontStyle=0;fontSize=20;fontColor=#7B24FF;" parent="1" vertex="1">
+          <mxGeometry x="-280" y="360" width="340" height="230" as="geometry" />
         </mxCell>
         <mxCell id="8C8Kz3gRhh6Y5mMte7SM-45" value="ESPN dataset - venues.csv" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;fontColor=#7B24FF;" parent="1" vertex="1">
           <mxGeometry x="-230" y="350" width="230" height="30" as="geometry" />
         </mxCell>
         <mxCell id="8C8Kz3gRhh6Y5mMte7SM-46" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;strokeWidth=4;fontColor=#7B24FF;" parent="1" vertex="1">
-          <mxGeometry x="-187.5" y="410" width="155" height="90" as="geometry" />
+          <mxGeometry x="-187.5" y="429" width="155" height="90" as="geometry" />
         </mxCell>
         <mxCell id="8C8Kz3gRhh6Y5mMte7SM-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.871;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="8C8Kz3gRhh6Y5mMte7SM-46" target="8C8Kz3gRhh6Y5mMte7SM-29" edge="1">
           <mxGeometry relative="1" as="geometry">

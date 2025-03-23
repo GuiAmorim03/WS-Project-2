@@ -1,5 +1,6 @@
 import pandas as pd
 from rdflib import Graph, URIRef, Literal, Namespace
+from rdflib.plugins.sparql import prepareQuery
 
 df_main = pd.read_csv('players_data_light-2024_2025.csv')
 df_colors_logos = pd.read_csv('teams.csv')
@@ -75,6 +76,66 @@ for index, row in df_main.iterrows():
         league_uri = URIRef(ns_league + league_id)
         g.add((league_uri, ns_rel.name, Literal(league_name)))
         g.add((league_uri, ns_rel.country, URIRef(ns_country + country_id)))
+
+    # clubs
+    if club not in clubs:
+        clubs.add(club)
+        if 'Utd' in club:
+            club = club.replace('Utd', 'United')
+        if 'Paris' in club:
+            club = 'PSG'
+
+        # pesquisar no df_colors_logos pelo club na coluna 'name'
+        # club_id --> 'abbreviation'
+        # club_name --> 'name'
+        # club_color --> 'color'
+        # club_alternate_color --> 'alternateColor'
+        # club_logo --> 'logoURL'
+        club_info = df_colors_logos[df_colors_logos['name'].str.contains(club, na=False)]
+        if (len(club_info) == 0):
+            club_info = df_colors_logos[df_colors_logos['name'].str.contains(club, na=False)]
+        if (len(club_info) == 0):
+            club_info = df_colors_logos[df_colors_logos['shortDisplayName'].str.contains(club, na=False)]
+        if (len(club_info) == 0):
+            club_name_parts = club.split(' ')
+            for part in club_name_parts:
+                club_info = df_colors_logos[df_colors_logos['name'].str.contains(part, na=False)]
+                if (len(club_info) == 1):
+                    break
+
+        club_id = club_info['abbreviation'].values[0]
+        club_name = club_info['name'].values[0]
+        club_color = club_info['color'].values[0]
+        club_alternate_color = club_info['alternateColor'].values[0]
+        club_logo = club_info['logoURL'].values[0]
+
+        num_to_search_location = club_info['venueId'].values[0] # usar este ID para pesquisar no df_clubs_info
+        club_location = df_clubs_info[df_clubs_info['venueId'] == num_to_search_location]
+        club_stadium = club_location['fullName'].values[0]
+        club_city = club_location['city'].values[0]
+
+        # ir buscar o country_id já existente
+        league_id = league.split(' ')[0]
+        league_uri = URIRef(ns_league + league_id)
+        query = prepareQuery("""
+            SELECT ?country
+            WHERE {
+                ?league ns_rel:country ?country .
+            }
+        """, initNs={'ns_rel': ns_rel})
+        results = g.query(query, initBindings={'league': league_uri})
+        row = next(iter(results), None)
+        club_country_id = str(row.country)
+    
+        club_uri = URIRef(ns_club + club_id)
+        g.add((club_uri, ns_rel.name, Literal(club_name)))
+        g.add((club_uri, ns_rel.color, Literal(club_color)))
+        g.add((club_uri, ns_rel.alternateColor, Literal(club_alternate_color)))
+        g.add((club_uri, ns_rel.logo, Literal(club_logo)))
+        g.add((club_uri, ns_rel.stadium, Literal(club_stadium)))
+        g.add((club_uri, ns_rel.city, Literal(club_city)))
+        g.add((club_uri, ns_rel.country, URIRef(club_country_id)))
+        g.add((club_uri, ns_rel.league, URIRef(ns_league + league_id)))
 
 
 g.serialize(destination="football_rdf_data.nt", format="nt", encoding="utf-8")
