@@ -1,6 +1,8 @@
 import pandas as pd
 from rdflib import Graph, URIRef, Literal, Namespace
 from rdflib.plugins.sparql import prepareQuery
+from urllib.parse import quote
+from unidecode import unidecode
 
 df_main = pd.read_csv('players_data_light-2024_2025.csv')
 df_colors_logos = pd.read_csv('teams.csv')
@@ -41,8 +43,26 @@ def get_country_info(country_abrv):
 
     return country_name, country_flag
 
+def convert_player_name_to_id(player_name):
+    return quote(unidecode(player_name.lower().replace(' ', '_')))
+
+def check_player_exists(player_name):
+    if player_name not in players:
+        players.add(player_name)
+        return False, convert_player_name_to_id(player_name)
+    else:
+        # se o player já existe, é necessário verificar se é um falso duplicado
+        # verificar se o 'Born' e 'Nation' são iguais
+        repeated_player_info = df_main[df_main['Player'] == player_name]
+        born_years = repeated_player_info['Born'].unique()
+        nation = repeated_player_info['Nation'].unique()
+        if len(born_years) > 1 or len(nation) > 1 or player_name == 'Vitinha':  # Há 2 Vitinha da mesma idade e país
+            # são jogadores diferentes, precisa de id diferente
+            return False, convert_player_name_to_id(player_name)+"_2"
+        else:
+            return True, convert_player_name_to_id(player_name)
+
 for index, row in df_main.iterrows():
-    player = row['Player']
     club = row['Squad']
     league = row['Comp']
     country_abrv = row['Nation'].split(' ')[-1]
@@ -135,6 +155,32 @@ for index, row in df_main.iterrows():
         clubs.add(club_original_name)
         club_name_to_club_id[club_original_name] = club_id
 
+
+    # players
+    player_name = row['Player']
+    player_exists, player_id = check_player_exists(player_name)
+
+    if not player_exists:
+        # player_id
+        # player_name --> 'Player'
+        # player_pos --> 'Pos'
+        # player_year --> 'Born'
+        # player_nation --> 'Nation' (country_abrv)
+        # player_club --> 'Squad' (club_name_to_club_id)
+        player_pos = row['Pos']
+        try:
+            player_year = int(row['Born'])
+        except:
+            player_year = 0
+        player_nation = country_abrv
+        player_club = club_name_to_club_id[club_original_name]
+
+        player_uri = URIRef(ns_player + player_id)
+        g.add((player_uri, ns_rel.name, Literal(player_name)))
+        g.add((player_uri, ns_rel.position, Literal(player_pos)))
+        g.add((player_uri, ns_rel.born, Literal(player_year)))
+        g.add((player_uri, ns_rel.nation, URIRef(ns_country + player_nation)))
+        g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club)))
 
 g.serialize(destination="football_rdf_data.nt", format="nt", encoding="utf-8")
 g.serialize(destination="football_rdf_data.n3", format="turtle", encoding="utf-8")
