@@ -11,6 +11,9 @@ clubs = set()
 leagues = set()
 countries = set()
 
+league_code_to_country_code = {}
+club_name_to_club_id = {}
+
 BASE_URL = 'http://football.org/'
 ns_player = Namespace(BASE_URL + 'player/')
 ns_club = Namespace(BASE_URL + 'club/')
@@ -56,8 +59,6 @@ for index, row in df_main.iterrows():
 
     # leagues
     if league not in leagues:
-        leagues.add(league)
-
         # verificar se o country da league já existe
         # se não existir, pesquisar no df_main 'Nation' por uma linha com o cod pequeno para obter o cod grande
         # pesquisar no df_colors_logos pelo country na coluna 'abbreviation', usando o cod grande
@@ -77,9 +78,12 @@ for index, row in df_main.iterrows():
         g.add((league_uri, ns_rel.name, Literal(league_name)))
         g.add((league_uri, ns_rel.country, URIRef(ns_country + country_id)))
 
+        leagues.add(league)
+        league_code_to_country_code[league_id] = country_id
+
     # clubs
     if club not in clubs:
-        clubs.add(club)
+        club_original_name = club
         if 'Utd' in club:
             club = club.replace('Utd', 'United')
         if 'Paris' in club:
@@ -116,16 +120,7 @@ for index, row in df_main.iterrows():
 
         # ir buscar o country_id já existente
         league_id = league.split(' ')[0]
-        league_uri = URIRef(ns_league + league_id)
-        query = prepareQuery("""
-            SELECT ?country
-            WHERE {
-                ?league ns_rel:country ?country .
-            }
-        """, initNs={'ns_rel': ns_rel})
-        results = g.query(query, initBindings={'league': league_uri})
-        row = next(iter(results), None)
-        club_country_id = str(row.country)
+        club_country_id = league_code_to_country_code[league_id]
     
         club_uri = URIRef(ns_club + club_id)
         g.add((club_uri, ns_rel.name, Literal(club_name)))
@@ -134,8 +129,11 @@ for index, row in df_main.iterrows():
         g.add((club_uri, ns_rel.logo, Literal(club_logo)))
         g.add((club_uri, ns_rel.stadium, Literal(club_stadium)))
         g.add((club_uri, ns_rel.city, Literal(club_city)))
-        g.add((club_uri, ns_rel.country, URIRef(club_country_id)))
+        g.add((club_uri, ns_rel.country, URIRef(ns_country + club_country_id)))
         g.add((club_uri, ns_rel.league, URIRef(ns_league + league_id)))
+
+        clubs.add(club_original_name)
+        club_name_to_club_id[club_original_name] = club_id
 
 
 g.serialize(destination="football_rdf_data.nt", format="nt", encoding="utf-8")
