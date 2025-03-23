@@ -63,8 +63,8 @@ for index, row in df_main.iterrows():
         # se ja existir, é só adicionar a liga
         # league_name --> 'Comp'
         # league_country --> cod grande
-        league_id = row['Comp'].split(' ')[0]
-        league_name = ' '.join(row['Comp'].split(' ')[1:])
+        league_id = league.split(' ')[0]
+        league_name = ' '.join(league.split(' ')[1:])
         country_id = df_main[df_main['Nation'].str.contains(f'{league_id} ')]['Nation'].values[0].split(' ')[-1]
         if country_id not in countries:
             country_name, country_flag = get_country_info(country_id)
