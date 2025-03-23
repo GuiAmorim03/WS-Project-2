@@ -1,0 +1,230 @@
+<http://football.org/country/AUT> <http://football.org/rel/name> "Austria" .
+<http://football.org/country/POL> <http://football.org/rel/name> "Poland" .
+<http://football.org/country/DOM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/dom.png" .
+<http://football.org/country/GUF> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/10532.png" .
+<http://football.org/country/EST> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/est.png" .
+<http://football.org/country/GAB> <http://football.org/rel/name> "Gabon" .
+<http://football.org/country/MAD> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mad.png" .
+<http://football.org/country/MLI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mli.png" .
+<http://football.org/country/MLT> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mlt.png" .
+<http://football.org/league/de> <http://football.org/rel/name> "Bundesliga" .
+<http://football.org/country/ARM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/fifa.armenia.png" .
+<http://football.org/country/AUS> <http://football.org/rel/name> "Australia" .
+<http://football.org/country/CRO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cro.png" .
+<http://football.org/country/AUT> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/aut.png" .
+<http://football.org/country/GAB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gab.png" .
+<http://football.org/country/EGY> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/egy.png" .
+<http://football.org/country/SUI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sui.png" .
+<http://football.org/country/GNB> <http://football.org/rel/name> "Guinea-Bissau" .
+<http://football.org/country/MOZ> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/moz.png" .
+<http://football.org/country/MEX> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mex.png" .
+<http://football.org/country/JOR> <http://football.org/rel/name> "Jordan" .
+<http://football.org/country/PER> <http://football.org/rel/name> "Peru" .
+<http://football.org/country/CRC> <http://football.org/rel/name> "Costa Rica" .
+<http://football.org/country/PAR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/par.png" .
+<http://football.org/country/TUN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/tun.png" .
+<http://football.org/country/MAD> <http://football.org/rel/name> "Madagascar" .
+<http://football.org/league/it> <http://football.org/rel/country> <http://football.org/country/ITA> .
+<http://football.org/country/GAM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gam.png" .
+<http://football.org/country/CPV> <http://football.org/rel/name> "Cape Verde Islands" .
+<http://football.org/country/BFA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bka.png" .
+<http://football.org/country/TUR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/tur.png" .
+<http://football.org/country/FRA> <http://football.org/rel/name> "France" .
+<http://football.org/country/JAM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/jam.png" .
+<http://football.org/country/MTQ> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/marq.png" .
+<http://football.org/country/LUX> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/lux.png" .
+<http://football.org/country/TOG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/tog.png" .
+<http://football.org/country/SRB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sba.png" .
+<http://football.org/league/fr> <http://football.org/rel/name> "Ligue 1" .
+<http://football.org/country/GHA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gha.png" .
+<http://football.org/country/NED> <http://football.org/rel/name> "Netherlands" .
+<http://football.org/country/PUR> <http://football.org/rel/name> "Puerto Rico" .
+<http://football.org/country/ECU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png" .
+<http://football.org/country/MAR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mar.png" .
+<http://football.org/country/ANG> <http://football.org/rel/name> "Angola" .
+<http://football.org/country/EGY> <http://football.org/rel/name> "Egypt" .
+<http://football.org/country/BEN> <http://football.org/rel/name> "Benin" .
+<http://football.org/country/SVK> <http://football.org/rel/name> "Slovakia" .
+<http://football.org/country/JOR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/jor.png" .
+<http://football.org/country/SWE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/swe.png" .
+<http://football.org/league/es> <http://football.org/rel/country> <http://football.org/country/ESP> .
+<http://football.org/country/KVX> <http://football.org/rel/name> "Kosovo" .
+<http://football.org/country/CZE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cze.png" .
+<http://football.org/country/RUS> <http://football.org/rel/name> "Russia" .
+<http://football.org/country/GUF> <http://football.org/rel/name> "French Guiana" .
+<http://football.org/country/NOR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nor.png" .
+<http://football.org/country/MNE> <http://football.org/rel/name> "Montenegro" .
+<http://football.org/country/SVK> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/svk.png" .
+<http://football.org/country/TUN> <http://football.org/rel/name> "Tunisia" .
+<http://football.org/country/JPN> <http://football.org/rel/name> "Japan" .
+<http://football.org/country/URU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/uru.png" .
+<http://football.org/country/ISL> <http://football.org/rel/name> "Iceland" .
+<http://football.org/country/CPV> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png" .
+<http://football.org/country/EST> <http://football.org/rel/name> "Estonia" .
+<http://football.org/country/NGA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nga.png" .
+<http://football.org/country/BFA> <http://football.org/rel/name> "Burkina Faso" .
+<http://football.org/country/AUS> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/aus.png" .
+<http://football.org/league/eng> <http://football.org/rel/name> "Premier League" .
+<http://football.org/country/SVN> <http://football.org/rel/name> "Slovenia" .
+<http://football.org/country/IRL> <http://football.org/rel/name> "Republic of Ireland" .
+<http://football.org/country/GRE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gre.png" .
+<http://football.org/country/SCO> <http://football.org/rel/name> "Scotland" .
+<http://football.org/country/CIV> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/civ.png" .
+<http://football.org/league/fr> <http://football.org/rel/country> <http://football.org/country/FRA> .
+<http://football.org/country/MKD> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mkd.png" .
+<http://football.org/country/KVX> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/18272.png" .
+<http://football.org/country/IRN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/irn.png" .
+<http://football.org/country/GHA> <http://football.org/rel/name> "Ghana" .
+<http://football.org/country/MLT> <http://football.org/rel/name> "Malta" .
+<http://football.org/country/DEN> <http://football.org/rel/name> "Denmark" .
+<http://football.org/country/ZIM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/4214.png" .
+<http://football.org/country/ITA> <http://football.org/rel/name> "Italy" .
+<http://football.org/country/SLE> <http://football.org/rel/name> "Sierra Leone" .
+<http://football.org/country/POL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/pol.png" .
+<http://football.org/country/GEO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/geo.png" .
+<http://football.org/country/USA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/usa.png" .
+<http://football.org/country/EQG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/eqg.png" .
+<http://football.org/country/ZAM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/zam.png" .
+<http://football.org/country/PHI> <http://football.org/rel/name> "Philippines" .
+<http://football.org/country/ARM> <http://football.org/rel/name> "Armenia" .
+<http://football.org/country/MSR> <http://football.org/rel/name> "Montserrat" .
+<http://football.org/country/SUI> <http://football.org/rel/name> "Switzerland" .
+<http://football.org/country/ALG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/alg.png" .
+<http://football.org/country/ENG> <http://football.org/rel/name> "England" .
+<http://football.org/country/ENG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/eng.png" .
+<http://football.org/country/ESP> <http://football.org/rel/name> "Spain" .
+<http://football.org/country/SWE> <http://football.org/rel/name> "Sweden" .
+<http://football.org/country/ARG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/arg.png" .
+<http://football.org/country/HUN> <http://football.org/rel/name> "Hungary" .
+<http://football.org/country/CGO> <http://football.org/rel/name> "Congo" .
+<http://football.org/country/KOR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/kors.png" .
+<http://football.org/country/CAN> <http://football.org/rel/name> "Canada" .
+<http://football.org/country/MAR> <http://football.org/rel/name> "Morocco" .
+<http://football.org/country/ISL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/isl.png" .
+<http://football.org/country/PER> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/per.png" .
+<http://football.org/league/de> <http://football.org/rel/country> <http://football.org/country/GER> .
+<http://football.org/country/HUN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/hun.png" .
+<http://football.org/country/PAN> <http://football.org/rel/name> "Panama" .
+<http://football.org/country/NOR> <http://football.org/rel/name> "Norway" .
+<http://football.org/country/SVN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/svn.png" .
+<http://football.org/country/TUR> <http://football.org/rel/name> "Turkey" .
+<http://football.org/country/GAM> <http://football.org/rel/name> "Gambia" .
+<http://football.org/country/BIH> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bih.png" .
+<http://football.org/country/COM> <http://football.org/rel/name> "Comoros" .
+<http://football.org/country/ARG> <http://football.org/rel/name> "Argentina" .
+<http://football.org/country/LBY> <http://football.org/rel/name> "Libya" .
+<http://football.org/country/BDI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bdi.png" .
+<http://football.org/country/SEN> <http://football.org/rel/name> "Senegal" .
+<http://football.org/country/TOG> <http://football.org/rel/name> "Togo" .
+<http://football.org/country/GUI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gui.png" .
+<http://football.org/country/FIN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/fin.png" .
+<http://football.org/country/COD> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png" .
+<http://football.org/country/COL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/col.png" .
+<http://football.org/country/COD> <http://football.org/rel/name> "Congo DR" .
+<http://football.org/country/BEL> <http://football.org/rel/name> "Belgium" .
+<http://football.org/country/CYP> <http://football.org/rel/name> "Cyprus" .
+<http://football.org/country/MSR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/msr.png" .
+<http://football.org/country/CZE> <http://football.org/rel/name> "Czechia" .
+<http://football.org/country/PAN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/pan.png" .
+<http://football.org/country/POR> <http://football.org/rel/name> "Portugal" .
+<http://football.org/country/RUS> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/rus.png" .
+<http://football.org/country/UZB> <http://football.org/rel/name> "Uzbekistan" .
+<http://football.org/country/MOZ> <http://football.org/rel/name> "Mozambique" .
+<http://football.org/country/ALG> <http://football.org/rel/name> "Algeria" .
+<http://football.org/country/ANG> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ang.png" .
+<http://football.org/country/MLI> <http://football.org/rel/name> "Mali" .
+<http://football.org/country/BRA> <http://football.org/rel/name> "Brazil" .
+<http://football.org/country/CIV> <http://football.org/rel/name> "Ivory Coast" .
+<http://football.org/country/SCO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sco.png" .
+<http://football.org/country/CTA> <http://football.org/rel/name> "Central African Republic" .
+<http://football.org/country/NED> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ned.png" .
+<http://football.org/country/NIR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nir.png" .
+<http://football.org/country/KEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ken.png" .
+<http://football.org/country/PHI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/phi.png" .
+<http://football.org/country/GER> <http://football.org/rel/name> "Germany" .
+<http://football.org/country/CYP> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cyp.png" .
+<http://football.org/country/IDN> <http://football.org/rel/name> "Indonesia" .
+<http://football.org/country/ROU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/rom.png" .
+<http://football.org/country/ECU> <http://football.org/rel/name> "Ecuador" .
+<http://football.org/country/IRQ> <http://football.org/rel/name> "Iraq" .
+<http://football.org/country/LBY> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/lby.png" .
+<http://football.org/country/WAL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/wal.png" .
+<http://football.org/country/PUR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/pur.png" .
+<http://football.org/country/ITA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ita.png" .
+<http://football.org/country/WAL> <http://football.org/rel/name> "Wales" .
+<http://football.org/country/DOM> <http://football.org/rel/name> "Dominican Republic" .
+<http://football.org/country/MTQ> <http://football.org/rel/name> "Martinique" .
+<http://football.org/country/SUR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sur.png" .
+<http://football.org/country/EQG> <http://football.org/rel/name> "Equatorial Guinea" .
+<http://football.org/country/ISR> <http://football.org/rel/name> "Israel" .
+<http://football.org/country/NZL> <http://football.org/rel/name> "New Zealand" .
+<http://football.org/country/URU> <http://football.org/rel/name> "Uruguay" .
+<http://football.org/country/LTU> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ltu.png" .
+<http://football.org/country/ZIM> <http://football.org/rel/name> "Zimbabwe" .
+<http://football.org/country/PAR> <http://football.org/rel/name> "Paraguay" .
+<http://football.org/country/IRN> <http://football.org/rel/name> "Iran" .
+<http://football.org/country/CRC> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/crc.png" .
+<http://football.org/country/ROU> <http://football.org/rel/name> "Romania" .
+<http://football.org/country/JPN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png" .
+<http://football.org/country/ESP> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/esp.png" .
+<http://football.org/country/NIR> <http://football.org/rel/name> "Northern Ireland" .
+<http://football.org/country/BEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ben.png" .
+<http://football.org/country/GLP> <http://football.org/rel/flag> "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Flag_of_Guadeloupe_%28local%29_variant.svg/220px-Flag_of_Guadeloupe_%28local%29_variant.svg.png" .
+<http://football.org/country/USA> <http://football.org/rel/name> "United States" .
+<http://football.org/country/KSA> <http://football.org/rel/name> "Saudi Arabia" .
+<http://football.org/country/ALB> <http://football.org/rel/name> "Albania" .
+<http://football.org/country/CMR> <http://football.org/rel/name> "Cameroon" .
+<http://football.org/country/BDI> <http://football.org/rel/name> "Burundi" .
+<http://football.org/country/KSA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png" .
+<http://football.org/country/DEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/den.png" .
+<http://football.org/country/IRL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/irl.png" .
+<http://football.org/country/COM> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/com.png" .
+<http://football.org/country/NZL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png" .
+<http://football.org/country/BEL> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bel.png" .
+<http://football.org/country/CRO> <http://football.org/rel/name> "Croatia" .
+<http://football.org/league/eng> <http://football.org/rel/country> <http://football.org/country/ENG> .
+<http://football.org/country/JAM> <http://football.org/rel/name> "Jamaica" .
+<http://football.org/country/IDN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/idn.png" .
+<http://football.org/country/NGA> <http://football.org/rel/name> "Nigeria" .
+<http://football.org/country/GUI> <http://football.org/rel/name> "Guinea" .
+<http://football.org/country/GNB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/gnb.png" .
+<http://football.org/country/SEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sen.png" .
+<http://football.org/country/BIH> <http://football.org/rel/name> "Bosnia and Herzegovina" .
+<http://football.org/country/LTU> <http://football.org/rel/name> "Lithuania" .
+<http://football.org/country/KOR> <http://football.org/rel/name> "South Korea" .
+<http://football.org/league/it> <http://football.org/rel/name> "Serie A" .
+<http://football.org/country/VEN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ven.png" .
+<http://football.org/country/FIN> <http://football.org/rel/name> "Finland" .
+<http://football.org/country/GLP> <http://football.org/rel/name> "Guadalupe" .
+<http://football.org/country/SUR> <http://football.org/rel/name> "Suriname" .
+<http://football.org/country/LUX> <http://football.org/rel/name> "Luxembourg" .
+<http://football.org/country/GRE> <http://football.org/rel/name> "Greece" .
+<http://football.org/country/UKR> <http://football.org/rel/name> "Ukraine" .
+<http://football.org/country/CHI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/chi.png" .
+<http://football.org/country/IRQ> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/irq.png" .
+<http://football.org/country/VEN> <http://football.org/rel/name> "Venezuela" .
+<http://football.org/country/FRA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/fra.png" .
+<http://football.org/country/SRB> <http://football.org/rel/name> "Serbia" .
+<http://football.org/country/HAI> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/hai.png" .
+<http://football.org/country/HAI> <http://football.org/rel/name> "Haiti" .
+<http://football.org/country/GER> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ger.png" .
+<http://football.org/country/MEX> <http://football.org/rel/name> "Mexico" .
+<http://football.org/country/GEO> <http://football.org/rel/name> "Georgia" .
+<http://football.org/country/CMR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/crm.png" .
+<http://football.org/country/CTA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/soccer/500/10528.png" .
+<http://football.org/country/KEN> <http://football.org/rel/name> "Kenya" .
+<http://football.org/country/CHI> <http://football.org/rel/name> "Chile" .
+<http://football.org/country/BRA> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/bra.png" .
+<http://football.org/country/SLE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/sle.png" .
+<http://football.org/country/UKR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/ukr.png" .
+<http://football.org/country/ISR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/isr.png" .
+<http://football.org/country/ZAM> <http://football.org/rel/name> "Zambia" .
+<http://football.org/country/MKD> <http://football.org/rel/name> "North Macedonia" .
+<http://football.org/league/es> <http://football.org/rel/name> "La Liga" .
+<http://football.org/country/ALB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/alb.png" .
+<http://football.org/country/CGO> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/cgo.png" .
+<http://football.org/country/POR> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/por.png" .
+<http://football.org/country/UZB> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png" .
+<http://football.org/country/MNE> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/mtg.png" .
+<http://football.org/country/COL> <http://football.org/rel/name> "Colombia" .
+<http://football.org/country/CAN> <http://football.org/rel/flag> "https://a.espncdn.com/i/teamlogos/countries/500/can.png" .

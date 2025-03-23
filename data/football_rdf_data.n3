@@ -1,0 +1,347 @@
+@prefix ns1: <http://football.org/rel/> .
+
+<http://football.org/country/ALB> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/alb.png" ;
+    ns1:name "Albania" .
+
+<http://football.org/country/ALG> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/alg.png" ;
+    ns1:name "Algeria" .
+
+<http://football.org/country/ANG> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ang.png" ;
+    ns1:name "Angola" .
+
+<http://football.org/country/ARG> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/arg.png" ;
+    ns1:name "Argentina" .
+
+<http://football.org/country/ARM> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/fifa.armenia.png" ;
+    ns1:name "Armenia" .
+
+<http://football.org/country/AUS> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/aus.png" ;
+    ns1:name "Australia" .
+
+<http://football.org/country/AUT> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/aut.png" ;
+    ns1:name "Austria" .
+
+<http://football.org/country/BDI> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/bdi.png" ;
+    ns1:name "Burundi" .
+
+<http://football.org/country/BEL> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/bel.png" ;
+    ns1:name "Belgium" .
+
+<http://football.org/country/BEN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ben.png" ;
+    ns1:name "Benin" .
+
+<http://football.org/country/BFA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/bka.png" ;
+    ns1:name "Burkina Faso" .
+
+<http://football.org/country/BIH> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/bih.png" ;
+    ns1:name "Bosnia and Herzegovina" .
+
+<http://football.org/country/BRA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/bra.png" ;
+    ns1:name "Brazil" .
+
+<http://football.org/country/CAN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/can.png" ;
+    ns1:name "Canada" .
+
+<http://football.org/country/CGO> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/cgo.png" ;
+    ns1:name "Congo" .
+
+<http://football.org/country/CHI> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/chi.png" ;
+    ns1:name "Chile" .
+
+<http://football.org/country/CIV> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/civ.png" ;
+    ns1:name "Ivory Coast" .
+
+<http://football.org/country/CMR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/crm.png" ;
+    ns1:name "Cameroon" .
+
+<http://football.org/country/COD> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/rdc.png" ;
+    ns1:name "Congo DR" .
+
+<http://football.org/country/COL> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/col.png" ;
+    ns1:name "Colombia" .
+
+<http://football.org/country/COM> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/com.png" ;
+    ns1:name "Comoros" .
+
+<http://football.org/country/CPV> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/cpv.png" ;
+    ns1:name "Cape Verde Islands" .
+
+<http://football.org/country/CRC> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/crc.png" ;
+    ns1:name "Costa Rica" .
+
+<http://football.org/country/CRO> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/cro.png" ;
+    ns1:name "Croatia" .
+
+<http://football.org/country/CTA> ns1:flag "https://a.espncdn.com/i/teamlogos/soccer/500/10528.png" ;
+    ns1:name "Central African Republic" .
+
+<http://football.org/country/CYP> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/cyp.png" ;
+    ns1:name "Cyprus" .
+
+<http://football.org/country/CZE> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/cze.png" ;
+    ns1:name "Czechia" .
+
+<http://football.org/country/DEN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/den.png" ;
+    ns1:name "Denmark" .
+
+<http://football.org/country/DOM> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/dom.png" ;
+    ns1:name "Dominican Republic" .
+
+<http://football.org/country/ECU> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ecu.png" ;
+    ns1:name "Ecuador" .
+
+<http://football.org/country/EGY> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/egy.png" ;
+    ns1:name "Egypt" .
+
+<http://football.org/country/EQG> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/eqg.png" ;
+    ns1:name "Equatorial Guinea" .
+
+<http://football.org/country/EST> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/est.png" ;
+    ns1:name "Estonia" .
+
+<http://football.org/country/FIN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/fin.png" ;
+    ns1:name "Finland" .
+
+<http://football.org/country/GAB> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/gab.png" ;
+    ns1:name "Gabon" .
+
+<http://football.org/country/GAM> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/gam.png" ;
+    ns1:name "Gambia" .
+
+<http://football.org/country/GEO> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/geo.png" ;
+    ns1:name "Georgia" .
+
+<http://football.org/country/GHA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/gha.png" ;
+    ns1:name "Ghana" .
+
+<http://football.org/country/GLP> ns1:flag "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Flag_of_Guadeloupe_%28local%29_variant.svg/220px-Flag_of_Guadeloupe_%28local%29_variant.svg.png" ;
+    ns1:name "Guadalupe" .
+
+<http://football.org/country/GNB> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/gnb.png" ;
+    ns1:name "Guinea-Bissau" .
+
+<http://football.org/country/GRE> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/gre.png" ;
+    ns1:name "Greece" .
+
+<http://football.org/country/GUF> ns1:flag "https://a.espncdn.com/i/teamlogos/soccer/500/10532.png" ;
+    ns1:name "French Guiana" .
+
+<http://football.org/country/GUI> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/gui.png" ;
+    ns1:name "Guinea" .
+
+<http://football.org/country/HAI> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/hai.png" ;
+    ns1:name "Haiti" .
+
+<http://football.org/country/HUN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/hun.png" ;
+    ns1:name "Hungary" .
+
+<http://football.org/country/IDN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/idn.png" ;
+    ns1:name "Indonesia" .
+
+<http://football.org/country/IRL> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/irl.png" ;
+    ns1:name "Republic of Ireland" .
+
+<http://football.org/country/IRN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/irn.png" ;
+    ns1:name "Iran" .
+
+<http://football.org/country/IRQ> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/irq.png" ;
+    ns1:name "Iraq" .
+
+<http://football.org/country/ISL> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/isl.png" ;
+    ns1:name "Iceland" .
+
+<http://football.org/country/ISR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/isr.png" ;
+    ns1:name "Israel" .
+
+<http://football.org/country/JAM> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/jam.png" ;
+    ns1:name "Jamaica" .
+
+<http://football.org/country/JOR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/jor.png" ;
+    ns1:name "Jordan" .
+
+<http://football.org/country/JPN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/jpn.png" ;
+    ns1:name "Japan" .
+
+<http://football.org/country/KEN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ken.png" ;
+    ns1:name "Kenya" .
+
+<http://football.org/country/KOR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/kors.png" ;
+    ns1:name "South Korea" .
+
+<http://football.org/country/KSA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ksa.png" ;
+    ns1:name "Saudi Arabia" .
+
+<http://football.org/country/KVX> ns1:flag "https://a.espncdn.com/i/teamlogos/soccer/500/18272.png" ;
+    ns1:name "Kosovo" .
+
+<http://football.org/country/LBY> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/lby.png" ;
+    ns1:name "Libya" .
+
+<http://football.org/country/LTU> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ltu.png" ;
+    ns1:name "Lithuania" .
+
+<http://football.org/country/LUX> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/lux.png" ;
+    ns1:name "Luxembourg" .
+
+<http://football.org/country/MAD> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/mad.png" ;
+    ns1:name "Madagascar" .
+
+<http://football.org/country/MAR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/mar.png" ;
+    ns1:name "Morocco" .
+
+<http://football.org/country/MEX> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/mex.png" ;
+    ns1:name "Mexico" .
+
+<http://football.org/country/MKD> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/mkd.png" ;
+    ns1:name "North Macedonia" .
+
+<http://football.org/country/MLI> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/mli.png" ;
+    ns1:name "Mali" .
+
+<http://football.org/country/MLT> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/mlt.png" ;
+    ns1:name "Malta" .
+
+<http://football.org/country/MNE> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/mtg.png" ;
+    ns1:name "Montenegro" .
+
+<http://football.org/country/MOZ> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/moz.png" ;
+    ns1:name "Mozambique" .
+
+<http://football.org/country/MSR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/msr.png" ;
+    ns1:name "Montserrat" .
+
+<http://football.org/country/MTQ> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/marq.png" ;
+    ns1:name "Martinique" .
+
+<http://football.org/country/NED> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ned.png" ;
+    ns1:name "Netherlands" .
+
+<http://football.org/country/NGA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/nga.png" ;
+    ns1:name "Nigeria" .
+
+<http://football.org/country/NIR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/nir.png" ;
+    ns1:name "Northern Ireland" .
+
+<http://football.org/country/NOR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/nor.png" ;
+    ns1:name "Norway" .
+
+<http://football.org/country/NZL> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/nzl.png" ;
+    ns1:name "New Zealand" .
+
+<http://football.org/country/PAN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/pan.png" ;
+    ns1:name "Panama" .
+
+<http://football.org/country/PAR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/par.png" ;
+    ns1:name "Paraguay" .
+
+<http://football.org/country/PER> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/per.png" ;
+    ns1:name "Peru" .
+
+<http://football.org/country/PHI> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/phi.png" ;
+    ns1:name "Philippines" .
+
+<http://football.org/country/POL> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/pol.png" ;
+    ns1:name "Poland" .
+
+<http://football.org/country/POR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/por.png" ;
+    ns1:name "Portugal" .
+
+<http://football.org/country/PUR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/pur.png" ;
+    ns1:name "Puerto Rico" .
+
+<http://football.org/country/ROU> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/rom.png" ;
+    ns1:name "Romania" .
+
+<http://football.org/country/RUS> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/rus.png" ;
+    ns1:name "Russia" .
+
+<http://football.org/country/SCO> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/sco.png" ;
+    ns1:name "Scotland" .
+
+<http://football.org/country/SEN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/sen.png" ;
+    ns1:name "Senegal" .
+
+<http://football.org/country/SLE> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/sle.png" ;
+    ns1:name "Sierra Leone" .
+
+<http://football.org/country/SRB> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/sba.png" ;
+    ns1:name "Serbia" .
+
+<http://football.org/country/SUI> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/sui.png" ;
+    ns1:name "Switzerland" .
+
+<http://football.org/country/SUR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/sur.png" ;
+    ns1:name "Suriname" .
+
+<http://football.org/country/SVK> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/svk.png" ;
+    ns1:name "Slovakia" .
+
+<http://football.org/country/SVN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/svn.png" ;
+    ns1:name "Slovenia" .
+
+<http://football.org/country/SWE> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/swe.png" ;
+    ns1:name "Sweden" .
+
+<http://football.org/country/TOG> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/tog.png" ;
+    ns1:name "Togo" .
+
+<http://football.org/country/TUN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/tun.png" ;
+    ns1:name "Tunisia" .
+
+<http://football.org/country/TUR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/tur.png" ;
+    ns1:name "Turkey" .
+
+<http://football.org/country/UKR> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ukr.png" ;
+    ns1:name "Ukraine" .
+
+<http://football.org/country/URU> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/uru.png" ;
+    ns1:name "Uruguay" .
+
+<http://football.org/country/USA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/usa.png" ;
+    ns1:name "United States" .
+
+<http://football.org/country/UZB> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/uzb.png" ;
+    ns1:name "Uzbekistan" .
+
+<http://football.org/country/VEN> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ven.png" ;
+    ns1:name "Venezuela" .
+
+<http://football.org/country/WAL> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/wal.png" ;
+    ns1:name "Wales" .
+
+<http://football.org/country/ZAM> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/zam.png" ;
+    ns1:name "Zambia" .
+
+<http://football.org/country/ZIM> ns1:flag "https://a.espncdn.com/i/teamlogos/soccer/500/4214.png" ;
+    ns1:name "Zimbabwe" .
+
+<http://football.org/league/de> ns1:country <http://football.org/country/GER> ;
+    ns1:name "Bundesliga" .
+
+<http://football.org/league/eng> ns1:country <http://football.org/country/ENG> ;
+    ns1:name "Premier League" .
+
+<http://football.org/league/es> ns1:country <http://football.org/country/ESP> ;
+    ns1:name "La Liga" .
+
+<http://football.org/league/fr> ns1:country <http://football.org/country/FRA> ;
+    ns1:name "Ligue 1" .
+
+<http://football.org/league/it> ns1:country <http://football.org/country/ITA> ;
+    ns1:name "Serie A" .
+
+<http://football.org/country/ENG> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/eng.png" ;
+    ns1:name "England" .
+
+<http://football.org/country/ESP> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/esp.png" ;
+    ns1:name "Spain" .
+
+<http://football.org/country/FRA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/fra.png" ;
+    ns1:name "France" .
+
+<http://football.org/country/GER> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ger.png" ;
+    ns1:name "Germany" .
+
+<http://football.org/country/ITA> ns1:flag "https://a.espncdn.com/i/teamlogos/countries/500/ita.png" ;
+    ns1:name "Italy" .
+

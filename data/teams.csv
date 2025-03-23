@@ -609,7 +609,7 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 2839,Vale Of Leithen,Vale Of Leithen,VOL,Vale Of Leithen,Vale Of Leithen,000000,000000,,0,team.vale-of-leithen
 2841,Oman,Oman,OMA,Oman,Oman,E70000,FFFFFF,https://a.espncdn.com/i/teamlogos/countries/500/oma.png,0,oma
 2844,Benin,Benin,BEN,Benin,Benin,008751,FCD116,https://a.espncdn.com/i/teamlogos/countries/500/ben.png,0,ben
-2845,Burkina Faso,Burkina Faso,BKA,Burkina Faso,Burkina Faso,008000,EF2B2D,https://a.espncdn.com/i/teamlogos/countries/500/bka.png,10236,bka
+2845,Burkina Faso,Burkina Faso,BFA,Burkina Faso,Burkina Faso,008000,EF2B2D,https://a.espncdn.com/i/teamlogos/countries/500/bka.png,10236,bka
 2847,Guinea,Guinea,GUI,Guinea,Guinea,D20300,FCD116,https://a.espncdn.com/i/teamlogos/countries/500/gui.png,0,gui
 2848,Kenya,Kenya,KEN,Kenya,Kenya,bb0000,006600,https://a.espncdn.com/i/teamlogos/countries/500/ken.png,9788,ken
 2849,Mali,Mali,MLI,Mali,Mali,000000,C60000,https://a.espncdn.com/i/teamlogos/countries/500/mli.png,5316,mli
@@ -1858,7 +1858,7 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 18267,FC Cincinnati,FC Cincinnati,CIN,FC Cincinnati,Cincinnati,003087,fe5000,https://a.espncdn.com/i/teamlogos/soccer/500/18267.png,8674,fc_cincinnati
 18268,Chattanooga FC,Chattanooga FC,CHA,Chattanooga FC,Chattanooga,000000,C60000,https://a.espncdn.com/i/teamlogos/soccer/500/18268.png,0,chattanooga_fc
 18271,Brave SC,Brave SC,BRV,Brave SC,Brave SC,EDE104,09891C,https://a.espncdn.com/i/teamlogos/soccer/500/18271.png,0,the_villages_sc
-18272,Kosovo,Kosovo,KOS,Kosovo,Kosovo,0000cd,ffec00,https://a.espncdn.com/i/teamlogos/soccer/500/18272.png,6717,kosovo
+18272,Kosovo,Kosovo,KVX,Kosovo,Kosovo,0000cd,ffec00,https://a.espncdn.com/i/teamlogos/soccer/500/18272.png,6717,kosovo
 18278,Jong FC Utrecht,Jong FC Utrecht,JUT,Jong FC Utrecht,Jong Utrecht,DF1B27,6ab4c9,https://a.espncdn.com/i/teamlogos/soccer/500/18278.png,3473,jong_fc_utrecht
 18283,FK Liepaja,FK Liepaja,FKL,FK Liepaja,FK Liepaja,000000,C60000,https://a.espncdn.com/i/teamlogos/soccer/500/18283.png,0,fk_liepaja
 18284,Güemes,Güemes,CAG,Güemes,Güemes,000000,C60000,https://a.espncdn.com/i/teamlogos/soccer/500/18284.png,8656,gemes
