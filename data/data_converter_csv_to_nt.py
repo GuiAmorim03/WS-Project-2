@@ -188,6 +188,6 @@ for index, row in df_main.iterrows():
         player_club_2 = club_name_to_club_id[row['Squad']]
         g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club_2)))
 
-g.serialize(destination="football_rdf_data.nt", format="nt", encoding="utf-8")
+g.serialize(destination="import/football_rdf_data.nt", format="nt", encoding="utf-8")
 g.serialize(destination="football_rdf_data.n3", format="n3", encoding="utf-8")
 # print(df_main.head())
