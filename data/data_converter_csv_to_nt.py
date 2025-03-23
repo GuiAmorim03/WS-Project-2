@@ -108,6 +108,8 @@ for index, row in df_main.iterrows():
             club = club.replace('Utd', 'United')
         if 'Paris' in club:
             club = 'PSG'
+        if 'Wolves' in club:
+            club = 'Wolverhampton'
 
         # pesquisar no df_colors_logos pelo club na coluna 'name'
         # club_id --> 'abbreviation'

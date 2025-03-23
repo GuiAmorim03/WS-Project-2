@@ -824,7 +824,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/alfie_pond> ns1:born 2004 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Alfie Pond" ;
     ns1:nation <http://football.org/country/ENG> ;
     ns1:position "DF" .
@@ -1148,7 +1148,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/andre> ns1:born 2001 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "André" ;
     ns1:nation <http://football.org/country/BRA> ;
     ns1:position "MF" .
@@ -2594,7 +2594,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/carlos_forbs> ns1:born 2004 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Carlos Forbs" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "MF,FW" .
@@ -2810,7 +2810,7 @@
     ns1:position "FW" .
 
 <http://football.org/player/chiquinho> ns1:born 2000 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Chiquinho" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "MF" .
@@ -3038,7 +3038,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/craig_dawson> ns1:born 1990 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Craig Dawson" ;
     ns1:nation <http://football.org/country/ENG> ;
     ns1:position "DF" .
@@ -3284,7 +3284,7 @@
     ns1:position "GK" .
 
 <http://football.org/player/daniel_podence> ns1:born 1995 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Daniel Podence" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "MF,FW" .
@@ -4284,7 +4284,7 @@
     ns1:position "GK" .
 
 <http://football.org/player/emmanuel_agbadou> ns1:born 1997 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Emmanuel Agbadou" ;
     ns1:nation <http://football.org/country/CIV> ;
     ns1:position "DF" .
@@ -5514,7 +5514,7 @@
     ns1:position "FW" .
 
 <http://football.org/player/goncalo_guedes> ns1:born 1996 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Gonçalo Guedes" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "MF,FW" .
@@ -5940,7 +5940,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/hwang_hee-chan> ns1:born 1996 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Hwang Hee-chan" ;
     ns1:nation <http://football.org/country/KOR> ;
     ns1:position "MF,FW" .
@@ -6876,7 +6876,7 @@
     ns1:position "FW" .
 
 <http://football.org/player/jean-ricner_bellegarde> ns1:born 1998 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Jean-Ricner Bellegarde" ;
     ns1:nation <http://football.org/country/FRA> ;
     ns1:position "MF,FW" .
@@ -7134,7 +7134,7 @@
     ns1:position "FW,MF" .
 
 <http://football.org/player/joao_gomes> ns1:born 2001 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "João Gomes" ;
     ns1:nation <http://football.org/country/BRA> ;
     ns1:position "MF" .
@@ -7518,7 +7518,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/jorgen_strand_larsen> ns1:born 2000 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Jørgen Strand Larsen" ;
     ns1:nation <http://football.org/country/NOR> ;
     ns1:position "FW" .
@@ -7578,7 +7578,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/jose_sa> ns1:born 1993 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "José Sá" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "GK" .
@@ -9834,7 +9834,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/mario_lemina> ns1:born 1993 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Mario Lemina" ;
     ns1:nation <http://football.org/country/GAB> ;
     ns1:position "MF,DF" .
@@ -9936,7 +9936,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/marshall_munetsi> ns1:born 1996 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Marshall Munetsi" ;
     ns1:nation <http://football.org/country/ZIM> ;
     ns1:position "MF,FW" .
@@ -10158,7 +10158,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/matheus_cunha> ns1:born 1999 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Matheus Cunha" ;
     ns1:nation <http://football.org/country/BRA> ;
     ns1:position "MF,FW" .
@@ -10284,7 +10284,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/matt_doherty> ns1:born 1992 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Matt Doherty" ;
     ns1:nation <http://football.org/country/IRL> ;
     ns1:position "DF" .
@@ -11202,7 +11202,7 @@
     ns1:position "MF,FW" .
 
 <http://football.org/player/nasser_djiga> ns1:born 2002 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Nasser Djiga" ;
     ns1:nation <http://football.org/country/BFA> ;
     ns1:position "DF" .
@@ -11310,7 +11310,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/nelson_semedo> ns1:born 1993 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Nélson Semedo" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "DF" .
@@ -12060,7 +12060,7 @@
     ns1:position "MF,DF" .
 
 <http://football.org/player/pablo_sarabia> ns1:born 1992 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Pablo Sarabia" ;
     ns1:nation <http://football.org/country/ESP> ;
     ns1:position "MF,FW" .
@@ -12318,7 +12318,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/pedro_lima> ns1:born 2006 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Pedro Lima" ;
     ns1:nation <http://football.org/country/BRA> ;
     ns1:position "DF" .
@@ -12780,7 +12780,7 @@
     ns1:position "FW,MF" .
 
 <http://football.org/player/rayan_ait-nouri> ns1:born 2001 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Rayan Aït-Nouri" ;
     ns1:nation <http://football.org/country/ALG> ;
     ns1:position "DF" .
@@ -13110,7 +13110,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/rodrigo_gomes> ns1:born 2003 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Rodrigo Gomes" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "DF,FW" .
@@ -13380,7 +13380,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/sam_johnstone> ns1:born 1993 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Sam Johnstone" ;
     ns1:nation <http://football.org/country/ENG> ;
     ns1:position "GK" .
@@ -13518,7 +13518,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/santiago_bueno> ns1:born 1998 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Santiago Bueno" ;
     ns1:nation <http://football.org/country/URU> ;
     ns1:position "DF" .
@@ -14664,7 +14664,7 @@
     ns1:position "MF" .
 
 <http://football.org/player/tommy_doyle> ns1:born 2001 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Tommy Doyle" ;
     ns1:nation <http://football.org/country/ENG> ;
     ns1:position "MF" .
@@ -14688,7 +14688,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/toti_gomes> ns1:born 1999 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Toti Gomes" ;
     ns1:nation <http://football.org/country/POR> ;
     ns1:position "DF" .
@@ -15444,7 +15444,7 @@
     ns1:position "DF" .
 
 <http://football.org/player/yerson_mosquera> ns1:born 2001 ;
-    ns1:club <http://football.org/club/CRW> ;
+    ns1:club <http://football.org/club/WOL> ;
     ns1:name "Yerson Mosquera" ;
     ns1:nation <http://football.org/country/COL> ;
     ns1:position "DF" .
@@ -16457,15 +16457,6 @@
     ns1:name "Celta Vigo" ;
     ns1:stadium "Estadio Abanca-Balaídos" .
 
-<http://football.org/club/CRW> ns1:alternateColor "000000" ;
-    ns1:city "East Ridge, Tennessee" ;
-    ns1:color "7C2629" ;
-    ns1:country <http://football.org/country/ENG> ;
-    ns1:league <http://football.org/league/eng> ;
-    ns1:logo "https://a.espncdn.com/i/teamlogos/soccer/500/20000.png" ;
-    ns1:name "Chattanooga Red Wolves" ;
-    ns1:stadium "CHI Memorial Stadium" .
-
 <http://football.org/club/GET> ns1:alternateColor "C8142F" ;
     ns1:city "Getafe" ;
     ns1:color "0000ff" ;
@@ -16519,6 +16510,15 @@
     ns1:logo "https://a.espncdn.com/i/teamlogos/soccer/500/239.png" ;
     ns1:name "Torino" ;
     ns1:stadium "Olimpico Grande Torino" .
+
+<http://football.org/club/WOL> ns1:alternateColor "cd1937" ;
+    ns1:city "Wolverhampton" ;
+    ns1:color "fdb913" ;
+    ns1:country <http://football.org/country/ENG> ;
+    ns1:league <http://football.org/league/eng> ;
+    ns1:logo "https://a.espncdn.com/i/teamlogos/soccer/500/380.png" ;
+    ns1:name "Wolverhampton Wanderers" ;
+    ns1:stadium "Molineux Stadium" .
 
 <http://football.org/club/BOL> ns1:alternateColor "ffffff" ;
     ns1:city "Bologna" ;
