@@ -136,6 +136,21 @@ def check_player_exists(player_name):
         else:
             return True, convert_player_name_to_id(player_name)
 
+def update_stat_on_graph(uri, stat, new_value, g):
+    stat_id = convert_stat_name_to_id(stat)
+    stat_predicate = URIRef(ns_stat + stat_id)
+
+    if stat_id in ['pka', 'pksv', 'saves', 'ga', 'cs']: # por alguma razao estes estao a vir com casas decimais e deveriam ser int
+        new_value = int(new_value)
+
+    current_value = g.value(uri, stat_predicate)
+    if (type(new_value)) == int or new_value is None:
+        current_value = int(current_value if current_value is not None else 0)
+    else:
+        current_value = float(current_value if current_value is not None else 0)
+    updated_value = current_value + new_value
+    g.set((uri, stat_predicate, Literal(updated_value)))
+
 for index, row in df_main.iterrows():
     club = row['Squad']
     league = row['Comp']
@@ -258,13 +273,6 @@ for index, row in df_main.iterrows():
         g.add((player_uri, ns_rel.born, Literal(player_year)))
         g.add((player_uri, ns_rel.nation, URIRef(ns_country + player_nation)))
 
-        # stats
-        main_pos = player_pos[0]
-        for stat in stat_mappings:
-            if (main_pos == "GK" and GK in stat_mappings[stat]["entities"] or main_pos != "GK" and PLAYER in stat_mappings[stat]["entities"]):
-                stat_id = convert_stat_name_to_id(stat)
-                stat_value = row[stat]
-                g.add((player_uri, URIRef(ns_stat + stat_id), Literal(stat_value)))
     else:
         # adicionar pos nova se necessário
         actual_pos = {str(pos) for pos in g.objects(player_uri, ns_rel.position)}
@@ -273,23 +281,21 @@ for index, row in df_main.iterrows():
         for pos in diff_pos:
             g.add((player_uri, ns_rel.position, Literal(pos)))
 
-        # stats
-        main_pos = player_pos[0]
-        for stat in stat_mappings:
-            if (main_pos == "GK" and GK in stat_mappings[stat]["entities"] or main_pos != "GK" and PLAYER in stat_mappings[stat]["entities"]):
-                stat_id = convert_stat_name_to_id(stat)
-                stat_predicate = URIRef(ns_stat + stat_id)
+    club_uri = URIRef(ns_club + player_club)
+    g.add((player_uri, ns_rel.club, club_uri))
 
-                new_value = row[stat]
-                if (type(new_value)) == int:
-                    current_value = int(g.value(player_uri, stat_predicate))
-                    updated_value = current_value + new_value
-                else:
-                    current_value = float(g.value(player_uri, stat_predicate))
-                    updated_value = current_value + float(new_value)
-                g.set((player_uri, stat_predicate, Literal(updated_value)))
+    # stats
+    main_pos = player_pos[0]
+    for stat in stat_mappings:
 
-    g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club)))
+        # player stats
+        if (main_pos == "GK" and GK in stat_mappings[stat]["entities"] or main_pos != "GK" and PLAYER in stat_mappings[stat]["entities"]):
+            update_stat_on_graph(player_uri, stat, row[stat], g)
+
+            # team stats
+            if (TEAM in stat_mappings[stat]["entities"]):
+                update_stat_on_graph(club_uri, stat, row[stat], g)
+
 
 g.serialize(destination="import/football_rdf_data.nt", format="nt", encoding="utf-8")
 g.serialize(destination="import/football_rdf_data.n3", format="n3", encoding="utf-8")
