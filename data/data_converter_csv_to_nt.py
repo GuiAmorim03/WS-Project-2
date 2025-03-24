@@ -22,8 +22,82 @@ ns_club = Namespace(BASE_URL + 'club/')
 ns_league = Namespace(BASE_URL + 'league/')
 ns_country = Namespace(BASE_URL + 'country/')
 ns_rel = Namespace(BASE_URL + 'rel/')
+ns_stat = Namespace(BASE_URL + 'stat/')
+ns_stat_type = Namespace(BASE_URL + 'stat_type/')
 
 g = Graph()
+
+# Relações Estatisticas Tipo
+g.add((ns_stat_type.playing_time, ns_rel.name, Literal('Playing Time')))
+g.add((ns_stat_type.attacking, ns_rel.name, Literal('Attacking')))
+g.add((ns_stat_type.defending, ns_rel.name, Literal('Defending')))
+g.add((ns_stat_type.passing, ns_rel.name, Literal('Passing & Creativity')))
+g.add((ns_stat_type.goalkeeping, ns_rel.name, Literal('Goalkeeping')))
+g.add((ns_stat_type.miscellaneous, ns_rel.name, Literal('Miscellaneous')))
+
+# Relações Estatisticas
+def convert_stat_name_to_id(stat_name):
+    return stat_name.lower().replace('%', '_pct').replace('+', '_plus_')
+
+PLAYER = "player"
+GK = "goalkeeper"
+TEAM = "team"
+
+stat_mappings = {
+    "MP": {"description": "Matches Played", "type": ns_stat_type.playing_time, "entities": [PLAYER, GK]},
+    "Starts": {"description": "Games Started", "type": ns_stat_type.playing_time, "entities": [PLAYER, GK]},
+    "Min": {"description": "Minutes Played", "type": ns_stat_type.playing_time, "entities": [PLAYER, GK]},
+
+    "Gls": {"description": "Goals", "type": ns_stat_type.attacking, "entities": [PLAYER, GK, TEAM]},
+    "Ast": {"description": "Assists", "type": ns_stat_type.attacking, "entities": [PLAYER, GK]},
+    "G+A": {"description": "Goals + Assists", "type": ns_stat_type.attacking, "entities": [PLAYER, GK]},
+    "xG": {"description": "Expected Goals", "type": ns_stat_type.attacking, "entities": [PLAYER, GK, TEAM]},
+    "xAG": {"description": "Expected Assists", "type": ns_stat_type.attacking, "entities": [PLAYER, GK]},
+    "PK": {"description": "Penalties Scored", "type": ns_stat_type.attacking, "entities": [PLAYER, GK, TEAM]},
+    "PKatt": {"description": "Penalties Attempted", "type": ns_stat_type.attacking, "entities": [PLAYER, GK, TEAM]},
+
+    "Tkl": {"description": "Tackles", "type": ns_stat_type.defending, "entities": [PLAYER, TEAM]},
+    "TklW": {"description": "Tackles Won", "type": ns_stat_type.defending, "entities": [PLAYER, TEAM]},
+    "Blocks_stats_defense": {"description": "Blocks", "type": ns_stat_type.defending, "entities": [PLAYER, TEAM]},
+    "Int": {"description": "Interceptions", "type": ns_stat_type.defending, "entities": [PLAYER, TEAM]},
+    "Clr": {"description": "Clearances", "type": ns_stat_type.defending, "entities": [PLAYER, TEAM]},
+    "Err": {"description": "Errors Leading to Goal", "type": ns_stat_type.defending, "entities": [PLAYER, TEAM]},
+    "Recov": {"description": "Ball Recoveries", "type": ns_stat_type.defending, "entities": [PLAYER, TEAM]},
+
+    "PrgP": {"description": "Progressive Passes", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "PrgC": {"description": "Progressive Carries", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "PrgR": {"description": "Progressive Runs", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "KP": {"description": "Key Passes", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "PPA": {"description": "Passes into Penalty Area", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "Live": {"description": "Total Passes", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "Cmp_stats_passing_types": {"description": "Passes Completed", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "Touches": {"description": "Touches", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "Mis": {"description": "Miscontrols", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+    "Dis": {"description": "Times Dispossessed", "type": ns_stat_type.passing, "entities": [PLAYER, TEAM]},
+
+    "GA": {"description": "Goals Conceded", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "GA90": {"description": "Goals Conceded per 90 minutes", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "Saves": {"description": "Saves", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "Save%": {"description": "Save %", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "CS": {"description": "Clean Sheets", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "CS%": {"description": "Clean Sheet %", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "PKA": {"description": "Penalties Faced", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "PKsv": {"description": "Penalties Saved", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+
+    "CrdY": {"description": "Yellow Cards", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK, TEAM]},
+    "CrdR": {"description": "Red Cards", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK, TEAM]},
+    "Fls": {"description": "Fouls Committed", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK, TEAM]},
+    "PKcon": {"description": "Penalties Conceded", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK]},
+    "PKwon": {"description": "Penalties Won", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK]},
+    "OG": {"description": "Own Goals", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK, TEAM]},
+    "Off_stats_misc": {"description": "Offsides", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK, TEAM]}
+}
+
+for stat in stat_mappings:
+    stat_id = convert_stat_name_to_id(stat)
+    # print(stat)
+    g.add((URIRef(ns_stat + stat_id), ns_rel.name, Literal(stat_mappings[stat]["description"])))
+    g.add((URIRef(ns_stat + stat_id), ns_rel.type, URIRef(stat_mappings[stat]["type"])))
 
 def get_country_info(country_abrv):
     # pesquisar no df_colors_logos pelo country na coluna 'abbreviation'
@@ -159,34 +233,42 @@ for index, row in df_main.iterrows():
 
 
     # players
-    player_name = row['Player']
-    player_exists, player_id = check_player_exists(player_name)
-    player_uri = URIRef(ns_player + player_id)
-
-    if not player_exists:
         # player_id
         # player_name --> 'Player'
         # player_pos --> 'Pos'
         # player_year --> 'Born'
         # player_nation --> 'Nation' (country_abrv)
         # player_club --> 'Squad' (club_name_to_club_id)
-        player_pos = row['Pos'].split(',')
+    player_name = row['Player']
+    player_exists, player_id = check_player_exists(player_name)
+    player_uri = URIRef(ns_player + player_id)
+    player_pos = row['Pos'].split(',')
+    player_club = club_name_to_club_id[row['Squad']]
+
+    if not player_exists:
         try:
             player_year = int(row['Born'])
         except:
             player_year = 0
         player_nation = country_abrv
-        player_club = club_name_to_club_id[row['Squad']]
 
         g.add((player_uri, ns_rel.name, Literal(player_name)))
         for pos in player_pos:
             g.add((player_uri, ns_rel.position, Literal(pos)))
         g.add((player_uri, ns_rel.born, Literal(player_year)))
         g.add((player_uri, ns_rel.nation, URIRef(ns_country + player_nation)))
-        g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club)))
+
+        # stats
+        main_pos = player_pos[0]
+        for stat in stat_mappings:
+            if (main_pos == "GK" and GK in stat_mappings[stat]["entities"] or main_pos != "GK" and PLAYER in stat_mappings[stat]["entities"]):
+                stat_id = convert_stat_name_to_id(stat)
+                stat_value = row[stat]
+                g.add((player_uri, URIRef(ns_stat + stat_id), Literal(stat_value)))
     else:
-        player_club_2 = club_name_to_club_id[row['Squad']]
-        g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club_2)))
+        ...
+        # stats
+    g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club)))
 
 g.serialize(destination="import/football_rdf_data.nt", format="nt", encoding="utf-8")
 g.serialize(destination="import/football_rdf_data.n3", format="n3", encoding="utf-8")
