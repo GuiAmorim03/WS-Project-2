@@ -266,8 +266,29 @@ for index, row in df_main.iterrows():
                 stat_value = row[stat]
                 g.add((player_uri, URIRef(ns_stat + stat_id), Literal(stat_value)))
     else:
-        ...
+        # adicionar pos nova se necessário
+        actual_pos = {str(pos) for pos in g.objects(player_uri, ns_rel.position)}
+        new_pos = set(player_pos)
+        diff_pos = new_pos.difference(actual_pos)
+        for pos in diff_pos:
+            g.add((player_uri, ns_rel.position, Literal(pos)))
+
         # stats
+        main_pos = player_pos[0]
+        for stat in stat_mappings:
+            if (main_pos == "GK" and GK in stat_mappings[stat]["entities"] or main_pos != "GK" and PLAYER in stat_mappings[stat]["entities"]):
+                stat_id = convert_stat_name_to_id(stat)
+                stat_predicate = URIRef(ns_stat + stat_id)
+
+                new_value = row[stat]
+                if (type(new_value)) == int:
+                    current_value = int(g.value(player_uri, stat_predicate))
+                    updated_value = current_value + new_value
+                else:
+                    current_value = float(g.value(player_uri, stat_predicate))
+                    updated_value = current_value + float(new_value)
+                g.set((player_uri, stat_predicate, Literal(updated_value)))
+
     g.add((player_uri, ns_rel.club, URIRef(ns_club + player_club)))
 
 g.serialize(destination="import/football_rdf_data.nt", format="nt", encoding="utf-8")
