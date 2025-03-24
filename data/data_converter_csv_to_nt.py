@@ -1,6 +1,7 @@
 import pandas as pd
 from rdflib import Graph, URIRef, Literal, Namespace
 from rdflib.plugins.sparql import prepareQuery
+from rdflib.namespace import RDF
 from urllib.parse import quote
 from unidecode import unidecode
 
@@ -17,10 +18,7 @@ league_code_to_country_code = {}
 club_name_to_club_id = {}
 
 BASE_URL = 'http://football.org/'
-ns_player = Namespace(BASE_URL + 'player/')
-ns_club = Namespace(BASE_URL + 'club/')
-ns_league = Namespace(BASE_URL + 'league/')
-ns_country = Namespace(BASE_URL + 'country/')
+ns_ent = Namespace(BASE_URL + 'ent/')
 ns_rel = Namespace(BASE_URL + 'rel/')
 ns_stat = Namespace(BASE_URL + 'stat/')
 ns_stat_type = Namespace(BASE_URL + 'stat_type/')
@@ -162,9 +160,10 @@ for index, row in df_main.iterrows():
 
         country_name, country_flag = get_country_info(country_abrv)
         
-        country_uri = URIRef(ns_country + country_abrv)
+        country_uri = URIRef(ns_ent + country_abrv)
         g.add((country_uri, ns_rel.name, Literal(country_name)))
         g.add((country_uri, ns_rel.flag, Literal(country_flag)))
+        g.add((country_uri, RDF.type, ns_rel.Country))
 
     # leagues
     if league not in leagues:
@@ -179,13 +178,15 @@ for index, row in df_main.iterrows():
         country_id = df_main[df_main['Nation'].str.contains(f'{league_id} ')]['Nation'].values[0].split(' ')[-1]
         if country_id not in countries:
             country_name, country_flag = get_country_info(country_id)
-            country_uri = URIRef(ns_country + country_id)
+            country_uri = URIRef(ns_ent + country_id)
             g.add((country_uri, ns_rel.name, Literal(country_name)))
             g.add((country_uri, ns_rel.flag, Literal(country_flag)))
+            g.add((country_uri, RDF.type, ns_rel.Country))
 
-        league_uri = URIRef(ns_league + league_id)
+        league_uri = URIRef(ns_ent + league_id)
         g.add((league_uri, ns_rel.name, Literal(league_name)))
-        g.add((league_uri, ns_rel.country, URIRef(ns_country + country_id)))
+        g.add((league_uri, ns_rel.country, URIRef(ns_ent + country_id)))
+        g.add((league_uri, RDF.type, ns_rel.League))
 
         leagues.add(league)
         league_code_to_country_code[league_id] = country_id
@@ -233,15 +234,16 @@ for index, row in df_main.iterrows():
         league_id = league.split(' ')[0]
         club_country_id = league_code_to_country_code[league_id]
     
-        club_uri = URIRef(ns_club + club_id)
+        club_uri = URIRef(ns_ent + club_id)
         g.add((club_uri, ns_rel.name, Literal(club_name)))
         g.add((club_uri, ns_rel.color, Literal(club_color)))
         g.add((club_uri, ns_rel.alternateColor, Literal(club_alternate_color)))
         g.add((club_uri, ns_rel.logo, Literal(club_logo)))
         g.add((club_uri, ns_rel.stadium, Literal(club_stadium)))
         g.add((club_uri, ns_rel.city, Literal(club_city)))
-        g.add((club_uri, ns_rel.country, URIRef(ns_country + club_country_id)))
-        g.add((club_uri, ns_rel.league, URIRef(ns_league + league_id)))
+        g.add((club_uri, ns_rel.country, URIRef(ns_ent + club_country_id)))
+        g.add((club_uri, ns_rel.league, URIRef(ns_ent + league_id)))
+        g.add((club_uri, RDF.type, ns_rel.Club))
 
         clubs.add(club_original_name)
         club_name_to_club_id[club_original_name] = club_id
@@ -256,7 +258,7 @@ for index, row in df_main.iterrows():
         # player_club --> 'Squad' (club_name_to_club_id)
     player_name = row['Player']
     player_exists, player_id = check_player_exists(player_name)
-    player_uri = URIRef(ns_player + player_id)
+    player_uri = URIRef(ns_ent + player_id)
     player_pos = row['Pos'].split(',')
     player_club = club_name_to_club_id[row['Squad']]
 
@@ -271,7 +273,7 @@ for index, row in df_main.iterrows():
         for pos in player_pos:
             g.add((player_uri, ns_rel.position, Literal(pos)))
         g.add((player_uri, ns_rel.born, Literal(player_year)))
-        g.add((player_uri, ns_rel.nation, URIRef(ns_country + player_nation)))
+        g.add((player_uri, ns_rel.nation, URIRef(ns_ent + player_nation)))
 
     else:
         # adicionar pos nova se necessário
@@ -281,8 +283,9 @@ for index, row in df_main.iterrows():
         for pos in diff_pos:
             g.add((player_uri, ns_rel.position, Literal(pos)))
 
-    club_uri = URIRef(ns_club + player_club)
+    club_uri = URIRef(ns_ent + player_club)
     g.add((player_uri, ns_rel.club, club_uri))
+    g.add((player_uri, RDF.type, ns_rel.Player))
 
     # stats
     main_pos = player_pos[0]
