@@ -78,9 +78,9 @@ stat_mappings = {
     "GA": {"description": "Goals Conceded", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
     "GA90": {"description": "Goals Conceded per 90 minutes", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
     "Saves": {"description": "Saves", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
-    "Save%": {"description": "Save %", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "Save%": {"description": "Save %", "type": ns_stat_type.goalkeeping, "entities": [GK]},
     "CS": {"description": "Clean Sheets", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
-    "CS%": {"description": "Clean Sheet %", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
+    "CS%": {"description": "Clean Sheet %", "type": ns_stat_type.goalkeeping, "entities": [GK]},
     "PKA": {"description": "Penalties Faced", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
     "PKsv": {"description": "Penalties Saved", "type": ns_stat_type.goalkeeping, "entities": [GK, TEAM]},
 
@@ -288,13 +288,20 @@ for index, row in df_main.iterrows():
     main_pos = player_pos[0]
     for stat in stat_mappings:
 
+
         # player stats
         if (main_pos == "GK" and GK in stat_mappings[stat]["entities"] or main_pos != "GK" and PLAYER in stat_mappings[stat]["entities"]):
-            update_stat_on_graph(player_uri, stat, row[stat], g)
+            stat_value = row[stat]
+            if (pd.isna(stat_value)):
+                if (stat == "Save%"):
+                    stat_value = 0.0 # GK que estão com coluna vazia em vez de 0
+                if (stat == "CS%"):
+                    stat_value = row['CS'] / row['MP'] * 100
+            update_stat_on_graph(player_uri, stat, stat_value, g)
 
             # team stats
             if (TEAM in stat_mappings[stat]["entities"]):
-                update_stat_on_graph(club_uri, stat, row[stat], g)
+                update_stat_on_graph(club_uri, stat, stat_value, g)
 
 
 g.serialize(destination="import/football_rdf_data.nt", format="nt", encoding="utf-8")
