@@ -1,0 +1,17 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{ entity.name }}{% endblock %}
+
+{% block content %}
+
+<div class="card mb-4" 
+    style="border: 1px solid #{{ entity.color }}; 
+           --main-color: #{{ entity.color }};
+           --alt-color: #{{ entity.alternate_color }};">
+
+    {% block content_inside %}
+    {% endblock %}
+
+</div>
+
+{% endblock %}
