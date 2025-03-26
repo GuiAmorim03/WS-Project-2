@@ -115,13 +115,13 @@ def get_country_info(country_abrv):
 
     return country_name, country_flag
 
-def convert_player_name_to_id(player_name):
-    return quote(unidecode(player_name.lower().replace(' ', '_')))
+def convert_entity_name_to_id(entity_name):
+    return quote(unidecode(entity_name.lower().replace(' ', '_')))
 
 def check_player_exists(player_name):
     if player_name not in players:
         players.add(player_name)
-        return False, convert_player_name_to_id(player_name)
+        return False, convert_entity_name_to_id(player_name)
     else:
         # se o player já existe, é necessário verificar se é um falso duplicado
         # verificar se o 'Born' e 'Nation' são iguais
@@ -130,9 +130,9 @@ def check_player_exists(player_name):
         nation = repeated_player_info['Nation'].unique()
         if len(born_years) > 1 or len(nation) > 1 or player_name == 'Vitinha':  # Há 2 Vitinha da mesma idade e país
             # são jogadores diferentes, precisa de id diferente
-            return False, convert_player_name_to_id(player_name)+"_2"
+            return False, convert_entity_name_to_id(player_name)+"_2"
         else:
-            return True, convert_player_name_to_id(player_name)
+            return True, convert_entity_name_to_id(player_name)
 
 def update_stat_on_graph(uri, stat, new_value, g):
     stat_id = convert_stat_name_to_id(stat)
@@ -219,7 +219,8 @@ for index, row in df_main.iterrows():
                 if (len(club_info) == 1):
                     break
 
-        club_id = club_info['abbreviation'].values[0]
+        club_id = convert_entity_name_to_id(club_info['shortDisplayName'].values[0])
+        club_abrv = club_info['abbreviation'].values[0]
         club_name = club_info['name'].values[0]
         club_color = club_info['color'].values[0]
         club_alternate_color = club_info['alternateColor'].values[0]
@@ -236,6 +237,7 @@ for index, row in df_main.iterrows():
     
         club_uri = URIRef(ns_ent + club_id)
         g.add((club_uri, ns_rel.name, Literal(club_name)))
+        g.add((club_uri, ns_rel.abrv, Literal(club_abrv)))
         g.add((club_uri, ns_rel.color, Literal(club_color)))
         g.add((club_uri, ns_rel.alternateColor, Literal(club_alternate_color)))
         g.add((club_uri, ns_rel.logo, Literal(club_logo)))
