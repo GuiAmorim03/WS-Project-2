@@ -100,3 +100,38 @@ WHERE {
     ?stat_cat_id fut-rel:name ?stat_category .
 }
 ```
+
+## Query 4: Get all the clubs in the dataset (club_id, abbreviation, name, league, flag, logo, color, alternateColor, numPlayers)
+```
+sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+SELECT
+	?club_id
+	?abbreviation
+	?name
+	?league
+	?flag
+	?logo
+	?color
+	?alternateColor
+	(COUNT(?player) AS ?numPlayers)
+WHERE {
+	?club_id rdf:type fut-rel:Club .
+	?club_id fut-rel:name ?name .
+    ?club_id fut-rel:abrv ?abbreviation .
+    ?club_id fut-rel:league ?league .
+    ?club_id fut-rel:country ?country .
+    ?country fut-rel:flag ?flag .
+	?club_id fut-rel:logo ?logo .
+	?club_id fut-rel:color ?color .
+	?club_id fut-rel:alternateColor ?alternateColor .
+    OPTIONAL {
+        ?player fut-rel:club ?club_id .
+        FILTER NOT EXISTS { ?player fut-rel:left_club ?club_id }
+    }
+}
+GROUP BY ?club_id ?abbreviation ?league ?flag ?name ?logo ?color ?alternateColor
+ORDER BY ?name
+```
