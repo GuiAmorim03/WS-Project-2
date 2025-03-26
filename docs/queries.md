@@ -1,0 +1,88 @@
+# SPARQL Queries
+This document contains a list of SPARQL queries that can be used to query the data in the Knowledge Graph.
+
+## Query 1: Get all the players in the dataset (player_id, name, positions, nation, flag, currentClub, currentClubLogo, born)
+```sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+SELECT
+    ?player_id
+    ?name
+    (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
+    ?nation
+    ?flag
+    (SAMPLE(?currentClubRaw) AS ?currentClub)
+    (SAMPLE(?clubLogo) AS ?currentClubLogo)
+    ?born
+WHERE { 
+    ?player_id rdf:type fut-rel:Player .
+    ?player_id fut-rel:name ?name .
+    ?player_id fut-rel:position ?position .
+    ?player_id fut-rel:nation ?nation .
+    ?nation fut-rel:flag ?flag .
+    ?player_id fut-rel:born ?born .
+    
+    # Choose the current club (one that has not been left)
+    OPTIONAL {
+        ?player_id fut-rel:club ?currentClubRaw .
+        FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClubRaw }
+        
+        OPTIONAL {
+            ?currentClubRaw fut-rel:logo ?clubLogo .
+        }
+    }
+}
+GROUP BY ?player_id ?name ?nation ?flag ?born
+ORDER BY ?name
+```
+
+## Query 2: Get a specific player's details (player_id, name, positions, nation, flag, currentClub, pastClubs, born)
+```
+sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+SELECT
+    ?player_id
+    ?name
+    (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
+    ?nation
+    ?flag
+    (SAMPLE(?currentClubRaw) AS ?currentClub)
+    (SAMPLE(?clubLogo) AS ?currentClubLogo)
+    (GROUP_CONCAT(DISTINCT ?pastClub; separator=", ") AS ?pastClubs)
+    (GROUP_CONCAT(DISTINCT ?pastClubLogo; separator=", ") AS ?pastClubLogos)
+    ?born
+WHERE { 
+    # Filter for a specific player by ID
+    VALUES ?player_id { <http://football.org/ent/aaron_ciammaglichella> } 
+    
+    ?player_id rdf:type fut-rel:Player .
+    ?player_id fut-rel:name ?name .
+    ?player_id fut-rel:position ?position .
+    ?player_id fut-rel:nation ?nation .
+    ?nation fut-rel:flag ?flag .
+    ?player_id fut-rel:born ?born .
+    
+    # Identify the current club (one that has not been left)
+    OPTIONAL {
+        ?player_id fut-rel:club ?currentClubRaw .
+        FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClubRaw }
+        
+        # Get the logo of the current club
+        OPTIONAL {
+            ?currentClubRaw fut-rel:logo ?clubLogo .
+        }
+    }
+
+    # Get past clubs and their logos
+    OPTIONAL {
+        ?player_id fut-rel:left_club ?pastClub .
+        OPTIONAL {
+            ?pastClub fut-rel:logo ?pastClubLogo .
+        }
+    }
+}
+GROUP BY ?player_id ?name ?nation ?flag ?born
+```
