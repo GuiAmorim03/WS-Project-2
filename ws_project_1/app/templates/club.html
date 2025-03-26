@@ -16,8 +16,8 @@
                     <span>{{ entity.stadium }}</span>
                 </p>
                 <p>
-                    <a href="{% url 'league' league_id}" style="text-decoration: none;">
-                        <img src="{{ entity.league_flag }}" alt="Flag" style="height: 20px;">
+                    <a href="{% url 'league' entity.league.id}" style="text-decoration: none;">
+                        <img src="{{ entity.country.flag }}" alt="Flag" style="height: 20px;">
                     </a>
                     <span>{{ entity.league_name }}</span>
                 </p>

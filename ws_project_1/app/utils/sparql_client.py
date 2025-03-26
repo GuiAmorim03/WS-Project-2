@@ -2,7 +2,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from datetime import datetime
 
 # Configure your SPARQL endpoint
-ENDPOINT_URL = "http://68f38762ffe4:7200/repositories/football"  # Replace with your actual endpoint URL
+ENDPOINT_URL = "http://graphdb:7200/repositories/football"  # Replace with your actual endpoint URL
 
 def get_sparql_client():
     """Returns a configured SPARQLWrapper instance."""
@@ -148,4 +148,181 @@ def get_default_player_data():
         "stats": []
     }
 
-# You can add more query functions here for team_detail, etc.
+def query_club_details(club_id):
+    """
+    Query and process club details from the SPARQL endpoint.
+    
+    Args:
+        club_id: The ID of the club to query
+        
+    Returns:
+        dict: Processed club data ready for template rendering
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT
+        ?club_id
+        ?abbreviation
+        ?name
+        ?stadium
+        ?city
+        ?league_id
+        ?league_name
+        ?flag
+        ?logo
+        ?color
+        ?alternateColor
+    WHERE {{
+        VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
+        
+        ?club_id rdf:type fut-rel:Club .
+        ?club_id fut-rel:name ?name .
+        ?club_id fut-rel:abrv ?abbreviation .
+        ?club_id fut-rel:stadium ?stadium .
+        ?club_id fut-rel:city ?city .
+        ?club_id fut-rel:league ?league_id .
+        ?league_id fut-rel:name ?league_name .
+        ?club_id fut-rel:country ?country .
+        ?country fut-rel:flag ?flag .
+        ?club_id fut-rel:logo ?logo .
+        ?club_id fut-rel:color ?color .
+        ?club_id fut-rel:alternateColor ?alternateColor .
+    }}
+    """
+
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_club_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return get_default_club_data()
+
+def process_club_results(results):
+    """Process the SPARQL query results for club details into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return get_default_club_data()
+    
+    result = results["results"]["bindings"][0]
+    
+    return {
+        "id": result["club_id"]["value"].split("/")[-1],
+        "name": result["name"]["value"],
+        "abbreviation": result["abbreviation"]["value"],
+        "stadium": result["stadium"]["value"],
+        "city": result["city"]["value"],
+        "league": {
+            "id": result["league_id"]["value"].split("/")[-1],
+            "name": result["league_name"]["value"]
+        },
+        "country": {
+            "flag": result["flag"]["value"]
+        },
+        "logo": result["logo"]["value"],
+        "color": result["color"]["value"],
+        "alternate_color": result["alternateColor"]["value"]
+    }
+
+def get_default_club_data():
+    """Return default club data for when no results are found."""
+    return {
+        "id": "",
+        "name": "Club Not Found",
+        "abbreviation": "",
+        "stadium": "",
+        "city": "",
+        "league": {
+            "id": "",
+            "name": ""
+        },
+        "country": {
+            "flag": ""
+        },
+        "logo": "",
+        "color": "000000",
+        "alternate_color": "FFFFFF"
+    }
+
+def query_club_players(club_id):
+    """
+    Query and process a club's players from the SPARQL endpoint.
+    
+    Args:
+        club_id: The ID of the club to query players for
+        
+    Returns:
+        list: List of processed player data ready for template rendering
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT
+        ?player_id
+        ?name
+        ?born
+        (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
+        ?nation
+        ?flag
+    WHERE {{
+        VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
+        
+        ?player_id rdf:type fut-rel:Player .
+        ?player_id fut-rel:name ?name .
+        ?player_id fut-rel:position ?position .
+        ?player_id fut-rel:nation ?nation_id .
+        ?nation_id fut-rel:name ?nation .
+        ?nation_id fut-rel:flag ?flag .
+        ?player_id fut-rel:born ?born .
+        ?player_id fut-rel:club ?club_id .
+        FILTER NOT EXISTS {{ ?player_id fut-rel:left_club ?club_id }}
+    }}
+    GROUP BY ?player_id ?name ?born ?nation ?flag
+    ORDER BY ?name
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_club_players_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_club_players_results(results):
+    """Process the SPARQL query results for club players into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    players = []
+    for player in results["results"]["bindings"]:
+        # Extract positions from comma-separated string
+        positions_str = player.get("positions", {}).get("value", "")
+        positions = [pos.strip() for pos in positions_str.split(",")] if positions_str else []
+        
+        # Calculate age
+        birth_year = int(player["born"]["value"])
+        current_year = datetime.now().year
+        age = current_year - birth_year
+        
+        players.append({
+            "id": player["player_id"]["value"].split("/")[-1],
+            "name": player["name"]["value"],
+            "born": birth_year,
+            "age": age,
+            "positions": positions,
+            "nation": player["nation"]["value"],
+            "flag": player["flag"]["value"]
+        })
+    
+    return players
