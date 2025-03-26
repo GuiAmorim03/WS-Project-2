@@ -83,3 +83,20 @@ WHERE {
 }
 GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
 ```
+
+## Query 3: Get a specific player's stats (stat_category, stat_name, stat_value)
+```
+sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+SELECT ?stat_category ?stat_name ?stat_value
+WHERE {
+    VALUES ?player_id { <http://football.org/ent/aaron_ciammaglichella> } 
+
+    ?player_id ?stat ?stat_value .
+    ?stat fut-rel:type ?stat_cat_id .
+    ?stat fut-rel:name ?stat_name .
+    ?stat_cat_id fut-rel:name ?stat_category .
+}
+```
