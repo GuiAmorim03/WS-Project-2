@@ -278,6 +278,16 @@ for index, row in df_main.iterrows():
         g.add((player_uri, ns_rel.nation, URIRef(ns_ent + player_nation)))
 
     else:
+        # indicar que já saiu do clube anterior
+        club_registed = g.value(player_uri, ns_rel.club)
+        matches_registed = int(g.value(player_uri, ns_stat.mp))
+        matches_new = row['MP']
+        if matches_new < matches_registed:
+            first_club = URIRef(club_registed)
+        else:
+            first_club = URIRef(ns_ent + player_club)
+        g.add((player_uri, ns_rel.left_club, first_club))
+
         # adicionar pos nova se necessário
         actual_pos = {str(pos) for pos in g.objects(player_uri, ns_rel.position)}
         new_pos = set(player_pos)
