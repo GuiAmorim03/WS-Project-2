@@ -1,30 +1,11 @@
 from django.shortcuts import render
+from .utils.sparql_client import query_player_details
 
 def player_detail(request, player_id):
-    player_data = {
-        "name": "Aaron Malouda",
-        "born": 2005,
-        "age": 2025 - 2005,
-        "pos": ["Defender", "Midfielder"],
-        "country_name": "France",
-        "flag": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png",
-        "teams": [
-            {
-                "id": "paris_saint_germain",
-                "name": "Paris Saint-Germain",
-                "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
-            },
-            {
-                "id": "lille_osc",
-                "name": "Lille OSC",
-                "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/170.png",
-            }
-        ],
-        "color": "0C2C56",
-        "alternate_color": "FFFFFF",
-        "stats": []
-    }
-
+    # Get player data from the SPARQL endpoint
+    player_data = query_player_details(player_id)
+    # Log the player data
+    print(player_data)
     return render(request, "player.html", {"entity": player_data})
 
 def team_detail(request, team_id):
