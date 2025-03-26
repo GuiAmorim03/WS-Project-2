@@ -39,7 +39,6 @@ ORDER BY ?name
 
 ## Query 2: Get a specific player's details (player_id, name, positions, nation, flag, currentClub, pastClubs, born)
 ```
-sparql
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX fut-rel: <http://football.org/rel/>
 
@@ -49,8 +48,10 @@ SELECT
     (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
     ?nation
     ?flag
-    (SAMPLE(?currentClubRaw) AS ?currentClub)
-    (SAMPLE(?clubLogo) AS ?currentClubLogo)
+    ?currentClub
+    ?currentClubLogo
+    ?currentClubColor
+    ?currentClubAltColor
     (GROUP_CONCAT(DISTINCT ?pastClub; separator=", ") AS ?pastClubs)
     (GROUP_CONCAT(DISTINCT ?pastClubLogo; separator=", ") AS ?pastClubLogos)
     ?born
@@ -66,23 +67,19 @@ WHERE {
     ?player_id fut-rel:born ?born .
     
     # Identify the current club (one that has not been left)
-    OPTIONAL {
-        ?player_id fut-rel:club ?currentClubRaw .
-        FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClubRaw }
-        
-        # Get the logo of the current club
-        OPTIONAL {
-            ?currentClubRaw fut-rel:logo ?clubLogo .
-        }
-    }
+    ?player_id fut-rel:club ?currentClub .
+    FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClub }
 
-    # Get past clubs and their logos
+    # The current club always has a logo and colors
+    ?currentClub fut-rel:logo ?currentClubLogo .
+    ?currentClub fut-rel:color ?currentClubColor .
+    ?currentClub fut-rel:alternateColor ?currentClubAltColor .
+
+    # Get past clubs and their logos (if any)
     OPTIONAL {
         ?player_id fut-rel:left_club ?pastClub .
-        OPTIONAL {
-            ?pastClub fut-rel:logo ?pastClubLogo .
-        }
+        OPTIONAL { ?pastClub fut-rel:logo ?pastClubLogo . }
     }
 }
-GROUP BY ?player_id ?name ?nation ?flag ?born
+GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
 ```
