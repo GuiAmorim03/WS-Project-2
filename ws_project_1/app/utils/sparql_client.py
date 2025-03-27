@@ -34,10 +34,12 @@ def query_player_details(player_id):
         ?nation
         ?flag
         ?currentClub
+        ?currentClubName
         ?currentClubLogo
         ?currentClubColor
         ?currentClubAltColor
         (GROUP_CONCAT(DISTINCT ?pastClub; separator=", ") AS ?pastClubs)
+        (GROUP_CONCAT(DISTINCT ?pastClubName; separator=", ") AS ?pastClubsNames)
         (GROUP_CONCAT(DISTINCT ?pastClubLogo; separator=", ") AS ?pastClubLogos)
         ?born
     WHERE {{ 
@@ -56,6 +58,7 @@ def query_player_details(player_id):
         FILTER NOT EXISTS {{ ?player_id fut-rel:left_club ?currentClub }}
 
         # The current club always has a logo and colors
+        ?currentClub fut-rel:name ?currentClubName .
         ?currentClub fut-rel:logo ?currentClubLogo .
         ?currentClub fut-rel:color ?currentClubColor .
         ?currentClub fut-rel:alternateColor ?currentClubAltColor .
@@ -63,10 +66,13 @@ def query_player_details(player_id):
         # Get past clubs and their logos (if any)
         OPTIONAL {{
             ?player_id fut-rel:left_club ?pastClub .
-            OPTIONAL {{ ?pastClub fut-rel:logo ?pastClubLogo . }}
+            OPTIONAL {{ 
+                        ?pastClub fut-rel:name ?pastClubName . 
+                        ?pastClub fut-rel:logo ?pastClubLogo . 
+                    }}
         }}
     }}
-    GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
+    GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
     """
     
     # Execute the query
@@ -91,23 +97,25 @@ def process_player_results(results):
     
     # Extract past clubs
     past_clubs_str = result.get("pastClubs", {}).get("value", "")
+    past_clubs_names_str = result.get("pastClubsNames", {}).get("value", "")
     past_clubs_logos_str = result.get("pastClubLogos", {}).get("value", "")
     
     past_clubs = past_clubs_str.split(", ") if past_clubs_str else []
+    past_clubs_names = past_clubs_names_str.split(", ") if past_clubs_names_str else []
     past_clubs_logos = past_clubs_logos_str.split(", ") if past_clubs_logos_str else []
     
     teams = []
     # Add current club
     teams.append({
         "id": result["currentClub"]["value"].split("/")[-1],
-        "name": result["currentClub"]["value"].split("/")[-1].replace("_", " ").title(),
+        "name": result["currentClubName"]["value"],
         "logo": result["currentClubLogo"]["value"],
     })
     
     # Add past clubs
     for i in range(len(past_clubs)):
         club_id = past_clubs[i].split("/")[-1]
-        club_name = club_id.replace("_", " ").title()
+        club_name = past_clubs_names[i] if i < len(past_clubs_names) else ""
         club_logo = past_clubs_logos[i] if i < len(past_clubs_logos) else ""
         teams.append({
             "id": club_id,
