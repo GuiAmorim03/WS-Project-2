@@ -161,6 +161,7 @@ for index, row in df_main.iterrows():
         country_name, country_flag = get_country_info(country_abrv)
         
         country_uri = URIRef(ns_ent + country_abrv)
+        g.add((country_uri, ns_rel.abrv, Literal(country_abrv)))
         g.add((country_uri, ns_rel.name, Literal(country_name)))
         g.add((country_uri, ns_rel.flag, Literal(country_flag)))
         g.add((country_uri, RDF.type, ns_rel.Country))
@@ -179,6 +180,7 @@ for index, row in df_main.iterrows():
         if country_id not in countries:
             country_name, country_flag = get_country_info(country_id)
             country_uri = URIRef(ns_ent + country_id)
+            g.add((country_uri, ns_rel.abrv, Literal(country_id)))
             g.add((country_uri, ns_rel.name, Literal(country_name)))
             g.add((country_uri, ns_rel.flag, Literal(country_flag)))
             g.add((country_uri, RDF.type, ns_rel.Country))
