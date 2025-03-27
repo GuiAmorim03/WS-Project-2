@@ -91,9 +91,34 @@ def process_player_results(results):
     
     result = results["results"]["bindings"][0]
     
+    # Position mapping dictionary
+    position_mapping = {
+        "GK": "Goalkeeper",
+        "CB": "Center Back",
+        "LB": "Left Back",
+        "RB": "Right Back",
+        "DM": "Defensive Midfielder",
+        "CM": "Center Midfielder",
+        "MF": "Midfielder",
+        "WM": "Wing Midfielder",
+        "AM": "Attacking Midfielder",
+        "WF": "Wing Forward",
+        "FW": "Forward",
+        "ST": "Striker",
+        "CF": "Center Forward"
+    }
+    
     # Extract positions from comma-separated string
     positions_str = result.get("positions", {}).get("value", "")
-    positions = [pos.strip() for pos in positions_str.split(",")] if positions_str else []
+    raw_positions = [pos.strip() for pos in positions_str.split(",")] if positions_str else []
+    
+    # Convert abbreviated positions to full names
+    positions = []
+    for pos in raw_positions:
+        if pos in position_mapping:
+            positions.append(f"{position_mapping[pos]} ({pos})")
+        else:
+            positions.append(pos)
     
     # Extract past clubs
     past_clubs_str = result.get("pastClubs", {}).get("value", "")
