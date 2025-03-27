@@ -19,8 +19,9 @@ WHERE {
     ?player_id rdf:type fut-rel:Player .
     ?player_id fut-rel:name ?name .
     ?player_id fut-rel:position ?position .
-    ?player_id fut-rel:nation ?nation .
-    ?nation fut-rel:flag ?flag .
+    ?player_id fut-rel:nation ?nation_id .
+    ?nation_id fut-rel:abrv ?nation .
+    ?nation_id fut-rel:flag ?flag .
     ?player_id fut-rel:born ?born .
     
     # Choose the current club (one that has not been left)

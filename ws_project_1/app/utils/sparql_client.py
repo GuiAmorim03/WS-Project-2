@@ -348,3 +348,101 @@ def process_club_players_results(results):
         })
     
     return players
+
+def query_all_players():
+    """
+    Query and process a list of all players from the SPARQL endpoint.
+    
+    Returns:
+        list: List of processed player data ready for template rendering
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query
+    query = """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT
+        ?player_id
+        ?name
+        (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
+        ?nation
+        ?flag
+        (SAMPLE(?currentClubRaw) AS ?currentClub)
+        (SAMPLE(?clubLogo) AS ?currentClubLogo)
+        ?born
+    WHERE { 
+        ?player_id rdf:type fut-rel:Player .
+        ?player_id fut-rel:name ?name .
+        ?player_id fut-rel:position ?position .
+        ?player_id fut-rel:nation ?nation_id .
+        ?nation_id fut-rel:abrv ?nation .
+        ?nation_id fut-rel:flag ?flag .
+        ?player_id fut-rel:born ?born .
+        
+        # Choose the current club (one that has not been left)
+        OPTIONAL {
+            ?player_id fut-rel:club ?currentClubRaw .
+            FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClubRaw }
+            
+            OPTIONAL {
+                ?currentClubRaw fut-rel:logo ?clubLogo .
+            }
+        }
+    }
+    GROUP BY ?player_id ?name ?nation ?flag ?born
+    ORDER BY ?name
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_all_players_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_all_players_results(results):
+    """Process the SPARQL query results for all players into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    players = []
+    for player in results["results"]["bindings"]:
+        # Extract positions from comma-separated string
+        positions_str = player.get("positions", {}).get("value", "")
+        positions = [pos.strip() for pos in positions_str.split(",")] if positions_str else []
+        
+        # Calculate age
+        birth_year = int(player["born"]["value"])
+        current_year = datetime.now().year
+        age = current_year - birth_year
+        
+        # Extract player ID from URI
+        player_id = player["player_id"]["value"].split("/")[-1]
+        
+        # Handle optional current club information
+        current_club = None
+        current_club_logo = None
+        
+        if "currentClub" in player and player["currentClub"]["value"]:
+            current_club = player["currentClub"]["value"].split("/")[-1]
+            
+        if "currentClubLogo" in player and player["currentClubLogo"]["value"]:
+            current_club_logo = player["currentClubLogo"]["value"]
+            
+        players.append({
+            "id": player_id,
+            "name": player["name"]["value"],
+            "born": birth_year,
+            "age": age,
+            "positions": positions,
+            "nation": player["nation"]["value"],
+            "flag": player["flag"]["value"],
+            "current_club": current_club,
+            "club_logo": current_club_logo
+        })
+    
+    return players
