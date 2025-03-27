@@ -206,3 +206,26 @@ WHERE {
 GROUP BY ?player_id ?name ?born ?nation ?flag
 ORDER BY ?name
 ```
+
+## Query 7: Get the top 10 players in a specific stat (player_id, name, stat_name, stat_value)
+```
+sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+SELECT
+    ?player_id
+    ?name
+    ?stat_name
+    ?stat_value
+WHERE {
+    VALUES ?stat { <http://football.org/stat/min> } 
+    
+    ?player_id rdf:type fut-rel:Player .
+    ?player_id fut-rel:name ?name .
+    ?player_id ?stat ?stat_value .
+    ?stat fut-rel:name ?stat_name .
+}
+ORDER BY DESC(?stat_value)
+LIMIT 10
+```
