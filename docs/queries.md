@@ -49,10 +49,12 @@ SELECT
     ?nation
     ?flag
     ?currentClub
+	?currentClubName
     ?currentClubLogo
     ?currentClubColor
     ?currentClubAltColor
     (GROUP_CONCAT(DISTINCT ?pastClub; separator=", ") AS ?pastClubs)
+	(GROUP_CONCAT(DISTINCT ?pastClubName; separator=", ") AS ?pastClubNames)
     (GROUP_CONCAT(DISTINCT ?pastClubLogo; separator=", ") AS ?pastClubLogos)
     ?born
 WHERE { 
@@ -62,26 +64,28 @@ WHERE {
     ?player_id rdf:type fut-rel:Player .
     ?player_id fut-rel:name ?name .
     ?player_id fut-rel:position ?position .
-    ?player_id fut-rel:nation ?nation .
-    ?nation fut-rel:flag ?flag .
+    ?player_id fut-rel:nation ?nation_id .
+    ?nation_id fut-rel:name ?nation .
+    ?nation_id fut-rel:flag ?flag .
     ?player_id fut-rel:born ?born .
     
-    # Identify the current club (one that has not been left)
+    # Get current club
     ?player_id fut-rel:club ?currentClub .
     FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClub }
-
-    # The current club always has a logo and colors
+    
+    ?currentClub fut-rel:name ?currentClubName .
     ?currentClub fut-rel:logo ?currentClubLogo .
     ?currentClub fut-rel:color ?currentClubColor .
     ?currentClub fut-rel:alternateColor ?currentClubAltColor .
 
-    # Get past clubs and their logos (if any)
+    # Get past clubs
     OPTIONAL {
         ?player_id fut-rel:left_club ?pastClub .
-        OPTIONAL { ?pastClub fut-rel:logo ?pastClubLogo . }
+        ?pastClub fut-rel:name ?pastClubName .
+        ?pastClub fut-rel:logo ?pastClubLogo .
     }
 }
-GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
+GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
 ```
 
 ## Query 3: Get a specific player's stats (stat_category, stat_name, stat_value)
