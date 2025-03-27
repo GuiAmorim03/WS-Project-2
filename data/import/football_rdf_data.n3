@@ -108295,9 +108295,9 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/fulham> a ns2:Club ;
     ns2:abrv "FUL" ;
-    ns2:alternateColor "d11317" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "London" ;
-    ns2:color "ffffff" ;
+    ns2:color "000000" ;
     ns2:country <http://football.org/ent/ENG> ;
     ns2:league <http://football.org/ent/eng> ;
     ns2:logo "https://a.espncdn.com/i/teamlogos/soccer/500/370.png" ;
@@ -108381,9 +108381,9 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/lyon> a ns2:Club ;
     ns2:abrv "LYON" ;
-    ns2:alternateColor "1a1a1a" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "Lyon" ;
-    ns2:color "ffffff" ;
+    ns2:color "083f88" ;
     ns2:country <http://football.org/ent/FRA> ;
     ns2:league <http://football.org/ent/fr> ;
     ns2:logo "https://a.espncdn.com/i/teamlogos/soccer/500/167.png" ;
@@ -109251,7 +109251,7 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/juventus> a ns2:Club ;
     ns2:abrv "JUV" ;
-    ns2:alternateColor "ffef32" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "Torino" ;
     ns2:color "000000" ;
     ns2:country <http://football.org/ent/ITA> ;
@@ -109724,7 +109724,7 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/spurs> a ns2:Club ;
     ns2:abrv "TOT" ;
-    ns2:alternateColor "9bafd8" ;
+    ns2:alternateColor "132257" ;
     ns2:city "London" ;
     ns2:color "ffffff" ;
     ns2:country <http://football.org/ent/ENG> ;

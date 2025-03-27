@@ -47,7 +47,7 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 108,Brescia,Brescia,BRE,Brescia,Brescia,006bb9,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/108.png,6,ita.brescia
 109,Fiorentina,Fiorentina,FIO,Fiorentina,Fiorentina,4c1d84,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/109.png,2588,ita.fiorentina
 110,Internazionale,Internazionale,INT,Internazionale,Inter Milan,00239c,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/110.png,1642,ita.inter_milan
-111,Juventus,Juventus,JUV,Juventus,Juventus,000000,ffef32,https://a.espncdn.com/i/teamlogos/soccer/500/111.png,4600,ita.juventus
+111,Juventus,Juventus,JUV,Juventus,Juventus,000000,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/111.png,4600,ita.juventus
 112,Lazio,Lazio,LAZ,Lazio,Lazio,74bde7,ffef32,https://a.espncdn.com/i/teamlogos/soccer/500/112.png,8,ita.lazio_rome
 113,Lecce,Lecce,LEC,Lecce,Lecce,e4002b,08305d,https://a.espncdn.com/i/teamlogos/soccer/500/113.png,25,ita.lecce
 114,Napoli,Napoli,NAP,Napoli,Napoli,0677d2,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/114.png,2991,ita.napoli
@@ -94,7 +94,7 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 164,Spain,Spain,ESP,Spain,Spain,c60b1e,f1ff91,https://a.espncdn.com/i/teamlogos/countries/500/esp.png,1631,esp
 165,Nantes,Nantes,NAN,Nantes,Nantes,ffff00,011F68,https://a.espncdn.com/i/teamlogos/soccer/500/165.png,2329,fra.nantes
 166,Lille,Lille,LILL,Lille,Lille,c2051b,e2d3d7,https://a.espncdn.com/i/teamlogos/soccer/500/166.png,4947,fra.lille
-167,Lyon,Lyon,LYON,Lyon,Lyon,ffffff,1a1a1a,https://a.espncdn.com/i/teamlogos/soccer/500/167.png,6499,fra.lyon
+167,Lyon,Lyon,LYON,Lyon,Lyon,083f88,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/167.png,6499,fra.lyon
 169,Stade Rennais,Stade Rennais,REN,Stade Rennais,Rennes,ef2f24,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/169.png,2323,fra.rennes
 170,Troyes,Troyes,TRY,Troyes,Troyes,0000bf,fafafc,https://a.espncdn.com/i/teamlogos/soccer/500/170.png,2330,fra.troyes
 171,Guingamp,Guingamp,EAG,Guingamp,Guingamp,ef2f24,1a1a1a,https://a.espncdn.com/i/teamlogos/soccer/500/171.png,3368,fra.guingamp
@@ -240,10 +240,10 @@ teamId,location,name,abbreviation,displayName,shortDisplayName,color,alternateCo
 364,Liverpool,Liverpool,LIV,Liverpool,Liverpool,d11317,132257,https://a.espncdn.com/i/teamlogos/soccer/500/364.png,192,eng.liverpool
 365,Blackburn Rovers,Blackburn Rovers,BLK,Blackburn Rovers,Blackburn,0000fa,1a1a1a,https://a.espncdn.com/i/teamlogos/soccer/500/365.png,280,eng.blackburn
 366,Sunderland,Sunderland,SUN,Sunderland,Sunderland,EB172B,87cced,https://a.espncdn.com/i/teamlogos/soccer/500/366.png,194,eng.sunderland
-367,Tottenham Hotspur,Tottenham Hotspur,TOT,Tottenham Hotspur,Spurs,ffffff,9bafd8,https://a.espncdn.com/i/teamlogos/soccer/500/367.png,7827,eng.tottenham
+367,Tottenham Hotspur,Tottenham Hotspur,TOT,Tottenham Hotspur,Spurs,ffffff,132257,https://a.espncdn.com/i/teamlogos/soccer/500/367.png,7827,eng.tottenham
 368,Everton,Everton,EVE,Everton,Everton,0606fa,132257,https://a.espncdn.com/i/teamlogos/soccer/500/368.png,253,eng.everton
 369,Middlesbrough,Middlesbrough,MID,Middlesbrough,Boro,f42727,87cced,https://a.espncdn.com/i/teamlogos/soccer/500/369.png,3745,eng.middlesbrough
-370,Fulham,Fulham,FUL,Fulham,Fulham,ffffff,d11317,https://a.espncdn.com/i/teamlogos/soccer/500/370.png,279,eng.fulham
+370,Fulham,Fulham,FUL,Fulham,Fulham,000000,ffffff,https://a.espncdn.com/i/teamlogos/soccer/500/370.png,279,eng.fulham
 371,West Ham United,West Ham United,WHU,West Ham United,West Ham,7c2c3b,000000,https://a.espncdn.com/i/teamlogos/soccer/500/371.png,6660,eng.west_ham
 372,Charlton Athletic,Charlton Athletic,CHA,Charlton Athletic,Charlton,C8142F,020202,https://a.espncdn.com/i/teamlogos/soccer/500/372.png,188,eng.charlton
 373,Ipswich Town,Ipswich Town,IPS,Ipswich Town,Ipswich,0000fa,cd1937,https://a.espncdn.com/i/teamlogos/soccer/500/373.png,257,eng.ipswich
