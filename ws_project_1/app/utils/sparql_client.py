@@ -111,7 +111,7 @@ def process_player_results(results, player_id):
     
     # Extract past clubs
     past_clubs_str = result.get("pastClubs", {}).get("value", "")
-    past_clubs_names_str = result.get("pastClubsNames", {}).get("value", "")
+    past_clubs_names_str = result.get("pastClubNames", {}).get("value", "")
     past_clubs_logos_str = result.get("pastClubLogos", {}).get("value", "")
     
     past_clubs = past_clubs_str.split(", ") if past_clubs_str else []
