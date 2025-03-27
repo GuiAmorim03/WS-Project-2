@@ -93,7 +93,7 @@ def process_player_results(results):
     position_mapping = {
         "GK": "Goalkeeper",
         "DF": "Defender",
-        "MD": "Midfielder",
+        "MF": "Midfielder",
         "FW": "Forward",
     }
     
