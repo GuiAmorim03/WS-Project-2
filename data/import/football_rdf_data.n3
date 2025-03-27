@@ -107086,7 +107086,7 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/liverpool> a ns2:Club ;
     ns2:abrv "LIV" ;
-    ns2:alternateColor "132257" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "Liverpool" ;
     ns2:color "d11317" ;
     ns2:country <http://football.org/ent/ENG> ;
@@ -107736,9 +107736,9 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/barcelona> a ns2:Club ;
     ns2:abrv "BAR" ;
-    ns2:alternateColor "2f2f2f" ;
+    ns2:alternateColor "2685de" ;
     ns2:city "Barcelona" ;
-    ns2:color "00529f" ;
+    ns2:color "a20046" ;
     ns2:country <http://football.org/ent/ESP> ;
     ns2:league <http://football.org/ent/es> ;
     ns2:logo "https://a.espncdn.com/i/teamlogos/soccer/500/83.png" ;
@@ -108467,7 +108467,7 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/man_city> a ns2:Club ;
     ns2:abrv "MNC" ;
-    ns2:alternateColor "e6ff00" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "Manchester" ;
     ns2:color "99c5ea" ;
     ns2:country <http://football.org/ent/ENG> ;
@@ -108687,7 +108687,7 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/bayern> a ns2:Club ;
     ns2:abrv "MUN" ;
-    ns2:alternateColor "1a1a1a" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "München" ;
     ns2:color "dc052d" ;
     ns2:country <http://football.org/ent/GER> ;
@@ -109681,7 +109681,7 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/man_united> a ns2:Club ;
     ns2:abrv "MAN" ;
-    ns2:alternateColor "144992" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "Manchester" ;
     ns2:color "da020e" ;
     ns2:country <http://football.org/ent/ENG> ;
