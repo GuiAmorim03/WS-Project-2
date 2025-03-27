@@ -2,44 +2,49 @@
 
 {% block content_inside %}
 
-    <div class="card-header" 
-        style="background-color: var(--main-color); color: var(--alt-color);">
-        <div class="row">
-            <div class="col-10">
-                <h2>{{ entity.name }}</h2>
-                <p class="m-0">
-                    <img src="{{ entity.flag }}" alt="Flag" style="height: 20px;">
-                    <span>{{ entity.country_name }}</span>
-                    <span> • </span>
-                    <span>{{ entity.born }}</span>
-                    <span> • </span>
-                    <span>{{ entity.age }}y</span>
-                </p>
-                <p>
-                    {% for position in entity.pos %}
-                    {{ position }}{% if not forloop.last %} • {% endif %}
-                    {% endfor %}
-                </p>
-                <p>
-                    {% for team in entity.teams %}
-                    <a href="{% url 'team' team.id %}" style="text-decoration: none;">
-                        <img src="{{ team.logo }}" alt="Club" style="height: 20px;">
-                    </a>
-                    <span>{{ team.name }}</span>
-                    <br>
-                    {% endfor %}
-                </p>
-            </div>
-            <div class="col-2 text-center">
-                {% if entity.teams %}
-                <img src="{{ entity.teams.0.logo }}" alt="{{ entity.teams.0.team_name }}" class="img-fluid">
-                {% endif %}
-            </div>
+<div class="card-header" style="background-color: var(--main-color); color: var(--alt-color);">
+    <div class="row">
+        <div class="col-10">
+            <h2>{{ entity.name }}</h2>
+            <p class="m-0">
+                <img src="{{ entity.flag }}" alt="Flag" style="height: 20px;">
+                <span>{{ entity.country_name }}</span>
+                <br>
+                <span>{{ entity.born }}</span>
+                <span> • </span>
+                <span>{{ entity.age }}y</span>
+            </p>
+        </div>
+        <div class="col-2 text-center">
+            {% if entity.teams %}
+            <img src="{{ entity.teams.0.logo }}" alt="{{ entity.teams.0.team_name }}" class="img-fluid">
+            {% endif %}
         </div>
     </div>
+</div>
 
-    <div class="card-footer" style="color: var(--main-color); background-color: var(--alt-color);">
-        <h2 class="mt-4">Stats</h2>
-    </div>
+<div class="card-body" style="color: var(--main-color); background-color: var(--alt-color);">
+    <h4>Positions</h4>
+    <p>
+        {% for position in entity.pos %}
+        {{ position }}{% if not forloop.last %} <br> {% endif %}
+        {% endfor %}
+    </p>
+    <h4>Clubs</h4>
+    <p>
+        {% for team in entity.teams %}
+        <a href="{% url 'team' team.id %}" style="text-decoration: none;">
+            <img src="{{ team.logo }}" alt="Club" style="height: 20px;">
+        </a>
+        <span>{{ team.name }}</span>
+        <br>
+        {% endfor %}
+    </p>
+</div>
+
+
+<div class="card-footer" style="color: var(--alt-color); background-color: var(--main-color);">
+    <h2 class="mt-4">Stats</h2>
+</div>
 
 {% endblock %}

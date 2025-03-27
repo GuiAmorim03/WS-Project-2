@@ -2,62 +2,66 @@
 
 {% block content_inside %}
 
-    <div class="card-header" 
-        style="background-color: var(--main-color); color: var(--alt-color);">
-        <div class="row">
-            <div class="col-2 text-center">
-                <img src="{{ entity.logo }}" alt="{{ entity.name }}" class="img-fluid">
-            </div>
-            <div class="col-10">
-                <h2>{{ entity.name }}</h2>
-                <p class="m-1">
-                    <span>{{ entity.city }}</span>
-                    <span> • </span>
-                    <span>{{ entity.stadium }}</span>
-                </p>
-                <p>
-                    <a href="{% url 'league' entity.league.id}" style="text-decoration: none;">
-                        <img src="{{ entity.country.flag }}" alt="Flag" style="height: 20px;">
-                    </a>
-                    <span>{{ entity.league_name }}</span>
-                </p>
-            </div>
+<div class="card-header" style="background-color: var(--main-color); color: var(--alt-color);">
+    <div class="row">
+        <div class="col-2 text-center">
+            <img src="{{ entity.logo }}" alt="{{ entity.name }}" class="img-fluid">
+        </div>
+        <div class="col-10">
+            <h2>{{ entity.name }}</h2>
+            <p class="m-1">
+                <span>{{ entity.city }}</span>
+                <span> • </span>
+                <span>{{ entity.stadium }}</span>
+            </p>
+            <p>
+                <a href="{% url 'league' entity.league.id}" style="text-decoration: none;">
+                    <img src="{{ entity.country.flag }}" alt="Flag" style="height: 20px;">
+                </a>
+                <span>{{ entity.league_name }}</span>
+            </p>
         </div>
     </div>
+</div>
+</div>
 
-    <div class="card-body" style="color: var(--main-color); background-color: var(--alt-color);">
-        <h2>Squad</h2>
+<div class="card-body" style="color: var(--main-color); background-color: var(--alt-color);">
+    <h2>Squad</h2>
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Position(s)</th>
-                    <th>Age</th>
-                    <th>Country</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for player in entity.players %}
-                    <tr>
-                        <td>{{ player.name }}</td>
-                        <td>
-                            {% for pos in player.pos %}
-                                <span>{{ pos }}{% if not forloop.last %}, {% endif %}</span>
-                            {% endfor %}
-                        </td>
-                        <td>{{ player.age }}</td>
-                        <td>
-                            <img src="{{ player.country_flag }}" alt="{{ player.country_name }}" style="height: 20px; margin-right: 5px;">
-                            {{ player.country_name }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <th class="sortable" data-column="name">Name</th>
+            <th class="sortable" data-column="position">Position</th>
+            <th class="sortable" data-column="age">Age</th>
+            <th class="sortable" data-column="country">Country</th>
+        </thead>
+        <tbody>
+            {% for player in entity.players %}
+            <tr>
+                <td>
+                    <a href="{% url 'player' player.id %}" style="text-decoration: none; color: inherit;">
+                        {{ player.name }}
+                    </a>
+                </td>
+                <td>
+                    {% for pos in player.pos %}
+                    <span>{{ pos }}{% if not forloop.last %}, {% endif %}</span>
+                    {% endfor %}
+                </td>
+                <td>{{ player.age }}</td>
+                <td>
+                    <img src="{{ player.country_flag }}" alt="{{ player.country_name }}"
+                        style="height: 20px; margin-right: 5px;">
+                    {{ player.country_name }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-    <div class="card-footer" style="color: var(--alt-color); background-color: var(--main-color);">
-        <h2 class="mt-4">Stats</h2>
-    </div>
+<div class="card-footer" style="color: var(--alt-color); background-color: var(--main-color);">
+    <h2 class="mt-4">Stats</h2>
+</div>
 
 {% endblock %}
