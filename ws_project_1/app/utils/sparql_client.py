@@ -595,3 +595,72 @@ def process_player_stats_results(results):
     
     # Convert the dictionary to a sorted list of categories
     return sorted(list(categories.values()), key=lambda x: x["name"])
+
+def query_club_stats(club_id):
+    """
+    Query and process club statistics from the SPARQL endpoint.
+    
+    Args:
+        club_id: The ID of the club to query stats for
+        
+    Returns:
+        list: List of processed stats categories ready for template rendering
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT ?stat_category ?stat_name ?stat_value
+    WHERE {{
+        VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
+        
+        ?club_id ?stat ?stat_value .
+        ?stat fut-rel:type ?stat_cat_id .
+        ?stat fut-rel:name ?stat_name .
+        ?stat_cat_id fut-rel:name ?stat_category .
+    }}
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_club_stats_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_club_stats_results(results):
+    """
+    Process the SPARQL query results for club stats into the format needed for templates.
+    Stats are grouped by category.
+    """
+    if not results["results"]["bindings"]:
+        return []
+    
+    # Create a dictionary to group stats by category
+    categories = {}
+    
+    for stat in results["results"]["bindings"]:
+        category = stat["stat_category"]["value"]
+        stat_name = stat["stat_name"]["value"]
+        stat_value = stat["stat_value"]["value"]
+        
+        # Create category if it doesn't exist yet
+        if category not in categories:
+            categories[category] = {
+                "name": category,
+                "stats": []
+            }
+            
+        # Add stat to the appropriate category
+        categories[category]["stats"].append({
+            "name": stat_name,
+            "value": stat_value
+        })
+    
+    # Convert the dictionary to a sorted list of categories
+    return sorted(list(categories.values()), key=lambda x: x["name"])
