@@ -446,3 +446,83 @@ def process_all_players_results(results):
         })
     
     return players
+
+def query_all_clubs():
+    """
+    Query and process a list of all clubs from the SPARQL endpoint.
+    
+    Returns:
+        list: List of processed club data ready for template rendering
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query
+    query = """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT
+        ?club_id
+        ?abbreviation
+        ?name
+        ?league
+        ?flag
+        ?logo
+        ?color
+        ?alternateColor
+        (COUNT(?player) AS ?numPlayers)
+    WHERE {
+        ?club_id rdf:type fut-rel:Club .
+        ?club_id fut-rel:name ?name .
+        ?club_id fut-rel:abrv ?abbreviation .
+        ?club_id fut-rel:league ?league_id .
+        ?league_id fut-rel:name ?league .
+        ?club_id fut-rel:country ?country .
+        ?country fut-rel:flag ?flag .
+        ?club_id fut-rel:logo ?logo .
+        ?club_id fut-rel:color ?color .
+        ?club_id fut-rel:alternateColor ?alternateColor .
+        OPTIONAL {
+            ?player fut-rel:club ?club_id .
+            FILTER NOT EXISTS { ?player fut-rel:left_club ?club_id }
+        }
+    }
+    GROUP BY ?club_id ?abbreviation ?league ?flag ?name ?logo ?color ?alternateColor
+    ORDER BY ?name
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_all_clubs_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_all_clubs_results(results):
+    """Process the SPARQL query results for all clubs into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    clubs = []
+    for club in results["results"]["bindings"]:
+        # Extract club ID from URI
+        club_id = club["club_id"]["value"].split("/")[-1]
+        
+        # Get number of players (convert to integer)
+        num_players = int(club.get("numPlayers", {}).get("value", "0"))
+        
+        clubs.append({
+            "id": club_id,
+            "name": club["name"]["value"],
+            "abbreviation": club["abbreviation"]["value"],
+            "league": club["league"]["value"],
+            "flag": club["flag"]["value"],
+            "logo": club["logo"]["value"],
+            "color": club["color"]["value"],
+            "alternate_color": club["alternateColor"]["value"],
+            "num_players": num_players
+        })
+    
+    return clubs
