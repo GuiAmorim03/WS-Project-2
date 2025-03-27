@@ -119,13 +119,15 @@ def convert_entity_name_to_id(entity_name):
     return quote(unidecode(entity_name.lower().replace(' ', '_')))
 
 def check_player_exists(player_name):
-    if player_name not in players:
-        players.add(player_name)
+    player_name_unidecoded = unidecode(player_name)
+    if player_name_unidecoded not in players:
+        players.add(player_name_unidecoded)
         return False, convert_entity_name_to_id(player_name)
     else:
         # se o player já existe, é necessário verificar se é um falso duplicado
         # verificar se o 'Born' e 'Nation' são iguais
-        repeated_player_info = df_main[df_main['Player'] == player_name]
+        df_main['Player_unidecoded'] = df_main['Player'].apply(unidecode)
+        repeated_player_info = df_main[df_main['Player_unidecoded'] == unidecode(player_name_unidecoded)]
         born_years = repeated_player_info['Born'].unique()
         nation = repeated_player_info['Nation'].unique()
         if len(born_years) > 1 or len(nation) > 1 or player_name == 'Vitinha':  # Há 2 Vitinha da mesma idade e país

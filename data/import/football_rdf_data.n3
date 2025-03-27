@@ -27462,36 +27462,23 @@
     ns1:xg 6e-01 .
 
 <http://football.org/ent/ederson> a ns2:Player ;
-    ns2:born 1993,
-        1999 ;
-    ns2:club <http://football.org/ent/atalanta>,
-        <http://football.org/ent/man_city> ;
-    ns2:name "Ederson",
-        "Éderson" ;
+    ns2:born 1993 ;
+    ns2:club <http://football.org/ent/man_city> ;
+    ns2:name "Ederson" ;
     ns2:nation <http://football.org/ent/BRA> ;
-    ns2:position "GK",
-        "MF" ;
-    ns1:ast 4 ;
-    ns1:blocks_stats_defense 25 ;
-    ns1:clr 26 ;
-    ns1:cmp_stats_passing_types 1368 ;
-    ns1:crdr 1 ;
-    ns1:crdy 8 ;
+    ns2:position "GK" ;
+    ns1:ast 3 ;
+    ns1:crdr 0 ;
+    ns1:crdy 3 ;
     ns1:cs 5 ;
     ns1:cs_pct 2.63e+01 ;
-    ns1:dis 36 ;
-    ns1:err 1 ;
-    ns1:fls 27 ;
-    ns1:g_plus_a 7 ;
+    ns1:fls 1 ;
+    ns1:g_plus_a 3 ;
     ns1:ga 23 ;
     ns1:ga90 1.21e+00 ;
-    ns1:gls 3 ;
-    ns1:int 33 ;
-    ns1:kp 29 ;
-    ns1:live 1520 ;
-    ns1:min 4029 ;
-    ns1:mis 38 ;
-    ns1:mp 48 ;
+    ns1:gls 0 ;
+    ns1:min 1710 ;
+    ns1:mp 19 ;
     ns1:off_stats_misc 0 ;
     ns1:og 0 ;
     ns1:pk 0 ;
@@ -27500,18 +27487,51 @@
     ns1:pkcon 1 ;
     ns1:pksv 0 ;
     ns1:pkwon 0 ;
+    ns1:save_pct 6.96e+01 ;
+    ns1:saves 47 ;
+    ns1:starts 19 ;
+    ns1:xag 8e-01 ;
+    ns1:xg 0e+00 .
+
+<http://football.org/ent/ederson_2> a ns2:Player ;
+    ns2:born 1999 ;
+    ns2:club <http://football.org/ent/atalanta> ;
+    ns2:name "Éderson" ;
+    ns2:nation <http://football.org/ent/BRA> ;
+    ns2:position "MF" ;
+    ns1:ast 1 ;
+    ns1:blocks_stats_defense 25 ;
+    ns1:clr 26 ;
+    ns1:cmp_stats_passing_types 1368 ;
+    ns1:crdr 1 ;
+    ns1:crdy 5 ;
+    ns1:dis 36 ;
+    ns1:err 1 ;
+    ns1:fls 26 ;
+    ns1:g_plus_a 4 ;
+    ns1:gls 3 ;
+    ns1:int 33 ;
+    ns1:kp 29 ;
+    ns1:live 1520 ;
+    ns1:min 2319 ;
+    ns1:mis 38 ;
+    ns1:mp 29 ;
+    ns1:off_stats_misc 0 ;
+    ns1:og 0 ;
+    ns1:pk 0 ;
+    ns1:pkatt 0 ;
+    ns1:pkcon 0 ;
+    ns1:pkwon 0 ;
     ns1:ppa 35 ;
     ns1:prgc 29 ;
     ns1:prgp 165 ;
     ns1:prgr 63 ;
     ns1:recov 149 ;
-    ns1:save_pct 6.96e+01 ;
-    ns1:saves 47 ;
-    ns1:starts 45 ;
+    ns1:starts 26 ;
     ns1:tkl 44 ;
     ns1:tklw 27 ;
     ns1:touches 1856 ;
-    ns1:xag 4.5e+00 ;
+    ns1:xag 3.7e+00 ;
     ns1:xg 3e+00 .
 
 <http://football.org/ent/edhy_zuliani> a ns2:Player ;
