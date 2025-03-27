@@ -649,6 +649,13 @@ def process_club_stats_results(results):
         stat_name = stat["stat_name"]["value"]
         stat_value = stat["stat_value"]["value"]
         
+        # If the stat value is a float, round it to 2 decimal places
+        if '.' in stat_value:
+            try:
+                stat_value = round(float(stat_value), 2)
+            except ValueError:
+                pass
+        
         # Create category if it doesn't exist yet
         if category not in categories:
             categories[category] = {
