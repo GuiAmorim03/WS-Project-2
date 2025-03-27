@@ -13,6 +13,62 @@
     {% block content_inside %}
     {% endblock %}
 
+    {% if entity.stats %}
+    <div class="card-footer" style="color: var(--alt-color); background-color: var(--main-color);">
+        <h2 class="mt-4 mb-4">Stats</h2>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                {% for stats_group in entity.stats %}
+                <div class="swiper-slide">
+                    <div class="stats-column" style="background-color: var(--alt-color); color: var(--main-color);">
+                        <h5><b>{{ stats_group.name }}</b></h5>
+                        {% for stat in stats_group.stats %}
+                        <p class="stat-item m-0" style="border-color: var(--main-color);">
+                            <span class="stat-name">{{ stat.name }}</span>
+                            <span class="stat-value">{{ stat.value }}</span>
+                        </p>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Botões de navegação -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    {% endif %}
 </div>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/stats_entity.css' %}">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
+    });
+</script>
 
 {% endblock %}

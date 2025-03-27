@@ -77,12 +77,12 @@ def query_player_details(player_id):
     sparql.setQuery(query)
     try:
         results = sparql.query().convert()
-        return process_player_results(results)
+        return process_player_results(results, player_id)
     except Exception as e:
         print(f"SPARQL query error: {e}")
         return get_default_player_data()
 
-def process_player_results(results):
+def process_player_results(results, player_id):
     """Process the SPARQL query results into the format needed for templates."""
     if not results["results"]["bindings"]:
         return get_default_player_data()
@@ -152,7 +152,7 @@ def process_player_results(results):
         "teams": teams,
         "color": result["currentClubColor"]["value"],
         "alternate_color": result["currentClubAltColor"]["value"],
-        "stats": []
+        "stats": query_player_stats(player_id)
     }
 
 def get_default_player_data():
@@ -221,12 +221,12 @@ def query_club_details(club_id):
     sparql.setQuery(query)
     try:
         results = sparql.query().convert()
-        return process_club_results(results)
+        return process_club_results(results, club_id)
     except Exception as e:
         print(f"SPARQL query error: {e}")
         return get_default_club_data()
 
-def process_club_results(results):
+def process_club_results(results, club_id):
     """Process the SPARQL query results for club details into the format needed for templates."""
     if not results["results"]["bindings"]:
         return get_default_club_data()
@@ -248,7 +248,8 @@ def process_club_results(results):
         },
         "logo": result["logo"]["value"],
         "color": result["color"]["value"],
-        "alternate_color": result["alternateColor"]["value"]
+        "alternate_color": result["alternateColor"]["value"],
+        "stats": query_club_stats(club_id),
     }
 
 def get_default_club_data():
@@ -593,8 +594,7 @@ def process_player_stats_results(results):
             "value": stat_value
         })
     
-    # Convert the dictionary to a sorted list of categories
-    return sorted(list(categories.values()), key=lambda x: x["name"])
+    return sort_stats_categories(categories)
 
 def query_club_stats(club_id):
     """
@@ -662,5 +662,55 @@ def process_club_stats_results(results):
             "value": stat_value
         })
     
-    # Convert the dictionary to a sorted list of categories
-    return sorted(list(categories.values()), key=lambda x: x["name"])
+    return sort_stats_categories(categories)
+
+
+def sort_stats_categories(categories):
+    category_order = {
+        "Playing Time": 0,
+        "Attacking": 1,
+        "Defending": 2,
+        "Passing & Creativity": 3,
+        "Goalkeeping": 4,
+        "Miscellaneous": 5
+    }
+
+    stat_orders = {
+        "Playing Time": [
+            "Matches Played", "Games Started", "Minutes Played"
+        ],
+        "Attacking": [
+            "Goals", "Assists", "Goals + Assists", "Expected Goals",
+            "Expected Assists", "Penalties Scored", "Penalties Attempted"
+        ],
+        "Defending": [
+            "Tackles", "Tackles Won", "Blocks", "Interceptions",
+            "Clearances", "Errors Leading to Goal", "Ball Recoveries"
+        ],
+        "Passing & Creativity": [
+            "Progressive Passes", "Progressive Carries", "Progressive Runs",
+            "Key Passes", "Passes into Penalty Area", "Total Passes",
+            "Passes Completed", "Touches", "Miscontrols", "Times Dispossessed"
+        ],
+        "Goalkeeping": [
+            "Goals Conceded", "Goals Conceded per 90 minutes", "Saves",
+            "Save %", "Clean Sheets", "Clean Sheet %", "Penalties Faced", "Penalties Saved"
+        ],
+        "Miscellaneous": [
+            "Yellow Cards", "Red Cards", "Fouls Committed", "Penalties Conceded",
+            "Penalties Won", "Own Goals", "Offsides"
+        ]
+    }
+
+    sorted_categories = sorted(
+        categories.values(),
+        key=lambda x: category_order.get(x["name"], float('inf'))
+    )
+
+    for category in sorted_categories:
+        category_name = category["name"]
+        if category_name in stat_orders:
+            category["stats"].sort(key=lambda stat: stat_orders[category_name].index(stat["name"])
+                                   if stat["name"] in stat_orders[category_name] else float('inf'))
+
+    return sorted_categories
