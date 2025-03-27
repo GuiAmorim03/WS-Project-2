@@ -94,18 +94,9 @@ def process_player_results(results):
     # Position mapping dictionary
     position_mapping = {
         "GK": "Goalkeeper",
-        "CB": "Center Back",
-        "LB": "Left Back",
-        "RB": "Right Back",
-        "DM": "Defensive Midfielder",
-        "CM": "Center Midfielder",
-        "MF": "Midfielder",
-        "WM": "Wing Midfielder",
-        "AM": "Attacking Midfielder",
-        "WF": "Wing Forward",
+        "DF": "Defender",
+        "MD": "Midfielder",
         "FW": "Forward",
-        "ST": "Striker",
-        "CF": "Center Forward"
     }
     
     # Extract positions from comma-separated string
