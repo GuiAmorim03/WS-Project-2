@@ -229,3 +229,43 @@ WHERE {
 ORDER BY DESC(?stat_value)
 LIMIT 10
 ```
+
+## Query 8: Get the top 10 clubs in a specific stat (club_id, name, stat_name, stat_value)
+```
+sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+SELECT
+    ?club_id
+    ?name
+    ?stat_name
+    ?stat_value
+WHERE {
+    VALUES ?stat { <http://football.org/stat/crdr> } 
+    
+    ?club_id rdf:type fut-rel:Club .
+    ?club_id fut-rel:name ?name .
+    ?club_id ?stat ?stat_value .
+    ?stat fut-rel:name ?stat_name .
+}
+ORDER BY DESC(?stat_value)
+LIMIT 10
+```
+
+## Query 9: Get a specific club's stats (stat_category, stat_name, stat_value)
+```
+sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+SELECT ?stat_category ?stat_name ?stat_value
+WHERE {
+    VALUES ?club_id { <http://football.org/ent/heidenheim> }
+    
+    ?club_id ?stat ?stat_value .
+    ?stat fut-rel:type ?stat_cat_id .
+    ?stat fut-rel:name ?stat_name .
+    ?stat_cat_id fut-rel:name ?stat_category .
+}
+```
