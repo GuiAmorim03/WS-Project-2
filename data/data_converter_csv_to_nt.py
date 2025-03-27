@@ -223,7 +223,7 @@ for index, row in df_main.iterrows():
                 if (len(club_info) == 1):
                     break
 
-        club_id = convert_entity_name_to_id(club_info['shortDisplayName'].values[0])
+        club_id = club_info['shortDisplayName'].values[0]
         club_abrv = club_info['abbreviation'].values[0]
         club_name = club_info['name'].values[0]
         club_color = club_info['color'].values[0]
@@ -239,6 +239,9 @@ for index, row in df_main.iterrows():
         league_id = league.split(' ')[0]
         club_country_id = league_code_to_country_code[league_id]
     
+        if "'" in club_id:
+            club_id = club_name
+        club_id = convert_entity_name_to_id(club_id)
         club_uri = URIRef(ns_ent + club_id)
         g.add((club_uri, ns_rel.name, Literal(club_name)))
         g.add((club_uri, ns_rel.abrv, Literal(club_abrv)))

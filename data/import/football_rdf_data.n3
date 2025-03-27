@@ -4649,7 +4649,7 @@
 
 <http://football.org/ent/alex_moreno> a ns2:Player ;
     ns2:born 1993 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Álex Moreno" ;
     ns2:nation <http://football.org/ent/ESP> ;
     ns2:position "DF" ;
@@ -9593,7 +9593,7 @@
 
 <http://football.org/ent/anthony_elanga> a ns2:Player ;
     ns2:born 2002 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Anthony Elanga" ;
     ns2:nation <http://football.org/ent/SWE> ;
     ns2:position "FW",
@@ -16833,7 +16833,7 @@
 
 <http://football.org/ent/callum_hudson-odoi> a ns2:Player ;
     ns2:born 2000 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Callum Hudson-Odoi" ;
     ns2:nation <http://football.org/ent/ENG> ;
     ns2:position "FW",
@@ -19219,7 +19219,7 @@
 
 <http://football.org/ent/chris_wood> a ns2:Player ;
     ns2:born 1991 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Chris Wood" ;
     ns2:nation <http://football.org/ent/NZL> ;
     ns2:position "FW" ;
@@ -22656,7 +22656,7 @@
 
 <http://football.org/ent/danilo> a ns2:Player ;
     ns2:born 2001 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Danilo" ;
     ns2:nation <http://football.org/ent/BRA> ;
     ns2:position "MF" ;
@@ -28360,7 +28360,7 @@
 
 <http://football.org/ent/elliot_anderson> a ns2:Player ;
     ns2:born 2002 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Elliot Anderson" ;
     ns2:nation <http://football.org/ent/ENG> ;
     ns2:position "MF" ;
@@ -30168,7 +30168,7 @@
 
 <http://football.org/ent/eric_da_silva_moreira> a ns2:Player ;
     ns2:born 2006 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Eric da Silva Moreira" ;
     ns2:nation <http://football.org/ent/GER> ;
     ns2:position "DF",
@@ -39150,7 +39150,7 @@
 
 <http://football.org/ent/harry_toffolo> a ns2:Player ;
     ns2:born 1995 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Harry Toffolo" ;
     ns2:nation <http://football.org/ent/ENG> ;
     ns2:position "DF" ;
@@ -40543,7 +40543,7 @@
 
 <http://football.org/ent/ibrahim_sangare> a ns2:Player ;
     ns2:born 1997 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Ibrahim Sangaré" ;
     ns2:nation <http://football.org/ent/CIV> ;
     ns2:position "MF" ;
@@ -44964,7 +44964,7 @@
 
 <http://football.org/ent/james_ward-prowse> a ns2:Player ;
     ns2:born 1994 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest>,
+    ns2:club <http://football.org/ent/nottingham_forest>,
         <http://football.org/ent/west_ham> ;
     ns2:left_club <http://football.org/ent/west_ham> ;
     ns2:name "James Ward-Prowse" ;
@@ -52097,7 +52097,7 @@
 
 <http://football.org/ent/jota_silva> a ns2:Player ;
     ns2:born 1999 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Jota Silva" ;
     ns2:nation <http://football.org/ent/POR> ;
     ns2:position "FW",
@@ -70884,7 +70884,7 @@
 
 <http://football.org/ent/matz_sels> a ns2:Player ;
     ns2:born 1992 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Matz Sels" ;
     ns2:nation <http://football.org/ent/BEL> ;
     ns2:position "GK" ;
@@ -74616,7 +74616,7 @@
 
 <http://football.org/ent/morato> a ns2:Player ;
     ns2:born 2001 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Morato" ;
     ns2:nation <http://football.org/ent/BRA> ;
     ns2:position "DF" ;
@@ -74657,7 +74657,7 @@
 
 <http://football.org/ent/morgan_gibbs-white> a ns2:Player ;
     ns2:born 2000 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Morgan Gibbs-White" ;
     ns2:nation <http://football.org/ent/ENG> ;
     ns2:position "MF" ;
@@ -75311,7 +75311,7 @@
 
 <http://football.org/ent/murillo> a ns2:Player ;
     ns2:born 2002 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Murillo" ;
     ns2:nation <http://football.org/ent/BRA> ;
     ns2:position "DF" ;
@@ -76635,7 +76635,7 @@
 
 <http://football.org/ent/neco_williams> a ns2:Player ;
     ns2:born 2001 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Neco Williams" ;
     ns2:nation <http://football.org/ent/WAL> ;
     ns2:position "DF" ;
@@ -77674,7 +77674,7 @@
 
 <http://football.org/ent/nicolas_dominguez> a ns2:Player ;
     ns2:born 1998 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Nicolás Domínguez" ;
     ns2:nation <http://football.org/ent/ARG> ;
     ns2:position "FW",
@@ -78879,7 +78879,7 @@
 
 <http://football.org/ent/nikola_milenkovic> a ns2:Player ;
     ns2:born 1997 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Nikola Milenković" ;
     ns2:nation <http://football.org/ent/SRB> ;
     ns2:position "DF" ;
@@ -79898,7 +79898,7 @@
 
 <http://football.org/ent/ola_aina> a ns2:Player ;
     ns2:born 1996 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Ola Aina" ;
     ns2:nation <http://football.org/ent/NGA> ;
     ns2:position "DF" ;
@@ -85907,7 +85907,7 @@
 
 <http://football.org/ent/ramon_sosa> a ns2:Player ;
     ns2:born 1999 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Ramón Sosa" ;
     ns2:nation <http://football.org/ent/PAR> ;
     ns2:position "FW",
@@ -90422,7 +90422,7 @@
 
 <http://football.org/ent/ryan_yates> a ns2:Player ;
     ns2:born 1997 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Ryan Yates" ;
     ns2:nation <http://football.org/ent/ENG> ;
     ns2:position "MF" ;
@@ -96252,7 +96252,7 @@
 
 <http://football.org/ent/taiwo_awoniyi> a ns2:Player ;
     ns2:born 1997 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Taiwo Awoniyi" ;
     ns2:nation <http://football.org/ent/NGA> ;
     ns2:position "FW" ;
@@ -103351,7 +103351,7 @@
 
 <http://football.org/ent/willy_boly> a ns2:Player ;
     ns2:born 1991 ;
-    ns2:club <http://football.org/ent/nott%27ham_forest> ;
+    ns2:club <http://football.org/ent/nottingham_forest> ;
     ns2:name "Willy Boly" ;
     ns2:nation <http://football.org/ent/CIV> ;
     ns2:position "DF" ;
@@ -107031,7 +107031,7 @@ ns1:xg ns2:name "Expected Goals" ;
     ns1:touches 18356 ;
     ns1:xg 4.99e+01 .
 
-<http://football.org/ent/nott%27ham_forest> a ns2:Club ;
+<http://football.org/ent/nottingham_forest> a ns2:Club ;
     ns2:abrv "NFO" ;
     ns2:alternateColor "132257" ;
     ns2:city "Nottingham" ;
