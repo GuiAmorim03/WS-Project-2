@@ -34,3 +34,12 @@ def club_detail(request, club_id):
     print(club_data)
     
     return render(request, "club.html", {"entity": club_data})
+
+def dashboard(request):
+    return render(request, "dashboard.html", {"stats": {}})
+
+def players(request):
+    return render(request, "players.html", {"entities_list": []})
+
+def clubs(request):
+    return render(request, "clubs.html", {"entities_list": []})

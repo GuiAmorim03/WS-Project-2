@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("player/<path:player_id>", player_detail, name="player"),
     path("club/<path:club_id>", club_detail, name="team"),
-    path("league/<path:team_id>", club_detail, name="league"),
-    path("players/", player_detail, name="players"),
-    path("teams/", player_detail, name="teams"),
+    path("players", players, name="players"),
+    path("clubs", clubs, name="clubs"),
+    path("", dashboard, name="dashboard"),
 ]
