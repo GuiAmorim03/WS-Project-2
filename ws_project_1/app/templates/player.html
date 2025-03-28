@@ -35,9 +35,9 @@
         {% for team in entity.teams %}
         <a href="{% url 'team' team.id %}" style="text-decoration: none;">
             <img src="{{ team.logo }}" alt="Club" style="height: 20px;">
+            <span style="color: var(--main-color);" >{{ team.name }}</span>
         </a>
-        <span>{{ team.name }}</span>
-        <br>
+    <br>
         {% endfor %}
     </p>
 </div>
