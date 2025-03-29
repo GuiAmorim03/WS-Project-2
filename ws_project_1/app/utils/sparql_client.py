@@ -372,13 +372,14 @@ def query_all_players():
         ?flag
         (SAMPLE(?currentClubRaw) AS ?currentClub)
         (SAMPLE(?clubLogo) AS ?currentClubLogo)
+        (SAMPLE(?clubName) AS ?currentClubName)
         ?born
     WHERE { 
         ?player_id rdf:type fut-rel:Player .
         ?player_id fut-rel:name ?name .
         ?player_id fut-rel:position ?position .
         ?player_id fut-rel:nation ?nation_id .
-        ?nation_id fut-rel:abrv ?nation .
+        ?nation_id fut-rel:name ?nation .
         ?nation_id fut-rel:flag ?flag .
         ?player_id fut-rel:born ?born .
         
@@ -389,6 +390,7 @@ def query_all_players():
             
             OPTIONAL {
                 ?currentClubRaw fut-rel:logo ?clubLogo .
+                ?currentClubRaw fut-rel:name ?clubName .
             }
         }
     }
@@ -428,12 +430,13 @@ def process_all_players_results(results):
         current_club = None
         current_club_logo = None
         
-        if "currentClub" in player and player["currentClub"]["value"]:
-            current_club = player["currentClub"]["value"].split("/")[-1]
+        if "currentClubName" in player and player["currentClubName"]["value"]:
+            current_club = player["currentClubName"]["value"].split("/")[-1]
             
         if "currentClubLogo" in player and player["currentClubLogo"]["value"]:
             current_club_logo = player["currentClubLogo"]["value"]
-            
+           
+        print(player)
         players.append({
             "id": player_id,
             "name": player["name"]["value"],
