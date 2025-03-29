@@ -46,28 +46,23 @@ def query_player_details(player_id):
         # Filter for a specific player by ID
         VALUES ?player_id {{ <http://football.org/ent/{player_id}> }} 
         
-        ?player_id rdf:type fut-rel:Player .
-        ?player_id fut-rel:name ?name .
-        ?player_id fut-rel:position ?position .
-        ?player_id fut-rel:nation ?nation_id .
-        ?nation_id fut-rel:name ?nation .
-        ?nation_id fut-rel:flag ?flag .
-        ?player_id fut-rel:born ?born .
-        
-        # Get current club
-        ?player_id fut-rel:club ?currentClub .
-        FILTER NOT EXISTS {{ ?player_id fut-rel:left_club ?currentClub }}
-        
-        ?currentClub fut-rel:name ?currentClubName .
-        ?currentClub fut-rel:logo ?currentClubLogo .
-        ?currentClub fut-rel:color ?currentClubColor .
-        ?currentClub fut-rel:alternateColor ?currentClubAltColor .
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                fut-rel:position ?position ;
+                fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
+                fut-rel:born ?born ;
+                fut-rel:club ?currentClub .
+
+        ?currentClub fut-rel:name ?currentClubName ;
+                    fut-rel:logo ?currentClubLogo ;
+                    fut-rel:color ?currentClubColor ;
+                    fut-rel:alternateColor ?currentClubAltColor .
 
         # Get past clubs
         OPTIONAL {{
-            ?player_id fut-rel:left_club ?pastClub .
-            ?pastClub fut-rel:name ?pastClubName .
-            ?pastClub fut-rel:logo ?pastClubLogo .
+            ?player_id fut-rel:past_club ?pastClub .
+            ?pastClub fut-rel:name ?pastClubName ;
+                    fut-rel:logo ?pastClubLogo .
         }}
     }}
     GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
@@ -202,18 +197,18 @@ def query_club_details(club_id):
     WHERE {{
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
-        ?club_id rdf:type fut-rel:Club .
-        ?club_id fut-rel:name ?name .
-        ?club_id fut-rel:abrv ?abbreviation .
-        ?club_id fut-rel:stadium ?stadium .
-        ?club_id fut-rel:city ?city .
-        ?club_id fut-rel:league ?league_id .
+        ?club_id rdf:type fut-rel:Club ;
+                fut-rel:name ?name ;
+                fut-rel:abrv ?abbreviation ;
+                fut-rel:stadium ?stadium ;
+                fut-rel:city ?city ;
+                fut-rel:league ?league_id ;
+                fut-rel:logo ?logo ;
+                fut-rel:color ?color ;
+                fut-rel:alternateColor ?alternateColor ;
+                fut-rel:country/fut-rel:flag ?flag .
+
         ?league_id fut-rel:name ?league_name .
-        ?club_id fut-rel:country ?country .
-        ?country fut-rel:flag ?flag .
-        ?club_id fut-rel:logo ?logo .
-        ?club_id fut-rel:color ?color .
-        ?club_id fut-rel:alternateColor ?alternateColor .
     }}
     """
 
@@ -299,15 +294,13 @@ def query_club_players(club_id):
     WHERE {{
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
-        ?player_id rdf:type fut-rel:Player .
-        ?player_id fut-rel:name ?name .
-        ?player_id fut-rel:position ?position .
-        ?player_id fut-rel:nation ?nation_id .
-        ?nation_id fut-rel:name ?nation .
-        ?nation_id fut-rel:flag ?flag .
-        ?player_id fut-rel:born ?born .
-        ?player_id fut-rel:club ?club_id .
-        FILTER NOT EXISTS {{ ?player_id fut-rel:left_club ?club_id }}
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                fut-rel:born ?born ;
+                fut-rel:club ?club_id ;
+                fut-rel:nation/fut-rel:name ?nation ;
+                fut-rel:nation/fut-rel:flag ?flag ;
+                fut-rel:position ?position .
     }}
     GROUP BY ?player_id ?name ?born ?nation ?flag
     ORDER BY ?name
@@ -370,29 +363,20 @@ def query_all_players():
         (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
         ?nation
         ?flag
-        (SAMPLE(?currentClubRaw) AS ?currentClub)
-        (SAMPLE(?clubLogo) AS ?currentClubLogo)
+        ?currentClub
+        ?currentClubLogo
         ?born
     WHERE { 
-        ?player_id rdf:type fut-rel:Player .
-        ?player_id fut-rel:name ?name .
-        ?player_id fut-rel:position ?position .
-        ?player_id fut-rel:nation ?nation_id .
-        ?nation_id fut-rel:abrv ?nation .
-        ?nation_id fut-rel:flag ?flag .
-        ?player_id fut-rel:born ?born .
-        
-        # Choose the current club (one that has not been left)
-        OPTIONAL {
-            ?player_id fut-rel:club ?currentClubRaw .
-            FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClubRaw }
-            
-            OPTIONAL {
-                ?currentClubRaw fut-rel:logo ?clubLogo .
-            }
-        }
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                fut-rel:position ?position ;
+                fut-rel:nation [ fut-rel:abrv ?nation ; fut-rel:flag ?flag ] ;
+                fut-rel:born ?born ;
+                fut-rel:club ?currentClub .
+
+        OPTIONAL { ?currentClub fut-rel:logo ?currentClubLogo . }
     }
-    GROUP BY ?player_id ?name ?nation ?flag ?born
+    GROUP BY ?player_id ?name ?nation ?flag ?born ?currentClub ?currentClubLogo
     ORDER BY ?name
     """
     
@@ -473,20 +457,16 @@ def query_all_clubs():
         ?alternateColor
         (COUNT(?player) AS ?numPlayers)
     WHERE {
-        ?club_id rdf:type fut-rel:Club .
-        ?club_id fut-rel:name ?name .
-        ?club_id fut-rel:abrv ?abbreviation .
-        ?club_id fut-rel:league ?league_id .
-        ?league_id fut-rel:name ?league .
-        ?club_id fut-rel:country ?country .
-        ?country fut-rel:flag ?flag .
-        ?club_id fut-rel:logo ?logo .
-        ?club_id fut-rel:color ?color .
-        ?club_id fut-rel:alternateColor ?alternateColor .
-        OPTIONAL {
-            ?player fut-rel:club ?club_id .
-            FILTER NOT EXISTS { ?player fut-rel:left_club ?club_id }
-        }
+        ?club_id rdf:type fut-rel:Club ;
+                fut-rel:name ?name ;
+                fut-rel:abrv ?abbreviation ;
+                fut-rel:league/fut-rel:name ?league ;
+                fut-rel:country/fut-rel:flag ?flag ;
+                fut-rel:logo ?logo ;
+                fut-rel:color ?color ;
+                fut-rel:alternateColor ?alternateColor .
+        
+        OPTIONAL { ?player fut-rel:club ?club_id . }
     }
     GROUP BY ?club_id ?abbreviation ?league ?flag ?name ?logo ?color ?alternateColor
     ORDER BY ?name
@@ -550,9 +530,8 @@ def query_player_stats(player_id):
         VALUES ?player_id {{ <http://football.org/ent/{player_id}> }}
 
         ?player_id ?stat ?stat_value .
-        ?stat fut-rel:type ?stat_cat_id .
-        ?stat fut-rel:name ?stat_name .
-        ?stat_cat_id fut-rel:name ?stat_category .
+        ?stat fut-rel:type/fut-rel:name ?stat_category ;
+            fut-rel:name ?stat_name .
     }}
     """
     
@@ -618,9 +597,8 @@ def query_club_stats(club_id):
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
         ?club_id ?stat ?stat_value .
-        ?stat fut-rel:type ?stat_cat_id .
-        ?stat fut-rel:name ?stat_name .
-        ?stat_cat_id fut-rel:name ?stat_category .
+        ?stat fut-rel:type [fut-rel:name ?stat_category];
+              fut-rel:name ?stat_name 
     }}
     """
     

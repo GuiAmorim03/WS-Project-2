@@ -12,29 +12,20 @@ SELECT
     (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
     ?nation
     ?flag
-    (SAMPLE(?currentClubRaw) AS ?currentClub)
-    (SAMPLE(?clubLogo) AS ?currentClubLogo)
+    ?currentClub
+    ?currentClubLogo
     ?born
 WHERE { 
-    ?player_id rdf:type fut-rel:Player .
-    ?player_id fut-rel:name ?name .
-    ?player_id fut-rel:position ?position .
-    ?player_id fut-rel:nation ?nation_id .
-    ?nation_id fut-rel:abrv ?nation .
-    ?nation_id fut-rel:flag ?flag .
-    ?player_id fut-rel:born ?born .
-    
-    # Choose the current club (one that has not been left)
-    OPTIONAL {
-        ?player_id fut-rel:club ?currentClubRaw .
-        FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClubRaw }
-        
-        OPTIONAL {
-            ?currentClubRaw fut-rel:logo ?clubLogo .
-        }
-    }
+    ?player_id rdf:type fut-rel:Player ;
+               fut-rel:name ?name ;
+               fut-rel:position ?position ;
+               fut-rel:nation [ fut-rel:abrv ?nation ; fut-rel:flag ?flag ] ;
+               fut-rel:born ?born ;
+               fut-rel:club ?currentClub .
+
+    OPTIONAL { ?currentClub fut-rel:logo ?currentClubLogo . }
 }
-GROUP BY ?player_id ?name ?nation ?flag ?born
+GROUP BY ?player_id ?name ?nation ?flag ?born ?currentClub ?currentClubLogo
 ORDER BY ?name
 ```
 
@@ -50,43 +41,39 @@ SELECT
     ?nation
     ?flag
     ?currentClub
-	?currentClubName
+    ?currentClubName
     ?currentClubLogo
     ?currentClubColor
     ?currentClubAltColor
     (GROUP_CONCAT(DISTINCT ?pastClub; separator=", ") AS ?pastClubs)
-	(GROUP_CONCAT(DISTINCT ?pastClubName; separator=", ") AS ?pastClubNames)
+    (GROUP_CONCAT(DISTINCT ?pastClubName; separator=", ") AS ?pastClubNames)
     (GROUP_CONCAT(DISTINCT ?pastClubLogo; separator=", ") AS ?pastClubLogos)
     ?born
 WHERE { 
     # Filter for a specific player by ID
-    VALUES ?player_id { <http://football.org/ent/aaron_ciammaglichella> } 
-    
-    ?player_id rdf:type fut-rel:Player .
-    ?player_id fut-rel:name ?name .
-    ?player_id fut-rel:position ?position .
-    ?player_id fut-rel:nation ?nation_id .
-    ?nation_id fut-rel:name ?nation .
-    ?nation_id fut-rel:flag ?flag .
-    ?player_id fut-rel:born ?born .
-    
-    # Get current club
-    ?player_id fut-rel:club ?currentClub .
-    FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClub }
-    
-    ?currentClub fut-rel:name ?currentClubName .
-    ?currentClub fut-rel:logo ?currentClubLogo .
-    ?currentClub fut-rel:color ?currentClubColor .
-    ?currentClub fut-rel:alternateColor ?currentClubAltColor .
+    VALUES ?player_id { <http://football.org/ent/marcus_rashford> } 
+
+    ?player_id rdf:type fut-rel:Player ;
+               fut-rel:name ?name ;
+               fut-rel:position ?position ;
+               fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
+               fut-rel:born ?born ;
+               fut-rel:club ?currentClub .
+
+    ?currentClub fut-rel:name ?currentClubName ;
+                 fut-rel:logo ?currentClubLogo ;
+                 fut-rel:color ?currentClubColor ;
+                 fut-rel:alternateColor ?currentClubAltColor .
 
     # Get past clubs
     OPTIONAL {
-        ?player_id fut-rel:left_club ?pastClub .
-        ?pastClub fut-rel:name ?pastClubName .
-        ?pastClub fut-rel:logo ?pastClubLogo .
+        ?player_id fut-rel:past_club ?pastClub .
+        ?pastClub fut-rel:name ?pastClubName ;
+                  fut-rel:logo ?pastClubLogo .
     }
 }
-GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
+GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubName 
+         ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
 ```
 
 ## Query 3: Get a specific player's stats (stat_category, stat_name, stat_value)
@@ -100,9 +87,8 @@ WHERE {
     VALUES ?player_id { <http://football.org/ent/aaron_ciammaglichella> } 
 
     ?player_id ?stat ?stat_value .
-    ?stat fut-rel:type ?stat_cat_id .
-    ?stat fut-rel:name ?stat_name .
-    ?stat_cat_id fut-rel:name ?stat_category .
+    ?stat fut-rel:type/fut-rel:name ?stat_category ;
+          fut-rel:name ?stat_name .
 }
 ```
 
@@ -113,32 +99,28 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX fut-rel: <http://football.org/rel/>
 
 SELECT
-	?club_id
-	?abbreviation
-	?name
-	?league
-	?flag
-	?logo
-	?color
-	?alternateColor
-	(COUNT(?player) AS ?numPlayers)
+    ?club_id
+    ?abbreviation
+    ?name
+    ?league
+    ?flag
+    ?logo
+    ?color
+    ?alternateColor
+    (COUNT(?player) AS ?numPlayers)
 WHERE {
-	?club_id rdf:type fut-rel:Club .
-	?club_id fut-rel:name ?name .
-    ?club_id fut-rel:abrv ?abbreviation .
-    ?club_id fut-rel:league ?league_id .
-    ?league_id fut-rel:name ?league .
-    ?club_id fut-rel:country ?country .
-    ?country fut-rel:flag ?flag .
-	?club_id fut-rel:logo ?logo .
-	?club_id fut-rel:color ?color .
-	?club_id fut-rel:alternateColor ?alternateColor .
-    OPTIONAL {
-        ?player fut-rel:club ?club_id .
-        FILTER NOT EXISTS { ?player fut-rel:left_club ?club_id }
-    }
+    ?club_id rdf:type fut-rel:Club ;
+             fut-rel:name ?name ;
+             fut-rel:abrv ?abbreviation ;
+             fut-rel:league/fut-rel:name ?league ;
+             fut-rel:country/fut-rel:flag ?flag ;
+             fut-rel:logo ?logo ;
+             fut-rel:color ?color ;
+             fut-rel:alternateColor ?alternateColor .
+    
+    OPTIONAL { ?player fut-rel:club ?club_id . }
 }
-GROUP BY ?club_id ?abbreviation ?league ?flag ?name ?logo ?color ?alternateColor
+GROUP BY ?club_id ?abbreviation ?name ?league ?flag ?logo ?color ?alternateColor
 ORDER BY ?name
 ```
 
@@ -148,32 +130,32 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX fut-rel: <http://football.org/rel/>
 
 SELECT
-	?club_id
-	?abbreviation
-	?name
+    ?club_id
+    ?abbreviation
+    ?name
     ?stadium
     ?city
-	?league_id
-	?league_name
-	?flag
-	?logo
-	?color
-	?alternateColor
+    ?league_id
+    ?league_name
+    ?flag
+    ?logo
+    ?color
+    ?alternateColor
 WHERE {
     VALUES ?club_id { <http://football.org/ent/heidenheim> }
     
-	?club_id rdf:type fut-rel:Club .
-	?club_id fut-rel:name ?name .
-    ?club_id fut-rel:abrv ?abbreviation .
-    ?club_id fut-rel:stadium ?stadium .
-    ?club_id fut-rel:city ?city .
-    ?club_id fut-rel:league ?league_id .
+    ?club_id rdf:type fut-rel:Club ;
+             fut-rel:name ?name ;
+             fut-rel:abrv ?abbreviation ;
+             fut-rel:stadium ?stadium ;
+             fut-rel:city ?city ;
+             fut-rel:league ?league_id ;
+             fut-rel:logo ?logo ;
+             fut-rel:color ?color ;
+             fut-rel:alternateColor ?alternateColor ;
+             fut-rel:country/fut-rel:flag ?flag .
+
     ?league_id fut-rel:name ?league_name .
-    ?club_id fut-rel:country ?country .
-    ?country fut-rel:flag ?flag .
-	?club_id fut-rel:logo ?logo .
-	?club_id fut-rel:color ?color .
-	?club_id fut-rel:alternateColor ?alternateColor .
 }
 ```
 
@@ -184,24 +166,22 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX fut-rel: <http://football.org/rel/>
 
 SELECT
-	?player_id
-	?name
-	?born
-	(GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
-	?nation
-	?flag
+    ?player_id
+    ?name
+    ?born
+    (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
+    ?nation
+    ?flag
 WHERE {
-	VALUES ?club_id { <http://football.org/ent/heidenheim> }
-	
-	?player_id rdf:type fut-rel:Player .
-	?player_id fut-rel:name ?name .
-	?player_id fut-rel:position ?position .
-	?player_id fut-rel:nation ?nation_id .
-    ?nation_id fut-rel:name ?nation .
-	?nation_id fut-rel:flag ?flag .
-	?player_id fut-rel:born ?born .
-	?player_id fut-rel:club ?club_id .
-	FILTER NOT EXISTS { ?player_id fut-rel:left_club ?club_id }
+    VALUES ?club_id { <http://football.org/ent/heidenheim> }
+    
+    ?player_id rdf:type fut-rel:Player ;
+               fut-rel:name ?name ;
+               fut-rel:born ?born ;
+               fut-rel:club ?club_id ;
+               fut-rel:nation/fut-rel:name ?nation ;
+               fut-rel:nation/fut-rel:flag ?flag ;
+               fut-rel:position ?position .
 }
 GROUP BY ?player_id ?name ?born ?nation ?flag
 ORDER BY ?name
@@ -221,9 +201,10 @@ SELECT
 WHERE {
     VALUES ?stat { <http://football.org/stat/min> } 
     
-    ?player_id rdf:type fut-rel:Player .
-    ?player_id fut-rel:name ?name .
-    ?player_id ?stat ?stat_value .
+    ?player_id rdf:type fut-rel:Player ;
+               fut-rel:name ?name ;
+               ?stat ?stat_value .
+    
     ?stat fut-rel:name ?stat_name .
 }
 ORDER BY DESC(?stat_value)
@@ -244,9 +225,9 @@ SELECT
 WHERE {
     VALUES ?stat { <http://football.org/stat/crdr> } 
     
-    ?club_id rdf:type fut-rel:Club .
-    ?club_id fut-rel:name ?name .
-    ?club_id ?stat ?stat_value .
+    ?club_id rdf:type fut-rel:Club ;
+    		 fut-rel:name ?name ;
+             ?stat ?stat_value .
     ?stat fut-rel:name ?stat_name .
 }
 ORDER BY DESC(?stat_value)
@@ -264,8 +245,7 @@ WHERE {
     VALUES ?club_id { <http://football.org/ent/heidenheim> }
     
     ?club_id ?stat ?stat_value .
-    ?stat fut-rel:type ?stat_cat_id .
-    ?stat fut-rel:name ?stat_name .
-    ?stat_cat_id fut-rel:name ?stat_category .
+    ?stat fut-rel:type [fut-rel:name ?stat_category];
+          fut-rel:name ?stat_name .
 }
 ```
