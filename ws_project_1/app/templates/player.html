@@ -35,7 +35,9 @@
         {% for team in entity.teams %}
         <a href="{% url 'team' team.id %}" style="text-decoration: none;">
             <img src="{{ team.logo }}" alt="Club" style="height: 20px;">
-            <span style="color: var(--main-color);" >{{ team.name }}</span>
+            <span style="color: var(--main-color);">
+                {{ team.name }}{% if forloop.first %} (Current){% endif %}
+            </span>
         </a>
     <br>
         {% endfor %}
