@@ -4,4 +4,70 @@
 
 {% block content %}
 
+<h1>Football Players</h1>
+
+<!-- Filter Form -->
+<form method="get" class="search-form">
+    <div class="form-group">
+        <input type="text" name="name" placeholder="Search by name" value="{{ search_name }}">
+        <input type="text" name="position" placeholder="Search by position" value="{{ position }}">
+        <input type="text" name="nation" placeholder="Search by nation" value="{{ nation }}">
+        <button type="submit">Filter</button>
+    </div>
+</form>
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position(s)</th>
+            <th>Nation</th>
+            <th>Born</th>
+            <th>Current Club</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for player in entities_list %}
+        <tr onclick="window.location.href='{% url 'player' player.id %}';" style="cursor:pointer;">
+            <td>{{ player.name }}</td>
+            <td>{{ player.positions }}</td>
+            <td>
+                <img src="{{ player.flag }}" alt="{{ player.nation }} flag" class="small-flag">
+                {{ player.nation }}
+            </td>
+            <td>{{ player.born }}</td>
+            <td>
+                {% if player.current_club %}
+                    <img src="{{ player.club_logo }}" alt="{{ player.club_logo }}" class="small-logo">
+                    {{ player.current_club }}
+                {% else %}
+                    No current club
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No players found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if entities_list.has_other_pages %}
+<div class="pagination">
+    {% if entities_list.has_previous %}
+        <a href="?page=1{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">First</a>
+        <a href="?page={{ entities_list.previous_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Previous</a>
+    {% endif %}
+
+    Page {{ entities_list.number }} of {{ entities_list.paginator.num_pages }}
+
+    {% if entities_list.has_next %}
+        <a href="?page={{ entities_list.next_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Next</a>
+        <a href="?page={{ entities_list.paginator.num_pages }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Last</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/players_clubs.css' %}">
+
 {% endblock %}
