@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .utils.sparql_client import query_player_details, query_club_details, query_club_players
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .utils.sparql_client import query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs
 
 def player_detail(request, player_id):
     # Get player data from the SPARQL endpoint
@@ -39,7 +40,67 @@ def dashboard(request):
     return render(request, "dashboard.html", {"stats": {}})
 
 def players(request):
-    return render(request, "players.html", {"entities_list": []})
+
+    players_data = query_all_players() 
+
+    # Filtering
+    search_name = request.GET.get("name", "").strip().lower()
+    position = request.GET.get("position", "").strip().lower()
+    nation = request.GET.get("nation", "").strip().lower()
+
+    if search_name:
+        players_data = [p for p in players_data if search_name in p["name"].lower()]
+    if position:
+        players_data = [p for p in players_data if position in [pos.lower() for pos in p["positions"]]]
+    if nation:
+        players_data = [p for p in players_data if nation in p["nation"].lower()]
+
+    for player in players_data:
+            player["positions"] = ", ".join(player["positions"])
+
+    # Pagination
+    paginator = Paginator(players_data, 15)
+    page = request.GET.get("page", 1)
+
+    try:
+        players_page = paginator.page(page)
+    except PageNotAnInteger:
+        players_page = paginator.page(1)
+    except EmptyPage:
+        players_page = paginator.page(paginator.num_pages)
+
+    return render(request, "players.html", {
+        "entities_list": players_page,
+        "search_name": search_name,
+        "position": position,
+        "nation": nation
+    })
 
 def clubs(request):
-    return render(request, "clubs.html", {"entities_list": []})
+
+    clubs_data = query_all_clubs()
+
+    search_name = request.GET.get("name", "").strip().lower()
+    league = request.GET.get("league", "").strip().lower()
+
+    if search_name:
+        clubs_data = [c for c in clubs_data if search_name in c["name"].lower()]
+    if league:
+        clubs_data = [c for c in clubs_data if league in c["league"].lower()]
+
+    # Pagination
+    paginator = Paginator(clubs_data, 15)
+    page = request.GET.get("page", 1)
+
+    try:
+        clubs_page = paginator.page(page)
+    except PageNotAnInteger:
+        clubs_page = paginator.page(1)
+    except EmptyPage:
+        clubs_page = paginator.page(paginator.num_pages)
+
+    return render(request, "clubs.html", {
+        "entities_list": clubs_page,
+        "search_name": search_name,
+        "league": league
+    })
