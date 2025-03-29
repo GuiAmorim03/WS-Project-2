@@ -4,7 +4,12 @@
 
 <div class="card-header" style="background-color: var(--main-color); color: var(--alt-color);">
     <div class="row">
-        <div class="col-10">
+        <div class="col-2 text-center">
+            {% if entity.teams %}
+            <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid">
+            {% endif %}
+        </div>
+        <div class="col-8">
             <h2>{{ entity.name }}</h2>
             <p class="m-0">
                 <img src="{{ entity.flag }}" alt="Flag" style="height: 20px;">
@@ -35,7 +40,9 @@
         {% for team in entity.teams %}
         <a href="{% url 'team' team.id %}" style="text-decoration: none;">
             <img src="{{ team.logo }}" alt="Club" style="height: 20px;">
-            <span style="color: var(--main-color);" >{{ team.name }}</span>
+            <span style="color: var(--main-color);">
+                {{ team.name }}{% if forloop.first %} (Current){% endif %}
+            </span>
         </a>
     <br>
         {% endfor %}

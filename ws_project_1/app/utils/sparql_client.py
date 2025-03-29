@@ -33,6 +33,7 @@ def query_player_details(player_id):
         (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
         ?nation
         ?flag
+		?photo_url
         ?currentClub
         ?currentClubName
         ?currentClubLogo
@@ -46,31 +47,27 @@ def query_player_details(player_id):
         # Filter for a specific player by ID
         VALUES ?player_id {{ <http://football.org/ent/{player_id}> }} 
         
-        ?player_id rdf:type fut-rel:Player .
-        ?player_id fut-rel:name ?name .
-        ?player_id fut-rel:position ?position .
-        ?player_id fut-rel:nation ?nation_id .
-        ?nation_id fut-rel:name ?nation .
-        ?nation_id fut-rel:flag ?flag .
-        ?player_id fut-rel:born ?born .
-        
-        # Get current club
-        ?player_id fut-rel:club ?currentClub .
-        FILTER NOT EXISTS {{ ?player_id fut-rel:left_club ?currentClub }}
-        
-        ?currentClub fut-rel:name ?currentClubName .
-        ?currentClub fut-rel:logo ?currentClubLogo .
-        ?currentClub fut-rel:color ?currentClubColor .
-        ?currentClub fut-rel:alternateColor ?currentClubAltColor .
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                fut-rel:position ?position ;
+                fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
+                fut-rel:born ?born ;
+                fut-rel:photo_url ?photo_url ;
+                fut-rel:club ?currentClub .
+
+        ?currentClub fut-rel:name ?currentClubName ;
+                    fut-rel:logo ?currentClubLogo ;
+                    fut-rel:color ?currentClubColor ;
+                    fut-rel:alternateColor ?currentClubAltColor .
 
         # Get past clubs
         OPTIONAL {{
-            ?player_id fut-rel:left_club ?pastClub .
-            ?pastClub fut-rel:name ?pastClubName .
-            ?pastClub fut-rel:logo ?pastClubLogo .
+            ?player_id fut-rel:past_club ?pastClub .
+            ?pastClub fut-rel:name ?pastClubName ;
+                    fut-rel:logo ?pastClubLogo .
         }}
     }}
-    GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
+    GROUP BY ?player_id ?name ?nation ?flag ?photo_url ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
     """
     
     # Execute the query
@@ -146,6 +143,7 @@ def process_player_results(results, player_id):
         "name": result["name"]["value"],
         "born": birth_year,
         "age": age,
+        "photo_url": result["photo_url"]["value"],
         "pos": positions,
         "country_name": result["nation"]["value"].split("/")[-1].replace("_", " ").title(),
         "flag": result["flag"]["value"],
@@ -202,18 +200,18 @@ def query_club_details(club_id):
     WHERE {{
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
-        ?club_id rdf:type fut-rel:Club .
-        ?club_id fut-rel:name ?name .
-        ?club_id fut-rel:abrv ?abbreviation .
-        ?club_id fut-rel:stadium ?stadium .
-        ?club_id fut-rel:city ?city .
-        ?club_id fut-rel:league ?league_id .
+        ?club_id rdf:type fut-rel:Club ;
+                fut-rel:name ?name ;
+                fut-rel:abrv ?abbreviation ;
+                fut-rel:stadium ?stadium ;
+                fut-rel:city ?city ;
+                fut-rel:league ?league_id ;
+                fut-rel:logo ?logo ;
+                fut-rel:color ?color ;
+                fut-rel:alternateColor ?alternateColor ;
+                fut-rel:country/fut-rel:flag ?flag .
+
         ?league_id fut-rel:name ?league_name .
-        ?club_id fut-rel:country ?country .
-        ?country fut-rel:flag ?flag .
-        ?club_id fut-rel:logo ?logo .
-        ?club_id fut-rel:color ?color .
-        ?club_id fut-rel:alternateColor ?alternateColor .
     }}
     """
 
@@ -293,23 +291,23 @@ def query_club_players(club_id):
         ?player_id
         ?name
         ?born
+		?photo_url
         (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
         ?nation
         ?flag
     WHERE {{
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
-        ?player_id rdf:type fut-rel:Player .
-        ?player_id fut-rel:name ?name .
-        ?player_id fut-rel:position ?position .
-        ?player_id fut-rel:nation ?nation_id .
-        ?nation_id fut-rel:name ?nation .
-        ?nation_id fut-rel:flag ?flag .
-        ?player_id fut-rel:born ?born .
-        ?player_id fut-rel:club ?club_id .
-        FILTER NOT EXISTS {{ ?player_id fut-rel:left_club ?club_id }}
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                fut-rel:born ?born ;
+                fut-rel:club ?club_id ;
+                fut-rel:photo_url ?photo_url ;
+                fut-rel:nation/fut-rel:name ?nation ;
+                fut-rel:nation/fut-rel:flag ?flag ;
+                fut-rel:position ?position .
     }}
-    GROUP BY ?player_id ?name ?born ?nation ?flag
+    GROUP BY ?player_id ?name ?born ?photo_url ?nation ?flag
     ORDER BY ?name
     """
     
@@ -343,6 +341,7 @@ def process_club_players_results(results):
             "name": player["name"]["value"],
             "born": birth_year,
             "age": age,
+            "photo_url": player["photo_url"]["value"],
             "positions": positions,
             "nation": player["nation"]["value"],
             "flag": player["flag"]["value"]
@@ -370,31 +369,23 @@ def query_all_players():
         (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
         ?nation
         ?flag
-        (SAMPLE(?currentClubRaw) AS ?currentClub)
-        (SAMPLE(?clubLogo) AS ?currentClubLogo)
-        (SAMPLE(?clubName) AS ?currentClubName)
+        ?currentClubName
+        ?currentClubLogo
         ?born
     WHERE { 
-        ?player_id rdf:type fut-rel:Player .
-        ?player_id fut-rel:name ?name .
-        ?player_id fut-rel:position ?position .
-        ?player_id fut-rel:nation ?nation_id .
-        ?nation_id fut-rel:name ?nation .
-        ?nation_id fut-rel:flag ?flag .
-        ?player_id fut-rel:born ?born .
-        
-        # Choose the current club (one that has not been left)
-        OPTIONAL {
-            ?player_id fut-rel:club ?currentClubRaw .
-            FILTER NOT EXISTS { ?player_id fut-rel:left_club ?currentClubRaw }
-            
-            OPTIONAL {
-                ?currentClubRaw fut-rel:logo ?clubLogo .
-                ?currentClubRaw fut-rel:name ?clubName .
-            }
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                fut-rel:position ?position ;
+                fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
+                fut-rel:born ?born ;
+
+        OPTIONAL { 
+            ?player_id fut-rel:club ?currentClub .
+            OPTIONAL { ?currentClub fut-rel:name ?currentClubName . }
+            OPTIONAL { ?currentClub fut-rel:logo ?currentClubLogo . }
         }
     }
-    GROUP BY ?player_id ?name ?nation ?flag ?born
+    GROUP BY ?player_id ?name ?nation ?flag ?born ?currentClubName ?currentClubLogo
     ORDER BY ?name
     """
     
@@ -476,20 +467,16 @@ def query_all_clubs():
         ?alternateColor
         (COUNT(?player) AS ?numPlayers)
     WHERE {
-        ?club_id rdf:type fut-rel:Club .
-        ?club_id fut-rel:name ?name .
-        ?club_id fut-rel:abrv ?abbreviation .
-        ?club_id fut-rel:league ?league_id .
-        ?league_id fut-rel:name ?league .
-        ?club_id fut-rel:country ?country .
-        ?country fut-rel:flag ?flag .
-        ?club_id fut-rel:logo ?logo .
-        ?club_id fut-rel:color ?color .
-        ?club_id fut-rel:alternateColor ?alternateColor .
-        OPTIONAL {
-            ?player fut-rel:club ?club_id .
-            FILTER NOT EXISTS { ?player fut-rel:left_club ?club_id }
-        }
+        ?club_id rdf:type fut-rel:Club ;
+                fut-rel:name ?name ;
+                fut-rel:abrv ?abbreviation ;
+                fut-rel:league/fut-rel:name ?league ;
+                fut-rel:country/fut-rel:flag ?flag ;
+                fut-rel:logo ?logo ;
+                fut-rel:color ?color ;
+                fut-rel:alternateColor ?alternateColor .
+        
+        OPTIONAL { ?player fut-rel:club ?club_id . }
     }
     GROUP BY ?club_id ?abbreviation ?league ?flag ?name ?logo ?color ?alternateColor
     ORDER BY ?name
@@ -553,9 +540,8 @@ def query_player_stats(player_id):
         VALUES ?player_id {{ <http://football.org/ent/{player_id}> }}
 
         ?player_id ?stat ?stat_value .
-        ?stat fut-rel:type ?stat_cat_id .
-        ?stat fut-rel:name ?stat_name .
-        ?stat_cat_id fut-rel:name ?stat_category .
+        ?stat fut-rel:type/fut-rel:name ?stat_category ;
+            fut-rel:name ?stat_name .
     }}
     """
     
@@ -621,9 +607,8 @@ def query_club_stats(club_id):
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
         ?club_id ?stat ?stat_value .
-        ?stat fut-rel:type ?stat_cat_id .
-        ?stat fut-rel:name ?stat_name .
-        ?stat_cat_id fut-rel:name ?stat_category .
+        ?stat fut-rel:type [fut-rel:name ?stat_category];
+              fut-rel:name ?stat_name 
     }}
     """
     
@@ -674,6 +659,137 @@ def process_club_stats_results(results):
     
     return sort_stats_categories(categories)
 
+def query_graph_data(selected_node_id=None):
+    """
+    Query the RDF graph structure, returning nodes and relationships
+    that can be visualized in a graph representation.
+    
+    Args:
+        selected_node_id (str, optional): If provided, only return this node
+            and its directly connected nodes (adjacent nodes)
+    
+    Returns:
+        dict: Contains 'nodes' and 'links' for graph visualization
+    """
+    sparql = get_sparql_client()
+    
+    if selected_node_id:
+        # Query for a specific node and its adjacent nodes
+        query = f"""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX fut-rel: <http://football.org/rel/>
+        
+        SELECT ?subject ?predicate ?object ?subjectLabel ?objectLabel ?subjectType ?objectType
+        WHERE {{
+            # Get relationships where selected node is the subject
+            {{
+                <{selected_node_id}> ?predicate ?object .
+                BIND(<{selected_node_id}> AS ?subject)
+                
+                # Get labels and types
+                OPTIONAL {{ ?subject rdfs:label ?subjectLabel }}
+                OPTIONAL {{ ?object rdfs:label ?objectLabel }}
+                OPTIONAL {{ ?subject rdf:type ?subjectType }}
+                OPTIONAL {{ ?object rdf:type ?objectType }}
+                
+                # Filter out schema-related predicates
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+            }}
+            UNION
+            # Get relationships where selected node is the object
+            {{
+                ?subject ?predicate <{selected_node_id}> .
+                BIND(<{selected_node_id}> AS ?object)
+                
+                # Get labels and types
+                OPTIONAL {{ ?subject rdfs:label ?subjectLabel }}
+                OPTIONAL {{ ?object rdfs:label ?objectLabel }}
+                OPTIONAL {{ ?subject rdf:type ?subjectType }}
+                OPTIONAL {{ ?object rdf:type ?objectType }}
+                
+                # Filter out schema-related predicates
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+            }}
+        }}
+        """
+    else:
+        # Query for the entire graph
+        query = """
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX fut-rel: <http://football.org/rel/>
+        
+        SELECT ?subject ?predicate ?object ?subjectLabel ?objectLabel ?subjectType ?objectType
+        WHERE {
+            ?subject ?predicate ?object .
+            
+            # Get human-readable labels where available
+            OPTIONAL { ?subject rdfs:label ?subjectLabel }
+            OPTIONAL { ?object rdfs:label ?objectLabel }
+            
+            # Get types
+            OPTIONAL { ?subject rdf:type ?subjectType }
+            OPTIONAL { ?object rdf:type ?objectType }
+            
+            # Filter out schema-related triples to focus on domain data
+            FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
+            FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+        }
+        """
+    
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    try:
+        results = sparql.query().convert()
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return {"nodes": [], "links": []}
+    
+    # Process the results to create a graph structure
+    nodes = {}
+    links = []
+    
+    # Correctly iterate through the bindings in results
+    for result in results["results"]["bindings"]:
+        subject_uri = result.get('subject', {}).get('value', '')
+        object_uri = result.get('object', {}).get('value', '')
+        predicate = result.get('predicate', {}).get('value', '')
+        
+        # Use labels if available, otherwise use URIs
+        subject_label = result.get('subjectLabel', {}).get('value', '') or subject_uri.split('/')[-1]
+        object_label = result.get('objectLabel', {}).get('value', '') or object_uri.split('/')[-1]
+        
+        # Add subject node if not already added
+        if subject_uri not in nodes:
+            nodes[subject_uri] = {
+                'id': subject_uri,
+                'label': subject_label,
+                'type': result.get('subjectType', {}).get('value', 'Unknown').split('#')[-1]
+            }
+        
+        # Add object node if not already added and it's a URI (not a literal)
+        if object_uri.startswith('http') and object_uri not in nodes:
+            nodes[object_uri] = {
+                'id': object_uri,
+                'label': object_label,
+                'type': result.get('objectType', {}).get('value', 'Unknown').split('#')[-1]
+            }
+        
+        # Add relationship if object is a URI (not a literal)
+        if object_uri.startswith('http'):
+            links.append({
+                'source': subject_uri,
+                'target': object_uri,
+                'label': predicate.split('/')[-1]
+            })
+    
+    return {
+        'nodes': list(nodes.values()),
+        'links': links
+    }
 
 def sort_stats_categories(categories):
     category_order = {
@@ -724,3 +840,195 @@ def sort_stats_categories(categories):
                                    if stat["name"] in stat_orders[category_name] else float('inf'))
 
     return sorted_categories
+
+def query_top_players_by_stat(stat_id, limit=10):
+    """
+    Query and process top players for a specific stat from the SPARQL endpoint.
+    
+    Args:
+        stat_id: The ID of the stat to query (e.g., "min" for minutes played)
+        limit: Maximum number of players to return (default: 10)
+        
+    Returns:
+        list: List of players with the specified stat, ordered by stat value
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query with dynamic stat and limit
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    SELECT
+        ?player_id
+        ?name
+        ?photo_url
+        ?stat_name
+        ?stat_value
+        ?club_name
+        ?club_logo
+        ?color
+	    ?alternateColor
+        ?flag
+    WHERE {{
+        VALUES ?stat {{ <http://football.org/stat/{stat_id}> }} 
+        
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                ?stat ?stat_value ;
+                fut-rel:club ?club ;
+                fut-rel:nation/fut-rel:flag ?flag .
+        
+        ?club fut-rel:name ?club_name ;
+              fut-rel:logo ?club_logo ;
+              fut-rel:color ?color ;
+              fut-rel:alternateColor ?alternateColor .
+        
+        ?stat fut-rel:name ?stat_name .
+
+        OPTIONAL {{ ?player_id fut-rel:photo_url ?photo_url . }}
+    }}
+    ORDER BY DESC(xsd:float(?stat_value))
+    LIMIT {limit}
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_top_players_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_top_players_results(results):
+    """Process the SPARQL query results for top players into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    players = []
+    for player in results["results"]["bindings"]:
+        # Extract player ID from URI
+        player_id = player["player_id"]["value"].split("/")[-1]
+        
+        # Format stat value (convert to appropriate type if needed)
+        stat_value = player["stat_value"]["value"]
+        try:
+            # Try to convert to float if it's a number
+            stat_value = float(stat_value)
+            # Format to 2 decimal places if it's a float
+            if stat_value == int(stat_value):
+                stat_value = int(stat_value)
+            else:
+                stat_value = round(stat_value, 2)
+        except ValueError:
+            # Keep as string if not a number
+            pass
+        
+        players.append({
+            "id": player_id,
+            "name": player["name"]["value"],
+            "stat_name": player["stat_name"]["value"],
+            "stat_value": stat_value,
+            "club_name": player.get("club_name", {}).get("value", ""),
+            "club_logo": player.get("club_logo", {}).get("value", ""),
+            "flag": player.get("flag", {}).get("value", ""),
+            "photo_url": player.get("photo_url", {}).get("value", "")
+        })
+    
+    return players
+
+def query_top_clubs_by_stat(stat_id, limit=10):
+    """
+    Query and process top clubs for a specific stat from the SPARQL endpoint.
+    
+    Args:
+        stat_id: The ID of the stat to query (e.g., "crdr" for cards red)
+        limit: Maximum number of clubs to return (default: 10)
+        
+    Returns:
+        list: List of clubs with the specified stat, ordered by stat value
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query with dynamic stat and limit
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    SELECT
+        ?club_id
+        ?name
+        ?stat_name
+        ?stat_value
+        ?logo
+        ?flag
+        ?league_name
+        ?color
+        ?alternateColor
+    WHERE {{
+        VALUES ?stat {{ <http://football.org/stat/{stat_id}> }} 
+        
+        ?club_id rdf:type fut-rel:Club ;
+                fut-rel:name ?name ;
+                ?stat ?stat_value ;
+                fut-rel:logo ?logo ;
+                fut-rel:color ?color ;
+                fut-rel:alternateColor ?alternateColor ;
+                fut-rel:country/fut-rel:flag ?flag ;
+                fut-rel:league/fut-rel:name ?league_name .
+        
+        ?stat fut-rel:name ?stat_name .
+    }}
+    ORDER BY DESC(xsd:float(?stat_value))
+    LIMIT {limit}
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_top_clubs_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_top_clubs_results(results):
+    """Process the SPARQL query results for top clubs into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    clubs = []
+    for club in results["results"]["bindings"]:
+        # Extract club ID from URI
+        club_id = club["club_id"]["value"].split("/")[-1]
+        
+        # Format stat value (convert to appropriate type if needed)
+        stat_value = club["stat_value"]["value"]
+        try:
+            # Try to convert to float if it's a number
+            stat_value = float(stat_value)
+            # Format to 2 decimal places if it's a float
+            if stat_value == int(stat_value):
+                stat_value = int(stat_value)
+            else:
+                stat_value = round(stat_value, 2)
+        except ValueError:
+            # Keep as string if not a number
+            pass
+        
+        clubs.append({
+            "id": club_id,
+            "name": club["name"]["value"],
+            "stat_name": club["stat_name"]["value"],
+            "stat_value": stat_value,
+            "logo": club.get("logo", {}).get("value", ""),
+            "flag": club.get("flag", {}).get("value", ""),
+            "league_name": club.get("league_name", {}).get("value", ""),
+            "color": club.get("color", {}).get("value", ""),
+            "alternate_color": club.get("alternateColor", {}).get("value", "")
+        })
+    
+    return clubs

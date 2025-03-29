@@ -1,0 +1,337 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}RDF Graph Visualization{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h1>RDF Graph Visualization</h1>
+            <p>Interactive visualization of entities and their relationships</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Node Details Panel -->
+            <div class="card mb-3">
+                <div class="card-header">Node Details</div>
+                <div class="card-body" id="node-details-panel">
+                    <p class="text-muted">Select a node to view details</p>
+                </div>
+            </div>
+            
+            <!-- Moved Triples Table below Node Details -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>RDF Triples</span>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="showPrettyNames" checked>
+                        <label class="form-check-label" for="showPrettyNames">Show Readable Names</label>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-striped table-hover table-sm mb-0 text-center">
+                            <thead class="table-light sticky-top">
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Predicate</th>
+                                    <th>Object</th>
+                                </tr>
+                            </thead>
+                            <tbody id="triples-table-body">
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">
+                                        Select a node to view its relationships
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <!-- Graph now takes full width -->
+            <div class="card">
+                <div class="card-body">
+                    <div id="graph-container" style="height: 800px; border: 1px solid #ddd; position: relative; overflow: hidden;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include D3.js or another graph visualization library -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/force-graph"></script>
+
+<script>
+    // Store the graph data from Django backend
+    const graphData = {{ graph_data|safe }}; // Ensure this is a valid JSON object
+    let selectedNodeData = null;
+    
+    // Initialize the graph
+    const Graph = ForceGraph()
+      (document.getElementById('graph-container'))
+      .cooldownTicks(100) // Allow sufficient ticks for stabilization
+      .graphData(graphData)
+      .nodeLabel(node => `${node.label} (${node.type})`)
+      .linkLabel(link => link.label)
+      .nodeAutoColorBy('type')
+      .linkDirectionalArrowLength(6)
+      .linkDirectionalArrowRelPos(1)
+      .onNodeClick(node => {
+                    
+          // Store the selected node
+          selectedNodeData = node;
+          
+          // Update triples table with selected node data
+          updateTriplesTable(node);
+          
+          // Update node details panel
+          updateNodeDetailsPanel(node);
+      });
+      
+    // Add force bounds to keep nodes within the container
+    Graph.d3Force('center', d3.forceCenter(0, 0))
+         .d3Force('charge').strength(-120)
+         .d3Force('collide', d3.forceCollide(node => Math.sqrt(50 / (node.level || 1))))
+         .d3Force('bounds', () => {
+             const containerRect = document.getElementById('graph-container').getBoundingClientRect();
+             const width = containerRect.width;
+             const height = containerRect.height;
+             
+             graphData.nodes.forEach(node => {
+                 // Keep nodes within the visible area with a small margin
+                 node.x = Math.max(-width/2 + 30, Math.min(width/2 - 30, node.x || 0));
+                 node.y = Math.max(-height/2 + 30, Math.min(height/2 - 30, node.y || 0));
+             });
+         });
+    
+    // Ensure the graph is properly centered and fitted on initial load
+    setTimeout(() => {
+        // Pause the simulation while we center
+        Graph.pauseAnimation();
+        
+        // Reset camera position
+        Graph.centerAt(0, 0);
+        
+        // Calculate bounds to fit all nodes
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        Graph.graphData().nodes.forEach(node => {
+            if (node.x < minX) minX = node.x;
+            if (node.x > maxX) maxX = node.x;
+            if (node.y < minY) minY = node.y;
+            if (node.y > maxY) maxY = node.y;
+        });
+        
+        // Center on the computed middle point
+        const centerX = (minX + maxX) / 2;
+        const centerY = (minY + maxY) / 2;
+        Graph.centerAt(centerX, centerY, 1000);
+        
+        // Calculate zoom level to fit all nodes
+        const containerRect = document.getElementById('graph-container').getBoundingClientRect();
+        const graphWidth = maxX - minX;
+        const graphHeight = maxY - minY;
+        const scaleX = containerRect.width / (graphWidth * 1.2);  // 1.2 adds 20% margin
+        const scaleY = containerRect.height / (graphHeight * 1.2);
+        const scale = Math.min(scaleX, scaleY, 2);  // Cap zoom at 2x
+        
+        Graph.zoom(scale, 250);
+        
+        // Resume animation after centering
+        setTimeout(() => Graph.resumeAnimation(), 1100);
+    }, 1000);  // Wait for initial graph stabilization
+
+    // Handle window resize to adjust graph bounds
+    window.addEventListener('resize', () => {
+        Graph.width(document.getElementById('graph-container').clientWidth);
+        Graph.height(document.getElementById('graph-container').clientHeight);
+    });
+      
+    // Function to update node details panel
+    function updateNodeDetailsPanel(node) {
+        const detailsPanel = document.getElementById('node-details-panel');
+        if (!node) {
+            detailsPanel.innerHTML = '<p class="text-muted">Select a node to view details</p>';
+            return;
+        }
+        
+        // Extract URI parts for display
+        const uriParts = node.id.split('/');
+        const entityId = uriParts[uriParts.length - 1];
+        
+        // Create HTML for node details
+        let html = `
+            <h5>${node.label}</h5>
+            <p><strong>Type:</strong> ${node.type || 'Unknown'}</p>
+            <p><strong>ID:</strong> ${entityId}</p>
+        `;
+        
+        // Add a link to entity page if it's a Player or Club
+        if (node.type === 'Player') {
+            html += `<p><a href="/players/${entityId}" class="btn btn-sm btn-outline-primary">View Player Details</a></p>`;
+        } else if (node.type === 'Club') {
+            html += `<p><a href="/clubs/${entityId}" class="btn btn-sm btn-outline-primary">View Club Details</a></p>`;
+        }
+        
+        detailsPanel.innerHTML = html;
+    }
+    
+    // Function to update triples table
+    function updateTriplesTable(node) {
+        const tableBody = document.getElementById('triples-table-body');
+        const showPrettyNames = document.getElementById('showPrettyNames').checked;
+        
+        if (!node) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="3" class="text-center text-muted">
+                        Select a node to view its relationships
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+        
+        // Clear the table
+        tableBody.innerHTML = '';
+        
+        // Find all triples where the selected node is subject
+        const outgoingTriples = graphData.links.filter(link => 
+            (typeof link.source === 'object' ? link.source.id : link.source) === node.id);
+        
+        // Find all triples where the selected node is object
+        const incomingTriples = graphData.links.filter(link => 
+            (typeof link.target === 'object' ? link.target.id : link.target) === node.id);
+        
+        // Create a map to track created rows (to avoid duplicate triples)
+        const addedTriples = new Set();
+        
+        // Helper function to find node by id
+        const findNodeById = (id) => graphData.nodes.find(n => n.id === id) || { label: id.split('/').pop() };
+        
+        // Helper function to format URI for display
+        const formatUri = (uri, isPredicate = false) => {
+            if (showPrettyNames) {
+                if (isPredicate) {
+                    // Make predicates more readable by splitting on camelCase
+                    const name = uri.split('/').pop();
+                    return name
+                        .replace(/([A-Z])/g, ' $1') // Add space before capitals
+                        .replace(/_/g, ' ')         // Replace underscores with spaces
+                        .trim();                    // Trim any extra spaces
+                } else {
+                    return uri.split('/').pop();
+                }
+            }
+            return uri;
+        };
+        
+        // Helper function to add triple to table
+        const addTripleToTable = (subject, predicate, object, isHighlighted = false) => {
+            const tripleKey = `${subject.id || subject}|${predicate}|${object.id || object}`;
+            
+            // Skip if this triple was already added
+            if (addedTriples.has(tripleKey)) return;
+            addedTriples.add(tripleKey);
+            
+            const row = document.createElement('tr');
+            if (isHighlighted) row.classList.add('table-primary');
+            
+            // Make nodes clickable to navigate to them
+            const isSubjectNode = typeof subject === 'object' && subject.id !== node.id;
+            const isObjectNode = typeof object === 'object' && object.id !== node.id;
+            
+            row.innerHTML = `
+                <td class="${isSubjectNode ? 'clickable-node' : ''}" 
+                    ${isSubjectNode ? `data-node-id="${subject.id}"` : ''}>${formatUri(subject.id || subject)}</td>
+                <td>${formatUri(predicate, true)}</td>
+                <td class="${isObjectNode ? 'clickable-node' : ''}"
+                    ${isObjectNode ? `data-node-id="${object.id}"` : ''}>${formatUri(object.id || object)}</td>
+            `;
+            
+            tableBody.appendChild(row);
+        };
+        
+        // Add outgoing triples
+        outgoingTriples.forEach(link => {
+            const subject = node;
+            const predicate = link.label;
+            const object = typeof link.target === 'object' ? link.target : findNodeById(link.target);
+            addTripleToTable(subject, predicate, object, true);
+        });
+        
+        // Add incoming triples
+        incomingTriples.forEach(link => {
+            const subject = typeof link.source === 'object' ? link.source : findNodeById(link.source);
+            const predicate = link.label;
+            const object = node;
+            addTripleToTable(subject, predicate, object, true);
+        });
+        
+        // Add click handler for clickable nodes in the table
+        document.querySelectorAll('.clickable-node').forEach(cell => {
+            cell.addEventListener('click', () => {
+                const nodeId = cell.dataset.nodeId;
+                const clickedNode = graphData.nodes.find(n => n.id === nodeId);
+                if (clickedNode) {
+                    Graph.onNodeClick(clickedNode);
+                }
+            });
+        });
+    }
+    
+    // Add event listener for the pretty names toggle
+    document.getElementById('showPrettyNames').addEventListener('change', () => {
+        if (selectedNodeData) {
+            updateTriplesTable(selectedNodeData);
+        }
+    });
+      
+    document.getElementById('reset-graph').addEventListener('click', () => {
+        Graph.centerAt(0, 0, 1000);
+        Graph.zoom(1, 1000);
+        
+        // Clear the triples table
+        updateTriplesTable(null);
+        
+        // Clear node details
+        updateNodeDetailsPanel(null);
+        
+        // Clear selected node
+        selectedNodeData = null;
+    });
+</script>
+
+<style>
+    .sticky-top {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    
+    .clickable-node {
+        color: #0d6efd;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
+    .clickable-node:hover {
+        font-weight: bold;
+    }
+    
+    /* Adjust heights for better layout */
+    @media (min-width: 768px) {
+        .row > .col-md-3 {
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+    }
+</style>
+
+{% endblock %}

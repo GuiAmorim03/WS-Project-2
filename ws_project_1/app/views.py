@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils.sparql_client import query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs
+from .utils.sparql_client import query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data
 
 def player_detail(request, player_id):
     # Get player data from the SPARQL endpoint
@@ -22,6 +22,7 @@ def club_detail(request, club_id):
         formatted_players.append({
             "id": player["id"],
             "name": player["name"],
+            "photo_url": player["photo_url"],
             "age": player["age"],
             "pos": player["positions"],  # Note the field name change from positions to pos
             "country_name": player["nation"],
@@ -104,3 +105,12 @@ def clubs(request):
         "search_name": search_name,
         "league": league
     })
+
+def graph_view(request):
+    # Get graph data (nodes and relationships) from the SPARQL endpoint
+    graph_data = query_graph_data()
+    
+    # Log the graph data for debugging
+    print("Graph data fetched:", len(graph_data["nodes"]) if graph_data.get("nodes") else 0, "nodes")
+    
+    return render(request, "graph.html", {"graph_data": graph_data})
