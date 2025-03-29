@@ -22,6 +22,7 @@ def club_detail(request, club_id):
         formatted_players.append({
             "id": player["id"],
             "name": player["name"],
+            "photo_url": player["photo_url"],
             "age": player["age"],
             "pos": player["positions"],  # Note the field name change from positions to pos
             "country_name": player["nation"],

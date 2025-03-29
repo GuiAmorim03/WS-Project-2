@@ -33,6 +33,7 @@ def query_player_details(player_id):
         (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
         ?nation
         ?flag
+		?photo_url
         ?currentClub
         ?currentClubName
         ?currentClubLogo
@@ -51,6 +52,7 @@ def query_player_details(player_id):
                 fut-rel:position ?position ;
                 fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
                 fut-rel:born ?born ;
+                fut-rel:photo_url ?photo_url ;
                 fut-rel:club ?currentClub .
 
         ?currentClub fut-rel:name ?currentClubName ;
@@ -65,7 +67,7 @@ def query_player_details(player_id):
                     fut-rel:logo ?pastClubLogo .
         }}
     }}
-    GROUP BY ?player_id ?name ?nation ?flag ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
+    GROUP BY ?player_id ?name ?nation ?flag ?photo_url ?currentClub ?currentClubName ?currentClubLogo ?currentClubColor ?currentClubAltColor ?born
     """
     
     # Execute the query
@@ -141,6 +143,7 @@ def process_player_results(results, player_id):
         "name": result["name"]["value"],
         "born": birth_year,
         "age": age,
+        "photo_url": result["photo_url"]["value"],
         "pos": positions,
         "country_name": result["nation"]["value"].split("/")[-1].replace("_", " ").title(),
         "flag": result["flag"]["value"],
@@ -288,6 +291,7 @@ def query_club_players(club_id):
         ?player_id
         ?name
         ?born
+		?photo_url
         (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
         ?nation
         ?flag
@@ -298,11 +302,12 @@ def query_club_players(club_id):
                 fut-rel:name ?name ;
                 fut-rel:born ?born ;
                 fut-rel:club ?club_id ;
+                fut-rel:photo_url ?photo_url ;
                 fut-rel:nation/fut-rel:name ?nation ;
                 fut-rel:nation/fut-rel:flag ?flag ;
                 fut-rel:position ?position .
     }}
-    GROUP BY ?player_id ?name ?born ?nation ?flag
+    GROUP BY ?player_id ?name ?born ?photo_url ?nation ?flag
     ORDER BY ?name
     """
     
@@ -336,6 +341,7 @@ def process_club_players_results(results):
             "name": player["name"]["value"],
             "born": birth_year,
             "age": age,
+            "photo_url": player["photo_url"]["value"],
             "positions": positions,
             "nation": player["nation"]["value"],
             "flag": player["flag"]["value"]
