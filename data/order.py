@@ -41,5 +41,19 @@ if missing_players:
 
     print(f"Missing players: {', '.join(grouped_missing)}")
 
+# See how many players have jpg and how many have png
+
+jpg_count = df['UrlPhoto'].str.endswith('.jpg').sum()
+png_count = df['UrlPhoto'].str.endswith('.png').sum()
+
+print(f"Number of players with jpg: {jpg_count}")
+print(f"Number of players with png: {png_count}")
+
+# Remove duplicates from the file, prioritizing the rows that a value in the 'UrlPhoto' column
+df = df.sort_values(by='UrlPhoto').drop_duplicates(subset=['Rk'], keep='first')
+
+print(f"Number of players after removing duplicates: {len(df)}")
+
 df = df.sort_values(by='Rk')
+
 df.to_csv('players.csv', index=False)
