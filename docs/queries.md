@@ -196,6 +196,7 @@ PREFIX fut-rel: <http://football.org/rel/>
 SELECT
     ?player_id
     ?name
+	?photo
     ?stat_name
     ?stat_value
 WHERE {
@@ -206,6 +207,10 @@ WHERE {
                ?stat ?stat_value .
     
     ?stat fut-rel:name ?stat_name .
+    
+    OPTIONAL {
+        ?player_id fut-rel:photo_url ?photo .
+    }
 }
 ORDER BY DESC(?stat_value)
 LIMIT 10
@@ -222,11 +227,13 @@ SELECT
     ?name
     ?stat_name
     ?stat_value
+	?logo
 WHERE {
     VALUES ?stat { <http://football.org/stat/crdr> } 
     
     ?club_id rdf:type fut-rel:Club ;
     		 fut-rel:name ?name ;
+       		 fut-rel:logo ?logo ;
              ?stat ?stat_value .
     ?stat fut-rel:name ?stat_name .
 }

@@ -836,3 +836,189 @@ def sort_stats_categories(categories):
                                    if stat["name"] in stat_orders[category_name] else float('inf'))
 
     return sorted_categories
+
+def query_top_players_by_stat(stat_id, limit=10):
+    """
+    Query and process top players for a specific stat from the SPARQL endpoint.
+    
+    Args:
+        stat_id: The ID of the stat to query (e.g., "min" for minutes played)
+        limit: Maximum number of players to return (default: 10)
+        
+    Returns:
+        list: List of players with the specified stat, ordered by stat value
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query with dynamic stat and limit
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT
+        ?player_id
+        ?name
+        ?photo_url
+        ?stat_name
+        ?stat_value
+        ?club_name
+        ?club_logo
+        ?flag
+    WHERE {{
+        VALUES ?stat {{ <http://football.org/stat/{stat_id}> }} 
+        
+        ?player_id rdf:type fut-rel:Player ;
+                fut-rel:name ?name ;
+                ?stat ?stat_value ;
+                fut-rel:club ?club ;
+                fut-rel:nation/fut-rel:flag ?flag .
+        
+        ?club fut-rel:name ?club_name ;
+              fut-rel:logo ?club_logo .
+        
+        ?stat fut-rel:name ?stat_name .
+
+        OPTIONAL {{ ?player_id fut-rel:photo_url ?photo_url . }}
+    }}
+    ORDER BY DESC(xsd:float(?stat_value))
+    LIMIT {limit}
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_top_players_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_top_players_results(results):
+    """Process the SPARQL query results for top players into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    players = []
+    for player in results["results"]["bindings"]:
+        # Extract player ID from URI
+        player_id = player["player_id"]["value"].split("/")[-1]
+        
+        # Format stat value (convert to appropriate type if needed)
+        stat_value = player["stat_value"]["value"]
+        try:
+            # Try to convert to float if it's a number
+            stat_value = float(stat_value)
+            # Format to 2 decimal places if it's a float
+            if stat_value == int(stat_value):
+                stat_value = int(stat_value)
+            else:
+                stat_value = round(stat_value, 2)
+        except ValueError:
+            # Keep as string if not a number
+            pass
+        
+        players.append({
+            "id": player_id,
+            "name": player["name"]["value"],
+            "stat_name": player["stat_name"]["value"],
+            "stat_value": stat_value,
+            "club_name": player.get("club_name", {}).get("value", ""),
+            "club_logo": player.get("club_logo", {}).get("value", ""),
+            "flag": player.get("flag", {}).get("value", ""),
+            "photo_url": player.get("photo_url", {}).get("value", "")
+        })
+    
+    return players
+
+def query_top_clubs_by_stat(stat_id, limit=10):
+    """
+    Query and process top clubs for a specific stat from the SPARQL endpoint.
+    
+    Args:
+        stat_id: The ID of the stat to query (e.g., "crdr" for cards red)
+        limit: Maximum number of clubs to return (default: 10)
+        
+    Returns:
+        list: List of clubs with the specified stat, ordered by stat value
+    """
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query with dynamic stat and limit
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT
+        ?club_id
+        ?name
+        ?stat_name
+        ?stat_value
+        ?logo
+        ?flag
+        ?league_name
+        ?color
+        ?alternateColor
+    WHERE {{
+        VALUES ?stat {{ <http://football.org/stat/{stat_id}> }} 
+        
+        ?club_id rdf:type fut-rel:Club ;
+                fut-rel:name ?name ;
+                ?stat ?stat_value ;
+                fut-rel:logo ?logo ;
+                fut-rel:color ?color ;
+                fut-rel:alternateColor ?alternateColor ;
+                fut-rel:country/fut-rel:flag ?flag ;
+                fut-rel:league/fut-rel:name ?league_name .
+        
+        ?stat fut-rel:name ?stat_name .
+    }}
+    ORDER BY DESC(xsd:float(?stat_value))
+    LIMIT {limit}
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_top_clubs_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+
+def process_top_clubs_results(results):
+    """Process the SPARQL query results for top clubs into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    clubs = []
+    for club in results["results"]["bindings"]:
+        # Extract club ID from URI
+        club_id = club["club_id"]["value"].split("/")[-1]
+        
+        # Format stat value (convert to appropriate type if needed)
+        stat_value = club["stat_value"]["value"]
+        try:
+            # Try to convert to float if it's a number
+            stat_value = float(stat_value)
+            # Format to 2 decimal places if it's a float
+            if stat_value == int(stat_value):
+                stat_value = int(stat_value)
+            else:
+                stat_value = round(stat_value, 2)
+        except ValueError:
+            # Keep as string if not a number
+            pass
+        
+        clubs.append({
+            "id": club_id,
+            "name": club["name"]["value"],
+            "stat_name": club["stat_name"]["value"],
+            "stat_value": stat_value,
+            "logo": club.get("logo", {}).get("value", ""),
+            "flag": club.get("flag", {}).get("value", ""),
+            "league_name": club.get("league_name", {}).get("value", ""),
+            "color": club.get("color", {}).get("value", ""),
+            "alternate_color": club.get("alternateColor", {}).get("value", "")
+        })
+    
+    return clubs
