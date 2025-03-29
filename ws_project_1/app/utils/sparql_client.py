@@ -854,6 +854,7 @@ def query_top_players_by_stat(stat_id, limit=10):
     query = f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
     SELECT
         ?player_id
@@ -863,6 +864,8 @@ def query_top_players_by_stat(stat_id, limit=10):
         ?stat_value
         ?club_name
         ?club_logo
+        ?color
+	    ?alternateColor
         ?flag
     WHERE {{
         VALUES ?stat {{ <http://football.org/stat/{stat_id}> }} 
@@ -874,7 +877,9 @@ def query_top_players_by_stat(stat_id, limit=10):
                 fut-rel:nation/fut-rel:flag ?flag .
         
         ?club fut-rel:name ?club_name ;
-              fut-rel:logo ?club_logo .
+              fut-rel:logo ?club_logo ;
+              fut-rel:color ?color ;
+              fut-rel:alternateColor ?alternateColor .
         
         ?stat fut-rel:name ?stat_name .
 
@@ -947,6 +952,7 @@ def query_top_clubs_by_stat(stat_id, limit=10):
     query = f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
     SELECT
         ?club_id

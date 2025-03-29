@@ -192,27 +192,38 @@ ORDER BY ?name
 sparql
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX fut-rel: <http://football.org/rel/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT
     ?player_id
     ?name
-	?photo
+    ?photo_url
     ?stat_name
     ?stat_value
+    ?club_name
+    ?club_logo
+	?color
+	?alternateColor
+    ?flag
 WHERE {
     VALUES ?stat { <http://football.org/stat/min> } 
-    
+
     ?player_id rdf:type fut-rel:Player ;
                fut-rel:name ?name ;
-               ?stat ?stat_value .
-    
+               ?stat ?stat_value ;
+               fut-rel:club ?club ;
+               fut-rel:nation/fut-rel:flag ?flag .
+
+    ?club fut-rel:name ?club_name ;
+          fut-rel:logo ?club_logo ;
+          fut-rel:color ?color ;
+          fut-rel:alternateColor ?alternateColor .
+
     ?stat fut-rel:name ?stat_name .
-    
-    OPTIONAL {
-        ?player_id fut-rel:photo_url ?photo .
-    }
+
+    OPTIONAL { ?player_id fut-rel:photo_url ?photo_url . }
 }
-ORDER BY DESC(?stat_value)
+ORDER BY DESC(xsd:float(?stat_value))
 LIMIT 10
 ```
 
