@@ -8,6 +8,7 @@ from unidecode import unidecode
 df_main = pd.read_csv('players_data_light-2024_2025.csv')
 df_colors_logos = pd.read_csv('teams.csv')
 df_clubs_info = pd.read_csv('venues.csv')
+df_players_info = pd.read_csv('players.csv')
 
 players = set()
 clubs = set()
@@ -287,7 +288,8 @@ for index, row in df_main.iterrows():
     else:
         # indicar que já saiu do clube anterior
         club_registed = g.value(player_uri, ns_rel.club)
-        g.add((player_uri, ns_rel.left_club, club_registed))
+        g.remove((player_uri, ns_rel.club, club_registed))
+        g.add((player_uri, ns_rel.past_club, club_registed))
 
         # adicionar pos nova se necessário
         actual_pos = {str(pos) for pos in g.objects(player_uri, ns_rel.position)}
@@ -299,6 +301,13 @@ for index, row in df_main.iterrows():
     club_uri = URIRef(ns_ent + player_club)
     g.add((player_uri, ns_rel.club, club_uri))
     g.add((player_uri, RDF.type, ns_rel.Player))
+
+    # photo url
+    photo = df_players_info[df_players_info['Rk'] == row['Rk']]
+    photo_url = photo['UrlPhoto'].values[0]
+    if pd.isna(photo_url) or '.jpg' in photo_url:
+        photo_url = "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png"   
+    g.set((player_uri, ns_rel.photo_url, Literal(photo_url)))
 
     # stats
     main_pos = player_pos[0]
