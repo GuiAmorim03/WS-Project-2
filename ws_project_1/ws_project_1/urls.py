@@ -25,5 +25,6 @@ urlpatterns = [
     path("club/<path:club_id>", club_detail, name="team"),
     path("players", players, name="players"),
     path("clubs", clubs, name="clubs"),
+    path("graph", graph_view, name="graph"),
     path("", dashboard, name="dashboard"),
 ]

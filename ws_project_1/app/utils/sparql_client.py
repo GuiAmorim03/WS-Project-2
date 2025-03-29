@@ -671,6 +671,137 @@ def process_club_stats_results(results):
     
     return sort_stats_categories(categories)
 
+def query_graph_data(selected_node_id=None):
+    """
+    Query the RDF graph structure, returning nodes and relationships
+    that can be visualized in a graph representation.
+    
+    Args:
+        selected_node_id (str, optional): If provided, only return this node
+            and its directly connected nodes (adjacent nodes)
+    
+    Returns:
+        dict: Contains 'nodes' and 'links' for graph visualization
+    """
+    sparql = get_sparql_client()
+    
+    if selected_node_id:
+        # Query for a specific node and its adjacent nodes
+        query = f"""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX fut-rel: <http://football.org/rel/>
+        
+        SELECT ?subject ?predicate ?object ?subjectLabel ?objectLabel ?subjectType ?objectType
+        WHERE {{
+            # Get relationships where selected node is the subject
+            {{
+                <{selected_node_id}> ?predicate ?object .
+                BIND(<{selected_node_id}> AS ?subject)
+                
+                # Get labels and types
+                OPTIONAL {{ ?subject rdfs:label ?subjectLabel }}
+                OPTIONAL {{ ?object rdfs:label ?objectLabel }}
+                OPTIONAL {{ ?subject rdf:type ?subjectType }}
+                OPTIONAL {{ ?object rdf:type ?objectType }}
+                
+                # Filter out schema-related predicates
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+            }}
+            UNION
+            # Get relationships where selected node is the object
+            {{
+                ?subject ?predicate <{selected_node_id}> .
+                BIND(<{selected_node_id}> AS ?object)
+                
+                # Get labels and types
+                OPTIONAL {{ ?subject rdfs:label ?subjectLabel }}
+                OPTIONAL {{ ?object rdfs:label ?objectLabel }}
+                OPTIONAL {{ ?subject rdf:type ?subjectType }}
+                OPTIONAL {{ ?object rdf:type ?objectType }}
+                
+                # Filter out schema-related predicates
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
+                FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+            }}
+        }}
+        """
+    else:
+        # Query for the entire graph
+        query = """
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX fut-rel: <http://football.org/rel/>
+        
+        SELECT ?subject ?predicate ?object ?subjectLabel ?objectLabel ?subjectType ?objectType
+        WHERE {
+            ?subject ?predicate ?object .
+            
+            # Get human-readable labels where available
+            OPTIONAL { ?subject rdfs:label ?subjectLabel }
+            OPTIONAL { ?object rdfs:label ?objectLabel }
+            
+            # Get types
+            OPTIONAL { ?subject rdf:type ?subjectType }
+            OPTIONAL { ?object rdf:type ?objectType }
+            
+            # Filter out schema-related triples to focus on domain data
+            FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
+            FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+        }
+        """
+    
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    try:
+        results = sparql.query().convert()
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return {"nodes": [], "links": []}
+    
+    # Process the results to create a graph structure
+    nodes = {}
+    links = []
+    
+    # Correctly iterate through the bindings in results
+    for result in results["results"]["bindings"]:
+        subject_uri = result.get('subject', {}).get('value', '')
+        object_uri = result.get('object', {}).get('value', '')
+        predicate = result.get('predicate', {}).get('value', '')
+        
+        # Use labels if available, otherwise use URIs
+        subject_label = result.get('subjectLabel', {}).get('value', '') or subject_uri.split('/')[-1]
+        object_label = result.get('objectLabel', {}).get('value', '') or object_uri.split('/')[-1]
+        
+        # Add subject node if not already added
+        if subject_uri not in nodes:
+            nodes[subject_uri] = {
+                'id': subject_uri,
+                'label': subject_label,
+                'type': result.get('subjectType', {}).get('value', 'Unknown').split('#')[-1]
+            }
+        
+        # Add object node if not already added and it's a URI (not a literal)
+        if object_uri.startswith('http') and object_uri not in nodes:
+            nodes[object_uri] = {
+                'id': object_uri,
+                'label': object_label,
+                'type': result.get('objectType', {}).get('value', 'Unknown').split('#')[-1]
+            }
+        
+        # Add relationship if object is a URI (not a literal)
+        if object_uri.startswith('http'):
+            links.append({
+                'source': subject_uri,
+                'target': object_uri,
+                'label': predicate.split('/')[-1]
+            })
+    
+    return {
+        'nodes': list(nodes.values()),
+        'links': links
+    }
 
 def sort_stats_categories(categories):
     category_order = {
