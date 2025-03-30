@@ -94,12 +94,15 @@ def players(request):
     # Filtering
     search_name = request.GET.get("name", "").strip().lower()
     position = request.GET.get("position", "").strip().lower()
+    club = request.GET.get("club", "").strip().lower()
     nation = request.GET.get("nation", "").strip().lower()
 
     if search_name:
         players_data = [p for p in players_data if search_name in p["name"].lower()]
     if position:
         players_data = [p for p in players_data if position in [pos.lower() for pos in p["positions"]]]
+    if club:
+        players_data = [p for p in players_data if club in p["current_club"].lower()]
     if nation:
         players_data = [p for p in players_data if nation in p["nation"].lower()]
 
@@ -121,6 +124,7 @@ def players(request):
         "entities_list": players_page,
         "search_name": search_name,
         "position": position,
+        "club": club,
         "nation": nation
     })
 
