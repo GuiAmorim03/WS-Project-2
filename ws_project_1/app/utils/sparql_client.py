@@ -907,6 +907,11 @@ def process_top_players_results(results):
     if not results["results"]["bindings"]:
         return []
     
+    stat_name = results["results"]["bindings"][0]["stat_name"]["value"]
+    color = results["results"]["bindings"][0]["color"]["value"]
+    alternate_color = results["results"]["bindings"][0]["alternateColor"]["value"] if color == 'ffffff' else 'ffffff'
+    border = color if color != 'ffffff' else alternate_color
+    
     players = []
     for player in results["results"]["bindings"]:
         # Extract player ID from URI
@@ -929,15 +934,23 @@ def process_top_players_results(results):
         players.append({
             "id": player_id,
             "name": player["name"]["value"],
-            "stat_name": player["stat_name"]["value"],
-            "stat_value": stat_value,
-            "club_name": player.get("club_name", {}).get("value", ""),
-            "club_logo": player.get("club_logo", {}).get("value", ""),
-            "flag": player.get("flag", {}).get("value", ""),
-            "photo_url": player.get("photo_url", {}).get("value", "")
+            # "stat_name": player["stat_name"]["value"],
+            "stat": stat_value,
+            "info": player.get("club_name", {}).get("value", ""),
+            # "club_logo": player.get("club_logo", {}).get("value", ""),
+            # "flag": player.get("flag", {}).get("value", ""),
+            "icon": player.get("photo_url", {}).get("value", "")
         })
     
-    return players
+    return {
+        "name": stat_name,
+        "colors": {
+            "main": color,
+            "alternate": alternate_color,
+            "border": border,
+        },
+        "entities": players
+    }
 
 def query_top_clubs_by_stat(stat_id, limit=10):
     """
@@ -1000,6 +1013,11 @@ def process_top_clubs_results(results):
     if not results["results"]["bindings"]:
         return []
     
+    stat_name = results["results"]["bindings"][0]["stat_name"]["value"]
+    color = results["results"]["bindings"][0]["color"]["value"]
+    alternate_color = results["results"]["bindings"][0]["alternateColor"]["value"] if color == 'ffffff' else 'ffffff'
+    border = color if color != 'ffffff' else alternate_color
+
     clubs = []
     for club in results["results"]["bindings"]:
         # Extract club ID from URI
@@ -1022,13 +1040,21 @@ def process_top_clubs_results(results):
         clubs.append({
             "id": club_id,
             "name": club["name"]["value"],
-            "stat_name": club["stat_name"]["value"],
-            "stat_value": stat_value,
-            "logo": club.get("logo", {}).get("value", ""),
-            "flag": club.get("flag", {}).get("value", ""),
-            "league_name": club.get("league_name", {}).get("value", ""),
-            "color": club.get("color", {}).get("value", ""),
-            "alternate_color": club.get("alternateColor", {}).get("value", "")
+            # "stat_name": club["stat_name"]["value"],
+            "stat": stat_value,
+            "icon": club.get("logo", {}).get("value", ""),
+            # "flag": club.get("flag", {}).get("value", ""),
+            "info": club.get("league_name", {}).get("value", ""),
+            # "color": club.get("color", {}).get("value", ""),
+            # "alternate_color": club.get("alternateColor", {}).get("value", "")
         })
     
-    return clubs
+    return {
+        "name": stat_name,
+        "colors": {
+            "main": color,
+            "alternate": alternate_color,
+            "border": border,
+        },
+        "entities": clubs
+    }

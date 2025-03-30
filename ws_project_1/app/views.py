@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils.sparql_client import query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data
+from .utils.sparql_client import query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat
 
 def player_detail(request, player_id):
     # Get player data from the SPARQL endpoint
@@ -38,7 +38,54 @@ def club_detail(request, club_id):
     return render(request, "club.html", {"entity": club_data})
 
 def dashboard(request):
-    return render(request, "dashboard.html", {"stats": {}})
+    """
+        matches played  (só players)
+        goals
+        assists (só players)
+        penaltis scored
+        passes
+        fouls
+        saves  (só players)
+        cleansheets  (só players)
+        yellow cards
+        red cards
+    """
+
+    stats_to_get = [
+        {"id": "mp",  "both_entities": False},
+        {"id": "gls", "both_entities": True},
+        {"id": "ast", "both_entities": False},
+        {"id": "pk", "both_entities": True},
+        {"id": "cmp_stats_passing_types", "both_entities": True},
+        {"id": "fls", "both_entities": True},
+        {"id": "saves", "both_entities": False},
+        {"id": "cs",  "both_entities": False},
+        {"id": "crdy",  "both_entities": True},
+        {"id": "crdr",  "both_entities": True}
+    ]
+
+    stats = [
+        {
+            "entity": "Player",
+            "stats": []
+        },
+        {
+            "entity": "Club",
+            "stats": []
+        }
+    ]
+    
+
+    for stat_to_get in stats_to_get:
+        if stat_to_get["both_entities"]:
+            clubs = query_top_clubs_by_stat(stat_to_get["id"])
+            stats[1]["stats"].append(clubs)
+        players = query_top_players_by_stat(stat_to_get["id"])
+        stats[0]["stats"].append(players)
+
+    print(stats)
+
+    return render(request, "dashboard.html", {"stats": stats})
 
 def players(request):
 

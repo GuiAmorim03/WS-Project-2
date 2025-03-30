@@ -22,7 +22,7 @@ from app.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("player/<path:player_id>", player_detail, name="player"),
-    path("club/<path:club_id>", club_detail, name="team"),
+    path("club/<path:club_id>", club_detail, name="club"),
     path("players", players, name="players"),
     path("clubs", clubs, name="clubs"),
     path("graph", graph_view, name="graph"),

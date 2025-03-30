@@ -2,4 +2,9 @@
 
 {% block content %}
 
+<div>
+    {% include "layouts/stats_group.html" with stats_data=stats.0 %}
+
+    {% include "layouts/stats_group.html" with stats_data=stats.1 %}
+</div>
 {% endblock %}

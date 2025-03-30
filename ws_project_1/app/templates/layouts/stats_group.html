@@ -1,0 +1,92 @@
+<section class="mt-2 mb-5">
+    <h2 class="text-center mb-5">{{ stats_data.entity }} Stats</h2>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            {% for stat_group in stats_data.stats %}
+            <div class="swiper-slide">
+                <div class="stats-column">
+                    <h5><b>{{ stat_group.name }}</b></h5>
+                    <div class="card" style=" 
+                            --main-color: #{{ stat_group.colors.main }};
+                            --alt-color: #{{ stat_group.colors.alternate }};
+                            --border-color: #{{ stat_group.colors.border }};
+                            ">
+                        <div class="card-header entity-top" style="background-color: var(--main-color); color: var(--alt-color);
+                            border-color: var(--border-color);"
+                            onclick="location.href='{% url stats_data.entity|lower stat_group.entities.0.id %}'">
+                            <div class="row">
+                                <div class="col-6">
+                                    <img src="{{ stat_group.entities.0.icon }}"
+                                        alt="{{ stat_group.entities.0.name }} icon" class="img-fluid">
+                                </div>
+                                <div class="col-6 text-end">
+                                    <h6>
+                                        {{ stat_group.entities.0.name }}
+                                    </h6>
+                                    <h6>
+                                        {{ stat_group.entities.0.info }}
+                                    </h6>
+                                    <h1>
+                                        <b>{{ stat_group.entities.0.stat }}</b>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-0" style="border: 0px;">
+                            {% for ent in stat_group.entities|slice:"1:" %}
+                            <div class="row m-0 pt-2 entities-list" style="border-color: var(--border-color);"
+                                onclick="location.href='{% url stats_data.entity|lower ent.id %}'">
+                                <div class="col-2 d-flex align-items-end">
+                                    <img src="{{ ent.icon }}" alt="{{ ent.name }} icon" class="img-fluid"
+                                        style="height: 45px; margin-right: 5px;">
+                                </div>
+                                <div class="col-7">
+                                    <h6 class="mb-0">{{ ent.name }}</h6>
+                                    <span>{{ ent.info }}</span>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <h4>{{ ent.stat }}</h4>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botões de navegação -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
+    });
+</script>
