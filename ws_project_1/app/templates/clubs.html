@@ -26,7 +26,7 @@
     </thead>
     <tbody>
         {% for club in entities_list %}
-        <tr onclick="window.location.href='{% url 'team' club.id %}';" style="cursor:pointer;">
+        <tr onclick="window.location.href='{% url 'club' club.id %}';" style="cursor:pointer;">
             <td>
                 <img src="{{ club.logo }}" alt="{{ club.name }}" class="small-logo">
                 {{ club.name }}

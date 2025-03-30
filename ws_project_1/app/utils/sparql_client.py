@@ -147,7 +147,7 @@ def process_player_results(results, player_id):
         "pos": positions,
         "country_name": result["nation"]["value"].split("/")[-1].replace("_", " ").title(),
         "flag": result["flag"]["value"],
-        "teams": teams,
+        "clubs": teams,
         "color": result["currentClubColor"]["value"],
         "alternate_color": result["currentClubAltColor"]["value"],
         "stats": query_player_stats(player_id)

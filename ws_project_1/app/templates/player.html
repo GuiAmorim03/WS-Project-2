@@ -5,7 +5,7 @@
 <div class="card-header" style="background-color: var(--main-color); color: var(--alt-color);">
     <div class="row">
         <div class="col-2 text-center">
-            {% if entity.teams %}
+            {% if entity.clubs %}
             <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid">
             {% endif %}
         </div>
@@ -21,8 +21,8 @@
             </p>
         </div>
         <div class="col-2 text-center">
-            {% if entity.teams %}
-            <img src="{{ entity.teams.0.logo }}" alt="{{ entity.teams.0.team_name }}" class="img-fluid">
+            {% if entity.clubs %}
+            <img src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
             {% endif %}
         </div>
     </div>
@@ -37,11 +37,11 @@
     </p>
     <h4>Clubs</h4>
     <p>
-        {% for team in entity.teams %}
-        <a href="{% url 'team' team.id %}" style="text-decoration: none;">
-            <img src="{{ team.logo }}" alt="Club" style="height: 20px;">
+        {% for club in entity.clubs %}
+        <a href="{% url 'club' club.id %}" style="text-decoration: none;">
+            <img src="{{ club.logo }}" alt="Club" style="height: 20px;">
             <span style="color: var(--main-color);">
-                {{ team.name }}{% if forloop.first %} (Current){% endif %}
+                {{ club.name }}{% if forloop.first %} (Current){% endif %}
             </span>
         </a>
     <br>
