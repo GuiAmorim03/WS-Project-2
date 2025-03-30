@@ -39,9 +39,9 @@
     <p>
         {% for club in entity.clubs %}
         <a href="{% url 'club' club.id %}" style="text-decoration: none;">
-            <img src="{{ club.logo }}" alt="Club" style="height: 20px;">
-            <span style="color: var(--main-color);">
-                {{ club.name }}{% if forloop.first %} (Current){% endif %}
+            <img src="{{ club.logo }}" class="mb-1" alt="Club" style="height: 20px;">
+            <span {% if forloop.first %}style="font-weight: bold; color: var(--main-color);"{% else %}style="color: var(--main-color); opacity: 0.5;"{% endif %}>
+                {{ club.name }}
             </span>
         </a>
     <br>
