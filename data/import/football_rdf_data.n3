@@ -11357,7 +11357,7 @@
     ns2:club <http://football.org/ent/leganes> ;
     ns2:name "Aritz Arambarri" ;
     ns2:nation <http://football.org/ent/ESP> ;
-    ns2:photo_url "https://www.zerozero.pt/img/logos/equipas/38_imgbank_1695724455.png" ;
+    ns2:photo_url "https://www.zerozero.pt/img/jogadores/26/719426__20201105150518_aritz_aranbarri.png" ;
     ns2:position "DF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 2 ;
@@ -109984,7 +109984,7 @@ ns1:xg ns2:name "Expected Goals" ;
 
 <http://football.org/ent/leganes> a ns2:Club ;
     ns2:abrv "LEG" ;
-    ns2:alternateColor "32cd32" ;
+    ns2:alternateColor "ffffff" ;
     ns2:city "Leganés, Madrid" ;
     ns2:color "6cace4" ;
     ns2:country <http://football.org/ent/ESP> ;

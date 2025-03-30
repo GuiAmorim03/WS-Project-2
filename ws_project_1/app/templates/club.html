@@ -25,7 +25,7 @@
 <div class="card-body" style="color: var(--main-color); background-color: var(--white-color);">
     <h2>Squad</h2>
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" style="font-size: large;">
         <thead>
             <th class="sortable" data-column="name">Name</th>
             <th class="sortable" data-column="position">Position</th>
@@ -38,7 +38,7 @@
                 <td>
                     <a href="{% url 'player' player.id %}" style="text-decoration: none; color: inherit;">
                         <img src="{{ player.photo_url }}" alt="{{ player.name }}" class="img-fluid"
-                            style="height: 20px; margin-right: 5px;">
+                            style="height: 40px; margin-right: 5px;">
                         {{ player.name }}
                     </a>
                 </td>
@@ -50,7 +50,7 @@
                 <td>{{ player.age }}</td>
                 <td>
                     <img src="{{ player.country_flag }}" alt="{{ player.country_name }}"
-                        style="height: 20px; margin-right: 5px;">
+                        style="height: 30px; margin-right: 5px;">
                     {{ player.country_name }}
                 </td>
             </tr>
