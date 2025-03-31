@@ -1,0 +1,13 @@
+.entity-top,
+.entities-list {
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+.entity-top {
+    padding-bottom: 0;
+}
+
+.entities-list {
+    border-top: 0;
+}

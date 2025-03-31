@@ -1,0 +1,382 @@
+<section class="mt-2 mb-5">
+    <h2 class="text-center mb-5 modern-title">{{ stats_data.entity }} Stats</h2>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            {% for stat_group in stats_data.stats %}
+            <div class="swiper-slide">
+                <div class="stats-column">
+                    <h5 class="stat-group-title"><b>{{ stat_group.name }}</b></h5>
+                    <div class="card modern-card" style=" 
+                            --main-color: #{{ stat_group.colors.main }};
+                            --alt-color: #{{ stat_group.colors.alternate }};
+                            --border-color: #{{ stat_group.colors.border }};
+                            ">
+                        <div class="card-header entity-top entities-list-{{ stats_data.entity|lower }}" 
+                            onclick="location.href='{% url stats_data.entity|lower stat_group.entities.0.id %}'">
+                            <div class="row">
+                                <div class="col-6 d-flex {% if stats_data.entity == 'Player' %}align-items-end{% else %}align-items-center{% endif %}">
+                                    <img src="{{ stat_group.entities.0.icon }}"
+                                        alt="{{ stat_group.entities.0.name }} icon" class="img-fluid entity-icon">
+                                </div>
+                                <div class="col-6 text-end pt-3">
+                                    <h6 class="entity-title">
+                                        {{ stat_group.entities.0.name }}
+                                    </h6>
+                                    <h6 class="entity-info">
+                                        {{ stat_group.entities.0.info }}
+                                    </h6>
+                                    <h1 class="entity-stat">
+                                        <b>{{ stat_group.entities.0.stat }}</b>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-0">
+                            {% for ent in stat_group.entities|slice:"1:" %}
+                            <div class="row m-0 entities-list entities-list-{{ stats_data.entity|lower }}" 
+                                onclick="location.href='{% url stats_data.entity|lower ent.id %}'">
+                                <div class="col-3 d-flex {% if stats_data.entity == 'Player' %}align-items-end pb-0{% else %}align-items-center{% endif %} justify-content-center pr-0 px-0">
+                                    <img src="{{ ent.icon }}" alt="{{ ent.name }} icon" class="img-fluid sub-entity-icon">
+                                </div>
+                                <div class="col-7 py-3">
+                                    <h6 class="mb-0 sub-entity-title">{{ ent.name }}</h6>
+                                    <span class="sub-entity-info">{{ ent.info }}</span>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-end py-3">
+                                    <h4 class="sub-entity-stat mb-0">{{ ent.stat }}</h4>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Navigation buttons -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<style>
+    .modern-title {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+    
+    .stat-group-title {
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        color: #444;
+    }
+    
+    .modern-card {
+        border-radius: 12px 12px 0 0;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .entity-top {
+        background: linear-gradient(135deg, var(--main-color), var(--main-color));
+        color: var(--alt-color);
+        padding: 1.25rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        padding-bottom: 0px;
+    }
+    
+    .entity-icon {
+        border-radius: 8px;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+    
+    .entity-title {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    
+    .entity-info {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+    
+    .entity-stat {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 0.5rem;
+    }
+    
+    .card-footer {
+        border: 0px !important;
+        background: white;
+        padding: 0 !important;
+    }
+    
+    .entities-list {
+        /* Keep the regular bottom border */
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+        padding: 0.75rem 1rem;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+        position: relative;
+        /* Remove default side borders */
+        border-left: none;
+        border-right: none;
+    }
+    
+    /* Restore the rule for the last item */
+    .entities-list:last-child {
+        border-bottom: none;
+    }
+    
+    /* Create pseudo-elements for the side borders */
+    .entities-list::before, .entities-list::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+    }
+    
+    /* Left border */
+    .entities-list::before {
+        left: 0;
+    }
+    
+    /* Right border */
+    .entities-list::after {
+        right: 0;
+    }
+    
+    .entities-list-player {
+        padding-bottom: 0px;
+    }
+    
+    .entities-list-club {
+        padding-bottom: 0.75rem;
+    }
+    
+    .sub-entity-icon {
+        height: 65px;
+        width: auto;
+        object-fit: contain;
+    }
+    
+    .sub-entity-title {
+        font-weight: 600;
+        color: #444;
+    }
+    
+    .sub-entity-info {
+        font-size: 0.85rem;
+        color: #666;
+    }
+    
+    .sub-entity-stat {
+        font-weight: 700;
+        color: var(--border-color);
+    }
+    
+    .swiper-button-next, .swiper-button-prev {
+        color: var(--main-color, #777);
+    }
+    
+    .swiper-pagination-bullet-active {
+        background: var(--main-color, #777);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Apply gradients using JavaScript after page loads
+        document.querySelectorAll('.entity-top').forEach(function(header) {
+            const card = header.closest('.modern-card');
+            const mainColor = getComputedStyle(card).getPropertyValue('--main-color').trim();
+            const alternateColor = getComputedStyle(card).getPropertyValue('--alt-color').trim();
+
+            console.log("Main Color:", mainColor);
+            console.log("Alternate Color:", alternateColor);
+            
+            // Check if color is light first
+            const isLight = isLightColor(mainColor);
+            
+            // Create a variant of the main color for the gradient based on its lightness
+            let variantColor;
+            if (isLight) {
+                variantColor = createDarkerColor(mainColor);
+            } else {
+                variantColor = createLighterColor(mainColor);
+            }
+            
+            // Apply the gradient (variant color on left)
+            header.style.background = `linear-gradient(135deg, ${variantColor}, ${mainColor})`;
+            
+            // Check if the main color is light and adjust text colors
+            if (isLight) {
+                // Find and adjust entity stats within this card
+                if (isLightColor(alternateColor)) {
+                    
+                    const entityStat = header.querySelector('.entity-stat');
+                    if (entityStat) {
+                        entityStat.style.color = '#000';
+                    }
+                    
+                    // Find and adjust sub-entity stats within this card
+                    const subEntityStats = card.querySelectorAll('.sub-entity-stat');
+                    subEntityStats.forEach(statElem => {
+                        statElem.style.color = '#000';
+                    });
+    
+                    // Adjust the color of the entity title and info
+                    const entityTitle = header.querySelector('.entity-title');
+                    if (entityTitle) {
+                        entityTitle.style.color = '#000';
+                    }
+
+                    const entityInfo = header.querySelector('.entity-info');
+                    if (entityInfo) {
+                        entityInfo.style.color = '#000';
+                    }
+                }
+                
+            }
+        });
+        
+        function applyGradientBorders() {
+            document.querySelectorAll('.modern-card').forEach(function(card) {
+                const mainColor = getComputedStyle(card).getPropertyValue('--main-color').trim();
+                const borderColor = getComputedStyle(card).getPropertyValue('--border-color').trim();
+                const isLight = isLightColor(mainColor);
+                
+                // Use darker color for light colors, lighter color for dark colors
+                const variantColor = isLight ? createDarkerColor(mainColor) : createLighterColor(mainColor);
+                
+                const styleEl = document.createElement('style');
+                const cardId = 'card-' + Math.random().toString(36).substr(2, 9);
+                card.classList.add(cardId);
+                
+                // Set the gradient border style for the left and right borders
+                styleEl.textContent = `
+                    .${cardId} .entities-list::before { 
+                        background: linear-gradient(to right, ${borderColor}, transparent) !important;
+                    }
+                    .${cardId} .entities-list::after { 
+                        background: linear-gradient(to left, ${borderColor}, transparent) !important;
+                    }
+                `;
+                document.head.appendChild(styleEl);
+            });
+        }
+        
+        applyGradientBorders();
+        
+        function createLighterColor(hexColor) {
+            try {
+                hexColor = hexColor.replace('#', '');
+                
+                const r = parseInt(hexColor.substring(0, 2), 16);
+                const g = parseInt(hexColor.substring(2, 4), 16);
+                const b = parseInt(hexColor.substring(4, 6), 16);
+                
+                const lighterR = Math.min(255, r + 60);
+                const lighterG = Math.min(255, g + 60);
+                const lighterB = Math.min(255, b + 60);
+                
+                const lighterColor = `#${lighterR.toString(16).padStart(2, '0')}${lighterG.toString(16).padStart(2, '0')}${lighterB.toString(16).padStart(2, '0')}`;
+                return lighterColor;
+            } catch (e) {
+                console.error("Error creating gradient:", e);
+                return hexColor;
+            }
+        }
+        
+        // New function to create darker color variant for light colors
+        function createDarkerColor(hexColor) {
+            try {
+                hexColor = hexColor.replace('#', '');
+                
+                const r = parseInt(hexColor.substring(0, 2), 16);
+                const g = parseInt(hexColor.substring(2, 4), 16);
+                const b = parseInt(hexColor.substring(4, 6), 16);
+                
+                const darkerR = Math.max(0, r - 60);
+                const darkerG = Math.max(0, g - 60);
+                const darkerB = Math.max(0, b - 60);
+                
+                const darkerColor = `#${darkerR.toString(16).padStart(2, '0')}${darkerG.toString(16).padStart(2, '0')}${darkerB.toString(16).padStart(2, '0')}`;
+                return darkerColor;
+            } catch (e) {
+                console.error("Error creating darker gradient:", e);
+                return hexColor;
+            }
+        }
+        
+        function isLightColor(color) {
+            // Remove any leading/trailing spaces
+            color = color.trim();
+            
+            let r, g, b;
+            
+            try {
+                // Handle hex colors with # prefix
+                if (color.startsWith('#')) {
+                    color = color.substring(1);
+                }
+                
+                // Handle 6-digit hex
+                if (color.length === 6) {
+                    r = parseInt(color.substring(0, 2), 16);
+                    g = parseInt(color.substring(2, 4), 16);
+                    b = parseInt(color.substring(4, 6), 16);
+                } 
+                // Handle 3-digit hex
+                else if (color.length === 3) {
+                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
+                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
+                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
+                } else {
+                    return false;
+                }
+                
+                // Calculate luminance - if high, it's a light color
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                return luminance > 0.7;
+            } catch (e) {
+                console.error("Error checking color brightness:", e);
+                return false;
+            }
+        }
+        
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
+    });
+</script>

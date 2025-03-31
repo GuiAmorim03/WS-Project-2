@@ -1,0 +1,11 @@
+.sortable {
+    cursor: pointer;
+}
+
+.sortable.ascending::after {
+    content: " ↑";
+}
+
+.sortable.descending::after {
+    content: " ↓";
+}

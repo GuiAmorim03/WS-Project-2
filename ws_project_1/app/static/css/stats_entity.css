@@ -1,0 +1,20 @@
+.stats-column {
+    padding: 20px;
+    border-radius: 5%;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid;
+    padding: 10px 2px;
+}
+
+.stat-name {
+    text-align: left;
+}
+
+.stat-value {
+    text-align: right;
+    font-weight: bold;
+}

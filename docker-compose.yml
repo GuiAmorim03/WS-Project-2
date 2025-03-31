@@ -1,0 +1,44 @@
+services:
+  web:
+    build:
+      context: ./ws_project_1
+      dockerfile: Dockerfile
+    volumes:
+      - ./ws_project_1:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - graphdb
+    environment:
+      - DEBUG=True
+    restart: unless-stopped
+
+  graphdb:
+    image: ontotext/graphdb:10.4.0
+    ports:
+      - "7200:7200"
+    volumes:
+      - graphdb-data:/opt/graphdb/home
+      - ./data/import:/opt/graphdb/home/import
+    environment:
+      - GDB_HEAP_SIZE=2g
+      - GDB_JAVA_OPTS=-Dgraphdb.workbench.importDirectory=/opt/graphdb/home/import
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7200/rest/repositories"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  init-graphdb:
+    image: curlimages/curl:7.82.0
+    depends_on:
+      graphdb:
+        condition: service_healthy
+    volumes:
+      - ./data/config:/config
+    entrypoint: ["/bin/sh", "/config/init-repository.sh"]
+    network_mode: "service:graphdb"
+
+volumes:
+  graphdb-data:

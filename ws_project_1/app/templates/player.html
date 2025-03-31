@@ -1,0 +1,233 @@
+{% extends "layouts/entity.html" %}
+
+    {% block content_inside %}
+
+<div class="card-header py-0" style="background-color: #f8f9fa; color: #333;">
+    <div class="row">
+        <div class="col-2 text-center d-flex align-items-end justify-content-center">
+            {% if entity.clubs %}
+            <div class="player-photo-container pt-2 px-2">
+                <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid" style="height: 175px; object-fit: contain;">
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-8 py-2">
+            <h2 class="mt-5" style="color: var(--main-color);">{{ entity.name }}</h2>
+            <p class="m-0">
+                <img src="{{ entity.flag }}" alt="Flag" class="mb-1" style="height: 20px">
+                <span>{{ entity.country_name }}</span>
+                <br>
+                <span>{{ entity.born }}</span>
+                <span> • </span>
+                <span>{{ entity.age }}y</span>
+            </p>
+        </div>
+        <div class="col-2 py-2 text-center">
+            {% if entity.clubs %}
+            <div class="club-logo-container p-2 mb-2">
+                <a href="{% url 'club' entity.clubs.0.id %}" style="text-decoration: none;">
+                    <img src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="card-body position-relative" style="background-color: #fff; color: #333;">
+    <!-- Team colors ball positioned at far right and vertically centered -->
+    <div class="team-colors-ball position-absolute" style="
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--main-color) 50%, var(--alt-color) 50%);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.1);
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    "></div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h4 style="color: var(--main-color);">Positions</h4>
+            <div class="positions-container">
+                {% for position in entity.pos %}
+                <div class="position-badge mb-2 p-2 rounded" style="border-left: 3px solid var(--main-color); background-color: #f8f9fa;">
+                    {{ position }}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" style="background-color: var(--main-color); border-color: var(--main-color);" class="btn btn-primary mt-2 add-button" data-bs-toggle="modal" data-bs-target="#addPosition">
+                Add New Position 
+            </button>
+        </div>
+        <div class="col-md-6">
+            <h4 style="color: var(--main-color);">Clubs</h4>
+            <div class="clubs-container">
+                {% for club in entity.clubs %}
+                <div class="club-item mb-2 p-2 {% if forloop.first %}current-club{% endif %}" style="display: flex; align-items: center;">
+                    <img src="{{ club.logo }}" class="me-2" alt="Club" style="height: 30px;">
+                    <a href="{% url 'club' club.id %}" style="text-decoration: none;">
+                        <span {% if forloop.first %}style="font-weight: bold; color: var(--main-color);"{% else %}style="color: #666;"{% endif %}>
+                            {{ club.name }}
+                        </span>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" style="background-color: var(--main-color); border-color: var(--main-color);" class="btn btn-primary mt-2 add-button" data-bs-toggle="modal" data-bs-target="#addClubModal">
+                Add New Club
+            </button>
+        </div>
+
+
+    <!-- Add new club Modal -->
+    <div class="modal fade" id="addClubModal" tabindex="-1" aria-labelledby="addClubModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addClubModalLabel">Add a New Club</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addClubForm" method="POST" action="{% url 'add_club' player_id %}">
+                        {% csrf_token %}
+                        <label for="club">Select Club:</label>
+                        <select name="club" id="club" class="form-control">
+                            {% for club in available_clubs %}
+                            <option value="{{ club.id }}">{{ club.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark" form="addClubForm">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addPosition" tabindex="-1" aria-labelledby="addPositionLabel" aria-hidden="true"> <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPositionLabel">Add a New Position</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPositionForm" method="POST" action="{% url 'add_position' player_id %}">
+                        {% csrf_token %}
+                        <label for="position">Select Position:</label>
+                        <select name="position" id="position" class="form-control">
+                            {% for key, value in available_positions %}
+                                <option value="{{ key }}"> {{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark" form="addPositionForm">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+
+{% load static %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM loaded for player page, starting color detection...");
+        
+        // Get the color from the card element
+        const cardElement = document.querySelector('.card');
+        let mainColor = '';
+        
+        if (cardElement) {
+            const cardStyle = getComputedStyle(cardElement);
+            mainColor = cardStyle.getPropertyValue('--main-color').trim();
+            console.log("Card element main-color:", mainColor);
+            
+            if (!mainColor) {
+                mainColor = cardElement.style.getPropertyValue('--main-color').trim();
+            }
+        }
+        
+        // If still empty, use hardcoded fallback
+        if (!mainColor) {
+            mainColor = "#{{ entity.color }}";
+            console.log("Using server-provided color:", mainColor);
+        }
+        
+        // Function to determine if a color is light
+        function isLightColor(color) {
+            // Remove any leading/trailing spaces
+            color = color.trim();
+            
+            let r, g, b;
+            
+            try {
+                // Handle hex colors with # prefix
+                if (color.startsWith('#')) {
+                    color = color.substring(1);
+                }
+                
+                // Handle 6-digit hex
+                if (color.length === 6) {
+                    r = parseInt(color.substring(0, 2), 16);
+                    g = parseInt(color.substring(2, 4), 16);
+                    b = parseInt(color.substring(4, 6), 16);
+                } 
+                // Handle 3-digit hex
+                else if (color.length === 3) {
+                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
+                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
+                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
+                } else {
+                    return false;
+                }
+                
+                // Calculate luminance - if high, it's a light color
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                return luminance > 0.7;
+            } catch (e) {
+                return false;
+            }
+        }
+        
+        // Apply appropriate styles based on color lightness
+        const isLight = isLightColor(mainColor);
+        console.log("Is light color:", isLight);
+        
+        if (isLight) {
+            console.log("Light color detected - applying black instead");
+            
+            // Replace light colors with black
+            document.querySelectorAll('h2[style*="color: var(--main-color)"], h4[style*="color: var(--main-color)"]').forEach(elem => {
+                elem.style.color = '#000';
+            });
+            
+            // Update position badges
+            document.querySelectorAll('.position-badge').forEach(badge => {
+                badge.style.borderLeftColor = '#000';
+            });
+            
+            // Update current club highlight
+            document.querySelectorAll('.current-club span').forEach(span => {
+                if (span.style.color.includes('var(--main-color)')) {
+                    span.style.color = '#000';
+                }
+            });
+
+            // Update add buttons
+            document.querySelectorAll('.add-button').forEach(button => {
+                button.style.backgroundColor = '#000';
+                button.style.borderColor = '#000';
+            });
+        }
+    });
+</script>
+
+{% endblock %}

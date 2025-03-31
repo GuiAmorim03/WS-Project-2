@@ -1,0 +1,68 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Clubs{% endblock %}
+
+{% block content %}
+
+<div class="mb-3" style="text-align: center;">
+    <h1>Football Clubs</h1>
+</div>
+
+<form method="get" class="search-form">
+    <div class="form-group">
+        <input type="text" name="name" placeholder="Search by name" value="{{ search_name }}">
+        <input type="text" name="league" placeholder="Search by league" value="{{ league }}">
+        <button type="submit">Filter</button>
+    </div>
+</form>
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Abbreviation</th>
+            <th>League</th>
+            <th>Country</th>
+            <th>Players Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for club in entities_list %}
+        <tr onclick="window.location.href='{% url 'club' club.id %}';" style="cursor:pointer;">
+            <td>
+                <img src="{{ club.logo }}" alt="{{ club.name }}" class="small-logo">
+                {{ club.name }}
+            </td>
+            <td>{{ club.abbreviation }}</td>
+            <td>{{ club.league }}</td>
+            <td>
+                <img src="{{ club.flag }}" alt="{{ club.name }} flag" class="small-flag">
+            </td>
+            <td>{{ club.num_players }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No clubs found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if entities_list.has_other_pages %}
+<div class="pagination">
+    {% if entities_list.has_previous %}
+        <a href="?page=1{% if search_name %}&name={{ search_name }}{% endif %}{% if league %}&league={{ league }}{% endif %}">First</a>
+        <a href="?page={{ entities_list.previous_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if league %}&league={{ league }}{% endif %}">Previous</a>
+    {% endif %}
+
+    Page {{ entities_list.number }} of {{ entities_list.paginator.num_pages }}
+
+    {% if entities_list.has_next %}
+        <a href="?page={{ entities_list.next_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if league %}&league={{ league }}{% endif %}">Next</a>
+        <a href="?page={{ entities_list.paginator.num_pages }}{% if search_name %}&name={{ search_name }}{% endif %}{% if league %}&league={{ league }}{% endif %}">Last</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/players_clubs.css' %}">
+
+{% endblock %}
