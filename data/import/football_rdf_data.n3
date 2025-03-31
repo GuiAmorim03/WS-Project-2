@@ -11315,7 +11315,7 @@
     ns2:club <http://football.org/ent/auxerre> ;
     ns2:name "Aristide Zossou" ;
     ns2:nation <http://football.org/ent/CIV> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "MF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 0 ;
@@ -14300,7 +14300,7 @@
     ns2:club <http://football.org/ent/auxerre> ;
     ns2:name "Ben Viadere" ;
     ns2:nation <http://football.org/ent/FRA> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "MF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 0 ;
@@ -29106,7 +29106,7 @@
     ns2:club <http://football.org/ent/reims> ;
     ns2:name "Eloge Zabi" ;
     ns2:nation <http://football.org/ent/CIV> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "DF",
         "MF" ;
     ns1:ast 0 ;
@@ -30064,7 +30064,7 @@
     ns2:club <http://football.org/ent/athletic> ;
     ns2:name "Endika Buján" ;
     ns2:nation <http://football.org/ent/ESP> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "FW" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 0 ;
@@ -39148,7 +39148,7 @@
     ns2:club <http://football.org/ent/reims> ;
     ns2:name "Hafiz Ibrahim" ;
     ns2:nation <http://football.org/ent/NGA> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "FW" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 1 ;
@@ -56605,7 +56605,7 @@
     ns2:club <http://football.org/ent/lens> ;
     ns2:name "Kembo Diliwidi" ;
     ns2:nation <http://football.org/ent/FRA> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "DF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 0 ;
@@ -79778,7 +79778,7 @@
     ns2:club <http://football.org/ent/montpellier> ;
     ns2:name "Nicolas Pays" ;
     ns2:nation <http://football.org/ent/FRA> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "FW",
         "MF" ;
     ns1:ast 0 ;
@@ -88881,7 +88881,7 @@
     ns2:club <http://football.org/ent/lens> ;
     ns2:name "Rayan Fofana" ;
     ns2:nation <http://football.org/ent/FRA> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "FW",
         "MF" ;
     ns1:ast 0 ;
@@ -95678,7 +95678,7 @@
     ns2:club <http://football.org/ent/betis> ;
     ns2:name "Sergio Arribas" ;
     ns2:nation <http://football.org/ent/ESP> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "DF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 2 ;
@@ -95965,7 +95965,7 @@
     ns2:club <http://football.org/ent/brest> ;
     ns2:name "Sérigné Diop" ;
     ns2:nation <http://football.org/ent/SEN> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "FW" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 1 ;
@@ -96518,7 +96518,7 @@
     ns2:club <http://football.org/ent/montpellier> ;
     ns2:name "Simon Cara" ;
     ns2:nation <http://football.org/ent/FRA> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "MF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 0 ;
@@ -99580,7 +99580,7 @@
     ns2:club <http://football.org/ent/villarreal> ;
     ns2:name "Thiago Ojeda" ;
     ns2:nation <http://football.org/ent/ARG> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "MF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 0 ;
@@ -105158,7 +105158,7 @@
     ns2:club <http://football.org/ent/montpellier> ;
     ns2:name "Wilfried Ndollo" ;
     ns2:nation <http://football.org/ent/CMR> ;
-    ns2:photo_url "https://www.zerozero.pt/images/dsgn/No_Photo_00001.png" ;
+    ns2:photo_url "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png" ;
     ns2:position "DF" ;
     ns1:ast 0 ;
     ns1:blocks_stats_defense 0 ;
