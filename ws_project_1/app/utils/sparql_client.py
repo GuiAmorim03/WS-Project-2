@@ -1058,3 +1058,65 @@ def process_top_clubs_results(results):
         },
         "entities": clubs
     }
+
+def query_player_club(player_id):
+        sparql = get_sparql_client()
+
+        # Step 1: Retrieve current club
+        query_get_club = f"""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX fut-rel: <http://football.org/rel/>
+
+        SELECT 
+        ?currentClub
+        WHERE {{
+            <http://football.org/ent/{player_id}> fut-rel:club ?currentClub .
+        }}
+        """
+        
+        current_club = None
+        try:
+            sparql.setQuery(query_get_club)
+            results = sparql.query().convert()
+
+            print(results)
+            
+            result = results["results"]["bindings"][0]
+            if result:
+                current_club = result["currentClub"]["value"]
+        except Exception as e:
+            print("Error fetching current club:", e)
+
+        return current_club
+
+def update_player_club(player_id, current_club, club_id):
+
+        sparql = SPARQLWrapper("http://graphdb:7200/repositories/football" + "/statements")
+        sparql.setReturnFormat(JSON)
+
+        current_club_id = current_club.split("/")[-1],
+        current_club_id = current_club_id[0] 
+
+        # Step 2: SPARQL Update - Move current club to pastClubs and update current club
+        query_update = f"""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX fut-rel: <http://football.org/rel/>
+
+        DELETE {{
+            <http://football.org/ent/{player_id}> fut-rel:club ?oldClub .
+        }}
+        INSERT {{
+            <http://football.org/ent/{player_id}> fut-rel:club <http://football.org/ent/{club_id}> .
+            {f'<http://football.org/ent/{player_id}> fut-rel:past_club <{current_club}> .' if current_club else ''}
+        }}
+        WHERE {{
+            OPTIONAL {{ <http://football.org/ent/{player_id}> fut-rel:club ?oldClub . }}
+        }}
+        """
+
+        try:
+            sparql.setQuery(query_update)
+            sparql.setMethod("POST")
+            sparql.query()
+        except Exception as e:
+            print("Error updating player club:", e)
