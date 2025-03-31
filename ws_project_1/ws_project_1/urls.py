@@ -21,10 +21,11 @@ from app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("player/<path:player_id>", player_detail, name="player"),
-    path("club/<path:club_id>", club_detail, name="club"),
+    path("player/<str:player_id>", player_detail, name="player"),
+    path("club/<str:club_id>", club_detail, name="club"),
     path("players", players, name="players"),
     path("clubs", clubs, name="clubs"),
     path("graph", graph_view, name="graph"),
     path("", dashboard, name="dashboard"),
+    path("player/<str:player_id>/add_club/", add_club_to_player, name="add_club"),
 ]
