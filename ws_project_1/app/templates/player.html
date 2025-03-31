@@ -57,6 +57,9 @@
                 </div>
                 {% endfor %}
             </div>
+            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addPosition">
+                Add New Position 
+            </button>
         </div>
         <div class="col-md-6">
             <h4 style="color: var(--main-color);">Clubs</h4>
@@ -104,6 +107,32 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addPosition" tabindex="-1" aria-labelledby="addPositionLabel" aria-hidden="true"> <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPositionLabel">Add a New Position</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPositionForm" method="POST" action="{% url 'add_position' player_id %}">
+                        {% csrf_token %}
+                        <label for="position">Select Position:</label>
+                        <select name="position" id="position" class="form-control">
+                            {% for key, value in available_positions %}
+                                <option value="{{ key }}"> {{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="addPositionForm">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
 </div>
 
