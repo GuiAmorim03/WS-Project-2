@@ -170,7 +170,7 @@
     }
     
     .sub-entity-icon {
-        height: 55px;
+        height: 65px;
         width: auto;
         object-fit: contain;
     }
@@ -206,17 +206,43 @@
             const card = header.closest('.modern-card');
             const mainColor = getComputedStyle(card).getPropertyValue('--main-color').trim();
             
-            // Create a lighter version of the main color for the gradient
-            const lighterColor = createLighterColor(mainColor);
+            // Check if color is light first
+            const isLight = isLightColor(mainColor);
             
-            // Apply the gradient (swapped order - lighter color on left)
-            header.style.background = `linear-gradient(135deg, ${lighterColor}, ${mainColor})`;
+            // Create a variant of the main color for the gradient based on its lightness
+            let variantColor;
+            if (isLight) {
+                variantColor = createDarkerColor(mainColor);
+            } else {
+                variantColor = createLighterColor(mainColor);
+            }
+            
+            // Apply the gradient (variant color on left)
+            header.style.background = `linear-gradient(135deg, ${variantColor}, ${mainColor})`;
+            
+            // Check if the main color is light and adjust text colors
+            if (isLight) {
+                // Find and adjust entity stats within this card
+                const entityStat = header.querySelector('.entity-stat');
+                if (entityStat) {
+                    entityStat.style.color = '#000';
+                }
+                
+                // Find and adjust sub-entity stats within this card
+                const subEntityStats = card.querySelectorAll('.sub-entity-stat');
+                subEntityStats.forEach(statElem => {
+                    statElem.style.color = '#000';
+                });
+            }
         });
         
         function applyGradientBorders() {
             document.querySelectorAll('.modern-card').forEach(function(card) {
                 const mainColor = getComputedStyle(card).getPropertyValue('--main-color').trim();
-                const lighterColor = createLighterColor(mainColor);
+                const isLight = isLightColor(mainColor);
+                
+                // Use darker color for light colors, lighter color for dark colors
+                const variantColor = isLight ? createDarkerColor(mainColor) : createLighterColor(mainColor);
                 
                 const styleEl = document.createElement('style');
                 const cardId = 'card-' + Math.random().toString(36).substr(2, 9);
@@ -225,7 +251,7 @@
                 // Set the gradient border style for the left and right borders
                 styleEl.textContent = `
                     .${cardId} .entities-list::before { 
-                        background: linear-gradient(to right, ${lighterColor}, transparent) !important;
+                        background: linear-gradient(to right, ${variantColor}, transparent) !important;
                     }
                     .${cardId} .entities-list::after { 
                         background: linear-gradient(to left, ${mainColor}, transparent) !important;
@@ -254,6 +280,63 @@
             } catch (e) {
                 console.error("Error creating gradient:", e);
                 return hexColor;
+            }
+        }
+        
+        // New function to create darker color variant for light colors
+        function createDarkerColor(hexColor) {
+            try {
+                hexColor = hexColor.replace('#', '');
+                
+                const r = parseInt(hexColor.substring(0, 2), 16);
+                const g = parseInt(hexColor.substring(2, 4), 16);
+                const b = parseInt(hexColor.substring(4, 6), 16);
+                
+                const darkerR = Math.max(0, r - 60);
+                const darkerG = Math.max(0, g - 60);
+                const darkerB = Math.max(0, b - 60);
+                
+                const darkerColor = `#${darkerR.toString(16).padStart(2, '0')}${darkerG.toString(16).padStart(2, '0')}${darkerB.toString(16).padStart(2, '0')}`;
+                return darkerColor;
+            } catch (e) {
+                console.error("Error creating darker gradient:", e);
+                return hexColor;
+            }
+        }
+        
+        function isLightColor(color) {
+            // Remove any leading/trailing spaces
+            color = color.trim();
+            
+            let r, g, b;
+            
+            try {
+                // Handle hex colors with # prefix
+                if (color.startsWith('#')) {
+                    color = color.substring(1);
+                }
+                
+                // Handle 6-digit hex
+                if (color.length === 6) {
+                    r = parseInt(color.substring(0, 2), 16);
+                    g = parseInt(color.substring(2, 4), 16);
+                    b = parseInt(color.substring(4, 6), 16);
+                } 
+                // Handle 3-digit hex
+                else if (color.length === 3) {
+                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
+                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
+                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
+                } else {
+                    return false;
+                }
+                
+                // Calculate luminance - if high, it's a light color
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                return luminance > 0.7;
+            } catch (e) {
+                console.error("Error checking color brightness:", e);
+                return false;
             }
         }
         
