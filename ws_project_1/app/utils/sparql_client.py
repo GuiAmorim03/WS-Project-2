@@ -1200,6 +1200,7 @@ def create_player(id, name, born, positions, photo_url, nation, club):
     query = f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
     INSERT DATA {{
@@ -1214,8 +1215,75 @@ def create_player(id, name, born, positions, photo_url, nation, club):
     query += f"""        
             fut-rel:photo_url "{photo_url}" ;
             fut-rel:nation <{nation_uri}> ;
-            fut-rel:club <{club_uri}> .
-    }}
+            fut-rel:club <{club_uri}> ;
+    """
+
+    PLAYER = "player"
+    GK = "goalkeeper"
+    if "GK" in positions:
+        main_position = GK
+    else:
+        main_position = PLAYER
+    stats = {
+        "MP": [PLAYER, GK],
+        "Starts": [PLAYER, GK],
+        "Min": [PLAYER, GK],
+
+        "Gls": [PLAYER, GK],
+        "Ast": [PLAYER, GK],
+        "G_plus_A": [PLAYER, GK],
+        "xG": [PLAYER, GK],
+        "xAG": [PLAYER, GK],
+        "PK": [PLAYER, GK],
+        "PKatt": [PLAYER, GK],
+
+        "Tkl": [PLAYER],
+        "TklW": [PLAYER],
+        "Blocks_stats_defense": [PLAYER],
+        "Int": [PLAYER],
+        "Clr": [PLAYER],
+        "Err": [PLAYER],
+        "Recov": [PLAYER],
+
+        "PrgP": [PLAYER],
+        "PrgC": [PLAYER],
+        "PrgR": [PLAYER],
+        "KP": [PLAYER],
+        "PPA": [PLAYER],
+        "Live": [PLAYER],
+        "Cmp_stats_passing_types": [PLAYER],
+        "Touches": [PLAYER],
+        "Mis": [PLAYER],
+        "Dis": [PLAYER],
+
+        "GA": [GK],
+        "GA90": [GK],
+        "Saves": [GK],
+        "Save_pct": [GK],
+        "CS": [GK],
+        "CS_pct": [GK],
+        "PKA": [GK],
+        "PKsv": [GK],
+
+        "CrdY": [PLAYER, GK],
+        "CrdR": [PLAYER, GK],
+        "Fls": [PLAYER, GK],
+        "PKcon": [PLAYER, GK],
+        "PKwon": [PLAYER, GK],
+        "OG": [PLAYER, GK],
+        "Off_stats_misc": [PLAYER, GK]
+    }
+
+    stats_filtered = [stat for stat, types in stats.items() if main_position in types]
+
+    for i, stat in enumerate(stats_filtered):
+        final_mark = "." if i == len(stats_filtered) - 1 else ";"
+        query += f"""
+            fut-stat:{stat.lower()} 0 {final_mark}
+        """
+    
+    query += f"""
+        }}
     """
 
     print(query)
