@@ -1,4 +1,4 @@
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, JSON, POST
 from datetime import datetime
 
 # Configure your SPARQL endpoint
@@ -1123,7 +1123,9 @@ def create_player(id, name, born, positions, photo_url, nation, club):
         club: Club ID
     """
 
-    sparql = get_sparql_client()
+    sparql = SPARQLWrapper(ENDPOINT_URL+"/statements")
+    sparql.setReturnFormat(JSON)
+    sparql.setMethod(POST)
     
     player_uri = f"http://football.org/ent/{id}"
     club_uri = f"http://football.org/ent/{club}"
@@ -1138,11 +1140,11 @@ def create_player(id, name, born, positions, photo_url, nation, club):
     INSERT DATA {{
         <{player_uri}> rdf:type fut-rel:Player ;
             fut-rel:name "{name}" ;
-            fut-rel:born {born}^^xsd:gYear ;
+            fut-rel:born {born} ;
     """
 
     for position in positions:
-        query += f'             fut-rel:position "{position}" ;\n'
+        query += f'        fut-rel:position "{position}" ;\n'
 
     query += f"""        
             fut-rel:photo_url "{photo_url}" ;
@@ -1154,6 +1156,7 @@ def create_player(id, name, born, positions, photo_url, nation, club):
     print(query)
 
     sparql.setQuery(query)
+
     try:
         sparql.query()
         print(f"Player {name} created successfully.")
