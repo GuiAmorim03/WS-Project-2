@@ -26,7 +26,8 @@
     cursor: pointer;
 }
 
-label {
+/* Scope label styles to modal content */
+.modal-content label {
     font-weight: bold;
     display: block;
     text-align: left;
@@ -34,18 +35,19 @@ label {
     margin-bottom: 0px;
 }
 
-span {
+.modal-content span {
     display: block;
     text-align: left;
     margin-bottom: 5px;
 }
 
-p {
+.modal-content p {
     margin: 0;
 }
 
-input,
-select {
+/* Scope form element styles to modal content */
+.modal-content input,
+.modal-content select {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
@@ -68,7 +70,7 @@ select {
     gap: 8px;
 }
 
-
+/* These button styles will only apply to buttons with btn-dark class */
 .btn-dark {
     background-color: #343a40;
     color: white;
