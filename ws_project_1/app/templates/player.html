@@ -2,17 +2,17 @@
 
     {% block content_inside %}
 
-<div class="card-header" style="background-color: #f8f9fa; color: #333;">
+<div class="card-header py-0" style="background-color: #f8f9fa; color: #333;">
     <div class="row">
-        <div class="col-2 text-center">
+        <div class="col-2 text-center d-flex align-items-end justify-content-center">
             {% if entity.clubs %}
-            <div class="player-photo-container p-2 rounded">
-                <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid rounded">
+            <div class="player-photo-container pt-2 px-2">
+                <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid" style="height: 175px; object-fit: contain;">
             </div>
             {% endif %}
         </div>
-        <div class="col-8">
-            <h2 style="color: var(--main-color);">{{ entity.name }}</h2>
+        <div class="col-8 py-2">
+            <h2 class="mt-5" style="color: var(--main-color);">{{ entity.name }}</h2>
             <p class="m-0">
                 <img src="{{ entity.flag }}" alt="Flag" style="height: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                 <span>{{ entity.country_name }}</span>
@@ -22,7 +22,7 @@
                 <span>{{ entity.age }}y</span>
             </p>
         </div>
-        <div class="col-2 text-center">
+        <div class="col-2 py-2 text-center">
             {% if entity.clubs %}
             <div class="club-logo-container p-2 mb-2">
                 <a href="{% url 'club' entity.clubs.0.id %}" style="text-decoration: none;">

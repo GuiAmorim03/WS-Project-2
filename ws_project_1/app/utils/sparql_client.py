@@ -890,7 +890,7 @@ def query_top_players_by_stat(stat_id, limit=10):
 
         OPTIONAL {{ ?player_id fut-rel:photo_url ?photo_url . }}
     }}
-    ORDER BY DESC(xsd:float(?stat_value))
+    ORDER BY DESC(xsd:float(?stat_value)) ?player_id
     LIMIT {limit}
     """
     
@@ -996,7 +996,7 @@ def query_top_clubs_by_stat(stat_id, limit=10):
         
         ?stat fut-rel:name ?stat_name .
     }}
-    ORDER BY DESC(xsd:float(?stat_value))
+    ORDER BY DESC(xsd:float(?stat_value)) ?club_id
     LIMIT {limit}
     """
     
