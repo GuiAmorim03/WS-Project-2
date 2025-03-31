@@ -1,13 +1,13 @@
 {% extends "layouts/entity.html" %}
 
-{% block content_inside %}
+    {% block content_inside %}
 
 <div class="card-header pb-0" style="background-color: var(--main-color); color: var(--alt-color);">
     <div class="row">
         <div class="col-2 text-center">
             {% if entity.clubs %}
             <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid">
-            {% endif %}
+                {% endif %}
         </div>
         <div class="col-8">
             <h2>{{ entity.name }}</h2>
@@ -23,7 +23,7 @@
         <div class="col-2 text-center">
             {% if entity.clubs %}
             <img src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
-            {% endif %}
+                {% endif %}
         </div>
     </div>
 </div>
@@ -33,7 +33,7 @@
     <p>
         {% for position in entity.pos %}
         {{ position }}{% if not forloop.last %} <br> {% endif %}
-        {% endfor %}
+            {% endfor %}
     </p>
     <h4>Clubs</h4>
     <p>
@@ -44,9 +44,58 @@
                 {{ club.name }}
             </span>
         </a>
-    <br>
-        {% endfor %}
+        <br>
+            {% endfor %}
     </p>
+
+    <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addClubModal">
+        Add New Club
+    </button>
+
+    <!-- Add new club Modal -->
+    <div class="modal fade" id="addClubModal" tabindex="-1" aria-labelledby="addClubModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addClubModalLabel">Add a New Club</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addClubForm" method="POST" action="{% url 'add_club' player_id %}">
+                        {% csrf_token %}
+                        <label for="club">Select Club:</label>
+                        <select name="club" id="club" class="form-control">
+                            {% for club in available_clubs %}
+                            <option value="{{ club.id }}">{{ club.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="addClubForm">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<!-- <script> -->
+<!-- document.getElementById("addClubForm").addEventListener("submit", function(event) { -->
+<!--     event.preventDefault();  // Prevent full page reload -->
+<!---->
+<!--     let formData = new FormData(this); -->
+<!--     fetch(this.action, { -->
+<!--         method: "POST", -->
+<!--         body: formData -->
+<!--     }) -->
+<!--     .then(response => { -->
+<!--         if (response.ok) { -->
+<!--             location.reload();  // Refresh to show the new club -->
+<!--         } -->
+<!--     }) -->
+<!--     .catch(error => console.error("Error:", error)); -->
+<!-- }); -->
+<!-- </script> -->
 {% endblock %}
