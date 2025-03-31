@@ -187,7 +187,7 @@
     
     .sub-entity-stat {
         font-weight: 700;
-        color: var(--main-color);
+        color: var(--border-color);
     }
     
     .swiper-button-next, .swiper-button-prev {
@@ -205,6 +205,10 @@
         document.querySelectorAll('.entity-top').forEach(function(header) {
             const card = header.closest('.modern-card');
             const mainColor = getComputedStyle(card).getPropertyValue('--main-color').trim();
+            const alternateColor = getComputedStyle(card).getPropertyValue('--alt-color').trim();
+
+            console.log("Main Color:", mainColor);
+            console.log("Alternate Color:", alternateColor);
             
             // Check if color is light first
             const isLight = isLightColor(mainColor);
@@ -223,22 +227,38 @@
             // Check if the main color is light and adjust text colors
             if (isLight) {
                 // Find and adjust entity stats within this card
-                const entityStat = header.querySelector('.entity-stat');
-                if (entityStat) {
-                    entityStat.style.color = '#000';
+                if (isLightColor(alternateColor)) {
+                    
+                    const entityStat = header.querySelector('.entity-stat');
+                    if (entityStat) {
+                        entityStat.style.color = '#000';
+                    }
+                    
+                    // Find and adjust sub-entity stats within this card
+                    const subEntityStats = card.querySelectorAll('.sub-entity-stat');
+                    subEntityStats.forEach(statElem => {
+                        statElem.style.color = '#000';
+                    });
+    
+                    // Adjust the color of the entity title and info
+                    const entityTitle = header.querySelector('.entity-title');
+                    if (entityTitle) {
+                        entityTitle.style.color = '#000';
+                    }
+
+                    const entityInfo = header.querySelector('.entity-info');
+                    if (entityInfo) {
+                        entityInfo.style.color = '#000';
+                    }
                 }
                 
-                // Find and adjust sub-entity stats within this card
-                const subEntityStats = card.querySelectorAll('.sub-entity-stat');
-                subEntityStats.forEach(statElem => {
-                    statElem.style.color = '#000';
-                });
             }
         });
         
         function applyGradientBorders() {
             document.querySelectorAll('.modern-card').forEach(function(card) {
                 const mainColor = getComputedStyle(card).getPropertyValue('--main-color').trim();
+                const borderColor = getComputedStyle(card).getPropertyValue('--border-color').trim();
                 const isLight = isLightColor(mainColor);
                 
                 // Use darker color for light colors, lighter color for dark colors
@@ -251,10 +271,10 @@
                 // Set the gradient border style for the left and right borders
                 styleEl.textContent = `
                     .${cardId} .entities-list::before { 
-                        background: linear-gradient(to right, ${variantColor}, transparent) !important;
+                        background: linear-gradient(to right, ${borderColor}, transparent) !important;
                     }
                     .${cardId} .entities-list::after { 
-                        background: linear-gradient(to left, ${mainColor}, transparent) !important;
+                        background: linear-gradient(to left, ${borderColor}, transparent) !important;
                     }
                 `;
                 document.head.appendChild(styleEl);
