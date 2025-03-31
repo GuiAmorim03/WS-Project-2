@@ -673,6 +673,8 @@ def query_graph_data(selected_node_id=None):
         dict: Contains 'nodes' and 'links' for graph visualization
     """
     sparql = get_sparql_client()
+
+    print(f"Selected node ID: {selected_node_id}")
     
     if selected_node_id:
         # Query for a specific node and its adjacent nodes
@@ -688,15 +690,15 @@ def query_graph_data(selected_node_id=None):
                 <{selected_node_id}> ?predicate ?object .
                 BIND(<{selected_node_id}> AS ?subject)
                 
-                # Get labels and types
-                OPTIONAL {{ ?subject rdfs:label ?subjectLabel }}
-                OPTIONAL {{ ?object rdfs:label ?objectLabel }}
+                # Get types
                 OPTIONAL {{ ?subject rdf:type ?subjectType }}
                 OPTIONAL {{ ?object rdf:type ?objectType }}
                 
-                # Filter out schema-related predicates
+                # Filter out non-relevant predicates
                 FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
                 FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+                FILTER (!STRSTARTS(STR(?predicate), "http://football.org/stat"))
+                FILTER (?predicate != <http://football.org/rel/photo_url>)
             }}
             UNION
             # Get relationships where selected node is the object
@@ -704,15 +706,15 @@ def query_graph_data(selected_node_id=None):
                 ?subject ?predicate <{selected_node_id}> .
                 BIND(<{selected_node_id}> AS ?object)
                 
-                # Get labels and types
-                OPTIONAL {{ ?subject rdfs:label ?subjectLabel }}
-                OPTIONAL {{ ?object rdfs:label ?objectLabel }}
+                # Get types
                 OPTIONAL {{ ?subject rdf:type ?subjectType }}
                 OPTIONAL {{ ?object rdf:type ?objectType }}
                 
-                # Filter out schema-related predicates
+                # Filter out non-relevant predicates
                 FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
                 FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+                FILTER (!STRSTARTS(STR(?predicate), "http://football.org/stat"))
+                FILTER (?predicate != <http://football.org/rel/photo_url>)
             }}
         }}
         """
@@ -722,22 +724,23 @@ def query_graph_data(selected_node_id=None):
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX fut-rel: <http://football.org/rel/>
-        
-        SELECT ?subject ?predicate ?object ?subjectLabel ?objectLabel ?subjectType ?objectType
+
+        SELECT ?subject ?predicate ?object ?subjectType ?objectType
         WHERE {
             ?subject ?predicate ?object .
-            
-            # Get human-readable labels where available
-            OPTIONAL { ?subject rdfs:label ?subjectLabel }
-            OPTIONAL { ?object rdfs:label ?objectLabel }
             
             # Get types
             OPTIONAL { ?subject rdf:type ?subjectType }
             OPTIONAL { ?object rdf:type ?objectType }
             
-            # Filter out schema-related triples to focus on domain data
+            # Filter out unrelated triples
             FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/2000/01/rdf-schema"))
             FILTER (!STRSTARTS(STR(?predicate), "http://www.w3.org/1999/02/22-rdf-syntax-ns"))
+            FILTER (!STRSTARTS(STR(?predicate), "http://proton.semanticweb.org/protonsys"))
+            FILTER (!STRSTARTS(STR(?predicate), "http://football.org/stat"))
+            FILTER (!STRSTARTS(STR(?subject), "http://football.org/stat"))
+            FILTER (?predicate != <http://football.org/rel/photo_url>)
+            FILTER (?predicate != <http://www.w3.org/2002/07/owl#inverseOf>)
         }
         """
     

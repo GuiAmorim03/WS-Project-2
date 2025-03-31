@@ -25,10 +25,6 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>RDF Triples</span>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="showPrettyNames" checked>
-                        <label class="form-check-label" for="showPrettyNames">Show Readable Names</label>
-                    </div>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
@@ -185,7 +181,6 @@
     // Function to update triples table
     function updateTriplesTable(node) {
         const tableBody = document.getElementById('triples-table-body');
-        const showPrettyNames = document.getElementById('showPrettyNames').checked;
         
         if (!node) {
             tableBody.innerHTML = `
@@ -217,19 +212,16 @@
         
         // Helper function to format URI for display
         const formatUri = (uri, isPredicate = false) => {
-            if (showPrettyNames) {
-                if (isPredicate) {
-                    // Make predicates more readable by splitting on camelCase
-                    const name = uri.split('/').pop();
-                    return name
-                        .replace(/([A-Z])/g, ' $1') // Add space before capitals
-                        .replace(/_/g, ' ')         // Replace underscores with spaces
-                        .trim();                    // Trim any extra spaces
-                } else {
-                    return uri.split('/').pop();
-                }
+            if (isPredicate) {
+                // Make predicates more readable by splitting on camelCase
+                const name = uri.split('/').pop();
+                return name
+                    .replace(/([A-Z])/g, ' $1') // Add space before capitals
+                    .replace(/_/g, ' ')         // Replace underscores with spaces
+                    .trim();                    // Trim any extra spaces
+            } else {
+                return uri.split('/').pop();
             }
-            return uri;
         };
         
         // Helper function to add triple to table
@@ -285,13 +277,6 @@
             });
         });
     }
-    
-    // Add event listener for the pretty names toggle
-    document.getElementById('showPrettyNames').addEventListener('change', () => {
-        if (selectedNodeData) {
-            updateTriplesTable(selectedNodeData);
-        }
-    });
       
     document.getElementById('reset-graph').addEventListener('click', () => {
         Graph.centerAt(0, 0, 1000);
