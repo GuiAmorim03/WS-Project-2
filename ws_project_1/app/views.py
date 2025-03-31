@@ -1,13 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils.sparql_client import query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat
+from .utils.sparql_client import query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, update_player_club
 
 def player_detail(request, player_id):
     # Get player data from the SPARQL endpoint
     player_data = query_player_details(player_id)
     # Log the player data
-    print(player_data)
-    return render(request, "player.html", {"entity": player_data})
+
+    available_clubs = query_all_clubs()
+
+    return render(request, "player.html", {
+        "player_id": player_id,
+        "entity": player_data, 
+        "available_clubs": available_clubs,
+    })
 
 def club_detail(request, club_id):
     # Get club data from the SPARQL endpoint
@@ -161,3 +167,20 @@ def graph_view(request):
     print("Graph data fetched:", len(graph_data["nodes"]) if graph_data.get("nodes") else 0, "nodes")
     
     return render(request, "graph.html", {"graph_data": graph_data})
+
+
+def add_club_to_player(request, player_id):
+    """
+    Handle adding a new club to a player's history while maintaining past clubs.
+    """
+    if request.method == "POST":
+        club_id = request.POST.get("club")
+
+        if not club_id:
+            return redirect("player", player_id=player_id)
+
+        current_club = query_player_club(player_id)
+
+        update_player_club(player_id, current_club, club_id)
+
+        return redirect("player", player_id=player_id)
