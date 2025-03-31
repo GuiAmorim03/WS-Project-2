@@ -1,0 +1,453 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36" version="26.1.3">
+  <diagram name="Página-1" id="WXYRPDDrzt9rSfXdKfX2">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="550" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-161" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;strokeColor=#FF4242;" vertex="1" parent="1">
+          <mxGeometry x="295" y="-19" width="770" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-136" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="-789" width="660" height="234" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-53" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-550" y="-815" width="300" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-58" value="&lt;u&gt;BaseURL&lt;/u&gt; -&amp;nbsp;&#39;http://football.org/&#39;&lt;div&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;rdf -&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;xsd -&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;http://www.w3.org/2001/XMLSchema&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;fut-rel -&amp;nbsp;&lt;/b&gt;BaseURL + &#39;rel/&#39;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;fut-stat -&amp;nbsp;&lt;/b&gt;BaseURL + &#39;stat/&#39;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-530" y="-756" width="280" height="157" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-77" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:club&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;curved=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-91">
+          <mxGeometry x="-0.003" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="472.0000000000059" y="-324" as="sourcePoint" />
+            <mxPoint x="197.00000000000455" y="-324" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-80" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:league&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-92">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="86.99999999999545" y="-324" as="sourcePoint" />
+            <mxPoint x="-268.0000000000059" y="-324" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-84" value="&lt;b&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;Legend&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-530" y="-805" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-85" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:name&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-92" target="MQwrnzJdkc_tL8PAlp7c-87">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-289.0610836698479" y="-367.2799024760657" as="sourcePoint" />
+            <mxPoint x="-281" y="-461.34000000000003" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-87" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;LeagueExample&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-410" y="-449" width="140" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-88" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/player_example&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="525" y="-276" width="310" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-89" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/Player&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="882" y="-334" width="250" height="81" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-91" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/club_example&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="287" y="-534" width="310" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-92" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/league_example&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="-166.43" y="-534" width="315" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-94" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/country_example&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="-100" y="-276" width="340" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-95" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/other_club&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="630" y="-409" width="310" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-96" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:past_club&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;curved=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-95">
+          <mxGeometry x="-0.003" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="572" y="-314" as="sourcePoint" />
+            <mxPoint x="298" y="-314" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-97" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:name&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-98">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="172" y="-349" as="sourcePoint" />
+            <mxPoint x="304.25" y="-475.34000000000003" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-759" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-98" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;ClubExample&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-73.93" y="-773" width="130" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-100" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;rdf:type&lt;/span&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-89">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="712" y="-344" as="sourcePoint" />
+            <mxPoint x="712" y="-500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-101" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:country&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-94">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="14" y="-229" as="sourcePoint" />
+            <mxPoint x="-258" y="-229" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-102" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:country&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-92" target="MQwrnzJdkc_tL8PAlp7c-94">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-208" y="-229" as="sourcePoint" />
+            <mxPoint x="-78" y="-35" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-103" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:nation&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-94">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="414" y="-283" as="sourcePoint" />
+            <mxPoint x="544" y="-89" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-104" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/Club&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="-534" width="250" height="81" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-105" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;rdf:type&lt;/span&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-104">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="129" y="-348.5" as="sourcePoint" />
+            <mxPoint x="124" y="-500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-106" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;rdf:type&lt;/span&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-95" target="MQwrnzJdkc_tL8PAlp7c-104">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="143" y="-356" as="sourcePoint" />
+            <mxPoint x="143" y="-490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-108" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:abrv&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-109">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="602.5" y="-610" as="sourcePoint" />
+            <mxPoint x="467.75" y="-555.34" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-629" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-109" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;CBE&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="92" y="-643" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-110" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:city&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-111">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="575" y="-587" as="sourcePoint" />
+            <mxPoint x="557.75" y="-605.34" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-579" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-111" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;Aveiro&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="630" y="-592" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-113" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:stadium&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-114">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="669" y="-527" as="sourcePoint" />
+            <mxPoint x="710.75" y="-593.34" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-629" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-114" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;Estádio de Aveiro&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="680" y="-643" width="168" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-115" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:color&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-116">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="-544.5" as="sourcePoint" />
+            <mxPoint x="697.25" y="-529.34" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-673" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-116" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;660e36&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="-687" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-118" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-98" target="MQwrnzJdkc_tL8PAlp7c-98">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-119" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:alternateColor&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-120">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="511.6336217136236" y="-548.9998812195968" as="sourcePoint" />
+            <mxPoint x="875.25" y="-623.34" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-715" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-120" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;ffffff&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-8" y="-728" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-121" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:logo&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-122">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="442" y="-555" as="sourcePoint" />
+            <mxPoint x="802" y="-692.9990243902439" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-579" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-122" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;https://a.espncdn.com/i/teamlogos/soccer/500/362.png&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-212" y="-592" width="458" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-123" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:name&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-94" target="MQwrnzJdkc_tL8PAlp7c-124">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="268" y="57" as="sourcePoint" />
+            <mxPoint x="5" y="-31.340000000000032" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-124" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;CountryExample&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="187" y="-153" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-125" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:abrv&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-94" target="MQwrnzJdkc_tL8PAlp7c-126">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="342" y="-70" as="sourcePoint" />
+            <mxPoint x="15" y="-21.340000000000032" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-126" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;CYE&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="-126" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-127" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:flag&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-94" target="MQwrnzJdkc_tL8PAlp7c-128">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="569.0736686876271" y="-78.99790581378687" as="sourcePoint" />
+            <mxPoint x="352.93" y="14.96999999999997" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-128" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;https://a.espncdn.com/i/teamlogos/countries/500/eng.png&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-381.37" y="-92" width="450" height="43" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-129" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/Country&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-430" y="-213" width="250" height="81" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-130" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;rdf:type&lt;/span&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-94" target="MQwrnzJdkc_tL8PAlp7c-129">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-53" y="-68" as="sourcePoint" />
+            <mxPoint x="-202" y="-404" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-131" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;http://football.org/ent/League&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-410" y="-395" width="250" height="81" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-132" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;rdf:type&lt;/span&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;exitX=0.27;exitY=0.937;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-92" target="MQwrnzJdkc_tL8PAlp7c-131">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-131" y="-292" as="sourcePoint" />
+            <mxPoint x="-280" y="-628" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-133" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-stat:pk&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-91" target="MQwrnzJdkc_tL8PAlp7c-164">
+          <mxGeometry x="0.3909" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="466" y="-633" as="sourcePoint" />
+            <mxPoint x="950" y="-760" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="442" y="-759" />
+              <mxPoint x="1172" y="-759" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-137" value="ESPN dataset - teams.csv" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;fontColor=#336600;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="-819" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-139" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="452" y="-667.5" width="398" height="112.5" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-140" value="ESPN dataset - venues.csv" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;fontColor=#7B24FF;" vertex="1" parent="1">
+          <mxGeometry x="620" y="-697.5" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-141" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:name&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-142">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1020.0020118343223" y="-259.00248520710005" as="sourcePoint" />
+            <mxPoint x="665.86" y="-206.02000000000004" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-142" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;PlayerExample&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="-153" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-143" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:born&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-144">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="633" y="-184" as="sourcePoint" />
+            <mxPoint x="675.86" y="-196.02000000000004" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-144" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;2000&quot;&lt;/font&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;^^xsd:integer&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="-82" width="100" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-148" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:photo_url&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-149">
+          <mxGeometry x="0.6552" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="901" y="-114.5" as="sourcePoint" />
+            <mxPoint x="943.86" y="-126.52000000000004" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-149" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;https://www.zerozero.pt/img/jogadores/new/40/80/434080_marcus_rashford_20250216205536.png&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="270" y="41" width="820" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-150" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:position&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-151">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="810.0048568033303" y="-252.9965692668938" as="sourcePoint" />
+            <mxPoint x="1150.42" y="-250.94000000000005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-151" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;FW&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="850" y="-139" width="50" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-154" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:position&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-155">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="810" y="-161" as="sourcePoint" />
+            <mxPoint x="1130.42" y="-188.94000000000005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-155" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;&quot;MF&quot;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="752" y="-92" width="50" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-157" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="-450" y="-289.5" width="770" height="260.5" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-158" value="ESPN dataset - teams.csv" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;fontColor=#336600;" vertex="1" parent="1">
+          <mxGeometry x="-450" y="-29" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-160" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-stat:pk&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-88" target="MQwrnzJdkc_tL8PAlp7c-164">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="900" y="-213" as="sourcePoint" />
+            <mxPoint x="1250" y="-229" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1170" y="-239" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-162" value="&lt;font style=&quot;color: rgb(255, 66, 66);&quot;&gt;zerozero.pt scraping&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;fontColor=#336600;" vertex="1" parent="1">
+          <mxGeometry x="295" y="101" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-163" value="" style="group" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="1330" y="-815" width="740" height="996" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-6" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;📊Playing Time &amp;amp; Appearances&lt;/b&gt;&lt;/div&gt;&lt;div&gt;MP – Matches played&lt;/div&gt;&lt;div&gt;Starts – Games started&lt;/div&gt;&lt;div&gt;Min – Minutes played&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;⚽Attacking Stats&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Gls – Goals scored&lt;/div&gt;&lt;div&gt;Ast – Assists provided&lt;/div&gt;&lt;div&gt;G+A – Goals + Assists&lt;/div&gt;&lt;div&gt;xG – Expected goals&lt;/div&gt;&lt;div&gt;xAG – Expected assists&lt;/div&gt;&lt;div&gt;PK - Penalty Goals&lt;/div&gt;&lt;div&gt;PKatt - Penalty Attemps&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;🛡️Defensive Stats&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Tkl – Total tackles&lt;/div&gt;&lt;div&gt;TklW – Tackles won&lt;/div&gt;&lt;div&gt;Blocks_stats_defense – Blocks made&lt;/div&gt;&lt;div&gt;Int – Interceptions&lt;/div&gt;&lt;div&gt;Clr – Clearances&lt;/div&gt;&lt;div&gt;Err – Errors leading to goals&lt;/div&gt;&lt;div&gt;Recov – Ball recoveries&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;🎯Passing &amp;amp; Ball Control&lt;/b&gt;&lt;/div&gt;&lt;div&gt;PrgP – Progressive passes&lt;/div&gt;&lt;div&gt;PrgC – Progressive carries&lt;/div&gt;&lt;div&gt;PrgR – Progressive runs (carries moving the ball forward significantly)&lt;/div&gt;&lt;div&gt;KP – Key passes (passes leading to a shot)&lt;/div&gt;&lt;div&gt;PPA – Passes into the penalty area&lt;/div&gt;&lt;div&gt;Live -&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Total Passes&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Cmp_stats_passing_types - Passes Completed&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Touches – Total touches of the ball&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Mis – Miscontrols&lt;/div&gt;&lt;div&gt;Dis – Times dispossessed&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;🧤Goalkeeping Stats&lt;/b&gt;&lt;/div&gt;&lt;div&gt;GA – Goals conceded&lt;/div&gt;&lt;div&gt;GA90 – Goals conceded per 90 minutes&lt;/div&gt;&lt;div&gt;Saves – Saves made&lt;/div&gt;&lt;div&gt;Save% – Save percentage&lt;/div&gt;&lt;div&gt;CS – Clean sheets&lt;/div&gt;&lt;div&gt;CS% – Clean sheet percentage&lt;/div&gt;&lt;div&gt;PKA – Penalties faced&lt;/div&gt;&lt;div&gt;PKsv – Penalty saves&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;🚨Miscellaneous Stats&lt;/b&gt;&lt;/div&gt;&lt;div&gt;CrdY – Yellow cards&lt;/div&gt;&lt;div&gt;CrdR – Red cards&lt;/div&gt;&lt;div&gt;Fls - Fouls&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PKcon – Penalties conceded&lt;br&gt;&lt;/span&gt;&lt;div&gt;PKwon – Penalties won&lt;/div&gt;&lt;/div&gt;&lt;div&gt;Off - Offsides&lt;br&gt;OG - Own Goals&lt;/div&gt;" style="shape=card;whiteSpace=wrap;html=1;align=left;fontSize=14;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="10" width="460" height="930" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-9" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=none;strokeColor=#FF0000;strokeWidth=5;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry y="15" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-10" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF0000;strokeWidth=2;" edge="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="220" y="143" as="sourcePoint" />
+            <mxPoint x="160" y="143" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-11" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF0000;strokeWidth=2;" edge="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="225" y="161" as="sourcePoint" />
+            <mxPoint x="165" y="161" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-12" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF0000;strokeWidth=2;" edge="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="231" y="197" as="sourcePoint" />
+            <mxPoint x="171" y="197" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-13" value="Red statistics are exclusive to players" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FF0000;fontStyle=1" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="260" y="37" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-50" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF0000;strokeWidth=2;" edge="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="264" y="865" as="sourcePoint" />
+            <mxPoint x="204" y="865" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-51" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF0000;strokeWidth=2;" edge="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="265" y="883" as="sourcePoint" />
+            <mxPoint x="205" y="883" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-166" value="&lt;font style=&quot;color: rgb(43, 156, 255);&quot;&gt;Blue marks are categories&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FF0000;fontStyle=1" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="270" y="140" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-168" value="" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;fontColor=#2B9CFF;strokeColor=#2B9CFF;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="130" y="103" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-169" value="" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;fontColor=#2B9CFF;strokeColor=#2B9CFF;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="219" y="18" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-170" value="" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;fontColor=#2B9CFF;strokeColor=#2B9CFF;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="128" y="255" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-171" value="" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;fontColor=#2B9CFF;strokeColor=#2B9CFF;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="180" y="405" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-172" value="" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;fontColor=#2B9CFF;strokeColor=#2B9CFF;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="150" y="607" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-173" value="" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;fontColor=#2B9CFF;strokeColor=#2B9CFF;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="160" y="792" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-176" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;strokeColor=#6C8EBF;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="-30" y="-30" width="540" height="992" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-177" value="&lt;font style=&quot;color: rgb(108, 142, 191);&quot;&gt;Hubert dataset&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;fontColor=#336600;" vertex="1" parent="MQwrnzJdkc_tL8PAlp7c-163">
+          <mxGeometry x="-30" y="962" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-164" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1132" y="-660" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-165" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:name&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;entryX=-0.004;entryY=0.23;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-164" target="MQwrnzJdkc_tL8PAlp7c-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1250" y="-692" as="sourcePoint" />
+            <mxPoint x="1400" y="-689" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-174" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;fut-rel:type&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;entryX=0.004;entryY=0.121;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-164" target="MQwrnzJdkc_tL8PAlp7c-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1220" y="-749" as="sourcePoint" />
+            <mxPoint x="1462" y="-749" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-182" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6C8EBF;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-450" y="-309" as="sourcePoint" />
+            <mxPoint x="-450" y="-539" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-183" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6C8EBF;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-450" y="-309" as="sourcePoint" />
+            <mxPoint x="330" y="-309" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-184" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6C8EBF;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="-29" as="sourcePoint" />
+            <mxPoint x="330" y="-309" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-185" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6C8EBF;exitX=0;exitY=0.823;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-176">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1190" y="-29" as="sourcePoint" />
+            <mxPoint x="330" y="-29" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-186" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6C8EBF;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="860" y="-539" as="sourcePoint" />
+            <mxPoint x="-450" y="-539" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-188" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6C8EBF;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="860" y="-539" as="sourcePoint" />
+            <mxPoint x="860" y="-789" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQwrnzJdkc_tL8PAlp7c-189" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6C8EBF;exitX=0;exitY=0.058;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="MQwrnzJdkc_tL8PAlp7c-176">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="870" y="-529" as="sourcePoint" />
+            <mxPoint x="860" y="-789" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

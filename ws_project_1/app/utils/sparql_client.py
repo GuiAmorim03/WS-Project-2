@@ -1,4 +1,4 @@
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, JSON, POST
 from datetime import datetime
 
 # Configure your SPARQL endpoint
@@ -427,7 +427,7 @@ def process_all_players_results(results):
         if "currentClubLogo" in player and player["currentClubLogo"]["value"]:
             current_club_logo = player["currentClubLogo"]["value"]
            
-        print(player)
+        # print(player)
         players.append({
             "id": player_id,
             "name": player["name"]["value"],
@@ -1120,3 +1120,109 @@ def update_player_club(player_id, current_club, club_id):
             sparql.query()
         except Exception as e:
             print("Error updating player club:", e)
+
+def query_all_nations():
+    """
+    Query and process a list of all nations from the SPARQL endpoint.
+    
+    Returns:
+        list: List of all nations with name, flag, and ID"
+        """
+    
+    sparql = get_sparql_client()
+    
+    # Construct the SPARQL query
+    query = """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+
+    SELECT
+        ?abrv
+        ?name
+    WHERE {
+        ?abrv rdf:type fut-rel:Country ;
+                fut-rel:name ?name ;
+    }
+    ORDER BY ?name
+    """
+    
+    # Execute the query
+    sparql.setQuery(query)
+    try:
+        results = sparql.query().convert()
+        return process_all_nations_results(results)
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return []
+    
+def process_all_nations_results(results):
+    """Process the SPARQL query results for all nations into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    nations = []
+    for nation in results["results"]["bindings"]:
+
+        nation_id = nation["abrv"]["value"]
+        
+        nations.append({
+            "id": nation_id,
+            "name": nation["name"]["value"],
+        })
+    
+    return nations
+
+def create_player(id, name, born, positions, photo_url, nation, club):
+    """
+    Create a new player in the RDF graph.
+    
+    Args:
+        name: Player's name
+        born: Year of birth
+        positions: List of positions
+        photo_url: URL of the player's photo
+        nation: Nation URI
+        club: Club ID
+    """
+
+    sparql = SPARQLWrapper(ENDPOINT_URL+"/statements")
+    sparql.setReturnFormat(JSON)
+    sparql.setMethod(POST)
+    
+    player_uri = f"http://football.org/ent/{id}"
+    club_uri = f"http://football.org/ent/{club}"
+    nation_uri = nation
+
+    # Construct the SPARQL insert query
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    INSERT DATA {{
+        <{player_uri}> rdf:type fut-rel:Player ;
+            fut-rel:name "{name}" ;
+            fut-rel:born {born} ;
+    """
+
+    for position in positions:
+        query += f'        fut-rel:position "{position}" ;\n'
+
+    query += f"""        
+            fut-rel:photo_url "{photo_url}" ;
+            fut-rel:nation <{nation_uri}> ;
+            fut-rel:club <{club_uri}> .
+    }}
+    """
+
+    print(query)
+
+    sparql.setQuery(query)
+
+    try:
+        sparql.query()
+        print(f"Player {name} created successfully.")
+    except Exception as e:
+        print(f"Error creating player: {e}")
+        return False
+    return True

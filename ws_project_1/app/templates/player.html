@@ -2,17 +2,19 @@
 
     {% block content_inside %}
 
-<div class="card-header pb-0" style="background-color: var(--main-color); color: var(--alt-color);">
+<div class="card-header" style="background-color: #f8f9fa; color: #333;">
     <div class="row">
         <div class="col-2 text-center">
             {% if entity.clubs %}
-            <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid">
-                {% endif %}
+            <div class="player-photo-container p-2 rounded">
+                <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
         </div>
         <div class="col-8">
-            <h2>{{ entity.name }}</h2>
+            <h2 style="color: var(--main-color);">{{ entity.name }}</h2>
             <p class="m-0">
-                <img src="{{ entity.flag }}" alt="Flag" style="height: 20px;">
+                <img src="{{ entity.flag }}" alt="Flag" style="height: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                 <span>{{ entity.country_name }}</span>
                 <br>
                 <span>{{ entity.born }}</span>
@@ -22,31 +24,55 @@
         </div>
         <div class="col-2 text-center">
             {% if entity.clubs %}
-            <img src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
-                {% endif %}
+            <div class="club-logo-container p-2 mb-2">
+                <a href="{% url 'club' entity.clubs.0.id %}" style="text-decoration: none;">
+                    <img src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
+                </a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
 
-<div class="card-body" style="color: var(--main-color); background-color: var(--alt-color);">
-    <h4>Positions</h4>
-    <p>
-        {% for position in entity.pos %}
-        {{ position }}{% if not forloop.last %} <br> {% endif %}
-            {% endfor %}
-    </p>
-    <h4>Clubs</h4>
-    <p>
-        {% for club in entity.clubs %}
-        <a href="{% url 'club' club.id %}" style="text-decoration: none;">
-            <img src="{{ club.logo }}" class="mb-1" alt="Club" style="height: 20px;">
-            <span {% if forloop.first %}style="font-weight: bold; color: var(--main-color);"{% else %}style="color: var(--main-color); opacity: 0.5;"{% endif %}>
-                {{ club.name }}
-            </span>
-        </a>
-        <br>
-            {% endfor %}
-    </p>
+<div class="card-body position-relative" style="background-color: #fff; color: #333;">
+    <!-- Team colors ball positioned at far right and vertically centered -->
+    <div class="team-colors-ball position-absolute" style="
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--main-color) 50%, var(--alt-color) 50%);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.1);
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    "></div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h4 style="color: var(--main-color);">Positions</h4>
+            <div class="positions-container">
+                {% for position in entity.pos %}
+                <div class="position-badge mb-2 p-2 rounded" style="border-left: 3px solid var(--main-color); background-color: #f8f9fa;">
+                    {{ position }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4 style="color: var(--main-color);">Clubs</h4>
+            <div class="clubs-container">
+                {% for club in entity.clubs %}
+                <div class="club-item mb-2 p-2 {% if forloop.first %}current-club{% endif %}" style="display: flex; align-items: center;">
+                    <img src="{{ club.logo }}" class="me-2" alt="Club" style="height: 30px;">
+                    <a href="{% url 'club' club.id %}" style="text-decoration: none;">
+                        <span {% if forloop.first %}style="font-weight: bold; color: var(--main-color);"{% else %}style="color: #666;"{% endif %}>
+                            {{ club.name }}
+                        </span>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
 
     <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addClubModal">
         Add New Club
@@ -78,24 +104,95 @@
             </div>
         </div>
     </div>
-
+    </div>
 </div>
 
-<!-- <script> -->
-<!-- document.getElementById("addClubForm").addEventListener("submit", function(event) { -->
-<!--     event.preventDefault();  // Prevent full page reload -->
-<!---->
-<!--     let formData = new FormData(this); -->
-<!--     fetch(this.action, { -->
-<!--         method: "POST", -->
-<!--         body: formData -->
-<!--     }) -->
-<!--     .then(response => { -->
-<!--         if (response.ok) { -->
-<!--             location.reload();  // Refresh to show the new club -->
-<!--         } -->
-<!--     }) -->
-<!--     .catch(error => console.error("Error:", error)); -->
-<!-- }); -->
-<!-- </script> -->
+{% load static %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM loaded for player page, starting color detection...");
+        
+        // Get the color from the card element
+        const cardElement = document.querySelector('.card');
+        let mainColor = '';
+        
+        if (cardElement) {
+            const cardStyle = getComputedStyle(cardElement);
+            mainColor = cardStyle.getPropertyValue('--main-color').trim();
+            console.log("Card element main-color:", mainColor);
+            
+            if (!mainColor) {
+                mainColor = cardElement.style.getPropertyValue('--main-color').trim();
+            }
+        }
+        
+        // If still empty, use hardcoded fallback
+        if (!mainColor) {
+            mainColor = "#{{ entity.color }}";
+            console.log("Using server-provided color:", mainColor);
+        }
+        
+        // Function to determine if a color is light
+        function isLightColor(color) {
+            // Remove any leading/trailing spaces
+            color = color.trim();
+            
+            let r, g, b;
+            
+            try {
+                // Handle hex colors with # prefix
+                if (color.startsWith('#')) {
+                    color = color.substring(1);
+                }
+                
+                // Handle 6-digit hex
+                if (color.length === 6) {
+                    r = parseInt(color.substring(0, 2), 16);
+                    g = parseInt(color.substring(2, 4), 16);
+                    b = parseInt(color.substring(4, 6), 16);
+                } 
+                // Handle 3-digit hex
+                else if (color.length === 3) {
+                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
+                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
+                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
+                } else {
+                    return false;
+                }
+                
+                // Calculate luminance - if high, it's a light color
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                return luminance > 0.7;
+            } catch (e) {
+                return false;
+            }
+        }
+        
+        // Apply appropriate styles based on color lightness
+        const isLight = isLightColor(mainColor);
+        console.log("Is light color:", isLight);
+        
+        if (isLight) {
+            console.log("Light color detected - applying black instead");
+            
+            // Replace light colors with black
+            document.querySelectorAll('h2[style*="color: var(--main-color)"], h4[style*="color: var(--main-color)"]').forEach(elem => {
+                elem.style.color = '#000';
+            });
+            
+            // Update position badges
+            document.querySelectorAll('.position-badge').forEach(badge => {
+                badge.style.borderLeftColor = '#000';
+            });
+            
+            // Update current club highlight
+            document.querySelectorAll('.current-club span').forEach(span => {
+                if (span.style.color.includes('var(--main-color)')) {
+                    span.style.color = '#000';
+                }
+            });
+        }
+    });
+</script>
+
 {% endblock %}

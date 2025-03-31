@@ -11,6 +11,7 @@
     <div class="form-group">
         <input type="text" name="name" placeholder="Search by name" value="{{ search_name }}">
         <input type="text" name="position" placeholder="Search by position" value="{{ position }}">
+        <input type="text" name="club" placeholder="Search by club" value="{{ club }}">
         <input type="text" name="nation" placeholder="Search by nation" value="{{ nation }}">
         <button type="submit">Filter</button>
     </div>
@@ -38,15 +39,17 @@
             <td>{{ player.born }}</td>
             <td>
                 {% if player.current_club %}
-                    <img src="{{ player.club_logo }}" alt="{{ player.club_logo }}" class="small-logo">
-                    {{ player.current_club }}
+                <img src="{{ player.club_logo }}" alt="{{ player.club_logo }}" class="small-logo">
+                {{ player.current_club }}
                 {% else %}
-                    No current club
+                No current club
                 {% endif %}
             </td>
         </tr>
         {% empty %}
-        <tr><td colspan="5">No players found.</td></tr>
+        <tr>
+            <td colspan="5">No players found.</td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>
@@ -54,20 +57,82 @@
 {% if entities_list.has_other_pages %}
 <div class="pagination">
     {% if entities_list.has_previous %}
-        <a href="?page=1{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">First</a>
-        <a href="?page={{ entities_list.previous_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Previous</a>
+    <a
+        href="?page=1{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">First</a>
+    <a
+        href="?page={{ entities_list.previous_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Previous</a>
     {% endif %}
 
     Page {{ entities_list.number }} of {{ entities_list.paginator.num_pages }}
 
     {% if entities_list.has_next %}
-        <a href="?page={{ entities_list.next_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Next</a>
-        <a href="?page={{ entities_list.paginator.num_pages }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Last</a>
+    <a
+        href="?page={{ entities_list.next_page_number }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Next</a>
+    <a
+        href="?page={{ entities_list.paginator.num_pages }}{% if search_name %}&name={{ search_name }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if nation %}&nation={{ nation }}{% endif %}">Last</a>
     {% endif %}
 </div>
 {% endif %}
 
+<button type="button" class="btn btn-dark" onclick="openModal()">Add Player</button>
+
+<div id="playerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h4>Add New Player</h4>
+        <form method="post">
+            {% csrf_token %}
+
+            <p><label for="name"><strong>Name</strong></label></p>
+            <input type="text" id="name" name="name" required>
+
+            <p><label for="positions"><strong>Positions</strong></label></p>
+            <div class="checkbox-group">
+                <span><input class="m-0" type="checkbox" name="position" value="GK"> Goalkeeper</span>
+                <span><input class="m-0" type="checkbox" name="position" value="DF"> Defender</span>
+                <span><input class="m-0" type="checkbox" name="position" value="MF"> Midfielder</span>
+                <span><input class="m-0" type="checkbox" name="position" value="FW"> Forward</span>
+            </div>
+            
+            <p><label for="born"><strong>Year of Birth</strong></label></p>
+            <input type="number" id="born" name="born" required>
+
+            <p><label for="photo_url"><strong>Photo URL</strong></label></p>
+            <input type="text" id="photo_url" name="photo_url" required>
+
+            <p><label for="nation"><strong>Nation</strong></label></p>
+            <select id="nation" name="nation" required>
+                {% for nation in nations %}
+                <option value="{{ nation.id }}">{{ nation.name }}</option>
+                {% endfor %}
+            </select>
+
+            <p><label for="club"><strong>Club</strong></label></p>
+            <select id="club" name="club">
+                {% for club in clubs %}
+                <option value="{{ club.id }}">{{ club.name }}</option>
+                {% endfor %}
+            </select>
+
+            <p><button type="submit" class="btn btn-dark">Save</button></p>
+        </form>
+    </div>
+</div>
+
+
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/players_clubs.css' %}">
+<link rel="stylesheet" href="{% static 'css/create_player.css' %}">
+
+<script>
+    function openModal() {
+        document.getElementById("playerModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("playerModal").style.display = "none";
+    }
+</script>
+
 
 {% endblock %}
