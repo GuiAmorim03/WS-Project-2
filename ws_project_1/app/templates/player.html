@@ -57,7 +57,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addPosition">
+            <button type="button" style="background-color: var(--main-color); border-color: var(--main-color);" class="btn btn-primary mt-2 add-button" data-bs-toggle="modal" data-bs-target="#addPosition">
                 Add New Position 
             </button>
         </div>
@@ -75,7 +75,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addClubModal">
+            <button type="button" style="background-color: var(--main-color); border-color: var(--main-color);" class="btn btn-primary mt-2 add-button" data-bs-toggle="modal" data-bs-target="#addClubModal">
                 Add New Club
             </button>
         </div>
@@ -219,6 +219,12 @@
                 if (span.style.color.includes('var(--main-color)')) {
                     span.style.color = '#000';
                 }
+            });
+
+            // Update add buttons
+            document.querySelectorAll('.add-button').forEach(button => {
+                button.style.backgroundColor = '#000';
+                button.style.borderColor = '#000';
             });
         }
     });
