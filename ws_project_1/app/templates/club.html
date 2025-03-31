@@ -2,65 +2,241 @@
 
 {% block content_inside %}
 
-<div class="card-header" style="background-color: var(--main-color); color: var(--alt-color);">
-    <div class="row">
-        <div class="col-2 text-center">
-            <img src="{{ entity.logo }}" alt="{{ entity.name }}" class="img-fluid">
-        </div>
-        <div class="col-10">
-            <h2>{{ entity.name }}</h2>
-            <p class="m-1">
-                <span>{{ entity.city }}</span>
-                <span> • </span>
-                <span>{{ entity.stadium }}</span>
-            </p>
-            <p>
-                <img src="{{ entity.country.flag }}" alt="Flag" style="height: 20px;">
-                <span>{{ entity.league.name }}</span>
-            </p>
+<div class="card">
+    <div class="card-header position-relative" style="background-color: #f8f9fa; color: #333; padding-right: 70px;">
+        <!-- Team colors ball with diagonal split and enhanced shadow -->
+        <div class="team-colors-ball position-absolute me-4" style="
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--main-color) 50%, var(--alt-color) 50%);
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.1);
+        "></div>
+        
+        <div class="row">
+            <div class="col-2 text-center">
+                <!-- Adding a subtle background to ensure logo visibility -->
+                <div class="logo-container p-2 rounded">
+                    <img src="{{ entity.logo }}" alt="{{ entity.name }}" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-10">
+                <h2 style="color: var(--main-color);">{{ entity.name }}</h2>
+                <p class="m-1">
+                    <span>{{ entity.city }}</span>
+                    <span> • </span>
+                    <span>{{ entity.stadium }}</span>
+                </p>
+                <p>
+                    <img src="{{ entity.country.flag }}" alt="Flag" style="height: 20px;">
+                    <span>{{ entity.league.name }}</span>
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="card-body" style="color: var(--main-color); background-color: var(--white-color);">
-    <h2>Squad</h2>
+    <div class="card-body" style="background-color: #fff;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 style="color: #333; font-weight: 500;">Squad</h2>
+        </div>
 
-    <table class="table table-bordered table-striped" style="font-size: large;">
-        <thead>
-            <th class="sortable" data-column="name">Name</th>
-            <th class="sortable" data-column="position">Position</th>
-            <th class="sortable" data-column="age">Age</th>
-            <th class="sortable" data-column="country">Country</th>
-        </thead>
-        <tbody>
-            {% for player in entity.players %}
-            <tr>
-                <td>
-                    <a href="{% url 'player' player.id %}" style="text-decoration: none; color: inherit;">
-                        <img src="{{ player.photo_url }}" alt="{{ player.name }}" class="img-fluid"
-                            style="height: 40px; margin-right: 5px;">
-                        {{ player.name }}
-                    </a>
-                </td>
-                <td>
-                    {% for pos in player.pos %}
-                    <span>{{ pos }}{% if not forloop.last %}, {% endif %}</span>
-                    {% endfor %}
-                </td>
-                <td>{{ player.age }}</td>
-                <td>
-                    <img src="{{ player.country_flag }}" alt="{{ player.country_name }}"
-                        style="height: 30px; margin-right: 5px;">
-                    {{ player.country_name }}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <table class="table" style="font-size: medium; border-collapse: separate; border-spacing: 0;">
+            <thead>
+                <tr>
+                    <th class="sortable py-3" data-column="name" style="border-top: none; border-bottom: 1px solid #eaeaea;">
+                        <span style="color: #666;">Name</span>
+                    </th>
+                    <th class="sortable py-3" data-column="position" style="border-top: none; border-bottom: 1px solid #eaeaea;">
+                        <span style="color: #666;">Position</span>
+                    </th>
+                    <th class="sortable py-3" data-column="age" style="border-top: none; border-bottom: 1px solid #eaeaea;">
+                        <span style="color: #666;">Age</span>
+                    </th>
+                    <th class="sortable py-3" data-column="country" style="border-top: none; border-bottom: 1px solid #eaeaea;">
+                        <span style="color: #666;">Country</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in entity.players %}
+                <tr class="player-row" style="transition: background-color 0.2s ease;">
+                    <td class="py-3">
+                        <a href="{% url 'player' player.id %}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                            <div style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+                                <img src="{{ player.photo_url }}" alt="{{ player.name }}" class="img-fluid">
+                            </div>
+                            <span>{{ player.name }}</span>
+                        </a>
+                    </td>
+                    <td class="py-3">
+                        {% for pos in player.pos %}
+                        <span>{{ pos }}{% if not forloop.last %}, {% endif %}</span>
+                        {% endfor %}
+                    </td>
+                    <td class="py-3">{{ player.age }}</td>
+                    <td class="py-3">
+                        <div style="display: flex; align-items: center;">
+                            <img src="{{ player.country_flag }}" alt="{{ player.country_name }}"
+                                style="height: 24px; width: auto; margin-right: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                            <span>{{ player.country_name }}</span>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/club.css' %}">
 <script src="{% static 'js/club.js' %}"></script>
+
+<style>
+    .player-row:hover {
+        background-color: rgba(var(--main-color-rgb), 0.05) !important;
+    }
+    .sortable:hover {
+        cursor: pointer;
+    }
+    .sortable:hover span {
+        /* Will be set by JavaScript based on color lightness */
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM loaded, starting color detection...");
+        
+        // FIXED: Get the color from the card element, not the document root
+        const cardElement = document.querySelector('.card');
+        let mainColor = '';
+        
+        if (cardElement) {
+            const cardStyle = getComputedStyle(cardElement);
+            mainColor = cardStyle.getPropertyValue('--main-color').trim();
+            console.log("Card element main-color:", mainColor);
+            
+            // Fallback to inline style if computed style is empty
+            if (!mainColor) {
+                mainColor = cardElement.style.getPropertyValue('--main-color').trim();
+                console.log("Using inline style main-color:", mainColor);
+            }
+        }
+        
+        // If still empty, use hardcoded fallback
+        if (!mainColor) {
+            // Extract from HTML attribute
+            mainColor = "#{{ entity.color }}";
+            console.log("Using server-provided color:", mainColor);
+        }
+        
+        // Debug function to determine if a color is light
+        function isLightColor(color) {
+            console.group("Color parsing for:", color);
+            
+            // Remove any leading/trailing spaces
+            color = color.trim();
+            console.log("After trim:", color);
+            
+            let r, g, b;
+            
+            try {
+                // Handle hex colors with # prefix
+                if (color.startsWith('#')) {
+                    console.log("Color starts with #, removing prefix");
+                    color = color.substring(1);
+                }
+                
+                console.log("Color without # (if applicable):", color);
+                console.log("Color length:", color.length);
+                
+                // Handle 6-digit hex
+                if (color.length === 6) {
+                    console.log("Parsing as 6-digit hex");
+                    r = parseInt(color.substring(0, 2), 16);
+                    g = parseInt(color.substring(2, 4), 16);
+                    b = parseInt(color.substring(4, 6), 16);
+                    console.log("Parsed RGB components:", r, g, b);
+                } 
+                // Handle 3-digit hex
+                else if (color.length === 3) {
+                    console.log("Parsing as 3-digit hex");
+                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
+                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
+                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
+                    console.log("Parsed RGB components:", r, g, b);
+                } else {
+                    console.warn("Unexpected color format:", color);
+                    console.groupEnd();
+                    return false;
+                }
+                
+                // Check for parsing errors
+                if (isNaN(r) || isNaN(g) || isNaN(b)) {
+                    console.error("Failed to parse color components to numbers:", r, g, b);
+                    console.groupEnd();
+                    return false;
+                }
+                
+                // Calculate luminance - if high, it's a light color
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                console.log("Calculated luminance:", luminance);
+                const isLight = luminance > 0.7;
+                console.log("Is light color:", isLight);
+                console.groupEnd();
+                return isLight; // Threshold for "light" colors
+            } catch (e) {
+                console.error("Exception during color parsing:", e);
+                console.groupEnd();
+                return false;
+            }
+        }
+        
+        // Now try with the actual value
+        console.log("Using actual mainColor:", mainColor);
+        const isLight = isLightColor(mainColor);
+        console.log("Final determination - Is light color:", isLight);
+        
+        // Apply appropriate styles based on color lightness
+        if (isLight) {
+            console.log("Light color detected - switching to black");
+            // Use black for team name instead of light color
+            const teamName = document.querySelector('h2[style*="color: var(--main-color)"]');
+            if (teamName) {
+                teamName.style.color = '#000';
+                console.log("Applied black color to team name");
+            } else {
+                console.warn("Team name element not found");
+            }
+            
+            // Make hover indicator darker for rows
+            document.querySelectorAll('.player-row').forEach(row => {
+                row.addEventListener('mouseover', function() {
+                    this.style.borderLeft = '2px solid #000';
+                    this.style.backgroundColor = 'rgba(0,0,0,0.03)';
+                });
+                row.addEventListener('mouseout', function() {
+                    this.style.borderLeft = '';
+                    this.style.backgroundColor = '';
+                });
+            });
+        } else {
+            console.log("Dark color detected - keeping original styling");
+            // For darker colors, keep the original styling
+            document.querySelectorAll('.sortable').forEach(col => {
+                col.addEventListener('mouseover', function() {
+                    this.querySelector('span').style.color = mainColor;
+                });
+                col.addEventListener('mouseout', function() {
+                    this.querySelector('span').style.color = '#666';
+                });
+            });
+        }
+    });
+</script>
 
 {% endblock %}
