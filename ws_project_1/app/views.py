@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils.sparql_client import query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club
+from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club
 from unidecode import unidecode
 
 def player_detail(request, player_id):
@@ -9,11 +9,20 @@ def player_detail(request, player_id):
     # Log the player data
 
     available_clubs = query_all_clubs()
+    position_mapping = {
+        "GK": "Goalkeeper",
+        "DF": "Defender",
+        "MF": "Midfielder",
+        "FW": "Forward",
+    }
+    player_positions = set(player_data.get("raw_positions", []))
+    available_positions = {key: value for key, value in position_mapping.items() if key not in player_positions}
 
     return render(request, "player.html", {
         "player_id": player_id,
         "entity": player_data, 
         "available_clubs": available_clubs,
+        "available_positions": available_positions.items(),
     })
 
 def club_detail(request, club_id):
@@ -208,4 +217,19 @@ def add_club_to_player(request, player_id):
 
         update_player_club(player_id, current_club, club_id)
 
+        return redirect("player", player_id=player_id)
+
+def add_position_to_player(request, player_id):
+    """
+    Handle adding a new position to a player.
+    """
+    if request.method == "POST":
+        position = request.POST.get("position")
+        
+        if not position:
+            return redirect("player", player_id=player_id)
+
+        add_new_player_position(player_id, position)
+
+        # Redirect back to player detail page
         return redirect("player", player_id=player_id)

@@ -97,7 +97,7 @@ def process_player_results(results, player_id):
     # Extract positions from comma-separated string
     positions_str = result.get("positions", {}).get("value", "")
     raw_positions = [pos.strip() for pos in positions_str.split(",")] if positions_str else []
-    
+    print(raw_positions) 
     # Convert abbreviated positions to full names
     positions = []
     for pos in raw_positions:
@@ -150,7 +150,8 @@ def process_player_results(results, player_id):
         "clubs": teams,
         "color": result["currentClubColor"]["value"],
         "alternate_color": result["currentClubAltColor"]["value"],
-        "stats": query_player_stats(player_id)
+        "stats": query_player_stats(player_id),
+        "raw_positions": raw_positions
     }
 
 def get_default_player_data():
@@ -1226,5 +1227,29 @@ def create_player(id, name, born, positions, photo_url, nation, club):
         print(f"Player {name} created successfully.")
     except Exception as e:
         print(f"Error creating player: {e}")
+        return False
+    return True
+
+def add_new_player_position(player_id, position):
+    sparql = SPARQLWrapper(ENDPOINT_URL+"/statements")
+    sparql.setReturnFormat(JSON)
+    sparql.setMethod(POST)
+
+    query = f"""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX fut-rel: <http://football.org/rel/>
+
+        INSERT DATA {{
+            <http://football.org/ent/{player_id}> fut-rel:position "{position}" .
+        }}
+        """
+
+    sparql.setQuery(query)
+
+    try:
+        sparql.query()
+        print(f"New position created successfully.")
+    except Exception as e:
+        print(f"Error creating updating position: {e}")
         return False
     return True

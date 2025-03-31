@@ -28,4 +28,5 @@ urlpatterns = [
     path("graph", graph_view, name="graph"),
     path("", dashboard, name="dashboard"),
     path("player/<str:player_id>/add_club/", add_club_to_player, name="add_club"),
+    path("player/<str:player_id>/add_position/", add_position_to_player, name="add_position"),
 ]
