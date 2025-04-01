@@ -1,0 +1,121 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Player Connection Checker{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Player Connection Checker</h1>
+            <p class="lead">Discover connections between football players. Check if they've played for the same club, come from the same country, or play in the same position.</p>
+            
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <form method="get" action="{% url 'player_connection' %}">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group mb-3">
+                                    <label for="player1">First Player:</label>
+                                    <select class="form-control" id="player1" name="player1" required>
+                                        <option value="">Select a player</option>
+                                        {% for player in player_list %}
+                                            <option value="{{ player.id }}" {% if player.id == selected_player1 %}selected{% endif %}>
+                                                {{ player.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center d-flex align-items-center justify-content-center">
+                                <div class="my-3 fw-bold">VS</div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group mb-3">
+                                    <label for="player2">Second Player:</label>
+                                    <select class="form-control" id="player2" name="player2" required>
+                                        <option value="">Select a player</option>
+                                        {% for player in player_list %}
+                                            <option value="{{ player.id }}" {% if player.id == selected_player2 %}selected{% endif %}>
+                                                {{ player.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white; transition: transform 0.3s, box-shadow 0.3s;">Check Connection</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% if results %}
+                <div class="card shadow">
+                    <div class="card-header" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">
+                        <h2 class="h5 mb-0">Connection Results</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-5 text-center">
+                                <img src="{{ results.player1.photo_url }}" alt="{{ results.player1.name }}" 
+                                     class="img-fluid mb-2" style="max-height: 150px;">
+                                <h3 class="h5">{{ results.player1.name }}</h3>
+                                <a href="{% url 'player' player_id=results.player1.id %}" class="btn btn-sm" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">View Profile</a>
+                            </div>
+                            <div class="col-md-2 text-center d-flex flex-column justify-content-center">
+                                {% if results.has_connection %}
+                                    <i class="fas fa-link fa-3x text-success mb-2"></i>
+                                    <div class="badge bg-success">Connected</div>
+                                {% else %}
+                                    <i class="fas fa-unlink fa-3x text-danger mb-2"></i>
+                                    <div class="badge bg-danger">No Connection</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-5 text-center">
+                                <img src="{{ results.player2.photo_url }}" alt="{{ results.player2.name }}" 
+                                     class="img-fluid mb-2" style="max-height: 150px;">
+                                <h3 class="h5">{{ results.player2.name }}</h3>
+                                <a href="{% url 'player' player_id=results.player2.id %}" class="btn btn-sm" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">View Profile</a>
+                            </div>
+                        </div>
+
+                        {% if results.has_connection %}
+                            <h3 class="h5 mb-3">Connections Found:</h3>
+                            <div class="list-group">
+                                {% for key, connection in results.connections.items %}
+                                    {% if connection.exists %}
+                                        <div class="list-group-item list-group-item-action">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <strong>{{ connection.description }}</strong>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                No connections found between these players.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Add button hover effect to match navbar */
+    .btn {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(to right, #121212, #1a1a1a, #222222) !important;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+</style>
+{% endblock %}

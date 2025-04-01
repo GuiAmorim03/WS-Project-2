@@ -8,6 +8,16 @@
         <!-- Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1; /* Ensures the content takes up available space */
+        }
+
         body {
             background-color: gainsboro;
             min-height: 100vh;
@@ -89,6 +99,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'graph' %}">
                                 <i class="fas fa-chart-line me-1"></i> Graph
+                            </a>
+                        </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <span class="separator">|</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'player_connection' %}active{% endif %}" href="{% url 'player_connection' %}">
+                                <i class="fas fa-link me-1"></i> Player Connections
                             </a>
                         </li>
                     </ul>

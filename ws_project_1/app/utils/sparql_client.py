@@ -1324,3 +1324,122 @@ def add_new_player_position(player_id, position):
         print(f"Error creating updating position: {e}")
         return False
     return True
+
+def check_player_connection(player1_id, player2_id):
+    """
+    Check if two players have a connection using SPARQL ASK queries.
+    
+    Args:
+        player1_id: ID of the first player
+        player2_id: ID of the second player
+        
+    Returns:
+        dict: Connection details with type and existence status
+    """
+    connections = {}
+    
+    # Check if they played for the same club (current or past)
+    connections["same_club"] = {
+        "exists": check_same_club_connection(player1_id, player2_id),
+        "description": "Played for the same club"
+    }
+    
+    # Check if they are from the same country
+    connections["same_country"] = {
+        "exists": check_same_country_connection(player1_id, player2_id),
+        "description": "Come from the same country"
+    }
+    
+    # Check if they play the same position
+    connections["same_position"] = {
+        "exists": check_same_position_connection(player1_id, player2_id),
+        "description": "Play the same position"
+    }
+    
+    # Summary of connections
+    any_connection = any(conn["exists"] for conn in connections.values())
+    
+    return {
+        "player1_id": player1_id,
+        "player2_id": player2_id,
+        "has_connection": any_connection,
+        "connections": connections
+    }
+
+def check_same_club_connection(player1_id, player2_id):
+    """Check if two players have played for the same club (current or past)."""
+    sparql = get_sparql_client()
+    
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    
+    ASK {{
+        {{
+            # Both at same current club
+            <http://football.org/ent/{player1_id}> fut-rel:club ?club .
+            <http://football.org/ent/{player2_id}> fut-rel:club ?club .
+        }} UNION {{
+            # Player 1 current, Player 2 past
+            <http://football.org/ent/{player1_id}> fut-rel:club ?club .
+            <http://football.org/ent/{player2_id}> fut-rel:past_club ?club .
+        }} UNION {{
+            # Player 1 past, Player 2 current
+            <http://football.org/ent/{player1_id}> fut-rel:past_club ?club .
+            <http://football.org/ent/{player2_id}> fut-rel:club ?club .
+        }} UNION {{
+            # Both at same past club
+            <http://football.org/ent/{player1_id}> fut-rel:past_club ?club .
+            <http://football.org/ent/{player2_id}> fut-rel:past_club ?club .
+        }}
+    }}
+    """
+    
+    sparql.setQuery(query)
+    try:
+        return sparql.query().convert()["boolean"]
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return False
+
+def check_same_country_connection(player1_id, player2_id):
+    """Check if two players are from the same country."""
+    sparql = get_sparql_client()
+    
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    
+    ASK {{
+        <http://football.org/ent/{player1_id}> fut-rel:nation ?country .
+        <http://football.org/ent/{player2_id}> fut-rel:nation ?country .
+    }}
+    """
+    
+    sparql.setQuery(query)
+    try:
+        return sparql.query().convert()["boolean"]
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return False
+
+def check_same_position_connection(player1_id, player2_id):
+    """Check if two players play the same position."""
+    sparql = get_sparql_client()
+    
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    
+    ASK {{
+        <http://football.org/ent/{player1_id}> fut-rel:position ?position .
+        <http://football.org/ent/{player2_id}> fut-rel:position ?position .
+    }}
+    """
+    
+    sparql.setQuery(query)
+    try:
+        return sparql.query().convert()["boolean"]
+    except Exception as e:
+        print(f"SPARQL query error: {e}")
+        return False

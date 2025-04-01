@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club
+from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection
 from unidecode import unidecode
 
 def player_detail(request, player_id):
@@ -233,3 +233,43 @@ def add_position_to_player(request, player_id):
 
         # Redirect back to player detail page
         return redirect("player", player_id=player_id)
+
+def player_connection_checker(request):
+    """
+    View for checking connections between two players using SPARQL ASK query
+    """
+    # Initialize variables
+    results = None
+    player_list = None
+    player1_id = request.GET.get("player1")
+    player2_id = request.GET.get("player2")
+    
+    # Get the list of all players for the selection dropdowns
+    player_list = query_all_players()
+    
+    # If both players are selected, check connections
+    if player1_id and player2_id:
+        results = check_player_connection(player1_id, player2_id)
+        
+        # Get player details for the results display
+        player1_data = query_player_details(player1_id)
+        player2_data = query_player_details(player2_id)
+        
+        results["player1"] = {
+            "id": player1_id,
+            "name": player1_data["name"],
+            "photo_url": player1_data["photo_url"]
+        }
+        
+        results["player2"] = {
+            "id": player2_id,
+            "name": player2_data["name"],
+            "photo_url": player2_data["photo_url"]
+        }
+    
+    return render(request, "player_connection.html", {
+        "player_list": player_list,
+        "results": results,
+        "selected_player1": player1_id,
+        "selected_player2": player2_id,
+    })

@@ -29,4 +29,5 @@ urlpatterns = [
     path("", dashboard, name="dashboard"),
     path("player/<str:player_id>/add_club/", add_club_to_player, name="add_club"),
     path("player/<str:player_id>/add_position/", add_position_to_player, name="add_position"),
+    path("player-connection/", player_connection_checker, name="player_connection"),
 ]
