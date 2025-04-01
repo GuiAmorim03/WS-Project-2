@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection
+from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection, delete_player
 from unidecode import unidecode
 
 def player_detail(request, player_id):
@@ -273,3 +273,16 @@ def player_connection_checker(request):
         "selected_player1": player1_id,
         "selected_player2": player2_id,
     })
+
+def delete_player_view(request, player_id):
+    """
+    Handle deleting a player.
+    """
+    if request.method == "POST":
+        # Delete the player using the delete_player function from sparql_client
+        success = delete_player(player_id)
+        if success:
+            return redirect("players")  # Redirect to players list after deletion
+    
+    # If not a POST request or deletion failed, redirect back to player detail
+    return redirect("player", player_id=player_id)

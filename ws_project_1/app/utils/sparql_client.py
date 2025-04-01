@@ -535,6 +535,8 @@ def query_player_stats(player_id):
     query = f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
     SELECT ?stat_category ?stat_name ?stat_value
     WHERE {{
@@ -1442,4 +1444,48 @@ def check_same_position_connection(player1_id, player2_id):
         return sparql.query().convert()["boolean"]
     except Exception as e:
         print(f"SPARQL query error: {e}")
+        return False
+
+def delete_player(player_id):
+    """
+    Delete a player and all their connections from the RDF graph.
+    
+    Args:
+        player_id: The ID of the player to delete
+        
+    Returns:
+        bool: True if deletion was successful, False otherwise
+    """
+    sparql = SPARQLWrapper(ENDPOINT_URL+"/statements")
+    sparql.setReturnFormat(JSON)
+    sparql.setMethod(POST)
+    
+    query = f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
+    
+    DELETE {{
+        # Delete all properties where player is the subject
+        <http://football.org/ent/{player_id}> ?p ?o .
+        
+        # Delete all properties where player is the object
+        ?s ?p2 <http://football.org/ent/{player_id}> .
+    }}
+    WHERE {{
+        # Get all statements where player is the subject
+        <http://football.org/ent/{player_id}> ?p ?o .
+        
+        # Get all statements where player is the object
+        OPTIONAL {{ ?s ?p2 <http://football.org/ent/{player_id}> . }}
+    }}
+    """
+    
+    sparql.setQuery(query)
+    try:
+        sparql.query()
+        print(f"Player {player_id} deleted successfully.")
+        return True
+    except Exception as e:
+        print(f"Error deleting player: {e}")
         return False
