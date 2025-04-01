@@ -269,3 +269,21 @@ WHERE {
           fut-rel:name ?stat_name .
 }
 ```
+
+## Query 10: Update a player's club
+```
+sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fut-rel: <http://football.org/rel/>
+
+DELETE {
+    <http://football.org/ent/mohamed_salah> fut-rel:club ?oldClub .
+}
+INSERT {
+    <http://football.org/ent/mohamed_salah> fut-rel:club <http://football.org/ent/everton> .
+    <http://football.org/ent/mohamed_salah> fut-rel:past_club <http://football.org/ent/liverpool> .
+}
+WHERE {
+    OPTIONAL { <http://football.org/ent/mohamed_salah> fut-rel:club ?oldClub . }
+}
+```
