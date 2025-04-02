@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club
+from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection, delete_player
 from unidecode import unidecode
 
 def player_detail(request, player_id):
@@ -233,3 +233,140 @@ def add_position_to_player(request, player_id):
 
         # Redirect back to player detail page
         return redirect("player", player_id=player_id)
+
+def player_connection_checker(request):
+    """
+    View for checking connections between two players using SPARQL ASK query
+    """
+    # Initialize variables
+    results = None
+    player_list = None
+    player1_id = request.GET.get("player1")
+    player2_id = request.GET.get("player2")
+    
+    # Get the list of all players for the selection dropdowns
+    player_list = query_all_players()
+    
+    # If both players are selected, check connections
+    if player1_id and player2_id:
+        results = check_player_connection(player1_id, player2_id)
+        
+        # Get player details for the results display
+        player1_data = query_player_details(player1_id)
+        player2_data = query_player_details(player2_id)
+        
+        results["player1"] = {
+            "id": player1_id,
+            "name": player1_data["name"],
+            "photo_url": player1_data["photo_url"],
+            "color": player1_data["color"],           # Add color
+            "alternate_color": player1_data["alternate_color"]  # Add alternate color
+        }
+        
+        results["player2"] = {
+            "id": player2_id,
+            "name": player2_data["name"],
+            "photo_url": player2_data["photo_url"],
+            "color": player2_data["color"],           # Add color
+            "alternate_color": player2_data["alternate_color"]  # Add alternate color
+        }
+
+        # Stats where the lower value is better (fouls commited, red cards, yellow cards, etc.)
+        negative_stats = [
+            "Errors Leading to Goal",
+            "Miscontrols",
+            "Times Dispossessed",
+            "Goals Conceded",
+            "Goals Conceded per 90 minutes",
+            "Yellow Cards",
+            "Red Cards",
+            "Fouls Committed",
+            "Penalties Conceded",
+            "Own Goals",
+            "Offsides",
+        ]
+        
+        # Pre-process stats for comparison (no need for template filters)
+        stats_comparison = []
+        
+        if "stats" in player1_data and "stats" in player2_data:
+            # Create a map of player2's stats for quick lookup
+            player2_stats_map = {}
+            for category in player2_data["stats"]:
+                cat_name = category["name"]
+                player2_stats_map[cat_name] = {}
+                for stat in category["stats"]:
+                    player2_stats_map[cat_name][stat["name"]] = stat["value"]
+            
+            # Process each category from player1
+            for category in player1_data["stats"]:
+                cat_name = category["name"]
+                comparison_category = {
+                    "name": cat_name,
+                    "stats": []
+                }
+                
+                # Process each stat in this category
+                for stat in category["stats"]:
+                    stat_name = stat["name"]
+                    player1_value = stat["value"]
+                    # Get corresponding stat from player2 (default to 0 if not found)
+                    player2_value = player2_stats_map.get(cat_name, {}).get(stat_name, 0)
+                    
+                    # Try to convert values to numbers for comparison
+                    try:
+                        p1_val = float(player1_value)
+                        p2_val = float(player2_value)
+                        
+                        # Check if this is a negative stat (lower is better)
+                        is_negative = stat_name in negative_stats
+                        
+                        if is_negative:
+                            # For negative stats, lower values are better
+                            player1_better = p1_val < p2_val
+                            player2_better = p2_val < p1_val
+                        else:
+                            # For regular stats, higher values are better
+                            player1_better = p1_val > p2_val
+                            player2_better = p2_val > p1_val
+                            
+                        equal = p1_val == p2_val
+                    except (ValueError, TypeError):
+                        # If conversion fails, treat as strings
+                        player1_better = False
+                        player2_better = False
+                        equal = player1_value == player2_value
+                    
+                    comparison_category["stats"].append({
+                        "name": stat_name,
+                        "player1_value": player1_value,
+                        "player2_value": player2_value,
+                        "player1_better": player1_better,
+                        "player2_better": player2_better,
+                        "equal": equal,
+                        "is_negative": stat_name in negative_stats  # Include this flag for UI display
+                    })
+                
+                stats_comparison.append(comparison_category)
+            
+            results["stats_comparison"] = stats_comparison
+    
+    return render(request, "player_connection.html", {
+        "player_list": player_list,
+        "results": results,
+        "selected_player1": player1_id,
+        "selected_player2": player2_id,
+    })
+
+def delete_player_view(request, player_id):
+    """
+    Handle deleting a player.
+    """
+    if request.method == "POST":
+        # Delete the player using the delete_player function from sparql_client
+        success = delete_player(player_id)
+        if success:
+            return redirect("players")  # Redirect to players list after deletion
+    
+    # If not a POST request or deletion failed, redirect back to player detail
+    return redirect("player", player_id=player_id)

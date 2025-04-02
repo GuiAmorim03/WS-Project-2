@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app.views import *
+from django.views.generic import RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 urlpatterns = [
@@ -29,4 +31,7 @@ urlpatterns = [
     path("", dashboard, name="dashboard"),
     path("player/<str:player_id>/add_club/", add_club_to_player, name="add_club"),
     path("player/<str:player_id>/add_position/", add_position_to_player, name="add_position"),
+    path("player-connection/", player_connection_checker, name="player_connection"),
+    path('players/<str:player_id>/delete/', delete_player_view, name='delete_player'),
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.ico')), name='favicon'),
 ]

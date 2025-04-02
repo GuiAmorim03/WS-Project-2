@@ -1,13 +1,129 @@
-.entity-top,
-.entities-list {
-    cursor: pointer;
-    border: 2px solid black;
+.modern-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.stat-group-title {
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.modern-card {
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: none;
+    transition: all 0.3s ease;
 }
 
 .entity-top {
-    padding-bottom: 0;
+    background: linear-gradient(135deg, var(--main-color), var(--main-color));
+    color: var(--alt-color);
+    padding: 1.25rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding-bottom: 0px;
+}
+
+.entity-icon {
+    border-radius: 8px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.entity-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.entity-info {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.entity-stat {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.card-footer {
+    border: 0px !important;
+    background: white;
+    padding: 0 !important;
 }
 
 .entities-list {
-    border-top: 0;
+    /* Keep the regular bottom border */
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 0.75rem 1rem;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    /* Remove default side borders */
+    border-left: none;
+    border-right: none;
+}
+
+/* Restore the rule for the last item */
+.entities-list:last-child {
+    border-bottom: none;
+}
+
+/* Create pseudo-elements for the side borders */
+.entities-list::before, .entities-list::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+}
+
+/* Left border */
+.entities-list::before {
+    left: 0;
+}
+
+/* Right border */
+.entities-list::after {
+    right: 0;
+}
+
+.entities-list-player {
+    padding-bottom: 0px;
+}
+
+.entities-list-club {
+    padding-bottom: 0.75rem;
+}
+
+.sub-entity-icon {
+    height: 65px;
+    width: auto;
+    object-fit: contain;
+}
+
+.sub-entity-title {
+    font-weight: 600;
+    color: #444;
+}
+
+.sub-entity-info {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.sub-entity-stat {
+    font-weight: 700;
+    color: var(--border-color);
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: var(--main-color, #777);
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--main-color, #777);
 }

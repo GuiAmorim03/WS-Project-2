@@ -79,7 +79,7 @@
                 Add New Club
             </button>
         </div>
-
+    </div>
 
     <!-- Add new club Modal -->
     <div class="modal fade" id="addClubModal" tabindex="-1" aria-labelledby="addClubModalLabel" aria-hidden="true">
@@ -133,10 +133,12 @@
         </div>
     </div>
 
-    </div>
 </div>
 
 {% load static %}
+
+<script src="{% static 'js/utils.js' %}"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         console.log("DOM loaded for player page, starting color detection...");
@@ -160,44 +162,7 @@
             mainColor = "#{{ entity.color }}";
             console.log("Using server-provided color:", mainColor);
         }
-        
-        // Function to determine if a color is light
-        function isLightColor(color) {
-            // Remove any leading/trailing spaces
-            color = color.trim();
-            
-            let r, g, b;
-            
-            try {
-                // Handle hex colors with # prefix
-                if (color.startsWith('#')) {
-                    color = color.substring(1);
-                }
-                
-                // Handle 6-digit hex
-                if (color.length === 6) {
-                    r = parseInt(color.substring(0, 2), 16);
-                    g = parseInt(color.substring(2, 4), 16);
-                    b = parseInt(color.substring(4, 6), 16);
-                } 
-                // Handle 3-digit hex
-                else if (color.length === 3) {
-                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
-                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
-                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
-                } else {
-                    return false;
-                }
-                
-                // Calculate luminance - if high, it's a light color
-                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-                return luminance > 0.7;
-            } catch (e) {
-                return false;
-            }
-        }
-        
-        // Apply appropriate styles based on color lightness
+                // Apply appropriate styles based on color lightness
         const isLight = isLightColor(mainColor);
         console.log("Is light color:", isLight);
         
