@@ -258,13 +258,17 @@ def player_connection_checker(request):
         results["player1"] = {
             "id": player1_id,
             "name": player1_data["name"],
-            "photo_url": player1_data["photo_url"]
+            "photo_url": player1_data["photo_url"],
+            "color": player1_data["color"],           # Add color
+            "alternate_color": player1_data["alternate_color"]  # Add alternate color
         }
         
         results["player2"] = {
             "id": player2_id,
             "name": player2_data["name"],
-            "photo_url": player2_data["photo_url"]
+            "photo_url": player2_data["photo_url"],
+            "color": player2_data["color"],           # Add color
+            "alternate_color": player2_data["alternate_color"]  # Add alternate color
         }
 
         # Stats where the lower value is better (fouls commited, red cards, yellow cards, etc.)
