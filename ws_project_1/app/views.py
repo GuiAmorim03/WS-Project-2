@@ -266,6 +266,86 @@ def player_connection_checker(request):
             "name": player2_data["name"],
             "photo_url": player2_data["photo_url"]
         }
+
+        # Stats where the lower value is better (fouls commited, red cards, yellow cards, etc.)
+        negative_stats = [
+            "Errors Leading to Goal",
+            "Miscontrols",
+            "Times Dispossessed",
+            "Goals Conceded",
+            "Goals Conceded per 90 minutes",
+            "Yellow Cards",
+            "Red Cards",
+            "Fouls Committed",
+            "Penalties Conceded",
+            "Own Goals",
+            "Offsides",
+        ]
+        
+        # Pre-process stats for comparison (no need for template filters)
+        stats_comparison = []
+        
+        if "stats" in player1_data and "stats" in player2_data:
+            # Create a map of player2's stats for quick lookup
+            player2_stats_map = {}
+            for category in player2_data["stats"]:
+                cat_name = category["name"]
+                player2_stats_map[cat_name] = {}
+                for stat in category["stats"]:
+                    player2_stats_map[cat_name][stat["name"]] = stat["value"]
+            
+            # Process each category from player1
+            for category in player1_data["stats"]:
+                cat_name = category["name"]
+                comparison_category = {
+                    "name": cat_name,
+                    "stats": []
+                }
+                
+                # Process each stat in this category
+                for stat in category["stats"]:
+                    stat_name = stat["name"]
+                    player1_value = stat["value"]
+                    # Get corresponding stat from player2 (default to 0 if not found)
+                    player2_value = player2_stats_map.get(cat_name, {}).get(stat_name, 0)
+                    
+                    # Try to convert values to numbers for comparison
+                    try:
+                        p1_val = float(player1_value)
+                        p2_val = float(player2_value)
+                        
+                        # Check if this is a negative stat (lower is better)
+                        is_negative = stat_name in negative_stats
+                        
+                        if is_negative:
+                            # For negative stats, lower values are better
+                            player1_better = p1_val < p2_val
+                            player2_better = p2_val < p1_val
+                        else:
+                            # For regular stats, higher values are better
+                            player1_better = p1_val > p2_val
+                            player2_better = p2_val > p1_val
+                            
+                        equal = p1_val == p2_val
+                    except (ValueError, TypeError):
+                        # If conversion fails, treat as strings
+                        player1_better = False
+                        player2_better = False
+                        equal = player1_value == player2_value
+                    
+                    comparison_category["stats"].append({
+                        "name": stat_name,
+                        "player1_value": player1_value,
+                        "player2_value": player2_value,
+                        "player1_better": player1_better,
+                        "player2_better": player2_better,
+                        "equal": equal,
+                        "is_negative": stat_name in negative_stats  # Include this flag for UI display
+                    })
+                
+                stats_comparison.append(comparison_category)
+            
+            results["stats_comparison"] = stats_comparison
     
     return render(request, "player_connection.html", {
         "player_list": player_list,
