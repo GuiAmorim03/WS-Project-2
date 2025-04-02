@@ -1,14 +1,14 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title %}Player Connection Checker{% endblock %}
+{% block title %}Player Connection & Comparison{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
-            <h1 class="mb-4">Player Connection Checker</h1>
-            <p class="lead">Discover connections between football players. Check if they've played for the same club, come from the same country, or play in the same position.</p>
+            <h1 class="mb-4">Player Connection & Comparison</h1>
+            <p class="lead">Compare football players and discover their connections. Check if they've played for the same club, come from the same country, or play in the same position. See how their statistics measure up against each other.</p>
             
             <div class="card shadow mb-4">
                 <div class="card-body">
@@ -101,6 +101,73 @@
                         {% endif %}
                     </div>
                 </div>
+                
+                {% if results.stats_comparison %}
+                <!-- Player Statistics Comparison -->
+                <div class="card shadow mt-4">
+                    <div class="card-header" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">
+                        <h2 class="h5 mb-0">Statistics Comparison</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5 text-center mb-3">
+                                <h3 class="h6">{{ results.player1.name }}</h3>
+                            </div>
+                            <div class="col-md-2 text-center mb-3">
+                                <h3 class="h6">Stat</h3>
+                            </div>
+                            <div class="col-md-5 text-center mb-3">
+                                <h3 class="h6">{{ results.player2.name }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="accordion" id="statsAccordion">
+                            {% for category in results.stats_comparison %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                                        <button class="accordion-button {% if forloop.first %}{% else %}collapsed{% endif %}" type="button" 
+                                                data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" 
+                                                aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ forloop.counter }}">
+                                            {{ category.name }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" 
+                                         aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#statsAccordion">
+                                        <div class="accordion-body p-0">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0">
+                                                    <tbody>
+                                                        {% for stat in category.stats %}
+                                                            <tr>
+                                                                <td class="text-end" width="40%">
+                                                                    <span class="{% if stat.player1_better %}player1-success fw-bold{% elif stat.player2_better %}text-muted{% endif %}">
+                                                                        {{ stat.player1_value }}
+                                                                    </span>
+                                                                </td>
+                                                                <td class="text-center" width="20%">{{ stat.name }}</td>
+                                                                <td class="text-start" width="40%">
+                                                                    <span class="{% if stat.player2_better %}player2-success fw-bold{% elif stat.player1_better %}text-muted{% endif %}">
+                                                                        {{ stat.player2_value }}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <small class="text-muted">Statistics are highlighted when a player performs better. 
+                            For stats like Yellow/Red Cards and Fouls, lower values are considered better.</small>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>
@@ -117,5 +184,58 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
+    
+    /* Style for the statistics comparison */
+    .accordion-button:not(.collapsed) {
+        background-color: rgba(18, 18, 18, 0.05);
+        color: #212529;
+    }
+    
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0, 0, 0, 0.125);
+    }
+    
+    .accordion-button::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+
+    .player1-success {
+    color: #{{ results.player1.color|default:'198754' }};
+    }
+
+    .player2-success {
+        color: #{{ results.player2.color|default:'198754' }};
+    }
+
 </style>
+
+{% load static %}
+
+<script src="{% static 'js/utils.js' %}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check if we have comparison results
+        if (document.querySelector('.accordion-item')) {
+            // Get player colors (if available)
+            const player1Color = "{{ results.player1.color|default:'198754' }}"; // Default to bootstrap success green
+            const player2Color = "{{ results.player2.color|default:'198754' }}";
+            
+
+            // Process player1's and player2's better stats
+            document.querySelectorAll('.text-success.fw-bold').forEach(element => {
+                const isPlayer1 = element.closest('td').classList.contains('text-end');
+                const color = isPlayer1 ? player1Color : player2Color;
+
+                // Default to green if the color is too light
+                if (isLightColor(color)) {
+                    element.style.color = '#198754';
+                } else {
+                    element.style.color = `#${color}`;
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

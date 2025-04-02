@@ -94,6 +94,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/club.css' %}">
 <script src="{% static 'js/club.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
 
 <style>
     .player-row:hover {
@@ -133,71 +134,8 @@
             mainColor = "#{{ entity.color }}";
             console.log("Using server-provided color:", mainColor);
         }
-        
-        // Debug function to determine if a color is light
-        function isLightColor(color) {
-            console.group("Color parsing for:", color);
-            
-            // Remove any leading/trailing spaces
-            color = color.trim();
-            console.log("After trim:", color);
-            
-            let r, g, b;
-            
-            try {
-                // Handle hex colors with # prefix
-                if (color.startsWith('#')) {
-                    console.log("Color starts with #, removing prefix");
-                    color = color.substring(1);
-                }
-                
-                console.log("Color without # (if applicable):", color);
-                console.log("Color length:", color.length);
-                
-                // Handle 6-digit hex
-                if (color.length === 6) {
-                    console.log("Parsing as 6-digit hex");
-                    r = parseInt(color.substring(0, 2), 16);
-                    g = parseInt(color.substring(2, 4), 16);
-                    b = parseInt(color.substring(4, 6), 16);
-                    console.log("Parsed RGB components:", r, g, b);
-                } 
-                // Handle 3-digit hex
-                else if (color.length === 3) {
-                    console.log("Parsing as 3-digit hex");
-                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
-                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
-                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
-                    console.log("Parsed RGB components:", r, g, b);
-                } else {
-                    console.warn("Unexpected color format:", color);
-                    console.groupEnd();
-                    return false;
-                }
-                
-                // Check for parsing errors
-                if (isNaN(r) || isNaN(g) || isNaN(b)) {
-                    console.error("Failed to parse color components to numbers:", r, g, b);
-                    console.groupEnd();
-                    return false;
-                }
-                
-                // Calculate luminance - if high, it's a light color
-                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-                console.log("Calculated luminance:", luminance);
-                const isLight = luminance > 0.7;
-                console.log("Is light color:", isLight);
-                console.groupEnd();
-                return isLight; // Threshold for "light" colors
-            } catch (e) {
-                console.error("Exception during color parsing:", e);
-                console.groupEnd();
-                return false;
-            }
-        }
-        
+
         // Now try with the actual value
-        console.log("Using actual mainColor:", mainColor);
         const isLight = isLightColor(mainColor);
         console.log("Final determination - Is light color:", isLight);
         
