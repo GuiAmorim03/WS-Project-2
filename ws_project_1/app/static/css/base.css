@@ -1,0 +1,60 @@
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1; /* Ensures the content takes up available space */
+}
+
+body {
+    background-color: gainsboro;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.navbar {
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    padding: 12px 0;
+    background: linear-gradient(to right, #121212, #1a1a1a, #222222) !important;
+}
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.navbar-brand i {
+    font-size: 1.3rem;
+}
+.nav-link {
+    font-weight: 500;
+    margin: 0 5px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+.separator {
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 5px;
+}
+footer {
+    margin-top: auto;
+    padding: 20px 0;
+    background: linear-gradient(to right, #121212, #1a1a1a, #222222);
+    color: #f8f9fa;
+    width: 100%;
+}
+footer p {
+    margin-bottom: 5px;
+}
+.creator-names {
+    font-style: italic;
+    color: #adb5bd;
+}

@@ -99,11 +99,12 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'css/stats_entity.css' %}">
-<!-- Add Font Awesome for delete icon -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var swiper = new Swiper(".mySwiper", {
@@ -124,13 +125,8 @@
                 }
             }
         });
-
-        console.log("Starting color detection in entity.html...");
         
-        // Log the entity color details from the server
-        console.log("Entity color from server: #{{ entity.color }}");
-        
-        // FIXED: Get the color from the card element, not the document root
+        // Get the color from the card element
         const card = document.querySelector('.card');
         let mainColor = '';
         
@@ -157,78 +153,7 @@
             mainColor = '#' + mainColor;
             console.log("Added # prefix, now:", mainColor);
         }
-        
-        // Improved function to determine if a color is light
-        function isLightColor(color) {
-            console.group("Entity - Color parsing for:", color);
-            
-            // Add a fallback for empty values
-            if (!color || color === '') {
-                console.warn("Empty color value provided");
-                console.groupEnd();
-                return false;
-            }
-            
-            // Remove any leading/trailing spaces
-            color = color.trim();
-            console.log("After trim:", color);
-            
-            let r, g, b;
-            
-            try {
-                // Handle hex colors with # prefix
-                if (color.startsWith('#')) {
-                    console.log("Color starts with #, removing prefix");
-                    color = color.substring(1);
-                }
                 
-                console.log("Processing color value:", color);
-                
-                // Try a different approach if we're still having issues
-                if (color.match(/^[0-9A-Fa-f]{6}$/)) {
-                    console.log("Valid 6-digit hex format detected");
-                    r = parseInt(color.substring(0, 2), 16);
-                    g = parseInt(color.substring(2, 4), 16);
-                    b = parseInt(color.substring(4, 6), 16);
-                } else if (color.match(/^[0-9A-Fa-f]{3}$/)) {
-                    console.log("Valid 3-digit hex format detected");
-                    r = parseInt(color.charAt(0) + color.charAt(0), 16);
-                    g = parseInt(color.charAt(1) + color.charAt(1), 16);
-                    b = parseInt(color.charAt(2) + color.charAt(2), 16);
-                } else {
-                    // Try to extract RGB values directly if it might be an RGB format
-                    console.log("Not a standard hex format, trying other approaches");
-                    
-                    // Try RGB format
-                    const rgbMatch = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-                    if (rgbMatch) {
-                        console.log("RGB format detected");
-                        r = parseInt(rgbMatch[1]);
-                        g = parseInt(rgbMatch[2]);
-                        b = parseInt(rgbMatch[3]);
-                    } else {
-                        console.error("Unable to parse color format:", color);
-                        console.groupEnd();
-                        return false;
-                    }
-                }
-                
-                console.log("Parsed RGB components:", r, g, b);
-                
-                // Calculate luminance - if high, it's a light color
-                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-                console.log("Calculated luminance:", luminance);
-                const isLight = luminance > 0.7;
-                console.log("Is light color:", isLight);
-                console.groupEnd();
-                return isLight;
-            } catch (e) {
-                console.error("Error parsing color:", e);
-                console.groupEnd();
-                return false;
-            }
-        }
-        
         // Apply appropriate styles based on color lightness
         const isLight = isLightColor(mainColor);
         console.log("Final determination - mainColor is light:", isLight);
