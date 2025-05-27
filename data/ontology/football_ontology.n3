@@ -392,3 +392,94 @@
     rdfs:comment "Number of times caught offside" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer .
+
+# Additional Properties for Inferred Data (SPIN Rules)
+:efficiency a owl:DatatypeProperty ;
+    rdfs:label "efficiency" ;
+    rdfs:comment "Player efficiency rating based on goals+assists per 90 minutes" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:double .
+
+:teammate a owl:ObjectProperty ;
+    rdfs:label "teammate" ;
+    rdfs:comment "Players who play for the same club" ;
+    rdfs:domain :Player ;
+    rdfs:range :Player .
+
+:past_teammate a owl:ObjectProperty ;
+    rdfs:label "past teammate" ;
+    rdfs:comment "Players who have played for the same club in the past" ;
+    rdfs:domain :Player ;
+    rdfs:range :Player .
+
+:compatriot a owl:ObjectProperty ;
+    rdfs:label "compatriot" ;
+    rdfs:comment "Players from the same country" ;
+    rdfs:domain :Player ;
+    rdfs:range :Player .
+
+:veteranStatus a owl:DatatypeProperty ;
+    rdfs:label "veteran status" ;
+    rdfs:comment "Whether a player is considered a veteran (35+ years old)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:youngProspect a owl:DatatypeProperty ;
+    rdfs:label "young prospect" ;
+    rdfs:comment "Whether a player is a young prospect (under 23)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:playerType a owl:DatatypeProperty ;
+    rdfs:label "player type" ;
+    rdfs:comment "Categorization based on playing style" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:string .
+
+:penaltySpecialist a owl:DatatypeProperty ;
+    rdfs:label "penalty specialist" ;
+    rdfs:comment "Whether player is good at penalties (90%+ success rate)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:playmaker a owl:DatatypeProperty ;
+    rdfs:label "playmaker" ;
+    rdfs:comment "Whether player is a playmaker (high assists and key passes)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:goalThreat a owl:DatatypeProperty ;
+    rdfs:label "goal threat" ;
+    rdfs:comment "Whether player is a significant goal threat" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:disciplinaryRisk a owl:DatatypeProperty ;
+    rdfs:label "disciplinary risk" ;
+    rdfs:comment "Whether player has disciplinary issues" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:keyPlayer a owl:DatatypeProperty ;
+    rdfs:label "key player" ;
+    rdfs:comment "Whether player is key for their club (high minutes played)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:versatilePlayer a owl:DatatypeProperty ;
+    rdfs:label "versatile player" ;
+    rdfs:comment "Player with balanced attacking and defensive stats" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:risingAge a owl:DatatypeProperty ;
+    rdfs:label "rising age" ;
+    rdfs:comment "Current age of the player" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:integer .
+
+:leagueRival a owl:ObjectProperty ;
+    rdfs:label "league rival" ;
+    rdfs:comment "Clubs that are rivals in the same league and city" ;
+    rdfs:domain :Club ;
+    rdfs:range :Club .
