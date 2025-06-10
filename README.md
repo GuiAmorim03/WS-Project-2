@@ -66,17 +66,17 @@ source venv/bin/active
 pip install -r requirements
 ```
 
-For this next step make sure that **GraphDB** is running on [http://localhost:7200](http://localhost:7200)
+Before the next step make sure that **GraphDB** is running on [http://localhost:7200](http://localhost:7200) and **import file** `data/import/football_rdf_data.nt`.
 
-### 3. Run Django
-
+### 3.Import Data and Create Repositories
 ```bash
-GRAPHDB_ENDPOINT=http://locahost:7200 python manage.py runserver 0.0.0.0:8000
+bash ./data/config/init-repository.sh ./data/config
 ```
 
-### 4.Import Data and Create Repositories
+### 4. Run Django
+
 ```bash
-bash ./data/config/init-repository.sh
+GRAPHDB_ENDPOINT=http://locahost:7200 python3 manage.py runserver 0.0.0.0:8000
 ```
 
 ## Project Structure
