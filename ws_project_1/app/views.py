@@ -22,6 +22,25 @@ def player_detail(request, player_id):
             player_data = query_player_details(player_id)
             player_data["spin_inferences"] = enhanced_data["spin_inferences"]
             
+            # Add efficiency as a stat if available
+            if "efficiency" in enhanced_data["spin_inferences"]:
+                efficiency_value = enhanced_data["spin_inferences"]["efficiency"]
+                
+                # Find the Attacking category
+                attacking_category = None
+                for category in player_data["stats"]:
+                    if category["name"] == "Attacking":
+                        attacking_category = category
+                        break
+                
+                if attacking_category:
+                    # Add efficiency stat to the Attacking category with SPIN badge flag
+                    attacking_category["stats"].append({
+                        "name": "Efficiency",
+                        "value": efficiency_value,
+                        "is_spin_stat": True  # Flag to show SPIN badge
+                    })
+            
             # Add SPIN rule related data
             player_data["teammates"] = query_player_teammates(player_id)
             player_data["compatriots"] = query_player_compatriots(player_id)
@@ -69,6 +88,19 @@ def club_detail(request, club_id):
     
     # Add players to club data
     club_data["players"] = formatted_players
+    
+    # Add SPIN rule enhanced data if active
+    if SPIN_RULES_ACTIVE:
+        # Add rival clubs information
+        rivals = query_club_rivals(club_id)
+        club_data["rivals"] = rivals[:5]  # Show top 5 rivals
+        club_data["has_rivals"] = len(rivals) > 0
+    else:
+        club_data["rivals"] = []
+        club_data["has_rivals"] = False
+    
+    # Add SPIN rules status for template
+    club_data["spin_rules_active"] = SPIN_RULES_ACTIVE
     
     # Log the club data
     print(club_data)
@@ -124,40 +156,9 @@ def dashboard(request):
     # Add SPIN rule enhanced data if active
     if SPIN_RULES_ACTIVE:
         # Add efficiency leaders section
-        efficiency_leaders = query_efficiency_leaders(10)
-        if efficiency_leaders:
-            efficiency_stat = {
-                "name": "Player Efficiency (Goals+Assists per 90min)",
-                "colors": {
-                    "main": "28a745",
-                    "alternate": "ffffff", 
-                    "border": "28a745"
-                },
-                "entities": efficiency_leaders
-            }
-            stats[0]["stats"].insert(0, efficiency_stat)
-        
-        # Add player classifications
-        classifications = [
-            ("playmaker", "Playmakers"),
-            ("goalThreat", "Goal Threats"), 
-            ("keyPlayer", "Key Players"),
-            ("versatilePlayer", "Versatile Players")
-        ]
-        
-        for classification, display_name in classifications:
-            classified_players = query_players_by_classification(classification)
-            if classified_players:
-                classification_stat = {
-                    "name": display_name,
-                    "colors": {
-                        "main": "6f42c1",
-                        "alternate": "ffffff",
-                        "border": "6f42c1"
-                    },
-                    "entities": classified_players[:10]  # Limit to top 10
-                }
-                stats[0]["stats"].append(classification_stat)
+        efficiency_leaders_data = query_efficiency_leaders(10)
+        if efficiency_leaders_data and efficiency_leaders_data.get("entities"):
+            stats[0]["stats"].insert(0, efficiency_leaders_data)
 
     print(stats)
 
@@ -208,7 +209,7 @@ def players(request):
                     })
                 if inferences.get("is_young_prospect"):
                     player["spin_badges"].append({
-                        "label": "Rising Star", 
+                        "label": "Young Prospect", 
                         "class": "prospect with-icon",
                         "icon": "fas fa-star"
                     })
@@ -252,7 +253,7 @@ def players(request):
                 # Performance metrics
                 if inferences.get("efficiency") and inferences["efficiency"] > 0.5:
                     player["spin_badges"].append({
-                        "label": f"Eff: {inferences['efficiency']}", 
+                        "label": "High Efficiency", 
                         "class": "efficiency with-icon",
                         "icon": "fas fa-chart-line"
                     })
@@ -432,8 +433,65 @@ def player_connection_checker(request):
             
             if enhanced_player1:
                 player1_data["spin_inferences"] = enhanced_player1["spin_inferences"]
+                
+                # Add efficiency as a stat if available
+                if "efficiency" in enhanced_player1["spin_inferences"]:
+                    efficiency_value = enhanced_player1["spin_inferences"]["efficiency"]
+                    
+                    # Find the Attacking category
+                    attacking_category = None
+                    for category in player1_data["stats"]:
+                        if category["name"] == "Attacking":
+                            attacking_category = category
+                            break
+                    
+                    if attacking_category:
+                        # Add efficiency stat to the Attacking category with SPIN badge flag
+                        attacking_category["stats"].append({
+                            "name": "Efficiency",
+                            "value": efficiency_value,
+                            "is_spin_stat": True  # Flag to show SPIN badge
+                        })
+                        
             if enhanced_player2:
                 player2_data["spin_inferences"] = enhanced_player2["spin_inferences"]
+                
+                # Add efficiency as a stat if available
+                if "efficiency" in enhanced_player2["spin_inferences"]:
+                    efficiency_value = enhanced_player2["spin_inferences"]["efficiency"]
+                    
+                    # Find the Attacking category
+                    attacking_category = None
+                    for category in player2_data["stats"]:
+                        if category["name"] == "Attacking":
+                            attacking_category = category
+                            break
+                    
+                    if attacking_category:
+                        # Add efficiency stat to the Attacking category with SPIN badge flag
+                        attacking_category["stats"].append({
+                            "name": "Efficiency",
+                            "value": efficiency_value,
+                            "is_spin_stat": True  # Flag to show SPIN badge
+                        })
+            
+            # Check for SPIN property connections
+            if enhanced_player1 and enhanced_player2:
+                spin_property_connections = check_spin_property_connections(
+                    enhanced_player1["spin_inferences"],
+                    enhanced_player2["spin_inferences"]
+                )
+                
+                # Add SPIN property connections to results
+                if not results.get("spin_connections"):
+                    results["spin_connections"] = {}
+                
+                results["spin_connections"].update(spin_property_connections)
+                
+                # Update connection flags
+                spin_property_exists = any(conn["exists"] for conn in spin_property_connections.values())
+                results["has_spin_connections"] = results.get("has_spin_connections", False) or spin_property_exists
+                results["has_connection"] = results["has_connection"] or spin_property_exists
         
         results["player1"] = {
             "id": player1_id,
@@ -495,6 +553,9 @@ def player_connection_checker(request):
                     # Get corresponding stat from player2 (default to 0 if not found)
                     player2_value = player2_stats_map.get(cat_name, {}).get(stat_name, 0)
                     
+                    # Check if this is a SPIN-derived stat
+                    is_spin_stat = "efficiency" in stat_name.lower()
+                    
                     # Try to convert values to numbers for comparison
                     try:
                         p1_val = float(player1_value)
@@ -526,12 +587,59 @@ def player_connection_checker(request):
                         "player1_better": player1_better,
                         "player2_better": player2_better,
                         "equal": equal,
-                        "is_negative": stat_name in negative_stats  # Include this flag for UI display
+                        "is_negative": stat_name in negative_stats,
+                        "is_spin_stat": is_spin_stat
                     })
                 
                 stats_comparison.append(comparison_category)
             
             results["stats_comparison"] = stats_comparison
+
+        # Add SPIN-derived stats if available
+        if SPIN_RULES_ACTIVE and enhanced_player1 and enhanced_player2:
+            spin_category = {
+                "name": "SPIN Analytics",
+                "stats": []
+            }
+            
+            # Add efficiency comparison if both players have it
+            if (enhanced_player1.get("spin_inferences", {}).get("efficiency") and 
+                enhanced_player2.get("spin_inferences", {}).get("efficiency")):
+                
+                eff1 = enhanced_player1["spin_inferences"]["efficiency"]
+                eff2 = enhanced_player2["spin_inferences"]["efficiency"]
+                
+                spin_category["stats"].append({
+                    "name": "Efficiency",
+                    "player1_value": eff1,
+                    "player2_value": eff2,
+                    "player1_better": eff1 > eff2,
+                    "player2_better": eff2 > eff1,
+                    "equal": eff1 == eff2,
+                    "is_negative": False,
+                    "is_spin_stat": True
+                })
+            
+            # Add current age comparison
+            if (enhanced_player1.get("spin_inferences", {}).get("current_age") and 
+                enhanced_player2.get("spin_inferences", {}).get("current_age")):
+                
+                age1 = enhanced_player1["spin_inferences"]["current_age"]
+                age2 = enhanced_player2["spin_inferences"]["current_age"]
+                
+                spin_category["stats"].append({
+                    "name": "Current Age",
+                    "player1_value": age1,
+                    "player2_value": age2,
+                    "player1_better": False,  # Age comparison is neutral
+                    "player2_better": False,
+                    "equal": age1 == age2,
+                    "is_negative": False,
+                    "is_spin_stat": True
+                })
+            
+            if spin_category["stats"]:
+                results["stats_comparison"].append(spin_category)
     
     return render(request, "player_connection.html", {
         "player_list": player_list,
@@ -540,6 +648,62 @@ def player_connection_checker(request):
         "selected_player2": player2_id,
         "spin_rules_active": SPIN_RULES_ACTIVE,
     })
+
+def check_spin_property_connections(player1_inferences, player2_inferences):
+    """
+    Check if two players share SPIN rule properties.
+    
+    Args:
+        player1_inferences: SPIN inferences for player 1
+        player2_inferences: SPIN inferences for player 2
+        
+    Returns:
+        dict: SPIN property connections
+    """
+    connections = {}
+    
+    # Check for shared boolean properties
+    boolean_properties = [
+        ("is_veteran", "Both are Veterans"),
+        ("is_young_prospect", "Both are Young Prospects"),
+        ("is_key_player", "Both are Key Players"),
+        ("is_playmaker", "Both are Playmakers"),
+        ("is_goal_threat", "Both are Goal Threats"),
+        ("is_penalty_specialist", "Both are Penalty Specialists"),
+        ("is_versatile", "Both are Versatile Players"),
+        ("is_disciplinary_risk", "Both are Disciplinary Risks")
+    ]
+    
+    for prop, description in boolean_properties:
+        player1_has = player1_inferences.get(prop, False)
+        player2_has = player2_inferences.get(prop, False)
+        
+        connections[f"both_{prop}"] = {
+            "exists": player1_has and player2_has,
+            "description": f"Connected via SPIN rule: {description}"
+        }
+    
+    # Check for same player type
+    player1_type = player1_inferences.get("player_type")
+    player2_type = player2_inferences.get("player_type")
+    
+    connections["same_player_type"] = {
+        "exists": player1_type and player2_type and player1_type == player2_type,
+        "description": f"Connected via SPIN rule: Same Player Type ({player1_type})" if player1_type and player2_type and player1_type == player2_type else "Connected via SPIN rule: Same Player Type"
+    }
+    
+    # Check for similar efficiency (within 0.1 range)
+    player1_eff = player1_inferences.get("efficiency")
+    player2_eff = player2_inferences.get("efficiency")
+    
+    if player1_eff and player2_eff:
+        efficiency_similar = abs(player1_eff - player2_eff) <= 0.1
+        connections["similar_efficiency"] = {
+            "exists": efficiency_similar,
+            "description": f"Connected via SPIN rule: Similar Efficiency ({player1_eff:.3f} vs {player2_eff:.3f})"
+        }
+    
+    return connections
 
 def delete_player_view(request, player_id):
     """

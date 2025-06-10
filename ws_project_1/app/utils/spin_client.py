@@ -258,13 +258,33 @@ def process_teammates_results(results):
     if not results["results"]["bindings"]:
         return []
     
+    # Position mapping dictionary (same as used in sparql_client.py)
+    position_mapping = {
+        "GK": "Goalkeeper",
+        "DF": "Defender", 
+        "MF": "Midfielder",
+        "FW": "Forward",
+    }
+    
     teammates = []
     for teammate in results["results"]["bindings"]:
+        # Extract positions from comma-separated string and convert to full names
+        positions_str = teammate.get("positions", {}).get("value", "")
+        raw_positions = [pos.strip() for pos in positions_str.split(",") if pos.strip()]
+        
+        # Convert abbreviated positions to full names
+        formatted_positions = []
+        for pos in raw_positions:
+            if pos in position_mapping:
+                formatted_positions.append(f"{position_mapping[pos]} ({pos})")
+            else:
+                formatted_positions.append(pos)
+        
         teammates.append({
             "id": teammate["teammate_id"]["value"].split("/")[-1],
             "name": teammate["name"]["value"],
             "photo_url": teammate["photo_url"]["value"],
-            "positions": [pos.strip() for pos in teammate.get("positions", {}).get("value", "").split(",") if pos.strip()],
+            "positions": ", ".join(formatted_positions),
             "nation": teammate["nation"]["value"],
             "flag": teammate["flag"]["value"]
         })
@@ -392,22 +412,41 @@ def query_efficiency_leaders(limit=10):
 def process_efficiency_leaders_results(results):
     """Process efficiency leaders query results."""
     if not results["results"]["bindings"]:
-        return []
+        return {
+            "name": "Efficiency",
+            "colors": {
+                "main": "ff6b35",
+                "alternate": "ffffff",
+                "border": "ff6b35",
+            },
+            "entities": []
+        }
     
-    leaders = []
+    players = []
     for leader in results["results"]["bindings"]:
-        leaders.append({
-            "id": leader["player_id"]["value"].split("/")[-1],
+        # Extract player ID from URI
+        player_id = leader["player_id"]["value"].split("/")[-1]
+        
+        # Format efficiency value
+        efficiency = round(float(leader["efficiency"]["value"]), 3)
+        
+        players.append({
+            "id": player_id,
             "name": leader["name"]["value"],
-            "photo_url": leader["photo_url"]["value"],
-            "efficiency": round(float(leader["efficiency"]["value"]), 3),
-            "current_club": leader.get("currentClubName", {}).get("value", ""),
-            "club_logo": leader.get("currentClubLogo", {}).get("value", ""),
-            "nation": leader["nation"]["value"],
-            "flag": leader["flag"]["value"]
+            "stat": efficiency,
+            "info": leader.get("currentClubName", {}).get("value", ""),
+            "icon": leader.get("photo_url", {}).get("value", "")
         })
     
-    return leaders
+    return {
+        "name": "Efficiency",
+        "colors": {
+            "main": "ff6b35",
+            "alternate": "ffffff",
+            "border": "ff6b35",
+        },
+        "entities": players
+    }
 
 def check_enhanced_player_connection(player1_id, player2_id):
     """

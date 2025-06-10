@@ -4,6 +4,7 @@
 {% block title %}Player Connection & Comparison{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/spin_badges.css' %}">
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
@@ -62,7 +63,60 @@
                                 <img src="{{ results.player1.photo_url }}" alt="{{ results.player1.name }}" 
                                      class="img-fluid mb-2" style="max-height: 150px;">
                                 <h3 class="h5">{{ results.player1.name }}</h3>
-                                <a href="{% url 'player' player_id=results.player1.id %}" class="btn btn-sm" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">View Profile</a>
+                                
+                                {% if results.player1.spin_inferences and results.player2.spin_inferences %}
+                                <div class="mt-2">
+                                    {% if results.player1.spin_inferences.is_veteran and results.player2.spin_inferences.is_veteran %}
+                                    <span class="spin-badge veteran with-icon me-1" title="Both are Veteran Players">
+                                        <i class="fas fa-crown"></i>
+                                        Veteran
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player1.spin_inferences.is_young_prospect and results.player2.spin_inferences.is_young_prospect %}
+                                    <span class="spin-badge prospect with-icon me-1" title="Both are Young Prospects">
+                                        <i class="fas fa-star"></i>
+                                        Young Prospect
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player1.spin_inferences.is_key_player and results.player2.spin_inferences.is_key_player %}
+                                    <span class="spin-badge key-player with-icon me-1" title="Both are Key Players">
+                                        <i class="fas fa-key"></i>
+                                        Key Player
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player1.spin_inferences.is_playmaker and results.player2.spin_inferences.is_playmaker %}
+                                    <span class="spin-badge playmaker with-icon me-1" title="Both are Playmakers">
+                                        <i class="fas fa-magic"></i>
+                                        Playmaker
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player1.spin_inferences.is_goal_threat and results.player2.spin_inferences.is_goal_threat %}
+                                    <span class="spin-badge goal-threat with-icon me-1" title="Both are Goal Threats">
+                                        <i class="fas fa-bullseye"></i>
+                                        Goal Threat
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player1.spin_inferences.is_versatile and results.player2.spin_inferences.is_versatile %}
+                                    <span class="spin-badge versatile with-icon me-1" title="Both are Versatile Players">
+                                        <i class="fas fa-sync-alt"></i>
+                                        Versatile
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player1.spin_inferences.player_type and results.player2.spin_inferences.player_type and results.player1.spin_inferences.player_type == results.player2.spin_inferences.player_type %}
+                                    <span class="spin-badge secondary me-1" title="Same Player Type">
+                                        {{ results.player1.spin_inferences.player_type }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                
+                                <a href="{% url 'player' player_id=results.player1.id %}" class="btn btn-sm mt-1" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">View Profile</a>
                             </div>
                             <div class="col-md-2 text-center d-flex flex-column justify-content-center">
                                 {% if results.has_connection %}
@@ -77,7 +131,60 @@
                                 <img src="{{ results.player2.photo_url }}" alt="{{ results.player2.name }}" 
                                      class="img-fluid mb-2" style="max-height: 150px;">
                                 <h3 class="h5">{{ results.player2.name }}</h3>
-                                <a href="{% url 'player' player_id=results.player2.id %}" class="btn btn-sm" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">View Profile</a>
+                                
+                                {% if results.player2.spin_inferences and results.player1.spin_inferences %}
+                                <div class="mt-2">
+                                    {% if results.player2.spin_inferences.is_veteran and results.player1.spin_inferences.is_veteran %}
+                                    <span class="spin-badge veteran with-icon me-1" title="Both are Veteran Players">
+                                        <i class="fas fa-crown"></i>
+                                        Veteran
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player2.spin_inferences.is_young_prospect and results.player1.spin_inferences.is_young_prospect %}
+                                    <span class="spin-badge prospect with-icon me-1" title="Both are Young Prospects">
+                                        <i class="fas fa-star"></i>
+                                        Young Prospect
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player2.spin_inferences.is_key_player and results.player1.spin_inferences.is_key_player %}
+                                    <span class="spin-badge key-player with-icon me-1" title="Both are Key Players">
+                                        <i class="fas fa-key"></i>
+                                        Key Player
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player2.spin_inferences.is_playmaker and results.player1.spin_inferences.is_playmaker %}
+                                    <span class="spin-badge playmaker with-icon me-1" title="Both are Playmakers">
+                                        <i class="fas fa-magic"></i>
+                                        Playmaker
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player2.spin_inferences.is_goal_threat and results.player1.spin_inferences.is_goal_threat %}
+                                    <span class="spin-badge goal-threat with-icon me-1" title="Both are Goal Threats">
+                                        <i class="fas fa-bullseye"></i>
+                                        Goal Threat
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player2.spin_inferences.is_versatile and results.player1.spin_inferences.is_versatile %}
+                                    <span class="spin-badge versatile with-icon me-1" title="Both are Versatile Players">
+                                        <i class="fas fa-sync-alt"></i>
+                                        Versatile
+                                    </span>
+                                    {% endif %}
+                                    
+                                    {% if results.player2.spin_inferences.player_type and results.player1.spin_inferences.player_type and results.player2.spin_inferences.player_type == results.player1.spin_inferences.player_type %}
+                                    <span class="spin-badge secondary me-1" title="Same Player Type">
+                                        {{ results.player2.spin_inferences.player_type }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                
+                                <a href="{% url 'player' player_id=results.player2.id %}" class="btn btn-sm mt-1" style="background: linear-gradient(to right, #121212, #1a1a1a, #222222); color: white;">View Profile</a>
                             </div>
                         </div>
 
@@ -92,6 +199,17 @@
                                         </div>
                                     {% endif %}
                                 {% endfor %}
+                                
+                                {% if spin_rules_active and results.spin_connections %}
+                                    {% for key, connection in results.spin_connections.items %}
+                                        {% if connection.exists %}
+                                            <div class="list-group-item list-group-item-action list-group-item-info">
+                                                <i class="fas fa-lightbulb text-info me-2"></i>
+                                                <strong>{{ connection.description }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         {% else %}
                             <div class="alert alert-info">
@@ -144,7 +262,12 @@
                                                                         {{ stat.player1_value }}
                                                                     </span>
                                                                 </td>
-                                                                <td class="text-center" width="20%">{{ stat.name }}</td>
+                                                                <td class="text-center" width="20%">
+                                                                    {{ stat.name }}
+                                                                    {% if stat.is_spin_stat %}
+                                                                        <span class="badge bg-purple ms-1" style="font-size: 0.5em; background-color: #6f42c1 !important;">SPIN</span>
+                                                                    {% endif %}
+                                                                </td>
                                                                 <td class="text-start" width="40%">
                                                                     <span class="{% if stat.player2_better %}player2-success fw-bold{% elif stat.player1_better %}text-muted{% endif %}">
                                                                         {{ stat.player2_value }}
