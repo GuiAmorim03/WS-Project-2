@@ -64,4 +64,14 @@ document.addEventListener('DOMContentLoaded', function() {
             header.classList.toggle('descending', isAscending);
         });
     });
+    
+    // Add loading indicator for club navigation
+    window.addEventListener('beforeunload', function() {
+        // Show loading state when navigating away
+        const body = document.body;
+        if (body) {
+            body.style.opacity = '0.7';
+            body.style.pointerEvents = 'none';
+        }
+    });
 });
