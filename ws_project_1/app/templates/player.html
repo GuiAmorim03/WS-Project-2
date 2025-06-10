@@ -2,7 +2,7 @@
 
     {% block content_inside %}
 
-<div class="card-header py-0" style="background-color: #f8f9fa; color: #333;">
+<div class="card-header py-0" vocab="https://schema.org/" typeof="Person" style="background-color: #f8f9fa; color: #333;">
     <div class="row">
         <div class="col-2 text-center d-flex align-items-end justify-content-center">
             {% if entity.clubs %}
@@ -12,12 +12,12 @@
             {% endif %}
         </div>
         <div class="col-8 py-2">
-            <h2 class="mt-5" style="color: var(--main-color);">{{ entity.name }}</h2>
+            <h2 class="mt-5" property="name" style="color: var(--main-color);">{{ entity.name }}</h2>
             <p class="m-0">
                 <img src="{{ entity.flag }}" alt="Flag" class="mb-1" style="height: 20px">
-                <span>{{ entity.country_name }}</span>
+                <span property="nationality">{{ entity.country_name }}</span>
                 <br>
-                <span>{{ entity.born }}</span>
+                <span property="birthDate">{{ entity.born }}</span>
                 <span> • </span>
                 <span>{{ entity.age }}y</span>
             </p>
@@ -26,7 +26,7 @@
             {% if entity.clubs %}
             <div class="club-logo-container p-2 mb-2">
                 <a href="{% url 'club' entity.clubs.0.id %}" style="text-decoration: none;">
-                    <img src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
+                    <img property="image" src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
                 </a>
             </div>
             {% endif %}
@@ -52,7 +52,7 @@
             <h4 style="color: var(--main-color);">Positions</h4>
             <div class="positions-container">
                 {% for position in entity.pos %}
-                <div class="position-badge mb-2 p-2 rounded" style="border-left: 3px solid var(--main-color); background-color: #f8f9fa;">
+                <div property="jobTitle" class="position-badge mb-2 p-2 rounded" style="border-left: 3px solid var(--main-color); background-color: #f8f9fa;">
                     {{ position }}
                 </div>
                 {% endfor %}
@@ -65,10 +65,10 @@
             <h4 style="color: var(--main-color);">Clubs</h4>
             <div class="clubs-container">
                 {% for club in entity.clubs %}
-                <div class="club-item mb-2 p-2 {% if forloop.first %}current-club{% endif %}" style="display: flex; align-items: center;">
-                    <img src="{{ club.logo }}" class="me-2" alt="Club" style="height: 30px;">
+                <div typeof="SportsTeam" property="affiliation" class="club-item mb-2 p-2 {% if forloop.first %}current-club{% endif %}" style="display: flex; align-items: center;">
+                    <img property="logo" src="{{ club.logo }}" class="me-2" alt="Club" style="height: 30px;">
                     <a href="{% url 'club' club.id %}" style="text-decoration: none;">
-                        <span {% if forloop.first %}style="font-weight: bold; color: var(--main-color);"{% else %}style="color: #666;"{% endif %}>
+                        <span property="name" {% if forloop.first %}style="font-weight: bold; color: var(--main-color);"{% else %}style="color: #666;"{% endif %}>
                             {{ club.name }}
                         </span>
                     </a>
