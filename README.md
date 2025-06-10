@@ -8,7 +8,7 @@ This project provides access to football (soccer) player and club statistics thr
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/) (included with Docker Desktop on Windows and Mac)
 
-## How to Run the Project
+## How to Run the Project (**WITH DOCKER**)
 
 ### 1. Clone the Repository
 
@@ -46,6 +46,37 @@ To stop and remove all containers, networks, and volumes created by `docker comp
 
 ```bash
 docker compose down -v
+```
+
+## How to Run the Project (**WITHOUT DOCKER**)
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/WS-Project-1.git
+cd WS-Project-1
+```
+
+### 2. Set Up Django App
+
+```bash
+cd ws_project_1
+python3 -m venv venv
+source venv/bin/active
+pip install -r requirements
+```
+
+For this next step make sure that **GraphDB** is running on [http://localhost:7200](http://localhost:7200)
+
+### 3. Run Django
+
+```bash
+GRAPHDB_ENDPOINT=http://locahost:7200 python manage.py runserver 0.0.0.0:8000
+```
+
+### 4.Import Data and Create Repositories
+```bash
+bash ./data/config/init-repository.sh
 ```
 
 ## Project Structure
