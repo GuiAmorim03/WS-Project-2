@@ -46,16 +46,16 @@ fi
 
 # Import the dataset to the football repository using REST API
 echo "Importing dataset from server file..."
-curl -X POST \
+IMPORT_DATASET=$(curl -X POST \
   -H "Content-Type: application/json" \
   -d '{
     "fileNames": [
       "football_rdf_data.nt"
     ]
   }' \
-  "http://localhost:7200/rest/repositories/football/import/server"
+    "http://localhost:7200/rest/repositories/football/import/server")
 
-if [ $? -eq 0 ]; then
+if "$IMPORT_DATASET"; then
     echo ""
     echo "Dataset import initiated successfully"
 else
