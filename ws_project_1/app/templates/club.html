@@ -38,7 +38,11 @@
                 <p class="m-1">
                     <span>{{ entity.city }}</span>
                     <span> • </span>
+                    {% if entity.venue.name and entity.venue.id %}
+                    <span><a href="{% url 'stadium' entity.venue.id %}" class="team-color-link" style="color: var(--main-color);">{{ entity.venue.name }}</a></span>
+                    {% else %}
                     <span>{{ entity.stadium }}</span>
+                    {% endif %}
                     {% if entity.inception %}
                     <span> • </span>
                     <span>{{ entity.inception }}</span>
@@ -248,6 +252,13 @@
             } else {
                 console.warn("Team name element not found");
             }
+            
+            // Apply black color to venue links with team color
+            const venueLinks = document.querySelectorAll('.team-color-link');
+            venueLinks.forEach(link => {
+                link.style.color = '#000';
+                console.log("Applied black color to venue link");
+            });
             
             // Make hover indicator darker for rows
             document.querySelectorAll('.player-row').forEach(row => {

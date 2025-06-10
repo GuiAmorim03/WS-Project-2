@@ -34,4 +34,5 @@ urlpatterns = [
     path("player-connection/", player_connection_checker, name="player_connection"),
     path('players/<str:player_id>/delete/', delete_player_view, name='delete_player'),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.ico')), name='favicon'),
+    path('stadium/<str:stadium_id>', stadium_detail, name='stadium'),
 ]

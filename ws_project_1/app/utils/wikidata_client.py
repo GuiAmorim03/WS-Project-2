@@ -2,7 +2,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from datetime import datetime
 
 from .wikidata_queries import (
-    get_club_id_query, get_club_details_query
+    get_club_id_query, get_club_details_query, get_stadium_details_query
 )
 
 WIKIDATA_ENDPOINT = "https://query.wikidata.org/sparql"
@@ -118,4 +118,85 @@ def process_club_details(details):
         "president": president,
         "coach": coach,
         "media_followers": int(result["mediaFollowers"]["value"]) if "mediaFollowers" in result else 0,
+        "venue": {
+            "id": result["stadiumInfo"]["value"].split("|")[0].replace("http://www.wikidata.org/entity/", "") if "stadiumInfo" in result else None,
+            "name": result["stadiumInfo"]["value"].split("|")[1] if "stadiumInfo" in result else None,
+        }
+    }
+
+def query_stadium_details(stadium_id):
+    """
+    Queries Wikidata for stadium details.
+
+    Args:
+        stadium_id: The Wikidata ID of the stadium
+        
+    Returns:
+        list: List of processed stadium data ready for template rendering
+    """
+
+    return process_query(get_stadium_details_query(stadium_id), process_func=process_stadium_details,
+                                 error_message="Error querying stadium details", success_message="Stadium details found")
+
+def process_stadium_details(details):
+    """Process the WIKIDATA query results for stadium details into the format needed."""
+    if not details["results"]["bindings"]:
+        return None
+    
+    result = details["results"]["bindings"][0]
+
+    # print(result)
+
+    location = result["location"]["value"]
+    
+    lng, lat = None, None
+    if location and location.startswith("Point("):
+        try:
+            coord_str = location.replace("Point(", "").replace(")", "")
+            coords = coord_str.split()
+            if len(coords) >= 2:
+                lng = float(coords[0])
+                lat = float(coords[1])
+        except Exception as e:
+            print(f"Error parsing coordinates: {e}")
+    
+    events = []
+    if "events" in result:
+        import re
+        raw_events = result["events"]["value"].split(";")
+        
+        for event in raw_events:
+            if not event.strip():
+                continue
+                
+            # Extract year from the event
+            year_match = re.search(r'\b(19\d\d|20\d\d)\b', event)
+            if year_match:
+                year = year_match.group(1)
+                
+                # If event doesn't start with the year, reformat it
+                if not event.strip().startswith(year):
+                    event_without_year = re.sub(r'\b' + year + r'\b', '', event).strip()
+                    event_without_year = re.sub(r'\s+', ' ', event_without_year)
+                    event_without_year = re.sub(r'^[,\s]+|[,\s]+$', '', event_without_year)
+                    event = f"{year} {event_without_year}"
+                
+                events.append((int(year), event.strip()))
+            else:
+                events.append((9999, event.strip()))
+        
+        events.sort()
+        events = [event[1] for event in events]
+
+    return {
+        "name": result["name"]["value"] if "name" in result else result["label"]["value"],
+        "location": {
+            "lng": lng,
+            "lat": lat,
+        },
+        "capacity": int(result["capacity"]["value"]) if "capacity" in result else 0,
+        "opening": datetime.fromisoformat(result["opening"]["value"].replace("Z","")).strftime("%d %B %Y") if "opening" in result else None,
+        "image": result["image"]["value"] if "image" in result else None,
+        "category": result["categoryName"]["value"] if "categoryName" in result else None,
+        "events": events
     }

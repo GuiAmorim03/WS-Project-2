@@ -55,6 +55,7 @@ def get_club_details_query(club_id):
         ?inception
         ?presidentInfo
         ?coachInfo
+        ?stadiumInfo
         (MAX(?followers) AS ?mediaFollowers)
     WHERE {{
         BIND(wd:{club_id} AS ?club)
@@ -102,10 +103,56 @@ def get_club_details_query(club_id):
                  CONCAT(?coachName, "|", "")) AS ?coachInfo)
         }}
         OPTIONAL {{
+            ?club wdt:P115 ?stadiumEntity . 
+            ?stadiumEntity rdfs:label ?stadiumName .
+            FILTER(LANG(?stadiumName) = "en")
+            BIND(CONCAT(STR(?stadiumEntity), "|", ?stadiumName) AS ?stadiumInfo)
+        }}
+        OPTIONAL {{
             ?club p:P8687 ?statement .
             ?statement ps:P8687 ?followers .
         }}
     }}
-    GROUP BY ?kitInfo ?officialName ?audio ?inception ?presidentInfo ?coachInfo
+    GROUP BY ?kitInfo ?officialName ?audio ?inception ?presidentInfo ?coachInfo ?stadiumInfo
     """
 
+
+
+def get_stadium_details_query(stadium_id):
+    """Returns SPARQL query for fetching stadium details by Wikidata ID."""
+    
+    return f"""
+    SELECT 
+        ?label
+        ?name
+        ?opening
+        ?image 
+        ?location
+        ?capacity
+        ?categoryName
+        (GROUP_CONCAT(DISTINCT ?eventName; separator=";") AS ?events) 
+    WHERE {{
+        BIND(wd:{stadium_id} AS ?stadium)        
+        
+        ?stadium rdfs:label ?label .
+        FILTER(LANG(?label) = "en")
+
+        OPTIONAL {{ ?stadium wdt:P1705 ?name . }}
+        OPTIONAL {{ ?stadium wdt:P1619 ?opening . }}
+        OPTIONAL {{ ?stadium wdt:P18 ?image . }}
+        OPTIONAL {{ ?stadium wdt:P625 ?location . }}
+        OPTIONAL {{ ?stadium wdt:P1083 ?capacity . }}
+        OPTIONAL {{ 
+            ?stadium wdt:P9803 ?categoryEntity . 
+            ?categoryEntity rdfs:label ?categoryName .
+            FILTER(LANG(?categoryName) = "en")
+        }}
+        OPTIONAL {{ 
+            ?stadium wdt:P793 ?eventEntity . 
+            ?eventEntity rdfs:label ?eventName .
+            FILTER(LANG(?eventName) = "en")
+        }}
+    }}
+    GROUP BY ?stadium ?label ?name ?opening ?image ?location ?capacity ?categoryName
+
+    """
