@@ -1,12 +1,34 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
 from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection, delete_player
+from .utils.spin_client import (
+    execute_spin_rules, clear_spin_inferences, query_enhanced_player_details, 
+    query_enhanced_all_players, query_player_teammates, query_player_compatriots,
+    query_players_by_classification, query_club_rivals, query_efficiency_leaders,
+    check_enhanced_player_connection
+)
 from unidecode import unidecode
+
+# Global variable to track SPIN rules state
+SPIN_RULES_ACTIVE = False
 
 def player_detail(request, player_id):
     # Get player data from the SPARQL endpoint
-    player_data = query_player_details(player_id)
-    # Log the player data
+    if SPIN_RULES_ACTIVE:
+        enhanced_data = query_enhanced_player_details(player_id)
+        if enhanced_data:
+            # Merge enhanced data with base player data
+            player_data = query_player_details(player_id)
+            player_data["spin_inferences"] = enhanced_data["spin_inferences"]
+            
+            # Add SPIN rule related data
+            player_data["teammates"] = query_player_teammates(player_id)
+            player_data["compatriots"] = query_player_compatriots(player_id)
+        else:
+            player_data = query_player_details(player_id)
+    else:
+        player_data = query_player_details(player_id)
 
     available_clubs = query_all_clubs()
     position_mapping = {
@@ -99,6 +121,44 @@ def dashboard(request):
         players = query_top_players_by_stat(stat_to_get["id"])
         stats[0]["stats"].append(players)
 
+    # Add SPIN rule enhanced data if active
+    if SPIN_RULES_ACTIVE:
+        # Add efficiency leaders section
+        efficiency_leaders = query_efficiency_leaders(10)
+        if efficiency_leaders:
+            efficiency_stat = {
+                "name": "Player Efficiency (Goals+Assists per 90min)",
+                "colors": {
+                    "main": "28a745",
+                    "alternate": "ffffff", 
+                    "border": "28a745"
+                },
+                "entities": efficiency_leaders
+            }
+            stats[0]["stats"].insert(0, efficiency_stat)
+        
+        # Add player classifications
+        classifications = [
+            ("playmaker", "Playmakers"),
+            ("goalThreat", "Goal Threats"), 
+            ("keyPlayer", "Key Players"),
+            ("versatilePlayer", "Versatile Players")
+        ]
+        
+        for classification, display_name in classifications:
+            classified_players = query_players_by_classification(classification)
+            if classified_players:
+                classification_stat = {
+                    "name": display_name,
+                    "colors": {
+                        "main": "6f42c1",
+                        "alternate": "ffffff",
+                        "border": "6f42c1"
+                    },
+                    "entities": classified_players[:10]  # Limit to top 10
+                }
+                stats[0]["stats"].append(classification_stat)
+
     print(stats)
 
     return render(request, "dashboard.html", {"stats": stats})
@@ -120,7 +180,84 @@ def players(request):
 
         return redirect("players")
 
-    players_data = query_all_players() 
+    # Use enhanced query if SPIN rules are active
+    if SPIN_RULES_ACTIVE:
+        players_data = query_enhanced_all_players()
+        
+        # Process enhanced data for template compatibility
+        for player in players_data:
+            # Calculate age from birth year if not available from SPIN rules
+            if "current_age" not in player.get("spin_inferences", {}):
+                birth_year = player["born"]
+                current_year = 2025
+                player["age"] = current_year - birth_year
+            else:
+                player["age"] = player["spin_inferences"]["current_age"]
+            
+            # Add SPIN inference badges for display with new styling
+            player["spin_badges"] = []
+            if player.get("spin_inferences"):
+                inferences = player["spin_inferences"]
+                
+                # Age-based badges
+                if inferences.get("is_veteran"):
+                    player["spin_badges"].append({
+                        "label": "Veteran", 
+                        "class": "veteran with-icon",
+                        "icon": "fas fa-crown"
+                    })
+                if inferences.get("is_young_prospect"):
+                    player["spin_badges"].append({
+                        "label": "Rising Star", 
+                        "class": "prospect with-icon",
+                        "icon": "fas fa-star"
+                    })
+                
+                # Role-based badges
+                if inferences.get("is_key_player"):
+                    player["spin_badges"].append({
+                        "label": "Key Player", 
+                        "class": "key-player with-icon",
+                        "icon": "fas fa-key"
+                    })
+                if inferences.get("player_type"):
+                    player_type = inferences["player_type"]
+                    if player_type == "Striker":
+                        player["spin_badges"].append({
+                            "label": "Striker", 
+                            "class": "goal-threat with-icon",
+                            "icon": "fas fa-bullseye"
+                        })
+                    elif player_type == "Defensive Midfielder":
+                        player["spin_badges"].append({
+                            "label": "Def. Mid", 
+                            "class": "secondary with-icon",
+                            "icon": "fas fa-shield-alt"
+                        })
+                
+                # Special abilities
+                if inferences.get("is_playmaker"):
+                    player["spin_badges"].append({
+                        "label": "Playmaker", 
+                        "class": "playmaker with-icon",
+                        "icon": "fas fa-magic"
+                    })
+                if inferences.get("is_versatile"):
+                    player["spin_badges"].append({
+                        "label": "Versatile", 
+                        "class": "versatile with-icon",
+                        "icon": "fas fa-sync-alt"
+                    })
+                
+                # Performance metrics
+                if inferences.get("efficiency") and inferences["efficiency"] > 0.5:
+                    player["spin_badges"].append({
+                        "label": f"Eff: {inferences['efficiency']}", 
+                        "class": "efficiency with-icon",
+                        "icon": "fas fa-chart-line"
+                    })
+    else:
+        players_data = query_all_players() 
 
     # Filtering
     search_name = request.GET.get("name", "").strip().lower()
@@ -165,8 +302,14 @@ def players(request):
     })
 
 def clubs(request):
-
     clubs_data = query_all_clubs()
+    
+    # Add SPIN rule enhanced data if active
+    if SPIN_RULES_ACTIVE:
+        for club in clubs_data:
+            # Add rival clubs information
+            rivals = query_club_rivals(club["id"])
+            club["rivals"] = rivals[:3]  # Show top 3 rivals
 
     search_name = request.GET.get("name", "").strip().lower()
     league = request.GET.get("league", "").strip().lower()
@@ -245,30 +388,69 @@ def player_connection_checker(request):
     player2_id = request.GET.get("player2")
     
     # Get the list of all players for the selection dropdowns
-    player_list = query_all_players()
+    if SPIN_RULES_ACTIVE:
+        player_list = query_enhanced_all_players()
+        # Format for template compatibility
+        for player in player_list:
+            player["positions"] = ", ".join(player["positions"])
+    else:
+        player_list = query_all_players()
     
     # If both players are selected, check connections
     if player1_id and player2_id:
-        results = check_player_connection(player1_id, player2_id)
+        # Use enhanced connection checking if SPIN rules are active
+        if SPIN_RULES_ACTIVE:
+            enhanced_results = check_enhanced_player_connection(player1_id, player2_id)
+            results = check_player_connection(player1_id, player2_id)
+            
+            # Merge enhanced connections
+            if enhanced_results and enhanced_results.get("spin_connections"):
+                results["spin_connections"] = enhanced_results["spin_connections"]
+        else:
+            results = check_player_connection(player1_id, player2_id)
+        
+        # Calculate connection status properly
+        standard_connections_exist = any(conn["exists"] for conn in results["connections"].values())
+        spin_connections_exist = False
+        
+        if SPIN_RULES_ACTIVE and results.get("spin_connections"):
+            spin_connections_exist = any(conn["exists"] for conn in results["spin_connections"].values())
+        
+        # Update connection flags
+        results["has_standard_connections"] = standard_connections_exist
+        results["has_spin_connections"] = spin_connections_exist
+        results["has_connection"] = standard_connections_exist or spin_connections_exist
         
         # Get player details for the results display
         player1_data = query_player_details(player1_id)
         player2_data = query_player_details(player2_id)
         
+        # Add SPIN inference data if available
+        if SPIN_RULES_ACTIVE:
+            enhanced_player1 = query_enhanced_player_details(player1_id)
+            enhanced_player2 = query_enhanced_player_details(player2_id)
+            
+            if enhanced_player1:
+                player1_data["spin_inferences"] = enhanced_player1["spin_inferences"]
+            if enhanced_player2:
+                player2_data["spin_inferences"] = enhanced_player2["spin_inferences"]
+        
         results["player1"] = {
             "id": player1_id,
             "name": player1_data["name"],
             "photo_url": player1_data["photo_url"],
-            "color": player1_data["color"],           # Add color
-            "alternate_color": player1_data["alternate_color"]  # Add alternate color
+            "color": player1_data["color"],
+            "alternate_color": player1_data["alternate_color"],
+            "spin_inferences": player1_data.get("spin_inferences", {})
         }
         
         results["player2"] = {
             "id": player2_id,
             "name": player2_data["name"],
             "photo_url": player2_data["photo_url"],
-            "color": player2_data["color"],           # Add color
-            "alternate_color": player2_data["alternate_color"]  # Add alternate color
+            "color": player2_data["color"],
+            "alternate_color": player2_data["alternate_color"],
+            "spin_inferences": player2_data.get("spin_inferences", {})
         }
 
         # Stats where the lower value is better (fouls commited, red cards, yellow cards, etc.)
@@ -356,6 +538,7 @@ def player_connection_checker(request):
         "results": results,
         "selected_player1": player1_id,
         "selected_player2": player2_id,
+        "spin_rules_active": SPIN_RULES_ACTIVE,
     })
 
 def delete_player_view(request, player_id):
@@ -370,3 +553,70 @@ def delete_player_view(request, player_id):
     
     # If not a POST request or deletion failed, redirect back to player detail
     return redirect("player", player_id=player_id)
+
+def toggle_spin_rules(request):
+    """
+    Toggle SPIN rules activation state and execute/clear rules accordingly.
+    """
+    global SPIN_RULES_ACTIVE
+    
+    if request.method == "POST":
+        SPIN_RULES_ACTIVE = not SPIN_RULES_ACTIVE
+        
+        try:
+            if SPIN_RULES_ACTIVE:
+                # Execute SPIN rules
+                success = execute_spin_rules()
+                if success:
+                    message = "SPIN rules activated and executed successfully"
+                else:
+                    # Rollback state if execution failed
+                    SPIN_RULES_ACTIVE = False
+                    message = "Failed to execute SPIN rules"
+                    return JsonResponse({
+                        'success': False,
+                        'spin_rules_active': SPIN_RULES_ACTIVE,
+                        'message': message
+                    })
+            else:
+                # Clear SPIN rule inferences
+                success = clear_spin_inferences()
+                if success:
+                    message = "SPIN rules deactivated and inferences cleared"
+                else:
+                    # Rollback state if clearing failed
+                    SPIN_RULES_ACTIVE = True
+                    message = "Failed to clear SPIN rule inferences"
+                    return JsonResponse({
+                        'success': False,
+                        'spin_rules_active': SPIN_RULES_ACTIVE,
+                        'message': message
+                    })
+            
+            return JsonResponse({
+                'success': True,
+                'spin_rules_active': SPIN_RULES_ACTIVE,
+                'message': message
+            })
+            
+        except Exception as e:
+            # Rollback state on any exception
+            SPIN_RULES_ACTIVE = not SPIN_RULES_ACTIVE
+            return JsonResponse({
+                'success': False,
+                'spin_rules_active': SPIN_RULES_ACTIVE,
+                'message': f"Error toggling SPIN rules: {str(e)}"
+            })
+    
+    elif request.method == "GET":
+        # Return the current status of SPIN rules
+        return JsonResponse({
+            'success': True,
+            'spin_rules_active': SPIN_RULES_ACTIVE,
+            'message': 'Current SPIN rules status retrieved successfully'
+        })
+    
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request method'
+    })
