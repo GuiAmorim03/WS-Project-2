@@ -8,6 +8,7 @@ from .utils.spin_client import (
     query_players_by_classification, query_club_rivals, query_efficiency_leaders,
     check_enhanced_player_connection
 )
+from .utils.wikidata_client import query_club_details_extra, query_stadium_details, query_league_details, query_league_winners
 from unidecode import unidecode
 
 # Global variable to track SPIN rules state
@@ -73,6 +74,17 @@ def club_detail(request, club_id):
     # Get players data from the SPARQL endpoint
     players = query_club_players(club_id)
     
+
+    # Get club data from WikiData
+    club_extra_data = query_club_details_extra(club_data["name"])
+
+    # merge club data with extra data
+    if club_extra_data:
+        club_data.update(club_extra_data)
+        if club_extra_data["official_name"] is not None:
+            club_data["name"] = club_data["official_name"]
+
+
     # Format players data to match template expectations
     formatted_players = []
     for player in players:
@@ -106,6 +118,22 @@ def club_detail(request, club_id):
     print(club_data)
     
     return render(request, "club.html", {"entity": club_data})
+
+def stadium_detail(request, stadium_id):
+    # Get stadium data from the SPARQL endpoint
+    stadium_data = query_stadium_details(stadium_id)
+
+    return render(request, "stadium.html", {"entity": stadium_data})
+
+def league_detail(request, league_name):
+    # Get league data from the SPARQL endpoint
+    league_data = query_league_details(league_name)
+
+    league_winners = query_league_winners(league_data["id"])
+    if league_winners:
+        league_data["winners"] = league_winners
+
+    return render(request, "league.html", {"entity": league_data})
 
 def dashboard(request):
     """

@@ -38,7 +38,7 @@ The first startup might take some time as it needs to build the images and impor
 Once the containers are running, you can access:
 
 - GraphDB interface: [http://localhost:7200](http://localhost:7200)
-- Web service: [http://localhost:8080](http://localhost:8080)
+- Web service: [http://localhost:8000](http://localhost:8000)
 
 ### 4. Shutting Down
 
