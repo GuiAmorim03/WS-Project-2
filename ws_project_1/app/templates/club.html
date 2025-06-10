@@ -348,7 +348,7 @@
                 if (wikidataInfo.venue && wikidataInfo.venue.name && wikidataInfo.venue.id) {
                     const stadiumInfo = document.getElementById('stadium-info');
                     if (stadiumInfo) {
-                        stadiumInfo.innerHTML = `<a href="/stadiums/${wikidataInfo.venue.id}/" class="team-color-link" style="color: var(--main-color);">${wikidataInfo.venue.name}</a>`;
+                        stadiumInfo.innerHTML = `<a href="/stadium/${wikidataInfo.venue.id}" class="team-color-link" style="color: var(--main-color);">${wikidataInfo.venue.name}</a>`;
                     }
                 }
                 
