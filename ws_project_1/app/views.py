@@ -73,17 +73,6 @@ def club_detail(request, club_id):
     
     # Get players data from the SPARQL endpoint
     players = query_club_players(club_id)
-    
-
-    # Get club data from WikiData
-    club_extra_data = query_club_details_extra(club_data["name"])
-
-    # merge club data with extra data
-    if club_extra_data:
-        club_data.update(club_extra_data)
-        if club_extra_data["official_name"] is not None:
-            club_data["name"] = club_data["official_name"]
-
 
     # Format players data to match template expectations
     formatted_players = []
@@ -118,6 +107,54 @@ def club_detail(request, club_id):
     print(club_data)
     
     return render(request, "club.html", {"entity": club_data})
+
+def club_wikidata_details(request, club_id):
+    """
+    AJAX endpoint for fetching Wikidata details for a club.
+    """
+    if request.method != 'GET':
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
+    
+    try:
+        # Get basic club data to extract the name
+        club_data = query_club_details(club_id)
+        club_name = club_data.get("name", "")
+        
+        if not club_name:
+            return JsonResponse({'success': False, 'message': 'Club not found'})
+        
+        # Get club data from WikiData
+        club_extra_data = query_club_details_extra(club_name)
+        
+        if club_extra_data:
+            # Process the data for JSON response
+            response_data = {
+                'success': True,
+                'data': {
+                    'brands': club_extra_data.get('brands', []),
+                    'official_name': club_extra_data.get('official_name'),
+                    'nicknames': club_extra_data.get('nicknames', []),
+                    'audio': club_extra_data.get('audio'),
+                    'inception': club_extra_data.get('inception'),
+                    'president': club_extra_data.get('president'),
+                    'coach': club_extra_data.get('coach'),
+                    'media_followers': club_extra_data.get('media_followers', 0),
+                    'venue': club_extra_data.get('venue', {})
+                }
+            }
+        else:
+            response_data = {
+                'success': False,
+                'message': 'No Wikidata information found for this club'
+            }
+        
+        return JsonResponse(response_data)
+        
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': f'Error fetching Wikidata information: {str(e)}'
+        })
 
 def stadium_detail(request, stadium_id):
     # Get stadium data from the SPARQL endpoint

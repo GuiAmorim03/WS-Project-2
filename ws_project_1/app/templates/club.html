@@ -3,6 +3,19 @@
 
 {% block content_inside %}
 
+<!-- Page loader overlay -->
+<div id="page-loader" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: rgba(255,255,255,0.9); z-index: 9999;">
+    <div class="text-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="mt-3">
+            <h5>Loading club information...</h5>
+            <p class="text-muted">Fetching additional details from external sources</p>
+        </div>
+    </div>
+</div>
+
 <div class="card" vocab="https://schema.org/" typeof="SportsTeam" resource="#{{ entity.id }}">
     <div class="card-header position-relative" style="background-color: #f8f9fa; color: #333; padding-right: 70px;">
         <!-- Team colors ball with diagonal split and enhanced shadow -->
@@ -26,58 +39,34 @@
             </div>
             <div class="col-10">
                 <div class="d-flex align-items-center">
-                    <h2 property="name" class="mt-5 me-2" style="color: var(--main-color);">{{ entity.name }}</h2>
-                    {% if entity.audio %}
-                    <div class="mt-5">
+                    <h2 property="name" class="mt-5 me-2" style="color: var(--main-color);" id="club-name">{{ entity.name }}</h2>
+                    <!-- Audio container -->
+                    <div class="mt-5" id="audio-container" style="display: none;">
                         <audio controls class="audio-player" style="height: 24px; width: 150px; opacity: 0.7;">
-                            <source src="{{ entity.audio }}" type="audio/mpeg">
+                            <source id="audio-source" src="" type="audio/mpeg">
                         </audio>
                     </div>
-                    {% endif %}
                 </div>
                 <p class="m-1">
                     <span property="address">{{ entity.city }}</span>
                     <span> • </span>
-                    {% if entity.venue.name and entity.venue.id %}
-                    <span property="location"><a href="{% url 'stadium' entity.venue.id %}" class="team-color-link" style="color: var(--main-color);">{{ entity.venue.name }}</a></span>
-                    {% else %}
-                    <span property="location">{{ entity.stadium }}</span>
-                    {% endif %}
-                    {% if entity.inception %}
-                    <span> • </span>
-                    <span property="foundingDate">{{ entity.inception }}</span>
-                    {% endif %}
-                </p>
-                <p class="m-1">
-                    {% if entity.nicknames %}
-                    {% for nickname in entity.nicknames %}
-                    <span property="alternateName" class="badge bg-secondary">{{ nickname }}</span>
-                    {% endfor %}
-                    {% endif %}
+                    <!-- Stadium info with potential link -->
+                    <span property="location" id="stadium-info">{{ entity.stadium }}</span>
+                    <!-- Inception date container -->
+                    <span id="inception-container" style="display: none;">
+                        <span> • </span>
+                        <span property="foundingDate" id="inception-date"></span>
+                    </span>
                 </p>
                 
-                {% if entity.media_followers %}
-                <div class="media-followers mb-2 mt-1">
-                    <div class="d-inline-block px-3 py-1 rounded-pill" style="background-color: rgba(var(--main-color-rgb), 0.1);">
-                        <i class="fas fa-users me-2"></i>
-                        <span class="fw-bold">{{ entity.media_followers|intcomma }}</span>
-                        <span class="text-muted small">followers</span>
-                    </div>
-                </div>
-                {% endif %}
+                <!-- Nicknames section -->
+                <p class="m-1" id="nicknames-container" style="display: none;"></p>
                 
-                {% if entity.brands %}
-                <div class="d-flex align-items-center flex-wrap mt-2 mb-2">
-                    {% for brand in entity.brands %}
-                        {% if brand.logo %}
-                        <div property="brand" typeof="Brand" class="me-3 mb-1">
-                            <img property="logo" src="{{ brand.logo }}" alt="{{ brand.name }}" title="{{ brand.name }}" 
-                                 style="height: 30px; max-width: 80px; object-fit: contain;">
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                {% endif %}
+                <!-- Media followers -->
+                <div class="media-followers mb-2 mt-1" id="followers-container" style="display: none;"></div>
+                
+                <!-- Brands section -->
+                <div class="d-flex align-items-center flex-wrap mt-2 mb-2" id="brands-container" style="display: none;"></div>
                 
                 <p>
                     <img src="{{ entity.country.flag }}" alt="Flag" class="mb-1" style="height: 20px;">
@@ -88,12 +77,18 @@
     </div>
 
     <div class="card-body" style="background-color: #fff;">
-        <!-- Rivals Section (SPIN Enhanced) -->
+        <!-- Error message for Wikidata loading -->
+        <div id="wikidata-error" class="alert alert-warning" style="display: none;">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Some additional information could not be loaded from external sources.
+        </div>
+
+        <!-- City Rivals Section (SPIN Enhanced) -->
         {% if entity.spin_rules_active and entity.has_rivals %}
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 style="color: #333; font-weight: 500;">
-                    Rival Clubs
+                    City Rival Clubs
                     <span class="badge bg-purple ms-2" style="font-size: 0.6em; background-color: #6f42c1 !important;">SPIN</span>
                 </h2>
             </div>
@@ -121,6 +116,7 @@
         <hr style="border-color: #eaeaea;">
         {% endif %}
 
+<<<<<<< HEAD
         {% if entity.president or entity.coach %}
         <div class="row mb-0">
             {% if entity.coach %}
@@ -175,6 +171,12 @@
         {% endif %}
 
         <div class="d-flex justify-content-between align-items-center mt-3">
+=======
+        <!-- Management section (President/Coach) -->
+        <div class="row mb-0" id="management-container" style="display: none;"></div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+>>>>>>> d4769c1df4b9abb39a88197b7283d6b3385a396f
             <h2 style="color: #333; font-weight: 500;">Squad</h2>
         </div>
 
@@ -251,81 +253,238 @@
         border-color: var(--main-color);
         color: white;
     }
+    
+    .placeholder {
+        background-color: #e9ecef;
+        border-radius: 0.25rem;
+    }
+    
+    .placeholder-wave {
+        animation: placeholder-wave 2s linear infinite;
+    }
+    
+    @keyframes placeholder-wave {
+        0% { background-position: -200px 0; }
+        100% { background-position: calc(200px + 100%) 0; }
+    }
+    
+    .placeholder-wave .placeholder {
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        background-size: 200px 100%;
+        animation: none;
+    }
 </style>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        console.log("DOM loaded, starting color detection...");
+        // Fetch Wikidata information asynchronously
+        const clubId = "{{ entity.id }}";
         
-        // FIXED: Get the color from the card element, not the document root
-        const cardElement = document.querySelector('.card');
-        let mainColor = '';
+        fetch(`/club/${clubId}/wikidata/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success && data.data) {
+                    updateClubWithWikidata(data.data);
+                } else {
+                    console.log('No Wikidata found or unsuccessful response');
+                    showWikidataError();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching Wikidata:', error);
+                showWikidataError();
+            })
+            .finally(() => {
+                console.log("Finally block executing - hiding loader");
+                // Always hide the page loader regardless of success or failure
+                const loader = document.getElementById('page-loader');
+                if (loader) {
+                    console.log("Loader element found, trying multiple methods to hide it");
+                    
+                    // Try multiple methods to hide the loader
+                    loader.style.display = 'none';
+                    loader.style.visibility = 'hidden';
+                    loader.style.opacity = '0';
+                    loader.style.zIndex = '-1';
+                    loader.classList.add('d-none');
+                    
+                    // As a last resort, remove it from DOM
+                    setTimeout(() => {
+                        if (loader.parentNode) {
+                            loader.remove();
+                            console.log("Loader removed from DOM");
+                        }
+                    }, 100);
+                    
+                    console.log("Loader hidden successfully");
+                } else {
+                    console.error("Loader element not found!");
+                }
+            });
         
-        if (cardElement) {
-            const cardStyle = getComputedStyle(cardElement);
-            mainColor = cardStyle.getPropertyValue('--main-color').trim();
-            console.log("Card element main-color:", mainColor);
-            
-            // Fallback to inline style if computed style is empty
-            if (!mainColor) {
-                mainColor = cardElement.style.getPropertyValue('--main-color').trim();
-                console.log("Using inline style main-color:", mainColor);
+        function updateClubWithWikidata(wikidataInfo) {
+            try {
+                // Update club name if official name exists
+                if (wikidataInfo.official_name) {
+                    const clubNameElement = document.getElementById('club-name');
+                    if (clubNameElement) {
+                        clubNameElement.textContent = wikidataInfo.official_name;
+                    }
+                }
+                
+                // Update audio
+                if (wikidataInfo.audio) {
+                    const audioSource = document.getElementById('audio-source');
+                    const audioContainer = document.getElementById('audio-container');
+                    if (audioSource && audioContainer) {
+                        audioSource.src = wikidataInfo.audio;
+                        audioContainer.style.display = 'block';
+                    }
+                }
+                
+                // Update inception date
+                if (wikidataInfo.inception) {
+                    const inceptionDate = document.getElementById('inception-date');
+                    const inceptionContainer = document.getElementById('inception-container');
+                    if (inceptionDate && inceptionContainer) {
+                        inceptionDate.textContent = wikidataInfo.inception;
+                        inceptionContainer.style.display = 'inline';
+                    }
+                }
+                
+                // Update nicknames
+                if (wikidataInfo.nicknames && Array.isArray(wikidataInfo.nicknames) && wikidataInfo.nicknames.length > 0) {
+                    const nicknamesContainer = document.getElementById('nicknames-container');
+                    if (nicknamesContainer) {
+                        const nicknameElements = wikidataInfo.nicknames.map(nickname => 
+                            `<span class="badge bg-secondary">${nickname}</span>`
+                        ).join(' ');
+                        nicknamesContainer.innerHTML = nicknameElements;
+                        nicknamesContainer.style.display = 'block';
+                    }
+                }
+                
+                // Update media followers
+                if (wikidataInfo.media_followers && wikidataInfo.media_followers > 0) {
+                    const followersContainer = document.getElementById('followers-container');
+                    if (followersContainer) {
+                        followersContainer.innerHTML = `
+                            <div class="d-inline-block px-3 py-1 rounded-pill" style="background-color: rgba(var(--main-color-rgb), 0.1);">
+                                <i class="fas fa-users me-2"></i>
+                                <span class="fw-bold">${wikidataInfo.media_followers.toLocaleString()}</span>
+                                <span class="text-muted small">followers</span>
+                            </div>
+                        `;
+                        followersContainer.style.display = 'block';
+                    }
+                }
+                
+                // Update brands
+                if (wikidataInfo.brands && Array.isArray(wikidataInfo.brands) && wikidataInfo.brands.length > 0) {
+                    const brandsContainer = document.getElementById('brands-container');
+                    if (brandsContainer) {
+                        const brandElements = wikidataInfo.brands.filter(brand => brand && brand.logo).map(brand => 
+                            `<div property="brand" class="me-3 mb-1">
+                                <img property="logo" src="${brand.logo}" alt="${brand.name || 'Brand'}" title="${brand.name || 'Brand'}" 
+                                     style="height: 30px; max-width: 80px; object-fit: contain;">
+                            </div>`
+                        ).join('');
+                        if (brandElements) {
+                            brandsContainer.innerHTML = brandElements;
+                            brandsContainer.style.display = 'flex';
+                        }
+                    }
+                }
+                
+                // Update stadium link
+                if (wikidataInfo.venue && wikidataInfo.venue.name && wikidataInfo.venue.id) {
+                    const stadiumInfo = document.getElementById('stadium-info');
+                    if (stadiumInfo) {
+                        stadiumInfo.innerHTML = `<a href="/stadium/${wikidataInfo.venue.id}" class="team-color-link" style="color: var(--main-color);">${wikidataInfo.venue.name}</a>`;
+                    }
+                }
+                
+                // Update management (president/coach)
+                let managementHtml = '';
+                
+                if (wikidataInfo.coach && wikidataInfo.coach.name) {
+                    managementHtml += `
+                        <div class="col-md-6 mb-3" typeof="Person" property="coach" >
+                            <div class="card h-100" style="border: none; box-shadow: none;">
+                                <div class="card-body p-0">
+                                    <div class="d-flex">
+                                        <div style="height: 100px; overflow: hidden;">
+                                            ${wikidataInfo.coach.photo ? 
+                                                `<img property="image" src="${wikidataInfo.coach.photo}" alt="${wikidataInfo.coach.name}" class="img-fluid h-100 object-fit-cover">` :
+                                                `<div class="bg-light h-100 d-flex align-items-center justify-content-center">
+                                                    <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
+                                                </div>`
+                                            }
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center p-3">
+                                            <div class="text-muted small">Head Coach</div>
+                                            <h5 property="name" class="mb-0 mt-1 fw-bold">${wikidataInfo.coach.name}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (wikidataInfo.president && wikidataInfo.president.name) {
+                    managementHtml += `
+                        <div class="col-md-6 mb-3" typeof="Person" property="founder" >
+                            <div class="card h-100" style="border: none; box-shadow: none;">
+                                <div class="card-body p-0">
+                                    <div class="d-flex">
+                                        <div style="height: 100px; overflow: hidden;">
+                                            ${wikidataInfo.president.photo ? 
+                                                `<img property="image" src="${wikidataInfo.president.photo}" alt="${wikidataInfo.president.name}" class="img-fluid h-100 object-fit-cover">` :
+                                                `<div class="bg-light h-100 d-flex align-items-center justify-content-center">
+                                                    <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
+                                                </div>`
+                                            }
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center p-3">
+                                            <div class="text-muted small">Club President</div>
+                                            <h5 property="name" class="mb-0 mt-1 fw-bold">${wikidataInfo.president.name}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (managementHtml) {
+                    const managementContainer = document.getElementById('management-container');
+                    if (managementContainer) {
+                        managementContainer.innerHTML = managementHtml;
+                        managementContainer.style.display = 'flex';
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error updating club with Wikidata:', error);
+                showWikidataError();
             }
         }
         
-        // If still empty, use hardcoded fallback
-        if (!mainColor) {
-            // Extract from HTML attribute
-            mainColor = "#{{ entity.color }}";
-            console.log("Using server-provided color:", mainColor);
+        function showWikidataError() {
+            // Show error message
+            const errorElement = document.getElementById('wikidata-error');
+            if (errorElement) {
+                errorElement.style.display = 'block';
+            }
         }
 
-        // Now try with the actual value
-        const isLight = isLightColor(mainColor);
-        console.log("Final determination - Is light color:", isLight);
-        
-        // Apply appropriate styles based on color lightness
-        if (isLight) {
-            console.log("Light color detected - switching to black");
-            // Use black for team name instead of light color
-            const teamName = document.querySelector('h2[style*="color: var(--main-color)"]');
-            if (teamName) {
-                teamName.style.color = '#000';
-                console.log("Applied black color to team name");
-            } else {
-                console.warn("Team name element not found");
-            }
-            
-            // Apply black color to venue links with team color
-            const venueLinks = document.querySelectorAll('.team-color-link');
-            venueLinks.forEach(link => {
-                link.style.color = '#000';
-                console.log("Applied black color to venue link");
-            });
-            
-            // Make hover indicator darker for rows
-            document.querySelectorAll('.player-row').forEach(row => {
-                row.addEventListener('mouseover', function() {
-                    this.style.borderLeft = '2px solid #000';
-                    this.style.backgroundColor = 'rgba(0,0,0,0.03)';
-                });
-                row.addEventListener('mouseout', function() {
-                    this.style.borderLeft = '';
-                    this.style.backgroundColor = '';
-                });
-            });
-        } else {
-            console.log("Dark color detected - keeping original styling");
-            // For darker colors, keep the original styling
-            document.querySelectorAll('.sortable').forEach(col => {
-                col.addEventListener('mouseover', function() {
-                    this.querySelector('span').style.color = mainColor;
-                });
-                col.addEventListener('mouseout', function() {
-                    this.querySelector('span').style.color = '#666';
-                });
-            });
-        }
+        // ...existing code for color detection...
     });
 </script>
 

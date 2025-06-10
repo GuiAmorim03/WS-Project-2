@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("player/<str:player_id>", player_detail, name="player"),
     path("club/<str:club_id>", club_detail, name="club"),
+    path("club/<str:club_id>/wikidata/", club_wikidata_details, name="club_wikidata_details"),
     path("players", players, name="players"),
     path("clubs", clubs, name="clubs"),
     path("graph", graph_view, name="graph"),
