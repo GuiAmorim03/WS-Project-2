@@ -1,0 +1,103 @@
+def get_club_id_query(club_name):
+
+    if club_name == "barcelona":
+        type = "Q103229495"
+    else:
+        type = "Q476028"
+
+    if club_name == "psg":
+        club_name = "Paris Saint-Germain"
+    elif club_name == "milan":
+        club_name = "AC Milan"
+    elif club_name.startswith("man_"):
+        club_name = club_name.replace("man_", "Manchester ")
+    elif club_name == "wolves":
+        club_name = "Wolverhampton"
+
+    """Returns SPARQL query for fetching club Wikidata ID."""
+    return f"""
+    SELECT DISTINCT 
+        ?club 
+    WHERE {{
+        ?club wdt:P31 wd:{type}.
+        ?club rdfs:label ?label .
+        FILTER(LANG(?label) = "en")
+        FILTER(CONTAINS(LCASE(?label), "{club_name.lower().replace('_', ' ')}"))
+
+        ?club wdt:P118 ?league .
+        FILTER(?league IN (wd:Q324867, wd:Q9448, wd:Q15804, wd:Q13394, wd:Q82595))
+    }}
+    """
+
+def get_club_details_query(club_id):
+    print(f"Fetching details for club ID: {club_id}")
+    club_id = club_id.replace("http://www.wikidata.org/entity/", "")
+
+    if club_id == 'Q12217':
+        club_id = 'Q8682'
+
+    """Returns SPARQL query for fetching club details by Wikidata ID."""
+    return f"""
+    SELECT
+        (GROUP_CONCAT(DISTINCT ?sponsorInfo; separator=";") AS ?sponsors)
+        ?kitInfo
+        ?officialName 
+        (GROUP_CONCAT(DISTINCT ?nickname; separator=";") AS ?nicknames) 
+        ?audio
+        ?inception
+        ?presidentInfo
+        ?coachInfo
+        (MAX(?followers) AS ?mediaFollowers)
+    WHERE {{
+        BIND(wd:{club_id} AS ?club)
+
+        OPTIONAL {{ 
+            ?club wdt:P859 ?sponsorEntity . 
+            ?sponsorEntity rdfs:label ?sponsorName .
+            FILTER(LANG(?sponsorName) = "en")
+            
+            OPTIONAL {{ ?sponsorEntity wdt:P2910 ?sponsorLogo . }}
+            BIND(IF(BOUND(?sponsorLogo), 
+                 CONCAT(?sponsorName, "|", STR(?sponsorLogo)), 
+                 CONCAT(?sponsorName, "|", "")) AS ?sponsorInfo)
+        }}
+        OPTIONAL {{ 
+            ?club wdt:P5995 ?kitEntity . 
+            ?kitEntity rdfs:label ?kitName .
+            FILTER(LANG(?kitName) = "en")
+            OPTIONAL {{ ?kitEntity wdt:P8972 ?kitLogo . }}
+            BIND(IF(BOUND(?kitLogo), 
+                    CONCAT(?kitName, "|", STR(?kitLogo)), 
+                    CONCAT(?kitName, "|", "")) AS ?kitInfo)
+        }}
+        OPTIONAL {{ ?club wdt:P1448 ?officialName . }}
+        OPTIONAL {{ ?club wdt:P1449 ?nickname . }}
+        OPTIONAL {{ ?club wdt:P443 ?audio . }}
+
+        OPTIONAL {{ ?club wdt:P571 ?inception . }}
+        OPTIONAL {{
+            ?club wdt:P488 ?presidentEntity . 
+            ?presidentEntity rdfs:label ?presidentName .
+            FILTER(LANG(?presidentName) = "en")
+            OPTIONAL {{ ?presidentEntity wdt:P18 ?presidentImage . }}
+            BIND(IF(BOUND(?presidentImage), 
+                 CONCAT(?presidentName, "|", STR(?presidentImage)), 
+                 CONCAT(?presidentName, "|", "")) AS ?presidentInfo)
+        }}
+        OPTIONAL {{
+            ?club wdt:P286 ?coachEntity . 
+            ?coachEntity rdfs:label ?coachName .
+            FILTER(LANG(?coachName) = "en")
+            OPTIONAL {{ ?coachEntity wdt:P18 ?coachImage . }}
+            BIND(IF(BOUND(?coachImage), 
+                 CONCAT(?coachName, "|", STR(?coachImage)), 
+                 CONCAT(?coachName, "|", "")) AS ?coachInfo)
+        }}
+        OPTIONAL {{
+            ?club p:P8687 ?statement .
+            ?statement ps:P8687 ?followers .
+        }}
+    }}
+    GROUP BY ?kitInfo ?officialName ?audio ?inception ?presidentInfo ?coachInfo
+    """
+

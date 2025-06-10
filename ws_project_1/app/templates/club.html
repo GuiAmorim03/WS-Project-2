@@ -1,4 +1,5 @@
 {% extends "layouts/entity.html" %}
+{% load humanize %}
 
 {% block content_inside %}
 
@@ -24,12 +25,54 @@
                 </div>
             </div>
             <div class="col-10">
-                <h2 class="mt-5" style="color: var(--main-color);">{{ entity.name }}</h2>
+                <div class="d-flex align-items-center">
+                    <h2 class="mt-5 me-2" style="color: var(--main-color);">{{ entity.name }}</h2>
+                    {% if entity.audio %}
+                    <div class="mt-5">
+                        <audio controls class="audio-player" style="height: 24px; width: 150px; opacity: 0.7;">
+                            <source src="{{ entity.audio }}" type="audio/mpeg">
+                        </audio>
+                    </div>
+                    {% endif %}
+                </div>
                 <p class="m-1">
                     <span>{{ entity.city }}</span>
                     <span> • </span>
                     <span>{{ entity.stadium }}</span>
+                    <span> • </span>
+                    <span>{{ entity.inception }}</span>
                 </p>
+                <p class="m-1">
+                    {% if entity.nicknames %}
+                    {% for nickname in entity.nicknames %}
+                    <span class="badge bg-secondary">{{ nickname }}</span>
+                    {% endfor %}
+                    {% endif %}
+                </p>
+                
+                {% if entity.media_followers %}
+                <div class="media-followers mb-2 mt-1">
+                    <div class="d-inline-block px-3 py-1 rounded-pill" style="background-color: rgba(var(--main-color-rgb), 0.1);">
+                        <i class="fas fa-users me-2"></i>
+                        <span class="fw-bold">{{ entity.media_followers|intcomma }}</span>
+                        <span class="text-muted small">followers</span>
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if entity.brands %}
+                <div class="d-flex align-items-center flex-wrap mt-2 mb-2">
+                    {% for brand in entity.brands %}
+                        {% if brand.logo %}
+                        <div class="me-3 mb-1">
+                            <img src="{{ brand.logo }}" alt="{{ brand.name }}" title="{{ brand.name }}" 
+                                 style="height: 30px; max-width: 80px; object-fit: contain;">
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
                 <p>
                     <img src="{{ entity.country.flag }}" alt="Flag" class="mb-1" style="height: 20px;">
                     <span>{{ entity.league.name }}</span>
@@ -42,6 +85,59 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 style="color: #333; font-weight: 500;">Squad</h2>
         </div>
+
+        {% if entity.president or entity.coach %}
+        <div class="row mb-0">
+            {% if entity.coach %}
+            <div class="col-md-6 mb-3">
+                <div class="card h-100" style="border: none; box-shadow: none;">
+                    <div class="card-body p-0">
+                        <div class="d-flex">
+                            <div style="height: 100px; overflow: hidden;">
+                                {% if entity.coach.photo %}
+                                <img src="{{ entity.coach.photo }}" alt="{{ entity.coach.name }}" class="img-fluid h-100 object-fit-cover">
+                                {% else %}
+                                <div class="bg-light h-100 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex flex-column justify-content-center p-3">
+                                <div class="text-muted small">Head Coach</div>
+                                <h5 class="mb-0 mt-1 fw-bold">{{ entity.coach.name }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if entity.president %}
+            <div class="col-md-6 mb-3">
+                <div class="card h-100" style="border: none; box-shadow: none;">
+                    <div class="card-body p-0">
+                        <div class="d-flex">
+                            <div style="height: 100px; overflow: hidden;">
+                                {% if entity.president.photo %}
+                                <img src="{{ entity.president.photo }}" alt="{{ entity.president.name }}" class="img-fluid h-100 object-fit-cover">
+                                {% else %}
+                                <div class="bg-light h-100 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex flex-column justify-content-center p-3">
+                                <div class="text-muted small">Club President</div>
+                                <h5 class="mb-0 mt-1 fw-bold">{{ entity.president.name }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+        {% endif %}
 
         <table class="table" style="font-size: medium; border-collapse: separate; border-spacing: 0;">
             <thead>
