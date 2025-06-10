@@ -5,7 +5,12 @@
             {% for stat_group in stats_data.stats %}
             <div class="swiper-slide">
                 <div class="stats-column">
-                    <h5 class="stat-group-title"><b>{{ stat_group.name }}</b></h5>
+                    <h5 class="stat-group-title">
+                        <b>{{ stat_group.name }}</b>
+                        {% if "Efficiency" in stat_group.name or "Playmakers" in stat_group.name or "Goal Threats" in stat_group.name or "Key Players" in stat_group.name or "Versatile Players" in stat_group.name %}
+                            <span class="badge bg-purple ms-2" style="font-size: 0.6em; background-color: #6f42c1 !important;">SPIN</span>
+                        {% endif %}
+                    </h5>
                     <div class="card modern-card" style=" 
                             --main-color: #{{ stat_group.colors.main }};
                             --alt-color: #{{ stat_group.colors.alternate }};
@@ -20,10 +25,10 @@
                                 </div>
                                 <div class="col-6 text-end pt-3">
                                     <h6 class="entity-title">
-                                        {{ stat_group.entities.0.name }}
+                                        {{ stat_group.entities.0.name|truncatechars:25 }}
                                     </h6>
                                     <h6 class="entity-info">
-                                        {{ stat_group.entities.0.info }}
+                                        {{ stat_group.entities.0.info|truncatechars:25 }}
                                     </h6>
                                     <h1 class="entity-stat">
                                         <b>{{ stat_group.entities.0.stat }}</b>
@@ -39,8 +44,8 @@
                                     <img src="{{ ent.icon }}" alt="{{ ent.name }} icon" class="img-fluid sub-entity-icon">
                                 </div>
                                 <div class="col-7 py-3">
-                                    <h6 class="mb-0 sub-entity-title">{{ ent.name }}</h6>
-                                    <span class="sub-entity-info">{{ ent.info }}</span>
+                                    <h6 class="mb-0 sub-entity-title">{{ ent.name|truncatechars:25 }}</h6>
+                                    <span class="sub-entity-info">{{ ent.info|truncatechars:25 }}</span>
                                 </div>
                                 <div class="col-2 d-flex align-items-center justify-content-end py-3">
                                     <h4 class="sub-entity-stat mb-0">{{ ent.stat }}</h4>

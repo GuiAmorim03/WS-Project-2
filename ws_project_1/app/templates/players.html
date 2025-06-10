@@ -22,7 +22,14 @@
 <table class="styled-table">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>Player</span>
+                    {% if entities_list and entities_list.0.spin_badges %}
+                        <span class="badge bg-purple" style="font-size: 0.6em; background-color: #6f42c1 !important;">SPIN</span>
+                    {% endif %}
+                </div>
+            </th>
             <th>Position(s)</th>
             <th>Nation</th>
             <th>Born</th>
@@ -31,8 +38,28 @@
     </thead>
     <tbody>
         {% for player in entities_list %}
-        <tr onclick="window.location.href='{% url 'player' player.id %}';" style="cursor:pointer;">
-            <td>{{ player.name }}</td>
+        <tr onclick="window.location.href='{% url 'player' player.id %}';" style="cursor:pointer;" class="player-row">
+            <td class="player-info-cell">
+                <div class="player-main-info">
+                    <div class="player-name-with-tags">
+                        <span class="player-name">{{ player.name }}</span>
+                        {% if player.spin_badges %}
+                            <div class="spin-tags">
+                                {% for badge in player.spin_badges|slice:":3" %}
+                                    <span class="spin-tag {{ badge.class }}" title="{{ badge.label }}">
+                                        {% if badge.icon %}<i class="{{ badge.icon }}"></i>{% endif %}
+                                    </span>
+                                {% endfor %}
+                                {% if player.spin_badges|length > 3 %}
+                                    <span class="spin-tag more-indicator" title="{{ player.spin_badges|length|add:"-3" }} more tags">
+                                        +{{ player.spin_badges|length|add:"-3" }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
             <td>{{ player.positions }}</td>
             <td>
                 <img src="{{ player.flag }}" alt="{{ player.nation }} flag" class="small-flag">
@@ -125,6 +152,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/players_clubs.css' %}">
 <link rel="stylesheet" href="{% static 'css/create_player.css' %}">
+<link rel="stylesheet" href="{% static 'css/spin_badges.css' %}">
 
 <script>
     function openModal() {
@@ -136,5 +164,55 @@
     }
 </script>
 
+<style>
+.player-row {
+    transition: background-color 0.2s ease;
+}
+
+.player-row:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.player-info-cell {
+    max-width: 300px;
+}
+
+.player-name-with-tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.player-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1rem;
+    flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .player-info-cell {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .player-name-with-tags {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .spin-tags {
+        order: 2;
+    }
+    
+    .player-name {
+        order: 1;
+    }
+}
+</style>
 
 {% endblock %}
