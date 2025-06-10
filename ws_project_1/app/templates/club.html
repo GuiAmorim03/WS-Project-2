@@ -116,67 +116,10 @@
         <hr style="border-color: #eaeaea;">
         {% endif %}
 
-<<<<<<< HEAD
-        {% if entity.president or entity.coach %}
-        <div class="row mb-0">
-            {% if entity.coach %}
-            <div typeof="Person" property="coach" class="col-md-6 mb-3">
-                <div class="card h-100" style="border: none; box-shadow: none;">
-                    <div class="card-body p-0">
-                        <div class="d-flex">
-                            <div style="height: 100px; overflow: hidden;">
-                                {% if entity.coach.photo %}
-                                <img property="image" src="{{ entity.coach.photo }}" alt="{{ entity.coach.name }}" class="img-fluid h-100 object-fit-cover">
-                                {% else %}
-                                <div class="bg-light h-100 d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
-                                </div>
-                                {% endif %}
-                            </div>
-                            <div class="d-flex flex-column justify-content-center p-3">
-                                <div class="text-muted small">Head Coach</div>
-                                <h5 property="name" class="mb-0 mt-1 fw-bold">{{ entity.coach.name }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-
-            {% if entity.president %}
-            <div typeof="Person" property="founder" class="col-md-6 mb-3">
-                <div class="card h-100" style="border: none; box-shadow: none;">
-                    <div class="card-body p-0">
-                        <div class="d-flex">
-                            <div style="height: 100px; overflow: hidden;">
-                                {% if entity.president.photo %}
-                                <img property="image" src="{{ entity.president.photo }}" alt="{{ entity.president.name }}" class="img-fluid h-100 object-fit-cover">
-                                {% else %}
-                                <div class="bg-light h-100 d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
-                                </div>
-                                {% endif %}
-                            </div>
-                            <div class="d-flex flex-column justify-content-center p-3">
-                                <div class="text-muted small">Club President</div>
-                                <h5 property="name" class="mb-0 mt-1 fw-bold">{{ entity.president.name }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-            
-        </div>
-        {% endif %}
-
-        <div class="d-flex justify-content-between align-items-center mt-3">
-=======
         <!-- Management section (President/Coach) -->
         <div class="row mb-0" id="management-container" style="display: none;"></div>
 
         <div class="d-flex justify-content-between align-items-center mb-3">
->>>>>>> d4769c1df4b9abb39a88197b7283d6b3385a396f
             <h2 style="color: #333; font-weight: 500;">Squad</h2>
         </div>
 
