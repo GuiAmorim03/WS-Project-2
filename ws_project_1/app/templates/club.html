@@ -3,7 +3,7 @@
 
 {% block content_inside %}
 
-<div class="card" vocab="https://schema.org/" typeof="SportsTeam">
+<div class="card" vocab="https://schema.org/" typeof="SportsTeam" resource="#{{ entity.id }}">
     <div class="card-header position-relative" style="background-color: #f8f9fa; color: #333; padding-right: 70px;">
         <!-- Team colors ball with diagonal split and enhanced shadow -->
         <div class="team-colors-ball position-absolute me-4" style="
@@ -26,7 +26,7 @@
             </div>
             <div class="col-10">
                 <div class="d-flex align-items-center">
-                    <h2 class="mt-5 me-2" style="color: var(--main-color);">{{ entity.name }}</h2>
+                    <h2 property="name" class="mt-5 me-2" style="color: var(--main-color);">{{ entity.name }}</h2>
                     {% if entity.audio %}
                     <div class="mt-5">
                         <audio controls class="audio-player" style="height: 24px; width: 150px; opacity: 0.7;">
@@ -39,19 +39,19 @@
                     <span property="address">{{ entity.city }}</span>
                     <span> • </span>
                     {% if entity.venue.name and entity.venue.id %}
-                    <span><a href="{% url 'stadium' entity.venue.id %}" class="team-color-link" style="color: var(--main-color);">{{ entity.venue.name }}</a></span>
+                    <span property="location"><a href="{% url 'stadium' entity.venue.id %}" class="team-color-link" style="color: var(--main-color);">{{ entity.venue.name }}</a></span>
                     {% else %}
-                    <span>{{ entity.stadium }}</span>
+                    <span property="location">{{ entity.stadium }}</span>
                     {% endif %}
                     {% if entity.inception %}
                     <span> • </span>
-                    <span>{{ entity.inception }}</span>
+                    <span property="foundingDate">{{ entity.inception }}</span>
                     {% endif %}
                 </p>
                 <p class="m-1">
                     {% if entity.nicknames %}
                     {% for nickname in entity.nicknames %}
-                    <span class="badge bg-secondary">{{ nickname }}</span>
+                    <span property="alternateName" class="badge bg-secondary">{{ nickname }}</span>
                     {% endfor %}
                     {% endif %}
                 </p>
@@ -70,8 +70,8 @@
                 <div class="d-flex align-items-center flex-wrap mt-2 mb-2">
                     {% for brand in entity.brands %}
                         {% if brand.logo %}
-                        <div class="me-3 mb-1">
-                            <img src="{{ brand.logo }}" alt="{{ brand.name }}" title="{{ brand.name }}" 
+                        <div property="brand" typeof="Brand" class="me-3 mb-1">
+                            <img property="logo" src="{{ brand.logo }}" alt="{{ brand.name }}" title="{{ brand.name }}" 
                                  style="height: 30px; max-width: 80px; object-fit: contain;">
                         </div>
                         {% endif %}
@@ -81,7 +81,7 @@
                 
                 <p>
                     <img src="{{ entity.country.flag }}" alt="Flag" class="mb-1" style="height: 20px;">
-                    <span><a href="{% url 'league' entity.league.name %}" style="color: var(--main-color);">{{ entity.league.name }}</a></span>
+                    <span property="memberOf" typeof="SportsOrganization"><a href="{% url 'league' entity.league.name %}" style="color: var(--main-color);">{{ entity.league.name }}</a></span>
                 </p>
             </div>
         </div>
@@ -100,15 +100,15 @@
             
             <div class="row">
                 {% for rival in entity.rivals %}
-                <div class="col-md-4 col-sm-6 mb-3">
+                <div typeof="SportsTeam" resource="#{{ rival.id }}" class="col-md-4 col-sm-6 mb-3">
                     <div class="card rival-card h-100" style="border: 1px solid #eaeaea; transition: all 0.3s ease;">
                         <div class="card-body text-center">
-                            <img src="{{ rival.logo }}" alt="{{ rival.name }}" class="mb-2" style="height: 40px; width: auto;">
-                            <h6 class="card-title mb-1" style="font-weight: 600;">{{ rival.name }}</h6>
-                            <p class="card-text mb-1" style="font-size: 0.85em; color: #666;">
+                            <img property="logo" src="{{ rival.logo }}" alt="{{ rival.name }}" class="mb-2" style="height: 40px; width: auto;">
+                            <h6 property="name" class="card-title mb-1" style="font-weight: 600;">{{ rival.name }}</h6>
+                            <p property="address" class="card-text mb-1" style="font-size: 0.85em; color: #666;">
                                 <i class="fas fa-map-marker-alt me-1"></i>{{ rival.city }}
                             </p>
-                            <p class="card-text mb-2" style="font-size: 0.8em; color: #888;">
+                            <p property="memberOf" class="card-text mb-2" style="font-size: 0.8em; color: #888;">
                                 {{ rival.league }}
                             </p>
                             <a href="{% url 'club' rival.id %}" class="btn btn-sm btn-outline-primary">View Club</a>
@@ -121,20 +121,16 @@
         <hr style="border-color: #eaeaea;">
         {% endif %}
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 style="color: #333; font-weight: 500;">Squad</h2>
-        </div>
-
         {% if entity.president or entity.coach %}
         <div class="row mb-0">
             {% if entity.coach %}
-            <div class="col-md-6 mb-3">
+            <div typeof="Person" property="coach" class="col-md-6 mb-3">
                 <div class="card h-100" style="border: none; box-shadow: none;">
                     <div class="card-body p-0">
                         <div class="d-flex">
                             <div style="height: 100px; overflow: hidden;">
                                 {% if entity.coach.photo %}
-                                <img src="{{ entity.coach.photo }}" alt="{{ entity.coach.name }}" class="img-fluid h-100 object-fit-cover">
+                                <img property="image" src="{{ entity.coach.photo }}" alt="{{ entity.coach.name }}" class="img-fluid h-100 object-fit-cover">
                                 {% else %}
                                 <div class="bg-light h-100 d-flex align-items-center justify-content-center">
                                     <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
@@ -143,7 +139,7 @@
                             </div>
                             <div class="d-flex flex-column justify-content-center p-3">
                                 <div class="text-muted small">Head Coach</div>
-                                <h5 class="mb-0 mt-1 fw-bold">{{ entity.coach.name }}</h5>
+                                <h5 property="name" class="mb-0 mt-1 fw-bold">{{ entity.coach.name }}</h5>
                             </div>
                         </div>
                     </div>
@@ -152,13 +148,13 @@
             {% endif %}
 
             {% if entity.president %}
-            <div class="col-md-6 mb-3">
+            <div typeof="Person" property="founder" class="col-md-6 mb-3">
                 <div class="card h-100" style="border: none; box-shadow: none;">
                     <div class="card-body p-0">
                         <div class="d-flex">
                             <div style="height: 100px; overflow: hidden;">
                                 {% if entity.president.photo %}
-                                <img src="{{ entity.president.photo }}" alt="{{ entity.president.name }}" class="img-fluid h-100 object-fit-cover">
+                                <img property="image" src="{{ entity.president.photo }}" alt="{{ entity.president.name }}" class="img-fluid h-100 object-fit-cover">
                                 {% else %}
                                 <div class="bg-light h-100 d-flex align-items-center justify-content-center">
                                     <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
@@ -167,7 +163,7 @@
                             </div>
                             <div class="d-flex flex-column justify-content-center p-3">
                                 <div class="text-muted small">Club President</div>
-                                <h5 class="mb-0 mt-1 fw-bold">{{ entity.president.name }}</h5>
+                                <h5 property="name" class="mb-0 mt-1 fw-bold">{{ entity.president.name }}</h5>
                             </div>
                         </div>
                     </div>
@@ -177,6 +173,10 @@
             
         </div>
         {% endif %}
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <h2 style="color: #333; font-weight: 500;">Squad</h2>
+        </div>
 
         <table class="table" style="font-size: medium; border-collapse: separate; border-spacing: 0;">
             <thead>
@@ -197,7 +197,7 @@
             </thead>
             <tbody>
                 {% for player in entity.players %}
-                <tr class="player-row" typeof="Person" property="athlete" style="transition: background-color 0.2s ease;" resource="{{ player.id }}">
+                <tr class="player-row" typeof="Person" property="athlete" style="transition: background-color 0.2s ease;" resource="#{{ player.id }}">
                     <td class="py-3">
                         <a href="{% url 'player' player.id %}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
                             <div style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center;">
