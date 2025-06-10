@@ -12,7 +12,80 @@
             {% endif %}
         </div>
         <div class="col-8 py-2">
-            <h2 class="mt-5" property="name" style="color: var(--main-color);">{{ entity.name }}</h2>
+            <h2 class="mt-5" style="color: var(--main-color);">{{ entity.name }}</h2>
+            
+            {% if entity.spin_inferences %}
+            <div class="player-tags mb-2">
+                {% if entity.spin_inferences.is_veteran %}
+                <span class="spin-badge veteran with-icon me-1" title="Veteran Player">
+                    <i class="fas fa-crown"></i>
+                    Veteran
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.is_young_prospect %}
+                <span class="spin-badge prospect with-icon me-1" title="Young Prospect">
+                    <i class="fas fa-star"></i>
+                    Young Prospect
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.is_key_player %}
+                <span class="spin-badge key-player with-icon me-1" title="Key Player">
+                    <i class="fas fa-key"></i>
+                    Key Player
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.is_playmaker %}
+                <span class="spin-badge playmaker with-icon me-1" title="Playmaker">
+                    <i class="fas fa-magic"></i>
+                    Playmaker
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.is_goal_threat %}
+                <span class="spin-badge goal-threat with-icon me-1" title="Goal Threat">
+                    <i class="fas fa-bullseye"></i>
+                    Goal Threat
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.is_penalty_specialist %}
+                <span class="spin-badge dark with-icon me-1" title="Penalty Specialist">
+                    <i class="fas fa-dot-circle"></i>
+                    Penalty Specialist
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.is_versatile %}
+                <span class="spin-badge versatile with-icon me-1" title="Versatile Player">
+                    <i class="fas fa-sync-alt"></i>
+                    Versatile
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.is_disciplinary_risk %}
+                <span class="spin-badge disciplinary with-icon me-1" title="Disciplinary Risk">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Disciplinary Risk
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.efficiency and entity.spin_inferences.efficiency > 0.5 %}
+                <span class="spin-badge success with-icon me-1" title="High Efficiency: {{ entity.spin_inferences.efficiency }}">
+                    <i class="fas fa-chart-line"></i>
+                    High Efficiency
+                </span>
+                {% endif %}
+                
+                {% if entity.spin_inferences.player_type %}
+                <span class="spin-badge secondary me-1" title="Player Type">
+                    {{ entity.spin_inferences.player_type }}
+                </span>
+                {% endif %}
+            </div>
+            {% endif %}
             <p class="m-0">
                 <img src="{{ entity.flag }}" alt="Flag" class="mb-1" style="height: 20px">
                 <span property="nationality">{{ entity.country_name }}</span>
@@ -43,11 +116,11 @@
         background: linear-gradient(135deg, var(--main-color) 50%, var(--alt-color) 50%);
         box-shadow: 0 3px 6px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.1);
         right: 20px;
-        top: 50%;
+        top: {% if entity.spin_inferences %}15%{% else %}50%{% endif %};
         transform: translateY(-50%);
     "></div>
     
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-md-6">
             <h4 style="color: var(--main-color);">Positions</h4>
             <div class="positions-container">
@@ -80,6 +153,48 @@
             </button>
         </div>
     </div>
+    
+    {% if entity.teammates or entity.compatriots %}
+    <div class="row">
+        {% if entity.teammates %}
+        <div class="col-md-6">
+            <h4 style="color: var(--main-color);">Teammates</h4>
+            <div class="teammates-container" style="max-height: 200px; overflow-y: auto;">
+                {% for teammate in entity.teammates %}
+                <div class="teammate-item mb-2 p-2" style="display: flex; align-items: center; background-color: #f8f9fa; border-radius: 5px;">
+                    <img src="{{ teammate.photo_url }}" class="me-2" alt="Teammate" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;">
+                    <a href="{% url 'player' teammate.id %}" style="text-decoration: none; color: inherit;">
+                        <span>{{ teammate.name }}</span>
+                        <small class="text-muted d-block">{{ teammate.positions }}</small>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if entity.compatriots %}
+        <div class="col-md-6">
+            <h4 style="color: var(--main-color);">Compatriots</h4>
+            <div class="compatriots-container" style="max-height: 200px; overflow-y: auto;">
+                {% for compatriot in entity.compatriots %}
+                <div class="compatriot-item mb-2 p-2" style="display: flex; align-items: center; background-color: #f8f9fa; border-radius: 5px;">
+                    <img src="{{ compatriot.photo_url }}" class="me-2" alt="Compatriot" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;">
+                    <div>
+                        <a href="{% url 'player' compatriot.id %}" style="text-decoration: none; color: inherit;">
+                            <span>{{ compatriot.name }}</span>
+                        </a>
+                        {% if compatriot.current_club %}
+                        <small class="text-muted d-block">{{ compatriot.current_club }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
 
     <!-- Add new club Modal -->
     <div class="modal fade" id="addClubModal" tabindex="-1" aria-labelledby="addClubModalLabel" aria-hidden="true">
@@ -136,6 +251,7 @@
 </div>
 
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/spin_badges.css' %}">
 
 <script src="{% static 'js/utils.js' %}"></script>
 

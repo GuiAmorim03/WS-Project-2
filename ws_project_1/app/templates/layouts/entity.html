@@ -46,7 +46,12 @@
                             display: flex;
                             justify-content: space-between;
                             align-items: center;">
-                            <span class="stat-name" style="color: #666;">{{ stat.name }}</span>
+                            <span class="stat-name" style="color: #666;">
+                                {{ stat.name }}
+                                {% if stat.is_spin_stat %}
+                                    <span class="badge bg-purple ms-1" style="font-size: 0.5em; background-color: #6f42c1 !important;">SPIN</span>
+                                {% endif %}
+                            </span>
                             <span class="stat-value" style="color: var(--main-color); font-weight: 500;">{{ stat.value }}</span>
                         </p>
                         {% endfor %}

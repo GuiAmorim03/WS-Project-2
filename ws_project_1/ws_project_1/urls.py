@@ -33,6 +33,7 @@ urlpatterns = [
     path("player/<str:player_id>/add_position/", add_position_to_player, name="add_position"),
     path("player-connection/", player_connection_checker, name="player_connection"),
     path('players/<str:player_id>/delete/', delete_player_view, name='delete_player'),
+    path('toggle-spin-rules/', toggle_spin_rules, name='toggle_spin_rules'),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.ico')), name='favicon'),
     path('stadium/<str:stadium_id>', stadium_detail, name='stadium'),
     path('league/<str:league_name>', league_detail, name='league'),
