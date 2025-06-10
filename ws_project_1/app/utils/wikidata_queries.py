@@ -1,18 +1,26 @@
 def get_club_id_query(club_name):
 
-    if club_name == "barcelona":
+    if club_name == "Barcelona":
         type = "Q103229495"
+        club_name = "FC Barcelona"
     else:
         type = "Q476028"
 
-    if club_name == "psg":
-        club_name = "Paris Saint-Germain"
-    elif club_name == "milan":
-        club_name = "AC Milan"
-    elif club_name.startswith("man_"):
-        club_name = club_name.replace("man_", "Manchester ")
-    elif club_name == "wolves":
-        club_name = "Wolverhampton"
+    if "Monchengladbach" in club_name:
+        club_name = club_name.replace("Monchengladbach", "Mönchengladbach")
+    elif club_name == "Atlético Madrid":
+        club_name = "Atlético de Madrid"
+    elif club_name == "Bayer Leverkusen":
+        club_name = "Bayer 04 Leverkusen"
+    elif club_name == "Celta Vigo":
+        club_name = "Celta de Vigo"
+    elif club_name == "TSG Hoffenheim":
+        club_name = "TSG 1899 Hoffenheim"
+    elif club_name == "AS Roma":
+        club_name = "A.S. Roma"
+    elif club_name == "Internazionale":
+        club_name = "Inter Milan"
+        
 
     """Returns SPARQL query for fetching club Wikidata ID."""
     return f"""

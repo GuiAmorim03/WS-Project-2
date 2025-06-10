@@ -36,6 +36,7 @@ def club_detail(request, club_id):
 
     # Get club data from WikiData
     club_extra_data = query_club_details_extra(club_id)
+    club_extra_data = query_club_details_extra(club_data["name"])
 
     # merge club data with extra data
     if club_extra_data:

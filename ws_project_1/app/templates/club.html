@@ -39,8 +39,10 @@
                     <span>{{ entity.city }}</span>
                     <span> • </span>
                     <span>{{ entity.stadium }}</span>
+                    {% if entity.inception %}
                     <span> • </span>
                     <span>{{ entity.inception }}</span>
+                    {% endif %}
                 </p>
                 <p class="m-1">
                     {% if entity.nicknames %}
