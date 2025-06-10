@@ -44,6 +44,24 @@ else
   echo "Repository 'football' already exists"
 fi
 
+# Import the ontology to the football repository using REST API
+echo "Importing ontology from server file..."
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fileNames": [
+      "ontology/football_ontology.n3"
+    ]
+  }' \
+  "http://localhost:7200/rest/repositories/football/import/server"
+
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "Ontology import initiated successfully"
+else
+  echo "Failed to import ontology"
+fi
+
 # Import the dataset to the football repository using REST API
 echo "Importing dataset from server file..."
 curl -X POST \

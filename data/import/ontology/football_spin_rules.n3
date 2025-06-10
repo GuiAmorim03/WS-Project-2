@@ -1,0 +1,237 @@
+@prefix : <http://football.org/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+
+# SPIN Rules
+
+# Rule 1: Calculate Player Efficiency (Goals + Assists per 90 minutes)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :efficiency ?eff .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :gls ?goals .
+            ?player :ast ?assists .
+            ?player :min ?minutes .
+            FILTER(?minutes > 0)
+            BIND((?goals + ?assists) * 90.0 / ?minutes AS ?eff)
+        }
+    """ 
+] .
+
+# Rule 2: Identify Veterans (35+ years old)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :veteranStatus true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :born ?birthYear .
+            FILTER(2025 - ?birthYear >= 35)
+        }
+    """
+] .
+
+# Rule 3: Identify Young Prospects (under 23)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :youngProspect true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :born ?birthYear .
+            FILTER(2025 - ?birthYear < 23)
+        }
+    """
+] .
+
+# Rule 4: Identify Penalty Specialists (90%+ penalty success rate)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :penaltySpecialist true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :pk ?scored .
+            ?player :pkatt ?attempted .
+            FILTER(?attempted > 0 && (?scored * 1.0 / ?attempted) >= 0.9)
+        }
+    """
+] .
+
+# Rule 5: Identify Playmakers (high assists and key passes relative to games)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :playmaker true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :ast ?assists .
+            ?player :kp ?keyPasses .
+            ?player :mp ?matches .
+            FILTER(?matches > 0 && 
+                   (?assists * 1.0 / ?matches) >= 0.3 && 
+                   (?keyPasses * 1.0 / ?matches) >= 1.5)
+        }
+    """
+] .
+
+# Rule 6: Identify Goal Threats (high goals per game)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :goalThreat true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :gls ?goals .
+            ?player :mp ?matches .
+            FILTER(?matches > 0 && (?goals * 1.0 / ?matches) >= 0.5)
+        }
+    """
+] .
+
+# Rule 7: Identify Disciplinary Risks (high cards per game)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :disciplinaryRisk true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :crdy ?yellowCards .
+            ?player :crdr ?redCards .
+            ?player :mp ?matches .
+            FILTER(?matches > 0 && 
+                   ((?yellowCards + ?redCards * 2) * 1.0 / ?matches) >= 0.3)
+        }
+    """
+] .
+
+# Rule 8: Identify Key Players (play most minutes for their position)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :keyPlayer true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :min ?minutes .
+            ?player :mp ?matches .
+            FILTER(?matches > 0 && (?minutes * 1.0 / ?matches) >= 70)
+        }
+    """
+] .
+
+# Rule 9: Classify Player Types based on statistics
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :playerType "Striker" .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :gls ?goals .
+            ?player :mp ?matches .
+            ?player :position ?pos .
+            FILTER(?matches > 0 && 
+                   (?goals * 1.0 / ?matches) >= 0.4 &&
+                   (CONTAINS(LCASE(?pos), "forward") || CONTAINS(LCASE(?pos), "striker")))
+        }
+    """
+] .
+
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :playerType "Defensive Midfielder" .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :tkl ?tackles .
+            ?player :int ?interceptions .
+            ?player :mp ?matches .
+            ?player :position ?pos .
+            FILTER(?matches > 0 && 
+                   ((?tackles + ?interceptions) * 1.0 / ?matches) >= 3.0 &&
+                   CONTAINS(LCASE(?pos), "midfield"))
+        }
+    """
+] .
+
+# Rule 10: Identify Versatile Players (good in multiple areas)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player :versatilePlayer true .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :gls ?goals .
+            ?player :ast ?assists .
+            ?player :tkl ?tackles .
+            ?player :mp ?matches .
+            FILTER(?matches > 0 && 
+                   (?goals * 1.0 / ?matches) >= 0.1 &&
+                   (?assists * 1.0 / ?matches) >= 0.1 &&
+                   (?tackles * 1.0 / ?matches) >= 1.0)
+        }
+    """
+] .
+
+# Rule 11: Infer club rivalries based on same league/city
+:Club spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?club1 :cityRival ?club2 .
+        }
+        WHERE {
+            ?club1 a :Club .
+            ?club2 a :Club .
+            ?club1 :league ?league .
+            ?club2 :league ?league .
+            ?club1 :city ?city1 .
+            ?club2 :city ?city2 .
+            FILTER(?club1 != ?club2 && ?city1 = ?city2)
+        }
+    """
+] .
+
+# Rule 12: Infer past teammates (players who have played for the same club in the past)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player1 :past_teammate ?player2 .
+        }
+        WHERE {
+            ?player1 a :Player .
+            ?player2 a :Player .
+            ?player1 :past_club ?club .
+            ?player2 :past_club ?club .
+            FILTER(?player1 != ?player2)
+        }
+    """
+] .
