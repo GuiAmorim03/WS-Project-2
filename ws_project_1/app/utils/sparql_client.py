@@ -1,3 +1,4 @@
+import os
 from SPARQLWrapper import SPARQLWrapper, JSON, POST, GET
 from datetime import datetime
 
@@ -11,11 +12,11 @@ from .sparql_queries import (
 )
 
 # Configure your SPARQL endpoint
-ENDPOINT_URL = "http://graphdb:7200/repositories/football"  # Replace with your actual endpoint URL
+GRAPHDB_ENDPOINT = os.environ.get("GRAPHDB_ENDPOINT", "http://graphdb:7200") + "/repositories/football"
 
 def get_sparql_client():
     """Returns a configured SPARQLWrapper instance."""
-    sparql = SPARQLWrapper(ENDPOINT_URL)
+    sparql = SPARQLWrapper(GRAPHDB_ENDPOINT)
     sparql.setReturnFormat(JSON)
     return sparql
 
