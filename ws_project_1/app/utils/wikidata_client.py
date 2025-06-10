@@ -2,7 +2,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from datetime import datetime
 
 from .wikidata_queries import (
-    get_club_id_query, get_club_details_query, get_stadium_details_query
+    get_club_id_query, get_club_details_query, get_stadium_details_query, get_league_id_query, get_league_details_query, get_league_winners_query
 )
 
 WIKIDATA_ENDPOINT = "https://query.wikidata.org/sparql"
@@ -200,3 +200,92 @@ def process_stadium_details(details):
         "category": result["categoryName"]["value"] if "categoryName" in result else None,
         "events": events
     }
+
+
+def query_league_details(league_name):
+    """
+    Queries Wikidata for league details by name.
+    First, it searches for the league Wikidata ID by name.
+    If found, it retrieves league details
+
+    Args:
+        league_name: The name of the league
+        
+    Returns:
+        list: List of processed league data ready for template rendering
+    """
+
+    league_id = process_query(get_league_id_query(league_name), process_func=process_league_id,
+                         error_message="Error querying league wikidata id", success_message="League wikidata id found")
+    
+    if not league_id:
+        return []
+    return process_query(get_league_details_query(league_id), process_func=process_league_details, additional_process_params={"league_id": league_id},
+                                 error_message="Error querying league details", success_message="League details found")
+
+
+def query_league_winners(league_id):
+    """
+    Queries Wikidata for league winners by id.
+
+    Args:
+        league_name: The wikidata id of the league
+        
+    Returns:
+        list: List of processed league winners data ready for template rendering
+    """
+
+    return process_query(get_league_winners_query(league_id), process_func=process_league_winners,
+                                 error_message="Error querying league winners", success_message="League winners found")
+
+
+def process_league_id(id):
+    """Process the WIKIDATA query results for league wikidata id into the format needed."""
+    return id["results"]["bindings"][0]["league"]["value"]
+
+def process_league_details(details, league_id=None):
+    """Process the WIKIDATA query results for league details into the format needed."""
+    if not details["results"]["bindings"]:
+        return None
+    
+    result = details["results"]["bindings"][0]
+    
+    return {
+        "id": league_id.replace("http://www.wikidata.org/entity/", ""),
+        "name": result["name"]["value"],
+        "logo": result["logo"]["value"] if "logo" in result else None,
+        "num_teams": int(result["numTeams"]["value"]) if "numTeams" in result else 0,
+        "website": result["website"]["value"] if "website" in result else None,   
+    }
+
+def calculate_league_winner(championship):
+    if "Serie A" in championship:
+        return "SSC Napoli"
+    elif "La Liga" in championship:
+        return "FC Barcelona"
+    elif "Bundesliga" in championship:
+        return "FC Bayern München"
+
+
+def process_league_winners(winners):
+    """Process the WIKIDATA query results for league winners into the format needed."""
+    if not winners["results"]["bindings"]:
+        return None
+    results = []
+    for championship in winners["results"]["bindings"]:
+        season = championship["seasonLabel"]["value"]
+        if "winnerLabel" in championship:
+            winner = championship["winnerLabel"]["value"]
+        elif "team1Label" in championship:
+            winner = championship["team1Label"]["value"]
+        else:
+            winner = calculate_league_winner(season)
+        results.append({
+            "season": season,
+            "name": winner
+        })
+    #results.sort(key=lambda x: x["season"])        
+    
+    return results
+
+

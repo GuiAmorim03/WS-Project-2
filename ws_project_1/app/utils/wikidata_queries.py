@@ -156,3 +156,65 @@ def get_stadium_details_query(stadium_id):
     GROUP BY ?stadium ?label ?name ?opening ?image ?location ?capacity ?categoryName
 
     """
+
+
+def get_league_id_query(league_name):        
+    """Returns SPARQL query for fetching club Wikidata ID."""
+    return f"""
+    SELECT DISTINCT ?league WHERE {{
+        ?league wdt:P31 wd:Q15991303;
+        wdt:P17 ?country;
+        rdfs:label "{league_name}"@en.
+        FILTER(?country IN (
+            # FILTRAR PAÍSES para evitar outras ligas com o mesmo nome
+            wd:Q145, # United Kingdom
+            wd:Q29, # Spain
+            wd:Q183, # Germany
+            wd:Q142, # France
+            wd:Q38 # Italy
+        ))
+    }}
+    """
+
+def get_league_details_query(league_id):
+    league_id = league_id.replace("http://www.wikidata.org/entity/", "")
+    """Returns SPARQL query for fetching club details by Wikidata ID."""
+    return f"""
+    SELECT ?name ?logo ?numTeams ?website WHERE {{
+    BIND(wd:{league_id} AS ?league)        
+
+    ?league rdfs:label ?name .
+    FILTER(LANG(?name) = "en")
+    
+    OPTIONAL {{ ?league wdt:P154 ?logo. }}
+    OPTIONAL {{ ?league wdt:P1132 ?numTeams. }}
+    OPTIONAL {{ ?league wdt:P856 ?website. }}
+    }}
+    """
+
+def get_league_winners_query(league_id):
+    league_id = league_id.replace("http://www.wikidata.org/entity/", "")
+    """Returns SPARQL query for fetching club details by Wikidata ID."""
+    return f"""
+    SELECT ?seasonLabel ?winnerLabel ?team1 ?team1Label WHERE {{
+        ?season wdt:P3450 wd:{league_id};
+                wdt:P580 ?startTime.
+
+        OPTIONAL {{ ?season wdt:P1346 ?winner. }}
+
+        # Participating team com ranking 1
+        OPTIONAL {{
+            ?season p:P1923 ?teamStatement.
+            ?teamStatement ps:P1923 ?team1.
+            ?teamStatement pq:P1352 1.
+        }}
+
+        BIND(YEAR(?startTime) AS ?startYear)
+        FILTER(?startYear < (YEAR(NOW()) ))
+
+        SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+    }}
+    ORDER BY DESC(?startYear)
+    """
+
+

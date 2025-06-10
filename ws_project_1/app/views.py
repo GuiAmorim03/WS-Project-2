@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection, delete_player
-from .utils.wikidata_client import query_club_details_extra, query_stadium_details
+from .utils.wikidata_client import query_club_details_extra, query_stadium_details, query_league_details, query_league_winners
 from unidecode import unidecode
 
 def player_detail(request, player_id):
@@ -69,11 +69,17 @@ def stadium_detail(request, stadium_id):
     # Get stadium data from the SPARQL endpoint
     stadium_data = query_stadium_details(stadium_id)
 
-    print(f"Fetching details for stadium {stadium_id}")
-
-    print(stadium_data)
-
     return render(request, "stadium.html", {"entity": stadium_data})
+
+def league_detail(request, league_name):
+    # Get league data from the SPARQL endpoint
+    league_data = query_league_details(league_name)
+
+    league_winners = query_league_winners(league_data["id"])
+    if league_winners:
+        league_data["winners"] = league_winners
+
+    return render(request, "league.html", {"entity": league_data})
 
 def dashboard(request):
     """

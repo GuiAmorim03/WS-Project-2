@@ -81,7 +81,7 @@
                 
                 <p>
                     <img src="{{ entity.country.flag }}" alt="Flag" class="mb-1" style="height: 20px;">
-                    <span>{{ entity.league.name }}</span>
+                    <span><a href="{% url 'league' entity.league.name %}" style="color: var(--main-color);">{{ entity.league.name }}</a></span>
                 </p>
             </div>
         </div>
