@@ -360,6 +360,7 @@
                     const audioContainer = document.getElementById('audio-container');
                     if (audioSource && audioContainer) {
                         audioSource.src = wikidataInfo.audio;
+                        audioSource.parentElement.load();
                         audioContainer.style.display = 'block';
                     }
                 }
