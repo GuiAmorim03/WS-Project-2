@@ -20,28 +20,44 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Abbreviation</th>
             <th>League</th>
             <th>Country</th>
-            <th>Players Count</th>
+            <th>Players</th>
+            {% if spin_rules_active %}
+            <th>Rivals</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
         {% for club in entities_list %}
         <tr onclick="window.location.href='{% url 'club' club.id %}';" style="cursor:pointer;">
             <td>
-                <img src="{{ club.logo }}" alt="{{ club.name }}" class="small-logo">
+                <img src="{{ club.logo }}" alt="{{ club.name }} logo" class="small-logo">
                 {{ club.name }}
             </td>
-            <td>{{ club.abbreviation }}</td>
             <td>{{ club.league }}</td>
             <td>
-                <img src="{{ club.flag }}" alt="{{ club.name }} flag" class="small-flag">
+                <img src="{{ club.flag }}" alt="Country flag" class="small-flag">
             </td>
             <td>{{ club.num_players }}</td>
+            {% if spin_rules_active %}
+            <td>
+                {% if club.rivals %}
+                    <div class="badge-container left">
+                        {% for rival in club.rivals %}
+                            <span class="spin-badge danger">{{ rival.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <span class="spin-badge light">No rivals</span>
+                {% endif %}
+            </td>
+            {% endif %}
         </tr>
         {% empty %}
-        <tr><td colspan="5">No clubs found.</td></tr>
+        <tr>
+            <td colspan="{% if spin_rules_active %}5{% else %}4{% endif %}">No clubs found.</td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>

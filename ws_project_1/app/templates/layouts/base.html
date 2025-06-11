@@ -54,6 +54,13 @@
             </div>
         </nav>
 
+        <!-- Floating SPIN Rules Button -->
+        <div id="spin-fab" class="floating-action-button hidden" onclick="toggleSpinRules()" title="Toggle SPIN Rules">
+            <i id="spin-icon" class="fas fa-cog"></i>
+            <i id="spin-loading" class="fas fa-spinner fa-spin" style="display: none;"></i>
+            <span id="spin-tooltip" class="fab-tooltip">Activate SPIN Rules</span>
+        </div>
+
         <div class="container mt-4">
             {% block content %}{% endblock %}
         </div>
@@ -68,4 +75,366 @@
 
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        .floating-action-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #343a40, #495057);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(52, 58, 64, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: none;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .floating-action-button.hidden {
+            opacity: 0;
+            transform: scale(0);
+            pointer-events: none;
+        }
+
+        .floating-action-button.show {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .floating-action-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(52, 58, 64, 0.6);
+        }
+
+        .floating-action-button.loading {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .floating-action-button.loading .fab-tooltip {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
+        .floating-action-button.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 400% 400%;
+            animation: gradient-shift 2s ease infinite;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .floating-action-button.active:hover {
+            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.7);
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .floating-action-button i {
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .floating-action-button:hover i {
+            transform: rotate(180deg);
+        }
+
+        .floating-action-button.active i {
+            transform: rotate(0deg);
+        }
+
+        .floating-action-button.active:hover i {
+            transform: rotate(360deg);
+        }
+
+        .fab-tooltip {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .fab-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            border: 6px solid transparent;
+            border-left-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .floating-action-button:hover .fab-tooltip {
+            opacity: 1;
+            visibility: visible;
+            right: 75px;
+        }
+
+        @media (max-width: 768px) {
+            .floating-action-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .floating-action-button i {
+                font-size: 20px;
+            }
+
+            .fab-tooltip {
+                display: none;
+            }
+        }
+        
+        /* SPIN Rule Enhancement Styles */
+        .spin-insights {
+            border-left: 3px solid var(--main-color);
+            transition: all 0.3s ease;
+        }
+        
+        .spin-insights:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .badge.bg-purple {
+            background-color: #6f42c1 !important;
+        }
+        
+        .teammate-item:hover, .compatriot-item:hover {
+            background-color: #e9ecef !important;
+            transform: translateX(2px);
+            transition: all 0.2s ease;
+        }
+        
+        .list-group-item[style*="border-left: 3px solid #6f42c1"] {
+            background-color: rgba(111, 66, 193, 0.05);
+        }
+    </style>
+    
+    <script>
+        // Track SPIN rules state
+        let spinRulesActive = false;
+        let isLoading = false;
+        
+        // Initialize button state with highest priority
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeSpinButton);
+        } else {
+            // DOM is already ready
+            initializeSpinButton();
+        }
+        
+        function initializeSpinButton() {
+            // Check localStorage first to avoid flickering
+            const storedState = localStorage.getItem('spinRulesActive');
+            if (storedState !== null) {
+                spinRulesActive = storedState === 'true';
+                updateSpinButton();
+            }
+            
+            // Show button immediately with current known state
+            showSpinButton();
+            
+            // Then verify with server asynchronously
+            setTimeout(checkSpinRulesStatus, 0);
+        }
+        
+        async function checkSpinRulesStatus() {
+            console.log('Checking SPIN rules status...');
+            try {
+                const response = await fetch('{% url "toggle_spin_rules" %}', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                });
+                
+                console.log('Response received:', response.status, response.statusText);
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    const newState = data.spin_rules_active;
+                    if (newState !== spinRulesActive) {
+                        spinRulesActive = newState;
+                        localStorage.setItem('spinRulesActive', spinRulesActive.toString());
+                        updateSpinButton();
+                    }
+                    console.log('SPIN rules status updated:', spinRulesActive);
+                } else {
+                    console.warn('Failed to get SPIN rules status:', data.message);
+                }
+            } catch (error) {
+                console.error('Error checking SPIN rules status:', error);
+                // Keep button visible even if status check fails
+            }
+        }
+        
+        function showSpinButton() {
+            const button = document.getElementById('spin-fab');
+            if (button) {
+                button.classList.remove('hidden');
+                button.classList.add('show');
+            }
+        }
+        
+        async function toggleSpinRules() {
+            if (isLoading) return; // Prevent multiple clicks during loading
+            
+            setLoadingState(true);
+            
+            try {
+                const response = await fetch('{% url "toggle_spin_rules" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    spinRulesActive = data.spin_rules_active;
+                    localStorage.setItem('spinRulesActive', spinRulesActive.toString());
+                    updateSpinButton();
+                    
+                    // Perform soft reload after a brief delay to show the updated button state
+                    setTimeout(() => {
+                        softReload();
+                    }, 500);
+                } else {
+                    console.error('Failed to toggle SPIN rules:', data.message);
+                    setLoadingState(false);
+                }
+            } catch (error) {
+                console.error('Error toggling SPIN rules:', error);
+                setLoadingState(false);
+            }
+        }
+        
+        function softReload() {
+            // Add a more sophisticated fade-out effect with blur
+            document.body.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            document.body.style.opacity = '0.6';
+            document.body.style.filter = 'blur(2px)';
+            document.body.style.transform = 'scale(0.98)';
+            
+            // Add a loading indicator
+            const loadingDiv = document.createElement('div');
+            loadingDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(255, 255, 255, 0.95);
+                padding: 20px 30px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                z-index: 9999;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255,255,255,0.3);
+            `;
+            loadingDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 12px; color: #333;">
+                    <i class="fas fa-sync-alt fa-spin" style="color: #007bff;"></i>
+                    <span style="font-weight: 600;">Updating page...</span>
+                </div>
+            `;
+            document.body.appendChild(loadingDiv);
+            
+            // Preserve the current URL with any query parameters
+            const currentUrl = window.location.href;
+            
+            // Use window.location.replace for a softer reload that doesn't add to history
+            setTimeout(() => {
+                window.location.replace(currentUrl);
+            }, 400);
+        }
+        
+        function setLoadingState(loading) {
+            isLoading = loading;
+            const button = document.getElementById('spin-fab');
+            const icon = document.getElementById('spin-icon');
+            const loadingIcon = document.getElementById('spin-loading');
+            const tooltip = document.getElementById('spin-tooltip');
+            
+            if (loading) {
+                button.classList.add('loading');
+                icon.style.display = 'none';
+                loadingIcon.style.display = 'block';
+                tooltip.textContent = spinRulesActive ? 'Clearing SPIN Rules...' : 'Executing SPIN Rules...';
+            } else {
+                button.classList.remove('loading');
+                icon.style.display = 'block';
+                loadingIcon.style.display = 'none';
+                updateSpinButton(); // This will set the correct tooltip text
+            }
+        }
+        
+        function updateSpinButton() {
+            if (isLoading) return; // Don't update if loading
+            
+            const button = document.getElementById('spin-fab');
+            const icon = document.getElementById('spin-icon');
+            const tooltip = document.getElementById('spin-tooltip');
+            
+            if (spinRulesActive) {
+                button.classList.add('active');
+                icon.className = 'fas fa-check-circle';
+                tooltip.textContent = 'SPIN Rules Active';
+            } else {
+                button.classList.remove('active');
+                icon.className = 'fas fa-cog';
+                tooltip.textContent = 'Activate SPIN Rules';
+            }
+        }
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 </html>

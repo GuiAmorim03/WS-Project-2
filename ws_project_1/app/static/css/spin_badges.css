@@ -1,69 +1,9 @@
-html, body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.container {
-    flex: 1; /* Ensures the content takes up available space */
-}
-
-body {
-    background-color: gainsboro;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-.navbar {
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
-    padding: 12px 0;
-    background: linear-gradient(to right, #121212, #1a1a1a, #222222) !important;
-}
-.navbar-brand {
-    font-weight: 700;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.navbar-brand i {
-    font-size: 1.3rem;
-}
-.nav-link {
-    font-weight: 500;
-    margin: 0 5px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: all 0.3s;
-}
-.nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-}
-.separator {
-    color: rgba(255, 255, 255, 0.3);
-    margin: 0 5px;
-}
-footer {
-    margin-top: auto;
-    padding: 20px 0;
-    background: linear-gradient(to right, #121212, #1a1a1a, #222222);
-    color: #f8f9fa;
-    width: 100%;
-}
-footer p {
-    margin-bottom: 5px;
-}
-.creator-names {
-    font-style: italic;
-    color: #adb5bd;
-}
-
-/* Modern Badge Styles */
+/* Modern Badge Styles (from base.css) */
 .spin-badge {
     display: inline-flex;
     align-items: center;
-    padding: 4px 10px;
+    justify-content: center;
+    padding: 4px 16px;
     font-size: 0.75rem;
     font-weight: 600;
     border-radius: 12px;
@@ -73,6 +13,7 @@ footer p {
     border: 1px solid transparent;
     transition: all 0.2s ease;
     white-space: nowrap;
+    text-align: center;
 }
 
 .spin-badge:hover {
@@ -80,112 +21,146 @@ footer p {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Badge with icons */
+.spin-badge.with-icon {
+    padding-left: 14px;
+    padding-right: 16px;
+}
+
+.spin-badge.with-icon i {
+    margin-right: 4px;
+    font-size: 0.7rem;
+}
+
+/* Tag Styles (from players.html) */
+.spin-tag {
+    width: 35px;
+    height: 20px;
+    border-radius: 10%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    cursor: help;
+}
+
+.spin-tag:hover {
+    transform: scale(1.2);
+    z-index: 1;
+}
+
+.spin-tag i {
+    font-size: 0.65rem;
+}
+
+.spin-tag.more-indicator {
+    background: #dee2e6;
+    color: #6c757d;
+    font-size: 0.55rem;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+
 /* Badge Colors */
-.spin-badge.primary {
+.spin-badge.primary, .spin-tag.primary {
     background: linear-gradient(135deg, #007bff, #0056b3);
     color: white;
     border-color: #0056b3;
 }
 
-.spin-badge.secondary {
+.spin-badge.secondary, .spin-tag.secondary {
     background: linear-gradient(135deg, #6c757d, #495057);
     color: white;
     border-color: #495057;
 }
 
-.spin-badge.success {
+.spin-badge.success, .spin-tag.success {
     background: linear-gradient(135deg, #28a745, #1e7e34);
     color: white;
     border-color: #1e7e34;
 }
 
-.spin-badge.info {
+.spin-badge.info, .spin-tag.info {
     background: linear-gradient(135deg, #17a2b8, #117a8b);
     color: white;
     border-color: #117a8b;
 }
 
-.spin-badge.warning {
+.spin-badge.warning, .spin-tag.warning {
     background: linear-gradient(135deg, #ffc107, #e0a800);
     color: #212529;
     border-color: #e0a800;
 }
 
-.spin-badge.danger {
+.spin-badge.danger, .spin-tag.danger {
     background: linear-gradient(135deg, #dc3545, #bd2130);
     color: white;
     border-color: #bd2130;
 }
 
-.spin-badge.light {
+.spin-badge.light, .spin-tag.light {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     color: #495057;
     border-color: #dee2e6;
 }
 
-.spin-badge.dark {
+.spin-badge.dark, .spin-tag.dark {
     background: linear-gradient(135deg, #343a40, #23272b);
     color: white;
     border-color: #23272b;
 }
 
 /* Special SPIN Rule Badges */
-.spin-badge.veteran {
+.spin-badge.veteran, .spin-tag.veteran {
     background: linear-gradient(135deg, #8b4513, #a0522d);
     color: white;
     border-color: #8b4513;
 }
 
-.spin-badge.prospect {
+.spin-badge.prospect, .spin-tag.prospect {
     background: linear-gradient(135deg, #32cd32, #228b22);
     color: white;
     border-color: #228b22;
 }
 
-.spin-badge.efficiency {
+.spin-badge.efficiency, .spin-tag.efficiency {
     background: linear-gradient(135deg, #ff6b35, #ff8c42);
     color: white;
     border-color: #ff6b35;
 }
 
-.spin-badge.playmaker {
+.spin-badge.playmaker, .spin-tag.playmaker {
     background: linear-gradient(135deg, #9b59b6, #8e44ad);
     color: white;
     border-color: #8e44ad;
 }
 
-.spin-badge.goal-threat {
+.spin-badge.goal-threat, .spin-tag.goal-threat {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
     border-color: #c0392b;
 }
 
-.spin-badge.key-player {
+.spin-badge.key-player, .spin-tag.key-player {
     background: linear-gradient(135deg, #f39c12, #e67e22);
     color: white;
     border-color: #e67e22;
 }
 
-.spin-badge.versatile {
+.spin-badge.versatile, .spin-tag.versatile {
     background: linear-gradient(135deg, #1abc9c, #16a085);
     color: white;
     border-color: #16a085;
 }
 
-.spin-badge.disciplinary {
+.spin-badge.disciplinary, .spin-tag.disciplinary {
     background: linear-gradient(135deg, #e67e22, #d35400);
     color: white;
     border-color: #d35400;
-}
-
-/* Badge with icons */
-.spin-badge.with-icon {
-    padding-left: 8px;
-}
-
-.spin-badge.with-icon i {
-    margin-right: 4px;
-    font-size: 0.7rem;
 }
 
 /* Badge containers */
@@ -208,12 +183,42 @@ footer p {
     justify-content: flex-end;
 }
 
+.spin-tags {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+}
+
 /* Responsive badges */
+@media (max-width: 768px) {
+    .spin-tag {
+        width: 18px;
+        height: 18px;
+        font-size: 0.6rem;
+    }
+    
+    .spin-tag i {
+        font-size: 0.55rem;
+    }
+    
+    .spin-tag.more-indicator {
+        width: 20px;
+        height: 20px;
+        font-size: 0.5rem;
+    }
+}
+
 @media (max-width: 576px) {
     .spin-badge {
         font-size: 0.65rem;
-        padding: 3px 8px;
+        padding: 3px 12px;
         margin: 1px 2px;
+    }
+    
+    .spin-badge.with-icon {
+        padding-left: 10px;
+        padding-right: 12px;
     }
     
     .spin-badge.with-icon i {

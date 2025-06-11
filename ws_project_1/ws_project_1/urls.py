@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("player/<str:player_id>", player_detail, name="player"),
     path("club/<str:club_id>", club_detail, name="club"),
+    path("club/<str:club_id>/wikidata/", club_wikidata_details, name="club_wikidata_details"),
     path("players", players, name="players"),
     path("clubs", clubs, name="clubs"),
     path("graph", graph_view, name="graph"),
@@ -33,5 +34,8 @@ urlpatterns = [
     path("player/<str:player_id>/add_position/", add_position_to_player, name="add_position"),
     path("player-connection/", player_connection_checker, name="player_connection"),
     path('players/<str:player_id>/delete/', delete_player_view, name='delete_player'),
+    path('toggle-spin-rules/', toggle_spin_rules, name='toggle_spin_rules'),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.ico')), name='favicon'),
+    path('stadium/<str:stadium_id>', stadium_detail, name='stadium'),
+    path('league/<str:league_name>', league_detail, name='league'),
 ]
