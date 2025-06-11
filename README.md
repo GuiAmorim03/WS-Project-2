@@ -50,34 +50,35 @@ docker compose down -v
 
 ## How to Run the Project (**WITHOUT DOCKER**)
 
-### 1. Clone the Repository
+### 1. Extract the zip file
 
-```bash
-git clone https://github.com/yourusername/WS-Project-1.git
-cd WS-Project-1
-```
+After downloading the project, extract the zip file and navigate to the project directory:
 
 ### 2. Set Up Django App
 
 ```bash
 cd ws_project_1
 python3 -m venv venv
-source venv/bin/active
-pip install -r requirements
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-Before the next step make sure that **GraphDB** is running on [http://localhost:7200](http://localhost:7200) and **import file** `data/import/football_rdf_data.nt`.
+Before the next step make sure that **GraphDB** is running on [http://localhost:7200](http://localhost:7200).
 
 ### 3.Import Data and Create Repositories
-```bash
-bash ./data/config/init-repository.sh ./data/config
-```
+
+First you need to create a GraphDB repository for the football data. **IMPORTANT**: The repository name must be `football`.
+
+After creating a repository in GraphDB, you need to import the RDF data.
+- File `data/import/football_rdf_data.nt` contains the football data in RDF format.
+- File `data/config/football_config.ttl` contains the ontology configuration for the football data.
 
 ### 4. Run Django
 
 ```bash
-GRAPHDB_ENDPOINT=http://locahost:7200 python3 manage.py runserver 0.0.0.0:8000
+GRAPHDB_ENDPOINT=http://localhost:7200 python3 manage.py runserver
 ```
+The variable `GRAPHDB_ENDPOINT` should point to your GraphDB instance. So, if you are not running GraphDB on the default port, you need to change it accordingly.
 
 ## Project Structure
 
