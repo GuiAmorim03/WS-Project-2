@@ -158,7 +158,10 @@
     <div class="row">
         {% if entity.teammates %}
         <div class="col-md-6">
-            <h4 style="color: var(--main-color);">Teammates</h4>
+            <h4 style="color: var(--main-color);">
+                Teammates 
+                <span class="badge bg-purple ms-2" style="font-size: 0.6em; background-color: #6f42c1 !important;">SPIN</span>
+            </h4>
             <div class="teammates-container" style="max-height: 200px; overflow-y: auto;">
                 {% for teammate in entity.teammates %}
                 <div class="teammate-item mb-2 p-2" style="display: flex; align-items: center; background-color: #f8f9fa; border-radius: 5px;">
@@ -175,7 +178,10 @@
         
         {% if entity.compatriots %}
         <div class="col-md-6">
-            <h4 style="color: var(--main-color);">Compatriots</h4>
+            <h4 style="color: var(--main-color);">
+                Compatriots 
+                <span class="badge bg-purple ms-2" style="font-size: 0.6em; background-color: #6f42c1 !important;">SPIN</span>
+            </h4>
             <div class="compatriots-container" style="max-height: 200px; overflow-y: auto;">
                 {% for compatriot in entity.compatriots %}
                 <div class="compatriot-item mb-2 p-2" style="display: flex; align-items: center; background-color: #f8f9fa; border-radius: 5px;">
