@@ -35,12 +35,21 @@ def player_detail(request, player_id):
                         break
                 
                 if attacking_category:
-                    # Add efficiency stat to the Attacking category with SPIN badge flag
-                    attacking_category["stats"].append({
-                        "name": "Efficiency",
-                        "value": efficiency_value,
-                        "is_spin_stat": True  # Flag to show SPIN badge
-                    })
+                    # Check if efficiency stat already exists
+                    efficiency_stat_exists = any(stat["name"] == "Efficiency" for stat in attacking_category["stats"])
+                    if not efficiency_stat_exists:
+                        # Add efficiency stat to the Attacking category with SPIN badge flag
+                        attacking_category["stats"].append({
+                            "name": "Efficiency",
+                            "value": efficiency_value,
+                            "is_spin_stat": True  # Flag to show SPIN badge
+                        })
+                    else:
+                        # Update existing efficiency stat with spin stat
+                        for stat in attacking_category["stats"]:
+                            if stat["name"] == "Efficiency":
+                                stat["is_spin_stat"] = True
+
             
             # Add SPIN rule related data
             player_data["teammates"] = query_player_teammates(player_id)
@@ -510,13 +519,19 @@ def player_connection_checker(request):
                             attacking_category = category
                             break
                     
-                    if attacking_category:
+                    efficiency_stat_exists = any(stat["name"] == "Efficiency" for stat in attacking_category["stats"])
+                    if not efficiency_stat_exists:
                         # Add efficiency stat to the Attacking category with SPIN badge flag
                         attacking_category["stats"].append({
                             "name": "Efficiency",
                             "value": efficiency_value,
                             "is_spin_stat": True  # Flag to show SPIN badge
                         })
+                    else:
+                        # Update existing efficiency stat with spin stat
+                        for stat in attacking_category["stats"]:
+                            if stat["name"] == "Efficiency":
+                                stat["is_spin_stat"] = True
                         
             if enhanced_player2:
                 player2_data["spin_inferences"] = enhanced_player2["spin_inferences"]
@@ -532,13 +547,19 @@ def player_connection_checker(request):
                             attacking_category = category
                             break
                     
-                    if attacking_category:
+                    efficiency_stat_exists = any(stat["name"] == "Efficiency" for stat in attacking_category["stats"])
+                    if not efficiency_stat_exists:
                         # Add efficiency stat to the Attacking category with SPIN badge flag
                         attacking_category["stats"].append({
                             "name": "Efficiency",
                             "value": efficiency_value,
                             "is_spin_stat": True  # Flag to show SPIN badge
                         })
+                    else:
+                        # Update existing efficiency stat with spin stat
+                        for stat in attacking_category["stats"]:
+                            if stat["name"] == "Efficiency":
+                                stat["is_spin_stat"] = True
             
             # Check for SPIN property connections
             if enhanced_player1 and enhanced_player2:
@@ -659,52 +680,6 @@ def player_connection_checker(request):
                 stats_comparison.append(comparison_category)
             
             results["stats_comparison"] = stats_comparison
-
-        # Add SPIN-derived stats if available
-        if SPIN_RULES_ACTIVE and enhanced_player1 and enhanced_player2:
-            spin_category = {
-                "name": "SPIN Analytics",
-                "stats": []
-            }
-            
-            # Add efficiency comparison if both players have it
-            if (enhanced_player1.get("spin_inferences", {}).get("efficiency") and 
-                enhanced_player2.get("spin_inferences", {}).get("efficiency")):
-                
-                eff1 = enhanced_player1["spin_inferences"]["efficiency"]
-                eff2 = enhanced_player2["spin_inferences"]["efficiency"]
-                
-                spin_category["stats"].append({
-                    "name": "Efficiency",
-                    "player1_value": eff1,
-                    "player2_value": eff2,
-                    "player1_better": eff1 > eff2,
-                    "player2_better": eff2 > eff1,
-                    "equal": eff1 == eff2,
-                    "is_negative": False,
-                    "is_spin_stat": True
-                })
-            
-            # Add current age comparison
-            if (enhanced_player1.get("spin_inferences", {}).get("current_age") and 
-                enhanced_player2.get("spin_inferences", {}).get("current_age")):
-                
-                age1 = enhanced_player1["spin_inferences"]["current_age"]
-                age2 = enhanced_player2["spin_inferences"]["current_age"]
-                
-                spin_category["stats"].append({
-                    "name": "Current Age",
-                    "player1_value": age1,
-                    "player2_value": age2,
-                    "player1_better": False,  # Age comparison is neutral
-                    "player2_better": False,
-                    "equal": age1 == age2,
-                    "is_negative": False,
-                    "is_spin_stat": True
-                })
-            
-            if spin_category["stats"]:
-                results["stats_comparison"].append(spin_category)
     
     return render(request, "player_connection.html", {
         "player_list": player_list,
