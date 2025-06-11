@@ -220,6 +220,80 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM loaded, starting color detection...");
+        
+        // FIXED: Get the color from the card element, not the document root
+        const cardElement = document.querySelector('.card');
+        let mainColor = '';
+        
+        if (cardElement) {
+            const cardStyle = getComputedStyle(cardElement);
+            mainColor = cardStyle.getPropertyValue('--main-color').trim();
+            console.log("Card element main-color:", mainColor);
+            
+            // Fallback to inline style if computed style is empty
+            if (!mainColor) {
+                mainColor = cardElement.style.getPropertyValue('--main-color').trim();
+                console.log("Using inline style main-color:", mainColor);
+            }
+        }
+        
+        // If still empty, use hardcoded fallback
+        if (!mainColor) {
+            // Extract from HTML attribute
+            mainColor = "#{{ entity.color }}";
+            console.log("Using server-provided color:", mainColor);
+        }
+
+        // Now try with the actual value
+        const isLight = isLightColor(mainColor);
+        console.log("Final determination - Is light color:", isLight);
+        
+        // Apply appropriate styles based on color lightness
+        if (isLight) {
+            console.log("Light color detected - switching to black");
+            // Use black for team name instead of light color
+            const teamName = document.querySelector('h2[style*="color: var(--main-color)"]');
+            if (teamName) {
+                teamName.style.color = '#000';
+                console.log("Applied black color to team name");
+            } else {
+                console.warn("Team name element not found");
+            }
+
+            // Apply black color to venue links with team color
+            const venueLinks = document.querySelectorAll('.team-color-link');
+            console.log("Found venue links:", venueLinks);
+            venueLinks.forEach(link => {
+                console.log("Applying black color to venue link:", link);
+                link.style.color = '#000';
+                console.log("Applied black color to venue link");
+            });
+            
+            // Make hover indicator darker for rows
+            document.querySelectorAll('.player-row').forEach(row => {
+                row.addEventListener('mouseover', function() {
+                    this.style.borderLeft = '2px solid #000';
+                    this.style.backgroundColor = 'rgba(0,0,0,0.03)';
+                });
+                row.addEventListener('mouseout', function() {
+                    this.style.borderLeft = '';
+                    this.style.backgroundColor = '';
+                });
+            });
+        } else {
+            console.log("Dark color detected - keeping original styling");
+            // For darker colors, keep the original styling
+            document.querySelectorAll('.sortable').forEach(col => {
+                col.addEventListener('mouseover', function() {
+                    this.querySelector('span').style.color = mainColor;
+                });
+                col.addEventListener('mouseout', function() {
+                    this.querySelector('span').style.color = '#666';
+                });
+            });
+        }
+
         // Fetch Wikidata information asynchronously
         const clubId = "{{ entity.id }}";
         
