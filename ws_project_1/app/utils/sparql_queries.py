@@ -51,6 +51,7 @@ def get_club_details_query(club_id):
     """Returns SPARQL query for fetching club details."""
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ont: <http://football.org/ontology#>
     PREFIX fut-rel: <http://football.org/rel/>
 
     SELECT
@@ -68,7 +69,7 @@ def get_club_details_query(club_id):
     WHERE {{
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
-        ?club_id rdf:type fut-rel:Club ;
+        ?club_id rdf:type ?class ;
                 fut-rel:name ?name ;
                 fut-rel:abrv ?abbreviation ;
                 fut-rel:stadium ?stadium ;
@@ -78,6 +79,7 @@ def get_club_details_query(club_id):
                 fut-rel:color ?color ;
                 fut-rel:alternateColor ?alternateColor ;
                 fut-rel:country/fut-rel:flag ?flag .
+        ?class rdfs:subClassOf* ont:Club .
 
         ?league_id fut-rel:name ?league_name .
     }}
@@ -88,6 +90,8 @@ def get_club_players_query(club_id):
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
 
     SELECT
         ?player_id
@@ -100,7 +104,7 @@ def get_club_players_query(club_id):
     WHERE {{
         VALUES ?club_id {{ <http://football.org/ent/{club_id}> }}
         
-        ?player_id rdf:type fut-rel:Player ;
+        ?player_id rdf:type ?class ;
                 fut-rel:name ?name ;
                 fut-rel:born ?born ;
                 fut-rel:club ?club_id ;
@@ -108,6 +112,7 @@ def get_club_players_query(club_id):
                 fut-rel:nation/fut-rel:name ?nation ;
                 fut-rel:nation/fut-rel:flag ?flag ;
                 fut-rel:position ?position .
+        ?class rdfs:subClassOf* ont:Player .
     }}
     GROUP BY ?player_id ?name ?born ?photo_url ?nation ?flag
     ORDER BY ?name
@@ -118,6 +123,8 @@ def get_all_players_query():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
 
     SELECT
         ?player_id
@@ -129,11 +136,12 @@ def get_all_players_query():
         ?currentClubLogo
         ?born
     WHERE { 
-        ?player_id rdf:type fut-rel:Player ;
+        ?player_id rdf:type ?class ;
                 fut-rel:name ?name ;
                 fut-rel:position ?position ;
                 fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
-                fut-rel:born ?born ;
+                fut-rel:born ?born .
+        ?class rdfs:subClassOf* ont:Player .
 
         OPTIONAL { 
             ?player_id fut-rel:club ?currentClub .
@@ -150,6 +158,8 @@ def get_all_clubs_query():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
 
     SELECT
         ?club_id
@@ -162,7 +172,7 @@ def get_all_clubs_query():
         ?alternateColor
         (COUNT(?player) AS ?numPlayers)
     WHERE {
-        ?club_id rdf:type fut-rel:Club ;
+        ?club_id rdf:type ?class ;
                 fut-rel:name ?name ;
                 fut-rel:abrv ?abbreviation ;
                 fut-rel:league/fut-rel:name ?league ;
@@ -170,6 +180,7 @@ def get_all_clubs_query():
                 fut-rel:logo ?logo ;
                 fut-rel:color ?color ;
                 fut-rel:alternateColor ?alternateColor .
+        ?class rdfs:subClassOf* ont:Club .
         
         OPTIONAL { ?player fut-rel:club ?club_id . }
     }
@@ -183,6 +194,8 @@ def get_player_stats_query(player_id):
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
     PREFIX fut-stat: <http://football.org/stat/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
     SELECT ?stat_category ?stat_name ?stat_value
@@ -200,6 +213,9 @@ def get_club_stats_query(club_id):
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
 
     SELECT ?stat_category ?stat_name ?stat_value
     WHERE {{

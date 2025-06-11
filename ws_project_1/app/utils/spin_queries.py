@@ -21,55 +21,6 @@ def get_player_efficiency_rule():
     }
     """
 
-def get_teammates_rule():
-    """Identify Teammates"""
-    return """
-    PREFIX fut-rel: <http://football.org/rel/>
-    
-    INSERT {
-        ?player1 fut-rel:teammate ?player2 .
-    }
-    WHERE {
-        ?player1 a fut-rel:Player .
-        ?player2 a fut-rel:Player .
-        ?player1 fut-rel:club ?club .
-        ?player2 fut-rel:club ?club .
-        FILTER(?player1 != ?player2)
-    }
-    """
-
-def get_compatriots_rule():
-    """Identify Compatriots (same nationality)"""
-    return """
-    PREFIX fut-rel: <http://football.org/rel/>
-    
-    INSERT {
-        ?player1 fut-rel:compatriot ?player2 .
-    }
-    WHERE {
-        ?player1 a fut-rel:Player .
-        ?player2 a fut-rel:Player .
-        ?player1 fut-rel:nation ?country .
-        ?player2 fut-rel:nation ?country .
-        FILTER(?player1 != ?player2)
-    }
-    """
-
-def get_current_age_rule():
-    """Calculate Current Age"""
-    return """
-    PREFIX fut-rel: <http://football.org/rel/>
-    
-    INSERT {
-        ?player fut-rel:currentAge ?age .
-    }
-    WHERE {
-        ?player a fut-rel:Player .
-        ?player fut-rel:born ?birthYear .
-        BIND(2025 - ?birthYear AS ?age)
-    }
-    """
-
 def get_veterans_rule():
     """Identify Veterans (35+ years old)"""
     return """
@@ -259,7 +210,7 @@ def get_league_rivals_rule():
     PREFIX fut-rel: <http://football.org/rel/>
     
     INSERT {
-        ?club1 fut-rel:leagueRival ?club2 .
+        ?club1 fut-rel:cityRival ?club2 .
     }
     WHERE {
         ?club1 a fut-rel:Club .
@@ -304,7 +255,7 @@ def get_clear_spin_inferences_query():
             fut-rel:currentAge, fut-rel:veteranStatus, fut-rel:youngProspect,
             fut-rel:penaltySpecialist, fut-rel:playmaker, fut-rel:goalThreat,
             fut-rel:disciplinaryRisk, fut-rel:keyPlayer, fut-rel:playerType,
-            fut-rel:versatilePlayer, fut-rel:leagueRival, fut-rel:pastTeammate
+            fut-rel:versatilePlayer, fut-rel:cityRival, fut-rel:pastTeammate
         ))
     }
     """
@@ -313,9 +264,6 @@ def get_all_spin_rules():
     """Get all SPIN rules in order"""
     return [
         get_player_efficiency_rule(),
-        get_teammates_rule(),
-        get_compatriots_rule(),
-        get_current_age_rule(),
         get_veterans_rule(),
         get_young_prospects_rule(),
         get_penalty_specialists_rule(),
@@ -453,6 +401,7 @@ def get_teammates_query(player_id):
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
 
     SELECT
         ?teammate_id
@@ -462,7 +411,7 @@ def get_teammates_query(player_id):
         ?nation
         ?flag
     WHERE {{
-        <http://football.org/ent/{player_id}> fut-rel:teammate ?teammate_id .
+        <http://football.org/ent/{player_id}> ont:teammate ?teammate_id .
         
         ?teammate_id fut-rel:name ?name ;
                 fut-rel:position ?position ;
@@ -478,6 +427,7 @@ def get_compatriots_query(player_id):
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
 
     SELECT
         ?compatriot_id
@@ -487,7 +437,7 @@ def get_compatriots_query(player_id):
         ?currentClubName
         ?currentClubLogo
     WHERE {{
-        <http://football.org/ent/{player_id}> fut-rel:compatriot ?compatriot_id .
+        <http://football.org/ent/{player_id}> ont:compatriot ?compatriot_id .
         
         ?compatriot_id fut-rel:name ?name ;
                 fut-rel:position ?position ;
@@ -544,6 +494,7 @@ def get_club_rivals_query(club_id):
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
 
     SELECT
         ?rival_id
@@ -554,7 +505,7 @@ def get_club_rivals_query(club_id):
         ?city
         ?league_name
     WHERE {{
-        <http://football.org/ent/{club_id}> fut-rel:leagueRival ?rival_id .
+        <http://football.org/ent/{club_id}> ont:cityRival ?rival_id .
         
         ?rival_id fut-rel:name ?name ;
                 fut-rel:logo ?logo ;
