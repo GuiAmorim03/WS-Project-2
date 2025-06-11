@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div class="card" vocab="https://schema.org/" typeof="SportsTeam">
+<div class="card" vocab="https://schema.org/" typeof="SportsTeam" resource="#{{ entity.id }}">
     <div class="card-header position-relative" style="background-color: #f8f9fa; color: #333; padding-right: 70px;">
         <!-- Team colors ball with diagonal split and enhanced shadow -->
         <div class="team-colors-ball position-absolute me-4" style="
@@ -39,7 +39,7 @@
             </div>
             <div class="col-10">
                 <div class="d-flex align-items-center">
-                    <h2 class="mt-5 me-2" style="color: var(--main-color);" id="club-name">{{ entity.name }}</h2>
+                    <h2 property="name" class="mt-5 me-2" style="color: var(--main-color);" id="club-name">{{ entity.name }}</h2>
                     <!-- Audio container -->
                     <div class="mt-5" id="audio-container" style="display: none;">
                         <audio controls class="audio-player" style="height: 24px; width: 150px; opacity: 0.7;">
@@ -51,11 +51,11 @@
                     <span property="address">{{ entity.city }}</span>
                     <span> • </span>
                     <!-- Stadium info with potential link -->
-                    <span id="stadium-info">{{ entity.stadium }}</span>
+                    <span property="location" id="stadium-info">{{ entity.stadium }}</span>
                     <!-- Inception date container -->
                     <span id="inception-container" style="display: none;">
                         <span> • </span>
-                        <span id="inception-date"></span>
+                        <span property="foundingDate" id="inception-date"></span>
                     </span>
                 </p>
                 
@@ -70,7 +70,7 @@
                 
                 <p>
                     <img src="{{ entity.country.flag }}" alt="Flag" class="mb-1" style="height: 20px;">
-                    <span><a href="{% url 'league' entity.league.name %}" style="color: var(--main-color);">{{ entity.league.name }}</a></span>
+                    <span property="memberOf" typeof="SportsOrganization"><a href="{% url 'league' entity.league.name %}" style="color: var(--main-color);">{{ entity.league.name }}</a></span>
                 </p>
             </div>
         </div>
@@ -95,15 +95,15 @@
             
             <div class="row">
                 {% for rival in entity.rivals %}
-                <div class="col-md-4 col-sm-6 mb-3">
+                <div typeof="SportsTeam" resource="#{{ rival.id }}" class="col-md-4 col-sm-6 mb-3">
                     <div class="card rival-card h-100" style="border: 1px solid #eaeaea; transition: all 0.3s ease;">
                         <div class="card-body text-center">
-                            <img src="{{ rival.logo }}" alt="{{ rival.name }}" class="mb-2" style="height: 40px; width: auto;">
-                            <h6 class="card-title mb-1" style="font-weight: 600;">{{ rival.name }}</h6>
-                            <p class="card-text mb-1" style="font-size: 0.85em; color: #666;">
+                            <img property="logo" src="{{ rival.logo }}" alt="{{ rival.name }}" class="mb-2" style="height: 40px; width: auto;">
+                            <h6 property="name" class="card-title mb-1" style="font-weight: 600;">{{ rival.name }}</h6>
+                            <p property="address" class="card-text mb-1" style="font-size: 0.85em; color: #666;">
                                 <i class="fas fa-map-marker-alt me-1"></i>{{ rival.city }}
                             </p>
-                            <p class="card-text mb-2" style="font-size: 0.8em; color: #888;">
+                            <p property="memberOf" class="card-text mb-2" style="font-size: 0.8em; color: #888;">
                                 {{ rival.league }}
                             </p>
                             <a href="{% url 'club' rival.id %}" class="btn btn-sm btn-outline-primary">View Club</a>
@@ -142,7 +142,7 @@
             </thead>
             <tbody>
                 {% for player in entity.players %}
-                <tr class="player-row" typeof="Person" property="athlete" style="transition: background-color 0.2s ease;" resource="{{ player.id }}">
+                <tr class="player-row" typeof="Person" property="athlete" style="transition: background-color 0.2s ease;" resource="#{{ player.id }}">
                     <td class="py-3">
                         <a href="{% url 'player' player.id %}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
                             <div style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center;">
@@ -220,6 +220,80 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM loaded, starting color detection...");
+        
+        // FIXED: Get the color from the card element, not the document root
+        const cardElement = document.querySelector('.card');
+        let mainColor = '';
+        
+        if (cardElement) {
+            const cardStyle = getComputedStyle(cardElement);
+            mainColor = cardStyle.getPropertyValue('--main-color').trim();
+            console.log("Card element main-color:", mainColor);
+            
+            // Fallback to inline style if computed style is empty
+            if (!mainColor) {
+                mainColor = cardElement.style.getPropertyValue('--main-color').trim();
+                console.log("Using inline style main-color:", mainColor);
+            }
+        }
+        
+        // If still empty, use hardcoded fallback
+        if (!mainColor) {
+            // Extract from HTML attribute
+            mainColor = "#{{ entity.color }}";
+            console.log("Using server-provided color:", mainColor);
+        }
+
+        // Now try with the actual value
+        const isLight = isLightColor(mainColor);
+        console.log("Final determination - Is light color:", isLight);
+        
+        // Apply appropriate styles based on color lightness
+        if (isLight) {
+            console.log("Light color detected - switching to black");
+            // Use black for team name instead of light color
+            const teamName = document.querySelector('h2[style*="color: var(--main-color)"]');
+            if (teamName) {
+                teamName.style.color = '#000';
+                console.log("Applied black color to team name");
+            } else {
+                console.warn("Team name element not found");
+            }
+
+            // Apply black color to venue links with team color
+            const venueLinks = document.querySelectorAll('.team-color-link');
+            console.log("Found venue links:", venueLinks);
+            venueLinks.forEach(link => {
+                console.log("Applying black color to venue link:", link);
+                link.style.color = '#000';
+                console.log("Applied black color to venue link");
+            });
+            
+            // Make hover indicator darker for rows
+            document.querySelectorAll('.player-row').forEach(row => {
+                row.addEventListener('mouseover', function() {
+                    this.style.borderLeft = '2px solid #000';
+                    this.style.backgroundColor = 'rgba(0,0,0,0.03)';
+                });
+                row.addEventListener('mouseout', function() {
+                    this.style.borderLeft = '';
+                    this.style.backgroundColor = '';
+                });
+            });
+        } else {
+            console.log("Dark color detected - keeping original styling");
+            // For darker colors, keep the original styling
+            document.querySelectorAll('.sortable').forEach(col => {
+                col.addEventListener('mouseover', function() {
+                    this.querySelector('span').style.color = mainColor;
+                });
+                col.addEventListener('mouseout', function() {
+                    this.querySelector('span').style.color = '#666';
+                });
+            });
+        }
+
         // Fetch Wikidata information asynchronously
         const clubId = "{{ entity.id }}";
         
@@ -286,6 +360,7 @@
                     const audioContainer = document.getElementById('audio-container');
                     if (audioSource && audioContainer) {
                         audioSource.src = wikidataInfo.audio;
+                        audioSource.parentElement.load();
                         audioContainer.style.display = 'block';
                     }
                 }
@@ -332,8 +407,8 @@
                     const brandsContainer = document.getElementById('brands-container');
                     if (brandsContainer) {
                         const brandElements = wikidataInfo.brands.filter(brand => brand && brand.logo).map(brand => 
-                            `<div class="me-3 mb-1">
-                                <img src="${brand.logo}" alt="${brand.name || 'Brand'}" title="${brand.name || 'Brand'}" 
+                            `<div property="brand" class="me-3 mb-1">
+                                <img property="logo" src="${brand.logo}" alt="${brand.name || 'Brand'}" title="${brand.name || 'Brand'}" 
                                      style="height: 30px; max-width: 80px; object-fit: contain;">
                             </div>`
                         ).join('');
@@ -348,7 +423,7 @@
                 if (wikidataInfo.venue && wikidataInfo.venue.name && wikidataInfo.venue.id) {
                     const stadiumInfo = document.getElementById('stadium-info');
                     if (stadiumInfo) {
-                        stadiumInfo.innerHTML = `<a href="/stadiums/${wikidataInfo.venue.id}/" class="team-color-link" style="color: var(--main-color);">${wikidataInfo.venue.name}</a>`;
+                        stadiumInfo.innerHTML = `<a href="/stadium/${wikidataInfo.venue.id}" class="team-color-link" style="color: var(--main-color);">${wikidataInfo.venue.name}</a>`;
                     }
                 }
                 
@@ -357,13 +432,13 @@
                 
                 if (wikidataInfo.coach && wikidataInfo.coach.name) {
                     managementHtml += `
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-3" typeof="Person" property="coach" >
                             <div class="card h-100" style="border: none; box-shadow: none;">
                                 <div class="card-body p-0">
                                     <div class="d-flex">
                                         <div style="height: 100px; overflow: hidden;">
                                             ${wikidataInfo.coach.photo ? 
-                                                `<img src="${wikidataInfo.coach.photo}" alt="${wikidataInfo.coach.name}" class="img-fluid h-100 object-fit-cover">` :
+                                                `<img property="image" src="${wikidataInfo.coach.photo}" alt="${wikidataInfo.coach.name}" class="img-fluid h-100 object-fit-cover">` :
                                                 `<div class="bg-light h-100 d-flex align-items-center justify-content-center">
                                                     <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
                                                 </div>`
@@ -371,7 +446,7 @@
                                         </div>
                                         <div class="d-flex flex-column justify-content-center p-3">
                                             <div class="text-muted small">Head Coach</div>
-                                            <h5 class="mb-0 mt-1 fw-bold">${wikidataInfo.coach.name}</h5>
+                                            <h5 property="name" class="mb-0 mt-1 fw-bold">${wikidataInfo.coach.name}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -382,13 +457,13 @@
                 
                 if (wikidataInfo.president && wikidataInfo.president.name) {
                     managementHtml += `
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-3" typeof="Person" property="founder" >
                             <div class="card h-100" style="border: none; box-shadow: none;">
                                 <div class="card-body p-0">
                                     <div class="d-flex">
                                         <div style="height: 100px; overflow: hidden;">
                                             ${wikidataInfo.president.photo ? 
-                                                `<img src="${wikidataInfo.president.photo}" alt="${wikidataInfo.president.name}" class="img-fluid h-100 object-fit-cover">` :
+                                                `<img property="image" src="${wikidataInfo.president.photo}" alt="${wikidataInfo.president.name}" class="img-fluid h-100 object-fit-cover">` :
                                                 `<div class="bg-light h-100 d-flex align-items-center justify-content-center">
                                                     <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
                                                 </div>`
@@ -396,7 +471,7 @@
                                         </div>
                                         <div class="d-flex flex-column justify-content-center p-3">
                                             <div class="text-muted small">Club President</div>
-                                            <h5 class="mb-0 mt-1 fw-bold">${wikidataInfo.president.name}</h5>
+                                            <h5 property="name" class="mb-0 mt-1 fw-bold">${wikidataInfo.president.name}</h5>
                                         </div>
                                     </div>
                                 </div>

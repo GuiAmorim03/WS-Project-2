@@ -1,3 +1,4 @@
+import os
 """
 SPIN rules client for executing and managing SPIN rule inferences.
 """
@@ -12,7 +13,7 @@ from .spin_queries import (
 )
 
 # Configure your SPARQL endpoint
-ENDPOINT_URL = "http://graphdb:7200/repositories/football"
+ENDPOINT_URL = os.environ.get("GRAPHDB_ENDPOINT", "http://graphdb:7200") + "/repositories/football"
 
 def get_sparql_update_client():
     """Returns a configured SPARQLWrapper instance for updates."""

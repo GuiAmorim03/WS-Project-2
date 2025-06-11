@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Usage: ./init-repository.sh /path/to/config
+
+CONFIG_DIR=${1:-/config}
+CONFIG_FILE="$CONFIG_DIR/repository-template.ttl"
+
 # Wait for GraphDB to start
 echo "Waiting for GraphDB to start..."
 until curl -s -f -o /dev/null "http://localhost:7200/rest/repositories"
@@ -12,12 +17,12 @@ echo "GraphDB is running!"
 
 # Verify that config file exists
 echo "Checking if config file exists..."
-if [ -f "/config/repository-template.ttl" ]; then
-  echo "Config file found at /config/repository-template.ttl"
+if [ -f "$CONFIG_FILE" ]; then
+  echo "Config file found at $CONFIG_FILE"
 else
-  echo "ERROR: Config file not found at /config/repository-template.ttl"
+  echo "ERROR: Config file not found at $CONFIG_FILE"
   echo "Listing directory contents:"
-  ls -la /config/
+  ls -la "$CONFIG_DIR"
   exit 1
 fi
 
@@ -29,7 +34,7 @@ if [ "$REPO_EXISTS" -eq "0" ]; then
   # Create repository - use the correct path
   curl -X POST \
     -H "Content-Type: multipart/form-data" \
-    -F "config=@/config/repository-template.ttl" \
+    -F "config=@$CONFIG_FILE" \
     "http://localhost:7200/rest/repositories"
   
   # Check if repository was created
@@ -91,16 +96,16 @@ fi
 
 # Import the dataset to the football repository using REST API
 echo "Importing dataset from server file..."
-curl -X POST \
+IMPORT_DATASET=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   -H "Content-Type: application/json" \
   -d '{
     "fileNames": [
       "football_rdf_data.nt"
     ]
   }' \
-  "http://localhost:7200/rest/repositories/football/import/server"
+    "http://localhost:7200/rest/repositories/football/import/server")
 
-if [ $? -eq 0 ]; then
+if [ "$IMPORT_DATASET" -eq "202" ]; then
     echo ""
     echo "Dataset import initiated successfully"
     # Wait for import to complete

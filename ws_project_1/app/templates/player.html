@@ -6,81 +6,81 @@
     <div class="row">
         <div class="col-2 text-center d-flex align-items-end justify-content-center">
             {% if entity.clubs %}
-            <div class="player-photo-container pt-2 px-2">
-                <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid" style="height: 175px; object-fit: contain;">
+            <div class="player-photo-container pt-2 px-2" typeof="ImageObject" property="image">
+                <img src="{{ entity.photo_url }}" alt="{{ entity.name }}" class="img-fluid" style="height: 175px; object-fit: contain;" property="contentUrl">
             </div>
             {% endif %}
         </div>
         <div class="col-8 py-2">
-            <h2 class="mt-5" style="color: var(--main-color);">{{ entity.name }}</h2>
+            <h2 class="mt-5" style="color: var(--main-color);" property="name">{{ entity.name }}</h2>
             
             {% if entity.spin_inferences %}
             <div class="player-tags mb-2">
                 {% if entity.spin_inferences.is_veteran %}
-                <span class="spin-badge veteran with-icon me-1" title="Veteran Player">
+                <span property="description" class="spin-badge veteran with-icon me-1" title="Veteran Player">
                     <i class="fas fa-crown"></i>
                     Veteran
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.is_young_prospect %}
-                <span class="spin-badge prospect with-icon me-1" title="Young Prospect">
+                <span property="description" class="spin-badge prospect with-icon me-1" title="Young Prospect">
                     <i class="fas fa-star"></i>
                     Young Prospect
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.is_key_player %}
-                <span class="spin-badge key-player with-icon me-1" title="Key Player">
+                <span property="description" class="spin-badge key-player with-icon me-1" title="Key Player">
                     <i class="fas fa-key"></i>
                     Key Player
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.is_playmaker %}
-                <span class="spin-badge playmaker with-icon me-1" title="Playmaker">
+                <span property="description" class="spin-badge playmaker with-icon me-1" title="Playmaker">
                     <i class="fas fa-magic"></i>
                     Playmaker
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.is_goal_threat %}
-                <span class="spin-badge goal-threat with-icon me-1" title="Goal Threat">
+                <span property="description" class="spin-badge goal-threat with-icon me-1" title="Goal Threat">
                     <i class="fas fa-bullseye"></i>
                     Goal Threat
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.is_penalty_specialist %}
-                <span class="spin-badge dark with-icon me-1" title="Penalty Specialist">
+                <span property="description" class="spin-badge dark with-icon me-1" title="Penalty Specialist">
                     <i class="fas fa-dot-circle"></i>
                     Penalty Specialist
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.is_versatile %}
-                <span class="spin-badge versatile with-icon me-1" title="Versatile Player">
+                <span property="description" class="spin-badge versatile with-icon me-1" title="Versatile Player">
                     <i class="fas fa-sync-alt"></i>
                     Versatile
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.is_disciplinary_risk %}
-                <span class="spin-badge disciplinary with-icon me-1" title="Disciplinary Risk">
+                <span property="description" class="spin-badge disciplinary with-icon me-1" title="Disciplinary Risk">
                     <i class="fas fa-exclamation-triangle"></i>
                     Disciplinary Risk
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.efficiency and entity.spin_inferences.efficiency > 0.5 %}
-                <span class="spin-badge success with-icon me-1" title="High Efficiency: {{ entity.spin_inferences.efficiency }}">
+                <span property="description" class="spin-badge success with-icon me-1" title="High Efficiency: {{ entity.spin_inferences.efficiency }}">
                     <i class="fas fa-chart-line"></i>
                     High Efficiency
                 </span>
                 {% endif %}
                 
                 {% if entity.spin_inferences.player_type %}
-                <span class="spin-badge secondary me-1" title="Player Type">
+                <span property="description" class="spin-badge secondary me-1" title="Player Type">
                     {{ entity.spin_inferences.player_type }}
                 </span>
                 {% endif %}
@@ -97,9 +97,9 @@
         </div>
         <div class="col-2 py-2 text-center">
             {% if entity.clubs %}
-            <div class="club-logo-container p-2 mb-2">
+            <div class="club-logo-container p-2 mb-2" typeof="SportsTeam" property="memberOf">
                 <a href="{% url 'club' entity.clubs.0.id %}" style="text-decoration: none;">
-                    <img property="image" src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
+                    <img property="logo" src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
                 </a>
             </div>
             {% endif %}

@@ -3,14 +3,13 @@
 
 {% block content_inside %}
 
-<div class="card">
+<div class="card h-card">
     <div class="card-header position-relative" style="background-color: #f8f9fa; color: #333; padding-right: 70px;">
-
         <div class="row">
             <div class="col-4 text-center">
                 <div class="logo-container p-2 rounded">
                     {% if entity.image %}
-                    <img src="{{ entity.image }}" alt="{{ entity.name }}" class="img-fluid" style="max-height: 200px;">
+                    <img src="{{ entity.image }}" alt="{{ entity.name }}" class="img-fluid u-photo" style="max-height: 200px;">
                     {% else %}
                     <div class="d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
                         <i class="fas fa-stadium-alt fa-3x text-muted"></i>
@@ -21,12 +20,12 @@
             <div class="col-8">
                 <div class="d-flex align-items-center">
                     {% if entity.name %}
-                    <h2 class="mt-5 me-2">{{ entity.name }}</h2>
+                    <h2 class="mt-5 me-2 p-name">{{ entity.name }}</h2>
                     {% endif %}
                 </div>
                 {% if entity.category %}
                 <p class="m-1">
-                    <span class="badge bg-secondary">{{ entity.category }}</span>
+                    <span class="badge bg-secondary p-category">{{ entity.category }}</span>
                 </p>
                 {% endif %}
 
@@ -35,7 +34,7 @@
                     <span class="me-2"><i class="fas fa-users me-1"></i> {{ entity.capacity|intcomma }}</span>
                     {% endif %}
                     {% if entity.opening %}
-                    <span><i class="fas fa-calendar-alt me-1"></i> {{ entity.opening }}</span>
+                    <span><i class="fas fa-calendar-alt me-1 dt-start"></i> {{ entity.opening }}</span>
                     {% endif %}
                 </p>
             </div>
@@ -56,12 +55,12 @@
             <h3 class="mb-3">Notable Events</h3>
             <div class="events-timeline">
                 {% for event in entity.events %}
-                <div class="event-card mb-3">
+                <div class="event-card mb-3 h-event">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="event-content">
-                                    <p class="mb-0">{{ event }}</p>
+                                    <p class="mb-0 p-name">{{ event }}</p>
                                 </div>
                             </div>
                         </div>
