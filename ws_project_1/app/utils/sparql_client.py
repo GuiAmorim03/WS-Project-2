@@ -368,7 +368,10 @@ def process_player_stats_results(results):
     Stats are grouped by category.
     """
     if not results["results"]["bindings"]:
+        print("No player stats found in results")
         return []
+    
+    print(f"Processing {len(results['results']['bindings'])} player stats")
     
     # Create a dictionary to group stats by category
     categories = {}
@@ -378,12 +381,15 @@ def process_player_stats_results(results):
         stat_name = stat["stat_name"]["value"]
         stat_value = stat["stat_value"]["value"]
         
+        print(f"Processing stat: {stat_name} in category {category} with value {stat_value}")
+        
         # Create category if it doesn't exist yet
         if category not in categories:
             categories[category] = {
                 "name": category,
                 "stats": []
             }
+            print(f"Created new category: {category}")
             
         # Add stat to the appropriate category
         categories[category]["stats"].append({
@@ -391,6 +397,7 @@ def process_player_stats_results(results):
             "value": stat_value
         })
     
+    print(f"Processed stats into {len(categories)} categories")
     return sort_stats_categories(categories)
 
 def query_club_stats(club_id):

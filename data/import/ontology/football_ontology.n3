@@ -1,0 +1,598 @@
+@prefix : <http://football.org/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix stat: <http://football.org/stat/> .
+
+# Ontology Declaration
+<http://football.org/ontology> a owl:Ontology ;
+    rdfs:label "Football Ontology" ;
+    rdfs:comment "A basic ontology for football/soccer data including players, clubs, countries, leagues, and statistics" .
+
+# Classes
+:Player a owl:Class ;
+    rdfs:label "Player" ;
+    rdfs:comment "A football player" .
+
+:Club a owl:Class ;
+    rdfs:label "Club" ;
+    rdfs:comment "A football club or team" .
+
+:Country a owl:Class ;
+    rdfs:label "Country" ;
+    rdfs:comment "A country that players can represent" .
+
+:League a owl:Class ;
+    rdfs:label "League" ;
+    rdfs:comment "A football league or competition" .
+
+:StatisticType a owl:Class ;
+    rdfs:label "Statistic Type" ;
+    rdfs:comment "Categories of football statistics" .
+
+# --- Stat Type Classes ---
+:PlayingTime a owl:Class ;
+    rdfs:subClassOf :StatisticType ;
+    rdfs:label "Playing Time" ;
+    rdfs:comment "Statistics related to playing time." .
+
+:Attacking a owl:Class ;
+    rdfs:subClassOf :StatisticType ;
+    rdfs:label "Attacking" ;
+    rdfs:comment "Statistics related to attacking actions." .
+
+:Defending a owl:Class ;
+    rdfs:subClassOf :StatisticType ;
+    rdfs:label "Defending" ;
+    rdfs:comment "Statistics related to defensive actions." .
+
+:Passing a owl:Class ;
+    rdfs:subClassOf :StatisticType ;
+    rdfs:label "Passing & Creativity" ;
+    rdfs:comment "Statistics related to passing and creativity." .
+
+:Goalkeeping a owl:Class ;
+    rdfs:subClassOf :StatisticType ;
+    rdfs:label "Goalkeeping" ;
+    rdfs:comment "Statistics related to goalkeeping." .
+
+:Miscellaneous a owl:Class ;
+    rdfs:subClassOf :StatisticType ;
+    rdfs:label "Miscellaneous" ;
+    rdfs:comment "Miscellaneous statistics." .
+
+# Object Properties - Relationships
+:club a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "club" ;
+    rdfs:comment "The club a player belongs to" ;
+    rdfs:domain :Player ;
+    rdfs:range :Club .
+
+:nation a owl:ObjectProperty, owl:FunctionalProperty;
+    rdfs:label "nation" ;
+    rdfs:comment "The country a player represents" ;
+    rdfs:domain :Player ;
+    rdfs:range :Country .
+
+:past_club a owl:ObjectProperty ;
+    rdfs:label "past club" ;
+    rdfs:comment "A club a player previously belonged to" ;
+    rdfs:domain :Player ;
+    rdfs:range :Club .
+
+:country a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "country" ;
+    rdfs:comment "The country where a club/league is located" ;
+    rdfs:domain [ owl:unionOf ( :Club :League ) ] ;
+    rdfs:range :Country .
+
+:league a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "league" ;
+    rdfs:comment "The league a club participates in" ;
+    rdfs:domain :Club ;
+    rdfs:range :League .
+
+:statType a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "stat type" ;
+    rdfs:comment "The type category of a statistic" ;
+    rdfs:range :StatisticType .
+
+# Data Properties - Basic Information
+:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:comment "The name of an entity" ;
+    rdfs:range xsd:string .
+
+:position a owl:DatatypeProperty ;
+    rdfs:label "position" ;
+    rdfs:comment "The playing position of a player" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:string .
+
+:born a owl:DatatypeProperty ;
+    rdfs:label "born" ;
+    rdfs:comment "The birth year of a player" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:integer .
+
+:photo_url a owl:DatatypeProperty ;
+    rdfs:label "photo URL" ;
+    rdfs:comment "URL to a photo of the entity" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:string .
+
+# Club Properties
+:stadium a owl:DatatypeProperty ;
+    rdfs:label "stadium" ;
+    rdfs:comment "The home stadium of a club" ;
+    rdfs:domain :Club ;
+    rdfs:range xsd:string .
+
+:city a owl:DatatypeProperty ;
+    rdfs:label "city" ;
+    rdfs:comment "The city where a club is based" ;
+    rdfs:domain :Club ;
+    rdfs:range xsd:string .
+
+:logo a owl:DatatypeProperty ;
+    rdfs:label "logo" ;
+    rdfs:comment "URL to the logo of a club" ;
+    rdfs:domain :Club ;
+    rdfs:range xsd:string .
+
+:color a owl:DatatypeProperty ;
+    rdfs:label "color" ;
+    rdfs:comment "Primary color of a club" ;
+    rdfs:domain :Club ;
+    rdfs:range xsd:string .
+
+:alternateColor a owl:DatatypeProperty ;
+    rdfs:label "alternate color" ;
+    rdfs:comment "Alternate color of a club" ;
+    rdfs:domain :Club ;
+    rdfs:range xsd:string .
+
+:abrv a owl:DatatypeProperty ;
+    rdfs:label "abbreviation" ;
+    rdfs:comment "Abbreviation for entities" ;
+    rdfs:domain [ owl:unionOf ( :Club :Country ) ] ;
+    rdfs:range xsd:string .
+
+# Country Properties
+:flag a owl:DatatypeProperty ;
+    rdfs:label "flag" ;
+    rdfs:comment "URL to the country flag" ;
+    rdfs:domain :Country ;
+    rdfs:range xsd:string .
+
+# Statistical Properties - Performance Stats
+:mp a owl:DatatypeProperty ;
+    rdfs:label "Matches Played" ;
+    rdfs:comment "Number of matches played" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :PlayingTime .
+
+:starts a owl:DatatypeProperty ;
+    rdfs:label "Games Started" ;
+    rdfs:comment "Number of games started" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :PlayingTime .
+
+:min a owl:DatatypeProperty ;
+    rdfs:label "Minutes Played" ;
+    rdfs:comment "Total minutes played" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :PlayingTime .
+
+:gls a owl:DatatypeProperty ;
+    rdfs:label "Goals" ;
+    rdfs:comment "Number of goals scored" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Attacking .
+
+:ast a owl:DatatypeProperty ;
+    rdfs:label "Assists" ;
+    rdfs:comment "Number of assists" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Attacking .
+
+:g_plus_a a owl:DatatypeProperty ;
+    rdfs:label "Goals + Assists" ;
+    rdfs:comment "Combined goals and assists" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Attacking .
+
+:xg a owl:DatatypeProperty ;
+    rdfs:label "Expected Goals" ;
+    rdfs:comment "Expected goals statistic" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:double ;
+    :statType :Attacking .
+
+:xag a owl:DatatypeProperty ;
+    rdfs:label "Expected Assists" ;
+    rdfs:comment "Expected assists statistic" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:double ;
+    :statType :Attacking .
+
+:pk a owl:DatatypeProperty ;
+    rdfs:label "Penalties Scored" ;
+    rdfs:comment "Number of penalties scored" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Attacking .
+
+:pkatt a owl:DatatypeProperty ;
+    rdfs:label "Penalties Attempted" ;
+    rdfs:comment "Number of penalties attempted" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Attacking .
+
+:tkl a owl:DatatypeProperty ;
+    rdfs:label "Tackles" ;
+    rdfs:comment "Number of tackles made" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Defending .
+
+:tklw a owl:DatatypeProperty ;
+    rdfs:label "Tackles Won" ;
+    rdfs:comment "Number of tackles won" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Defending .
+
+:blocks_stats_defense a owl:DatatypeProperty ;
+    rdfs:label "Blocks" ;
+    rdfs:comment "Number of blocks made" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Defending .
+
+:int a owl:DatatypeProperty ;
+    rdfs:label "Interceptions" ;
+    rdfs:comment "Number of interceptions" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Defending .
+
+:clr a owl:DatatypeProperty ;
+    rdfs:label "Clearances" ;
+    rdfs:comment "Number of clearances" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Defending .
+
+:err a owl:DatatypeProperty ;
+    rdfs:label "Errors Leading To Goal" ;
+    rdfs:comment "Number of errors leading to goals" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Defending .
+
+:recov a owl:DatatypeProperty ;
+    rdfs:label "Ball Recoveries" ;
+    rdfs:comment "Number of ball recoveries" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Defending .
+
+:prgp a owl:DatatypeProperty ;
+    rdfs:label "Progressive Passes" ;
+    rdfs:comment "Number of progressive passes" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:prgc a owl:DatatypeProperty ;
+    rdfs:label "Progressive Carries" ;
+    rdfs:comment "Number of progressive carries" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:prgr a owl:DatatypeProperty ;
+    rdfs:label "Progressive Runs" ;
+    rdfs:comment "Number of progressive runs" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:kp a owl:DatatypeProperty ;
+    rdfs:label "Key Passes" ;
+    rdfs:comment "Number of key passes" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:ppa a owl:DatatypeProperty ;
+    rdfs:label "Passes Into Penalty Area" ;
+    rdfs:comment "Number of passes into penalty area" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:live a owl:DatatypeProperty ;
+    rdfs:label "Total Passes" ;
+    rdfs:comment "Number of total passes" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:cmp_stats_passing_types a owl:DatatypeProperty ;
+    rdfs:label "Passes Completed" ;
+    rdfs:comment "Number of passes completed" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:touches a owl:DatatypeProperty ;
+    rdfs:label "Touches" ;
+    rdfs:comment "Number of touches" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:mis a owl:DatatypeProperty ;
+    rdfs:label "Miscontrols" ;
+    rdfs:comment "Number of miscontrols" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:dis a owl:DatatypeProperty ;
+    rdfs:label "Times Dispossessed" ;
+    rdfs:comment "Number of times dispossessed" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Passing .
+
+:ga a owl:DatatypeProperty ;
+    rdfs:label "Goals Conceded" ;
+    rdfs:comment "Number of goals conceded" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Goalkeeping .
+
+:ga90 a owl:DatatypeProperty ;
+    rdfs:label "Goals Conceded Per 90 Minutes" ;
+    rdfs:comment "Goals conceded per 90 minutes" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:double ;
+    :statType :Goalkeeping .
+
+:saves a owl:DatatypeProperty ;
+    rdfs:label "Saves" ;
+    rdfs:comment "Number of saves made" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Goalkeeping .
+
+:save_pct a owl:DatatypeProperty ;
+    rdfs:label "Save %" ;
+    rdfs:comment "Percentage of shots saved" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:double ;
+    :statType :Goalkeeping .
+
+:cs a owl:DatatypeProperty ;
+    rdfs:label "Clean Sheets" ;
+    rdfs:comment "Number of clean sheets" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Goalkeeping .
+
+:cs_pct a owl:DatatypeProperty ;
+    rdfs:label "Clean Sheet %" ;
+    rdfs:comment "Percentage of clean sheets" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:double ;
+    :statType :Goalkeeping .
+
+:pka a owl:DatatypeProperty ;
+    rdfs:label "Penalties Faced" ;
+    rdfs:comment "Number of penalties faced" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Goalkeeping .
+
+:pksv a owl:DatatypeProperty ;
+    rdfs:label "Penalties Saved" ;
+    rdfs:comment "Number of penalties saved" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Goalkeeping .
+
+:crdy a owl:DatatypeProperty ;
+    rdfs:label "Yellow Cards" ;
+    rdfs:comment "Number of yellow cards received" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Miscellaneous .
+
+:crdr a owl:DatatypeProperty ;
+    rdfs:label "Red Cards" ;
+    rdfs:comment "Number of red cards received" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Miscellaneous .
+
+:fls a owl:DatatypeProperty ;
+    rdfs:label "Fouls Committed" ;
+    rdfs:comment "Number of fouls committed" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Miscellaneous .
+
+:pkcon a owl:DatatypeProperty ;
+    rdfs:label "Penalties Conceded" ;
+    rdfs:comment "Number of penalties conceded" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:integer ;
+    :statType :Miscellaneous .
+
+:pkwon a owl:DatatypeProperty ;
+    rdfs:label "Penalties Won" ;
+    rdfs:comment "Number of penalties won" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:integer ;
+    :statType :Miscellaneous .
+
+:og a owl:DatatypeProperty ;
+    rdfs:label "Own Goals" ;
+    rdfs:comment "Number of own goals" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Miscellaneous .
+
+:off_stats_misc a owl:DatatypeProperty ;
+    rdfs:label "Offsides" ;
+    rdfs:comment "Number of times caught offside" ;
+    rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
+    rdfs:range xsd:integer ;
+    :statType :Miscellaneous .
+
+# Additional Properties for Inferred Data (SPIN Rules)
+:efficiency a owl:DatatypeProperty ;
+    rdfs:label "Efficiency" ;
+    rdfs:comment "Player efficiency rating based on goals+assists per 90 minutes" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:double ;
+    :statType :Attacking .
+
+:teammate a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label "teammate" ;
+    rdfs:comment "Players who play for the same club" ;
+    rdfs:domain :Player ;
+    rdfs:range :Player .
+
+:compatriot a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label "compatriot" ;
+    rdfs:comment "Players from the same country" ;
+    rdfs:domain :Player ;
+    rdfs:range :Player .
+
+:past_teammate a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label "past teammate" ;
+    rdfs:comment "Players who have played for the same club in the past" ;
+    rdfs:domain :Player ;
+    rdfs:range :Player .
+
+:cityRival a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label "city rival" ;
+    rdfs:comment "Clubs that are rivals in the same league and city" ;
+    rdfs:domain :Club ;
+    rdfs:range :Club .
+
+:veteranStatus a owl:DatatypeProperty ;
+    rdfs:label "veteran status" ;
+    rdfs:comment "Whether a player is considered a veteran (35+ years old)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:youngProspect a owl:DatatypeProperty ;
+    rdfs:label "young prospect" ;
+    rdfs:comment "Whether a player is a young prospect (under 23)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:playerType a owl:DatatypeProperty ;
+    rdfs:label "player type" ;
+    rdfs:comment "Categorization based on playing style" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:string .
+
+:penaltySpecialist a owl:DatatypeProperty ;
+    rdfs:label "penalty specialist" ;
+    rdfs:comment "Whether player is good at penalties (90%+ success rate)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:playmaker a owl:DatatypeProperty ;
+    rdfs:label "playmaker" ;
+    rdfs:comment "Whether player is a playmaker (high assists and key passes)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:goalThreat a owl:DatatypeProperty ;
+    rdfs:label "goal threat" ;
+    rdfs:comment "Whether player is a significant goal threat" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:disciplinaryRisk a owl:DatatypeProperty ;
+    rdfs:label "disciplinary risk" ;
+    rdfs:comment "Whether player has disciplinary issues" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:keyPlayer a owl:DatatypeProperty ;
+    rdfs:label "key player" ;
+    rdfs:comment "Whether player is key for their club (high minutes played)" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:versatilePlayer a owl:DatatypeProperty ;
+    rdfs:label "versatile player" ;
+    rdfs:comment "Player with balanced attacking and defensive stats" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:boolean .
+
+:risingAge a owl:DatatypeProperty ;
+    rdfs:label "rising age" ;
+    rdfs:comment "Current age of the player" ;
+    rdfs:domain :Player ;
+    rdfs:range xsd:integer .
+
+stat:mp owl:equivalentProperty :mp .
+stat:starts owl:equivalentProperty :starts .
+stat:min owl:equivalentProperty :min .
+stat:gls owl:equivalentProperty :gls .
+stat:ast owl:equivalentProperty :ast .
+stat:g_plus_a owl:equivalentProperty :g_plus_a .
+stat:xg owl:equivalentProperty :xg .
+stat:xag owl:equivalentProperty :xag .
+stat:pk owl:equivalentProperty :pk .
+stat:pkatt owl:equivalentProperty :pkatt .
+stat:tkl owl:equivalentProperty :tkl .
+stat:tklw owl:equivalentProperty :tklw .
+stat:blocks_stats_defense owl:equivalentProperty :blocks_stats_defense .
+stat:int owl:equivalentProperty :int .
+stat:clr owl:equivalentProperty :clr .
+stat:err owl:equivalentProperty :err .
+stat:recov owl:equivalentProperty :recov .
+stat:prgp owl:equivalentProperty :prgp .
+stat:prgc owl:equivalentProperty :prgc .
+stat:prgr owl:equivalentProperty :prgr .
+stat:kp owl:equivalentProperty :kp .
+stat:ppa owl:equivalentProperty :ppa .
+stat:live owl:equivalentProperty :live .
+stat:cmp_stats_passing_types owl:equivalentProperty :cmp_stats_passing_types .
+stat:touches owl:equivalentProperty :touches .
+stat:mis owl:equivalentProperty :mis .
+stat:dis owl:equivalentProperty :dis .
+stat:ga owl:equivalentProperty :ga .
+stat:ga90 owl:equivalentProperty :ga90 .
+stat:saves owl:equivalentProperty :saves .
+stat:save_pct owl:equivalentProperty :save_pct .
+stat:cs owl:equivalentProperty :cs .
+stat:cs_pct owl:equivalentProperty :cs_pct .
+stat:pka owl:equivalentProperty :pka .
+stat:pksv owl:equivalentProperty :pksv .
+stat:crdy owl:equivalentProperty :crdy .
+stat:crdr owl:equivalentProperty :crdr .
+stat:fls owl:equivalentProperty :fls .
+stat:pkcon owl:equivalentProperty :pkcon .
+stat:pkwon owl:equivalentProperty :pkwon .
+stat:og owl:equivalentProperty :og .
+stat:off_stats_misc owl:equivalentProperty :off_stats_misc .

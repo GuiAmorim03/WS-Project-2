@@ -1,6 +1,5 @@
 import pandas as pd
 from rdflib import Graph, URIRef, Literal, Namespace
-from rdflib.plugins.sparql import prepareQuery
 from rdflib.namespace import RDF
 from urllib.parse import quote
 from unidecode import unidecode
@@ -23,18 +22,10 @@ ns_ent = Namespace(BASE_URL + 'ent/')
 ns_rel = Namespace(BASE_URL + 'rel/')
 ns_stat = Namespace(BASE_URL + 'stat/')
 ns_stat_type = Namespace(BASE_URL + 'stat_type/')
+ns_ont = Namespace(BASE_URL + 'ontology#')
 
 g = Graph()
 
-# Relações Estatisticas Tipo
-g.add((ns_stat_type.playing_time, ns_rel.name, Literal('Playing Time')))
-g.add((ns_stat_type.attacking, ns_rel.name, Literal('Attacking')))
-g.add((ns_stat_type.defending, ns_rel.name, Literal('Defending')))
-g.add((ns_stat_type.passing, ns_rel.name, Literal('Passing & Creativity')))
-g.add((ns_stat_type.goalkeeping, ns_rel.name, Literal('Goalkeeping')))
-g.add((ns_stat_type.miscellaneous, ns_rel.name, Literal('Miscellaneous')))
-
-# Relações Estatisticas
 def convert_stat_name_to_id(stat_name):
     return stat_name.lower().replace('%', '_pct').replace('+', '_plus_')
 
@@ -91,12 +82,6 @@ stat_mappings = {
     "OG": {"description": "Own Goals", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK, TEAM]},
     "Off_stats_misc": {"description": "Offsides", "type": ns_stat_type.miscellaneous, "entities": [PLAYER, GK, TEAM]}
 }
-
-for stat in stat_mappings:
-    stat_id = convert_stat_name_to_id(stat)
-    # print(stat)
-    g.add((URIRef(ns_stat + stat_id), ns_rel.name, Literal(stat_mappings[stat]["description"])))
-    g.add((URIRef(ns_stat + stat_id), ns_rel.type, URIRef(stat_mappings[stat]["type"])))
 
 def get_country_info(country_abrv):
     # pesquisar no df_colors_logos pelo country na coluna 'abbreviation'
@@ -157,7 +142,7 @@ for index, row in df_main.iterrows():
     league = row['Comp']
     country_abrv = row['Nation'].split(' ')[-1]
 
-    # countries
+    # --- Countries ---
     if country_abrv not in countries:
         countries.add(country_abrv)
 
@@ -167,9 +152,9 @@ for index, row in df_main.iterrows():
         g.add((country_uri, ns_rel.abrv, Literal(country_abrv)))
         g.add((country_uri, ns_rel.name, Literal(country_name)))
         g.add((country_uri, ns_rel.flag, Literal(country_flag)))
-        g.add((country_uri, RDF.type, ns_rel.Country))
+        g.add((country_uri, RDF.type, ns_ont.Country))  # FIXED
 
-    # leagues
+    # --- Leagues ---
     if league not in leagues:
         # verificar se o country da league já existe
         # se não existir, pesquisar no df_main 'Nation' por uma linha com o cod pequeno para obter o cod grande
@@ -186,17 +171,17 @@ for index, row in df_main.iterrows():
             g.add((country_uri, ns_rel.abrv, Literal(country_id)))
             g.add((country_uri, ns_rel.name, Literal(country_name)))
             g.add((country_uri, ns_rel.flag, Literal(country_flag)))
-            g.add((country_uri, RDF.type, ns_rel.Country))
+            g.add((country_uri, RDF.type, ns_ont.Country))  # FIXED
 
         league_uri = URIRef(ns_ent + league_id)
         g.add((league_uri, ns_rel.name, Literal(league_name)))
         g.add((league_uri, ns_rel.country, URIRef(ns_ent + country_id)))
-        g.add((league_uri, RDF.type, ns_rel.League))
+        g.add((league_uri, RDF.type, ns_ont.League))  # FIXED
 
         leagues.add(league)
         league_code_to_country_code[league_id] = country_id
 
-    # clubs
+    # --- Clubs ---
     if club not in clubs:
         club_original_name = club
         if 'Utd' in club:
@@ -206,12 +191,12 @@ for index, row in df_main.iterrows():
         if 'Wolves' in club:
             club = 'Wolverhampton'
 
-        # pesquisar no df_colors_logos pelo club na coluna 'name'
-        # club_id --> 'abbreviation'
-        # club_name --> 'name'
-        # club_color --> 'color'
+        # Pesquisar no df_colors_logos pelo club na coluna 'name'
+        # club_id              --> 'abbreviation'
+        # club_name            --> 'name'
+        # club_color           --> 'color'
         # club_alternate_color --> 'alternateColor'
-        # club_logo --> 'logoURL'
+        # club_logo            --> 'logoURL'
         club_info = df_colors_logos[df_colors_logos['name'].str.contains(club, na=False)]
         if (len(club_info) == 0):
             club_info = df_colors_logos[df_colors_logos['name'].str.contains(club, na=False)]
@@ -231,12 +216,12 @@ for index, row in df_main.iterrows():
         club_alternate_color = club_info['alternateColor'].values[0]
         club_logo = club_info['logoURL'].values[0]
 
-        num_to_search_location = club_info['venueId'].values[0] # usar este ID para pesquisar no df_clubs_info
+        num_to_search_location = club_info['venueId'].values[0] # Usar este ID para pesquisar no df_clubs_info
         club_location = df_clubs_info[df_clubs_info['venueId'] == num_to_search_location]
         club_stadium = club_location['fullName'].values[0]
         club_city = club_location['city'].values[0]
 
-        # ir buscar o country_id já existente
+        # Ir buscar o country_id já existente
         league_id = league.split(' ')[0]
         club_country_id = league_code_to_country_code[league_id]
     
@@ -253,13 +238,13 @@ for index, row in df_main.iterrows():
         g.add((club_uri, ns_rel.city, Literal(club_city)))
         g.add((club_uri, ns_rel.country, URIRef(ns_ent + club_country_id)))
         g.add((club_uri, ns_rel.league, URIRef(ns_ent + league_id)))
-        g.add((club_uri, RDF.type, ns_rel.Club))
+        g.add((club_uri, RDF.type, ns_ont.Club))  # FIXED
 
         clubs.add(club_original_name)
         club_name_to_club_id[club_original_name] = club_id
 
 
-    # players
+    # --- Players ---
         # player_id
         # player_name --> 'Player'
         # player_pos --> 'Pos'
@@ -300,21 +285,19 @@ for index, row in df_main.iterrows():
 
     club_uri = URIRef(ns_ent + player_club)
     g.add((player_uri, ns_rel.club, club_uri))
-    g.add((player_uri, RDF.type, ns_rel.Player))
+    g.add((player_uri, RDF.type, ns_ont.Player))  # already correct
 
-    # photo url
+    # Photo URL
     photo = df_players_info[df_players_info['Rk'] == row['Rk']]
     photo_url = photo['UrlPhoto'].values[0]
     if pd.isna(photo_url) or '.jpg' in photo_url:
         photo_url = "https://resources.premierleague.com/premierleague/photos/players/250x250/Photo-Missing.png"   
     g.set((player_uri, ns_rel.photo_url, Literal(photo_url)))
 
-    # stats
+    # --- Stats ---
     main_pos = player_pos[0]
     for stat in stat_mappings:
-
-
-        # player stats
+        # Player stats
         if (main_pos == "GK" and GK in stat_mappings[stat]["entities"] or main_pos != "GK" and PLAYER in stat_mappings[stat]["entities"]):
             stat_value = row[stat]
             if (pd.isna(stat_value)):
@@ -324,11 +307,10 @@ for index, row in df_main.iterrows():
                     stat_value = row['CS'] / row['MP'] * 100
             update_stat_on_graph(player_uri, stat, stat_value, g)
 
-            # team stats
+            # Team stats
             if (TEAM in stat_mappings[stat]["entities"]):
                 update_stat_on_graph(club_uri, stat, stat_value, g)
 
 
 g.serialize(destination="import/football_rdf_data.nt", format="nt", encoding="utf-8")
 g.serialize(destination="import/football_rdf_data.n3", format="n3", encoding="utf-8")
-# print(df_main.head())
