@@ -22,7 +22,6 @@ ns_ent = Namespace(BASE_URL + 'ent/')
 ns_rel = Namespace(BASE_URL + 'rel/')
 ns_stat = Namespace(BASE_URL + 'stat/')
 ns_stat_type = Namespace(BASE_URL + 'stat_type/')
-ns_ont = Namespace(BASE_URL + 'ontology#')
 
 g = Graph()
 
@@ -152,7 +151,6 @@ for index, row in df_main.iterrows():
         g.add((country_uri, ns_rel.abrv, Literal(country_abrv)))
         g.add((country_uri, ns_rel.name, Literal(country_name)))
         g.add((country_uri, ns_rel.flag, Literal(country_flag)))
-        g.add((country_uri, RDF.type, ns_ont.Country))  # FIXED
 
     # --- Leagues ---
     if league not in leagues:
@@ -171,12 +169,10 @@ for index, row in df_main.iterrows():
             g.add((country_uri, ns_rel.abrv, Literal(country_id)))
             g.add((country_uri, ns_rel.name, Literal(country_name)))
             g.add((country_uri, ns_rel.flag, Literal(country_flag)))
-            g.add((country_uri, RDF.type, ns_ont.Country))  # FIXED
 
         league_uri = URIRef(ns_ent + league_id)
         g.add((league_uri, ns_rel.name, Literal(league_name)))
         g.add((league_uri, ns_rel.country, URIRef(ns_ent + country_id)))
-        g.add((league_uri, RDF.type, ns_ont.League))  # FIXED
 
         leagues.add(league)
         league_code_to_country_code[league_id] = country_id
@@ -238,7 +234,6 @@ for index, row in df_main.iterrows():
         g.add((club_uri, ns_rel.city, Literal(club_city)))
         g.add((club_uri, ns_rel.country, URIRef(ns_ent + club_country_id)))
         g.add((club_uri, ns_rel.league, URIRef(ns_ent + league_id)))
-        g.add((club_uri, RDF.type, ns_ont.Club))  # FIXED
 
         clubs.add(club_original_name)
         club_name_to_club_id[club_original_name] = club_id
@@ -285,7 +280,6 @@ for index, row in df_main.iterrows():
 
     club_uri = URIRef(ns_ent + player_club)
     g.add((player_uri, ns_rel.club, club_uri))
-    g.add((player_uri, RDF.type, ns_ont.Player))  # already correct
 
     # Photo URL
     photo = df_players_info[df_players_info['Rk'] == row['Rk']]
