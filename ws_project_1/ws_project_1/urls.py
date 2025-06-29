@@ -38,4 +38,5 @@ urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.ico')), name='favicon'),
     path('stadium/<str:stadium_id>', stadium_detail, name='stadium'),
     path('league/<str:league_name>', league_detail, name='league'),
+    path('city/<str:city_name>', city_detail, name='city'),
 ]

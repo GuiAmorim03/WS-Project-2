@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <p class="m-1">
-                    <span property="address">{{ entity.city }}</span>
+                    <span property="address"><a href="{% url 'city' entity.city %}" style="color: var(--main-color);">{{ entity.city }}</a></span>
                     <span> • </span>
                     <!-- Stadium info with potential link -->
                     <span property="location" id="stadium-info">{{ entity.stadium }}</span>
