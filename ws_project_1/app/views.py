@@ -185,8 +185,9 @@ def league_detail(request, league_name):
 def city_detail(request, city_name):
 
     city_details = query_city_details(city_name)
-    city_clubs = query_city_clubs(city_name)
+    city_clubs = query_city_clubs(city_name, SPIN_RULES_ACTIVE)
     city_details["clubs"] = city_clubs
+    city_details["spin_rules_active"] = SPIN_RULES_ACTIVE
     return render(request, "city.html", {"entity": city_details})
 
 def dashboard(request):

@@ -229,7 +229,8 @@ def get_club_stats_query(club_id):
     }}
     """
 
-def get_city_clubs_query(city_name):
+def get_city_clubs_query(city_name, spin):
+    order = "ORDER BY DESC(?success)" if spin else "ORDER BY ?name"
     """Returns SPARQL query for fetching clubs in a specific city."""
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -243,6 +244,7 @@ def get_city_clubs_query(city_name):
         ?logo
         ?color
         ?alternateColor
+        ?success
     WHERE {{
         ?club_id rdf:type ?class ;
                 fut-rel:name ?name ;
@@ -250,9 +252,10 @@ def get_city_clubs_query(city_name):
                 fut-rel:color ?color ;
                 fut-rel:alternateColor ?alternateColor ;
                 fut-rel:city "{city_name}" .
+        OPTIONAL {{ ?club_id ont:success ?success . }}
         ?class rdfs:subClassOf* ont:Club .
     }}
-    ORDER BY ?name
+    {order}
     """
 
 def get_graph_data_query(selected_node_id=None):

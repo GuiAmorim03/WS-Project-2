@@ -63,6 +63,28 @@ def get_player_efficiency_rule():
     }
     """
 
+def get_club_success_index_rule():
+    """Calculate Club Success Index ((Goals - Goals Conceded) * (Expected Goals + Clean Sheets) / 100)"""
+    return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
+    
+    INSERT {
+        ?club ont:success ?succ .
+    }
+    WHERE {
+        ?club rdf:type ?cClass .
+        ?cClass rdfs:subClassOf* ont:Club .
+        ?club ont:gls ?goals .
+        ?club ont:ga ?goalsConceded .
+        ?club ont:xg ?expectedGoals .
+        ?club ont:cs ?cleanSheets .
+        FILTER(?goals >= 0 && ?goalsConceded >= 0 && ?expectedGoals >= 0 && ?cleanSheets >= 0)
+        BIND(ROUND((?goals - ?goalsConceded) * (?expectedGoals + ?cleanSheets) / 100.0 * 100) / 100 AS ?succ)
+    }
+    """
+
 def get_veterans_rule():
     """Identify Veterans (35+ years old)"""
     return """
@@ -346,6 +368,7 @@ def get_all_spin_rules():
     """Get all SPIN rules in order"""
     return [
         get_player_efficiency_rule(),
+        get_club_success_index_rule(),
         get_veterans_rule(),
         get_young_prospects_rule(),
         get_penalty_specialists_rule(),
