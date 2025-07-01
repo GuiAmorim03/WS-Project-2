@@ -36,6 +36,15 @@
     rdfs:label "Statistic Type" ;
     rdfs:comment "Categories of football statistics" .
 
+:Goalkeeper a owl:Class ;
+    rdfs:subClassOf :Player ;
+    rdfs:label "Goalkeeper" ;
+    rdfs:comment "A player whose position is goalkeeper." .
+
+:OutfieldPlayer a owl:Class ;
+    rdfs:subClassOf :Player ;
+    rdfs:label "Outfield Player" ;
+    rdfs:comment "Any player whose position is not goalkeeper." .
 
 ################### STAT TYPE CLASSES ###################
 
@@ -68,7 +77,6 @@
     rdfs:subClassOf :StatisticType ;
     rdfs:label "Miscellaneous" ;
     rdfs:comment "Miscellaneous statistics." .
-
 
 ############ OBJECT PROPERTIES - RELATIONSHIPS ###########
 
@@ -107,6 +115,31 @@ rel:league a owl:ObjectProperty, owl:FunctionalProperty ;
     rdfs:comment "The type category of a statistic" ;
     rdfs:range :StatisticType .
 
+:playsAt a owl:ObjectProperty ;
+    rdfs:domain :Club ;
+    rdfs:range :Venue ;
+    rdfs:label "plays at" ;
+    rdfs:comment "Indicates the home venue where a team plays." .
+
+########### VENUE PROPERTIES ##########
+
+:name a owl:DatatypeProperty ;
+    rdfs:domain :Venue ;
+    rdfs:range xsd:string ;
+    rdfs:label "name" ;
+    rdfs:comment "The official name of the venue." .
+
+:city a owl:DatatypeProperty ;
+    rdfs:domain :Venue ;
+    rdfs:range xsd:string ;
+    rdfs:label "city" ;
+    rdfs:comment "The city where the venue is located." .
+
+:country a owl:ObjectProperty ;
+    rdfs:domain :Venue ;
+    rdfs:range :Country ;
+    rdfs:label "country" ;
+    rdfs:comment "The country where the venue is located." .
 
 ########### DATA PROPERTIES - SHARED PROPERTIES ##########
 
@@ -641,6 +674,55 @@ rel:off_stats_misc a owl:DatatypeProperty ;
         [ a owl:Restriction ;
           owl:onProperty [ owl:inverseOf rel:league ] ;
           owl:someValuesFrom :Club ]
+    )
+] .
+
+# Any :Player who has a currentClub property (or rel:club) is still active.
+:ActivePlayer owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Player
+        [ a owl:Restriction ;
+          owl:onProperty rel:club ;
+          owl:someValuesFrom :Club ]
+    )
+] .
+
+:GKPosition a owl:Class ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:onProperty rel:position ;
+        owl:hasValue "GK"
+    ] .
+
+:Goalkeeper owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Player
+        :GKPosition
+    )
+] .
+
+:OutfieldPosition owl:equivalentClass [
+    a owl:Class ;
+    owl:unionOf (
+        [ a owl:Restriction ;
+          owl:onProperty rel:position ;
+          owl:hasValue "DF" ]
+        [ a owl:Restriction ;
+          owl:onProperty rel:position ;
+          owl:hasValue "MF" ]
+        [ a owl:Restriction ;
+          owl:onProperty rel:position ;
+          owl:hasValue "FW" ]
+    )
+] .
+
+:OutfieldPlayer owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Player
+        :OutfieldPosition
     )
 ] .
 
