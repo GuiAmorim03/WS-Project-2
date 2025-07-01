@@ -216,6 +216,12 @@ for index, row in df_main.iterrows():
         club_location = df_clubs_info[df_clubs_info['venueId'] == num_to_search_location]
         club_stadium = club_location['fullName'].values[0]
         club_city = club_location['city'].values[0]
+        club_country = club_location['country'].values[0]
+
+        venue_uri = URIRef(ns_ent + num_to_search_location)
+        g.add((venue_uri, ns_rel.name, Literal(club_stadium)))
+        g.add((venue_uri, ns_rel.city, Literal(club_city)))
+        g.add((venue_uri, ns_rel.country, URIRef(ns_ent + convert_entity_name_to_id(club_country))))
 
         # Ir buscar o country_id já existente
         league_id = league.split(' ')[0]
@@ -238,6 +244,8 @@ for index, row in df_main.iterrows():
         clubs.add(club_original_name)
         club_name_to_club_id[club_original_name] = club_id
 
+        # Link team to venue
+        g.add((club_uri, ns_rel.playsAt, venue_uri))
 
     # --- Players ---
         # player_id
