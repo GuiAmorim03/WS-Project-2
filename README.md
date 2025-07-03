@@ -52,7 +52,7 @@ docker compose down -v
 
 ### 1. Extract the zip file
 
-After downloading the project, extract the zip file and navigate to the project directory:
+After downloading the project, extract the zip file and navigate to the project directory `Project-2`.
 
 ### 2. Set Up Django App
 
@@ -71,7 +71,7 @@ First you need to create a GraphDB repository for the football data. **IMPORTANT
 
 After creating a repository in GraphDB, you need to import the RDF data.
 - File `data/import/football_rdf_data.nt` contains the football data in RDF format.
-- File `data/config/football_config.ttl` contains the ontology configuration for the football data.
+- File `data/import/ontology/football_ontology.n3` contains the ontology configuration for the football data.
 
 ### 4. Run Django
 
@@ -85,3 +85,19 @@ The variable `GRAPHDB_ENDPOINT` should point to your GraphDB instance. So, if yo
 - `data/`: Contains the RDF data and configuration files
 - `ws_project_1/`: Main project code (Django application)
 - `docs/`: Documentation files
+
+### 5. Other Tests
+
+In order to import both the data and the ontology into Protégé, there is a file, `data/import/football_rdf_data_ontology.n3`, that serves that same purpose.
+
+The SPIN rules used for this project are located in:
+- `data/import/ontology/football_spin_rules.n3`
+
+In order to see how they are applied, it is possible to do so in the following files:
+- `ws_project_1/app/utils/spin_client.py`
+- `ws_project_1/app/utils/spin_queries.py`
+
+_Note: the name of the folder is 'ws\_project\_1' because both projects are available on GitHub and the second is a fork of the first._
+
+### 6. Possible Errors
+In some pages, messages like _Some additional information could not be loaded from external sources_ may appear, due to errors fetching data from Wikidata. If that happens, refresh the page (this is not a coding issue from our part, it's a problem with wikidata and their API ).
