@@ -382,7 +382,9 @@ def get_all_spin_rules():
         get_league_rivals_rule(),
         get_past_teammates_rule(),
         get_teammates_rule(),
-        get_compatriots_rule()
+        get_compatriots_rule(),
+        get_goalkeeper_classification_rule(),
+        get_outfield_player_classification_rule()
     ]
 
 def get_enhanced_player_details_query(player_id):
@@ -701,4 +703,42 @@ def get_efficiency_leaders_query(limit=10):
     }}
     ORDER BY DESC(xsd:float(?efficiency))
     LIMIT {limit}
+    """
+
+def get_goalkeeper_classification_rule():
+    """Classify players as Goalkeepers based on position"""
+    return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
+    
+    INSERT {
+        ?player rdf:type ont:Goalkeeper .
+    }
+    WHERE {
+        ?player rdf:type ?pClass .
+        ?pClass rdfs:subClassOf* ont:Player .
+        ?player fut-rel:position ?position .
+        FILTER(UCASE(?position) = "GK")
+    }
+    """
+
+def get_outfield_player_classification_rule():
+    """Classify players as OutfieldPlayers based on position (not GK)"""
+    return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
+    
+    INSERT {
+        ?player rdf:type ont:OutfieldPlayer .
+    }
+    WHERE {
+        ?player rdf:type ?pClass .
+        ?pClass rdfs:subClassOf* ont:Player .
+        ?player fut-rel:position ?position .
+        FILTER(UCASE(?position) != "GK")
+    }
     """

@@ -98,7 +98,7 @@
         <div class="col-2 py-2 text-center">
             {% if entity.clubs %}
             <div class="club-logo-container p-2 mb-2" typeof="SportsTeam" property="memberOf">
-                <a href="{% url 'club' entity.clubs.0.id %}" style="text-decoration: none;">
+                <a property="url" href="{% url 'club' entity.clubs.0.id %}" style="text-decoration: none;">
                     <img property="logo" src="{{ entity.clubs.0.logo }}" alt="{{ entity.clubs.0.team_name }}" class="img-fluid">
                 </a>
             </div>
