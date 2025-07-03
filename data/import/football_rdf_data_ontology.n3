@@ -11,14 +11,14 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix stat: <http://football.org/stat/> .
 
-####################### ONTOLOGY #######################
+####################### ONTOLOGY #########################
 
 <http://football.org/ontology> a owl:Ontology ;
     rdfs:label "Football Ontology" ;
     rdfs:comment "A basic ontology for football/soccer data including players, clubs, countries, leagues, and statistics" .
 
 
-####################### CLASSES #######################
+####################### CLASSES ##########################
 
 :Player a owl:Class ;
     rdfs:label "Player" ;
@@ -40,8 +40,22 @@
     rdfs:label "Statistic Type" ;
     rdfs:comment "Categories of football statistics" .
 
+################## PLAYER SUBCLASSES #####################
 
-################### STAT TYPE CLASSES ###################
+:Goalkeeper a owl:Class ;
+    rdfs:subClassOf :Player ;
+    rdfs:label "Goalkeeper" ;
+    rdfs:comment "A player whose position is goalkeeper." .
+
+:OutfieldPlayer a owl:Class ;
+    rdfs:subClassOf :Player ;
+    rdfs:label "Outfield Player" ;
+    rdfs:comment "Any player whose position is not goalkeeper." .
+
+# These classes are disjoint to ensure no player can be both a goalkeeper and an outfield player
+:Goalkeeper owl:disjointWith :OutfieldPlayer .
+
+################### STAT TYPE CLASSES ####################
 
 :PlayingTime a owl:Class ;
     rdfs:subClassOf :StatisticType ;
@@ -72,7 +86,6 @@
     rdfs:subClassOf :StatisticType ;
     rdfs:label "Miscellaneous" ;
     rdfs:comment "Miscellaneous statistics." .
-
 
 ############ OBJECT PROPERTIES - RELATIONSHIPS ###########
 
@@ -110,7 +123,6 @@ rel:league a owl:ObjectProperty, owl:FunctionalProperty ;
     rdfs:label "stat type" ;
     rdfs:comment "The type category of a statistic" ;
     rdfs:range :StatisticType .
-
 
 ########### DATA PROPERTIES - SHARED PROPERTIES ##########
 
@@ -485,7 +497,9 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     :statType :Miscellaneous .
 
 
-######## ADDITIONAL PROPERTIES FOR INFERRED DATA #########
+##### ADDITIONAL PROPERTIES FOR INFERRED DATA (SPIN) #####
+
+# STATS
 
 :efficiency a owl:DatatypeProperty ;
     rdfs:label "Efficiency" ;
@@ -493,6 +507,8 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     rdfs:domain :Player ;
     rdfs:range xsd:double ;
     :statType :Attacking .
+
+# RELATIONSHIPS
 
 :teammate a owl:ObjectProperty , owl:SymmetricProperty ;
     rdfs:label "teammate" ;
@@ -517,6 +533,8 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     rdfs:comment "Clubs that are rivals in the same league and city" ;
     rdfs:domain :Club ;
     rdfs:range :Club .
+
+# PLAYER PROPERTIES (MARKERS)
 
 :veteranStatus a owl:DatatypeProperty ;
     rdfs:label "veteran status" ;
@@ -648,6 +666,27 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     )
 ] .
 
+# Goalkeeper: Simple and fast - exact match
+:Goalkeeper owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Player
+        [ a owl:Restriction ;
+          owl:onProperty rel:position ;
+          owl:hasValue "GK" ]
+    )
+] .
+
+# OutfieldPlayer: Anyone who is a Player but NOT a Goalkeeper
+:OutfieldPlayer owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        :Player
+        [ a owl:Class ;
+          owl:complementOf :Goalkeeper ]
+    )
+] .
+
 # Additional restrictions for more precise classification
 
 # Players must have at least a name and position
@@ -702,6 +741,7 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     owl:onProperty rel:country ;
     owl:maxCardinality 1
 ] .
+
 
 <http://football.org/ent/aaron_ciammaglichella> ns1:born 2005 ;
     ns1:club <http://football.org/ent/torino> ;

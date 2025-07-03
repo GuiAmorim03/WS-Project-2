@@ -7,14 +7,14 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix stat: <http://football.org/stat/> .
 
-####################### ONTOLOGY #######################
+####################### ONTOLOGY #########################
 
 <http://football.org/ontology> a owl:Ontology ;
     rdfs:label "Football Ontology" ;
     rdfs:comment "A basic ontology for football/soccer data including players, clubs, countries, leagues, and statistics" .
 
 
-####################### CLASSES #######################
+####################### CLASSES ##########################
 
 :Player a owl:Class ;
     rdfs:label "Player" ;
@@ -36,6 +36,8 @@
     rdfs:label "Statistic Type" ;
     rdfs:comment "Categories of football statistics" .
 
+################## PLAYER SUBCLASSES #####################
+
 :Goalkeeper a owl:Class ;
     rdfs:subClassOf :Player ;
     rdfs:label "Goalkeeper" ;
@@ -46,7 +48,10 @@
     rdfs:label "Outfield Player" ;
     rdfs:comment "Any player whose position is not goalkeeper." .
 
-################### STAT TYPE CLASSES ###################
+# These classes are disjoint to ensure no player can be both a goalkeeper and an outfield player
+:Goalkeeper owl:disjointWith :OutfieldPlayer .
+
+################### STAT TYPE CLASSES ####################
 
 :PlayingTime a owl:Class ;
     rdfs:subClassOf :StatisticType ;
@@ -114,32 +119,6 @@ rel:league a owl:ObjectProperty, owl:FunctionalProperty ;
     rdfs:label "stat type" ;
     rdfs:comment "The type category of a statistic" ;
     rdfs:range :StatisticType .
-
-:playsAt a owl:ObjectProperty ;
-    rdfs:domain :Club ;
-    rdfs:range :Venue ;
-    rdfs:label "plays at" ;
-    rdfs:comment "Indicates the home venue where a team plays." .
-
-########### VENUE PROPERTIES ##########
-
-:name a owl:DatatypeProperty ;
-    rdfs:domain :Venue ;
-    rdfs:range xsd:string ;
-    rdfs:label "name" ;
-    rdfs:comment "The official name of the venue." .
-
-:city a owl:DatatypeProperty ;
-    rdfs:domain :Venue ;
-    rdfs:range xsd:string ;
-    rdfs:label "city" ;
-    rdfs:comment "The city where the venue is located." .
-
-:country a owl:ObjectProperty ;
-    rdfs:domain :Venue ;
-    rdfs:range :Country ;
-    rdfs:label "country" ;
-    rdfs:comment "The country where the venue is located." .
 
 ########### DATA PROPERTIES - SHARED PROPERTIES ##########
 
@@ -514,7 +493,9 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     :statType :Miscellaneous .
 
 
-######## ADDITIONAL PROPERTIES FOR INFERRED DATA #########
+##### ADDITIONAL PROPERTIES FOR INFERRED DATA (SPIN) #####
+
+# STATS
 
 :efficiency a owl:DatatypeProperty ;
     rdfs:label "Efficiency" ;
@@ -522,6 +503,8 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     rdfs:domain :Player ;
     rdfs:range xsd:double ;
     :statType :Attacking .
+
+# RELATIONSHIPS
 
 :teammate a owl:ObjectProperty , owl:SymmetricProperty ;
     rdfs:label "teammate" ;
@@ -546,6 +529,8 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     rdfs:comment "Clubs that are rivals in the same league and city" ;
     rdfs:domain :Club ;
     rdfs:range :Club .
+
+# PLAYER PROPERTIES (MARKERS)
 
 :veteranStatus a owl:DatatypeProperty ;
     rdfs:label "veteran status" ;
@@ -677,54 +662,26 @@ rel:off_stats_misc a owl:DatatypeProperty ;
     )
 ] .
 
-# Any :Player who has a currentClub property (or rel:club) is still active.
-:ActivePlayer owl:equivalentClass [
-    a owl:Class ;
-    owl:intersectionOf (
-        :Player
-        [ a owl:Restriction ;
-          owl:onProperty rel:club ;
-          owl:someValuesFrom :Club ]
-    )
-] .
+# Goalkeeper inference: Tried many approaches, reasoner always fails
+# :Goalkeeper owl:equivalentClass [
+#     a owl:Class ;
+#     owl:intersectionOf (
+#         :Player
+#         [ a owl:Restriction ;
+#           owl:onProperty rel:position ;
+#           owl:hasValue "GK" ]
+#     )
+# ] .
 
-:GKPosition a owl:Class ;
-    owl:equivalentClass [
-        a owl:Restriction ;
-        owl:onProperty rel:position ;
-        owl:hasValue "GK"
-    ] .
-
-:Goalkeeper owl:equivalentClass [
-    a owl:Class ;
-    owl:intersectionOf (
-        :Player
-        :GKPosition
-    )
-] .
-
-:OutfieldPosition owl:equivalentClass [
-    a owl:Class ;
-    owl:unionOf (
-        [ a owl:Restriction ;
-          owl:onProperty rel:position ;
-          owl:hasValue "DF" ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:position ;
-          owl:hasValue "MF" ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:position ;
-          owl:hasValue "FW" ]
-    )
-] .
-
-:OutfieldPlayer owl:equivalentClass [
-    a owl:Class ;
-    owl:intersectionOf (
-        :Player
-        :OutfieldPosition
-    )
-] .
+# OutfieldPlayer inference: Tried many approaches, reasoner always fails
+# :OutfieldPlayer owl:equivalentClass [
+#     a owl:Class ;
+#     owl:intersectionOf (
+#         :Player
+#         [ a owl:Class ;
+#           owl:complementOf :Goalkeeper ]
+#     )
+# ] .
 
 # Additional restrictions for more precise classification
 
