@@ -198,294 +198,294 @@ rel:flag a owl:DatatypeProperty ;
 
 ########## STATISTICAL PROPERTIES - PERFORMANCE ##########
 
-rel:mp a owl:DatatypeProperty ;
+stat:mp a owl:DatatypeProperty ;
     rdfs:label "Matches Played" ;
     rdfs:comment "Number of matches played" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :PlayingTime .
 
-rel:starts a owl:DatatypeProperty ;
+stat:starts a owl:DatatypeProperty ;
     rdfs:label "Games Started" ;
     rdfs:comment "Number of games started" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :PlayingTime .
 
-rel:min a owl:DatatypeProperty ;
+stat:min a owl:DatatypeProperty ;
     rdfs:label "Minutes Played" ;
     rdfs:comment "Total minutes played" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :PlayingTime .
 
-rel:gls a owl:DatatypeProperty ;
+stat:gls a owl:DatatypeProperty ;
     rdfs:label "Goals" ;
     rdfs:comment "Number of goals scored" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Attacking .
 
-rel:ast a owl:DatatypeProperty ;
+stat:ast a owl:DatatypeProperty ;
     rdfs:label "Assists" ;
     rdfs:comment "Number of assists" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Attacking .
 
-rel:g_plus_a a owl:DatatypeProperty ;
+stat:g_plus_a a owl:DatatypeProperty ;
     rdfs:label "Goals + Assists" ;
     rdfs:comment "Combined goals and assists" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Attacking .
 
-rel:xg a owl:DatatypeProperty ;
+stat:xg a owl:DatatypeProperty ;
     rdfs:label "Expected Goals" ;
     rdfs:comment "Expected goals statistic" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:double ;
     :statType :Attacking .
 
-rel:xag a owl:DatatypeProperty ;
+stat:xag a owl:DatatypeProperty ;
     rdfs:label "Expected Assists" ;
     rdfs:comment "Expected assists statistic" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:double ;
     :statType :Attacking .
 
-rel:pk a owl:DatatypeProperty ;
+stat:pk a owl:DatatypeProperty ;
     rdfs:label "Penalties Scored" ;
     rdfs:comment "Number of penalties scored" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Attacking .
 
-rel:pkatt a owl:DatatypeProperty ;
+stat:pkatt a owl:DatatypeProperty ;
     rdfs:label "Penalties Attempted" ;
     rdfs:comment "Number of penalties attempted" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Attacking .
 
-rel:tkl a owl:DatatypeProperty ;
+stat:tkl a owl:DatatypeProperty ;
     rdfs:label "Tackles" ;
     rdfs:comment "Number of tackles made" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Defending .
 
-rel:tklw a owl:DatatypeProperty ;
+stat:tklw a owl:DatatypeProperty ;
     rdfs:label "Tackles Won" ;
     rdfs:comment "Number of tackles won" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Defending .
 
-rel:blocks_stats_defense a owl:DatatypeProperty ;
+stat:blocks_stats_defense a owl:DatatypeProperty ;
     rdfs:label "Blocks" ;
     rdfs:comment "Number of blocks made" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Defending .
 
-rel:int a owl:DatatypeProperty ;
+stat:int a owl:DatatypeProperty ;
     rdfs:label "Interceptions" ;
     rdfs:comment "Number of interceptions" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Defending .
 
-rel:clr a owl:DatatypeProperty ;
+stat:clr a owl:DatatypeProperty ;
     rdfs:label "Clearances" ;
     rdfs:comment "Number of clearances" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Defending .
 
-rel:err a owl:DatatypeProperty ;
+stat:err a owl:DatatypeProperty ;
     rdfs:label "Errors Leading To Goal" ;
     rdfs:comment "Number of errors leading to goals" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Defending .
 
-rel:recov a owl:DatatypeProperty ;
+stat:recov a owl:DatatypeProperty ;
     rdfs:label "Ball Recoveries" ;
     rdfs:comment "Number of ball recoveries" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Defending .
 
-rel:prgp a owl:DatatypeProperty ;
+stat:prgp a owl:DatatypeProperty ;
     rdfs:label "Progressive Passes" ;
     rdfs:comment "Number of progressive passes" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:prgc a owl:DatatypeProperty ;
+stat:prgc a owl:DatatypeProperty ;
     rdfs:label "Progressive Carries" ;
     rdfs:comment "Number of progressive carries" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:prgr a owl:DatatypeProperty ;
+stat:prgr a owl:DatatypeProperty ;
     rdfs:label "Progressive Runs" ;
     rdfs:comment "Number of progressive runs" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:kp a owl:DatatypeProperty ;
+stat:kp a owl:DatatypeProperty ;
     rdfs:label "Key Passes" ;
     rdfs:comment "Number of key passes" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:ppa a owl:DatatypeProperty ;
+stat:ppa a owl:DatatypeProperty ;
     rdfs:label "Passes Into Penalty Area" ;
     rdfs:comment "Number of passes into penalty area" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:live a owl:DatatypeProperty ;
+stat:live a owl:DatatypeProperty ;
     rdfs:label "Total Passes" ;
     rdfs:comment "Number of total passes" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:cmp_stats_passing_types a owl:DatatypeProperty ;
+stat:cmp_stats_passing_types a owl:DatatypeProperty ;
     rdfs:label "Passes Completed" ;
     rdfs:comment "Number of passes completed" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:touches a owl:DatatypeProperty ;
+stat:touches a owl:DatatypeProperty ;
     rdfs:label "Touches" ;
     rdfs:comment "Number of touches" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:mis a owl:DatatypeProperty ;
+stat:mis a owl:DatatypeProperty ;
     rdfs:label "Miscontrols" ;
     rdfs:comment "Number of miscontrols" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:dis a owl:DatatypeProperty ;
+stat:dis a owl:DatatypeProperty ;
     rdfs:label "Times Dispossessed" ;
     rdfs:comment "Number of times dispossessed" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Passing .
 
-rel:ga a owl:DatatypeProperty ;
+stat:ga a owl:DatatypeProperty ;
     rdfs:label "Goals Conceded" ;
     rdfs:comment "Number of goals conceded" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Goalkeeping .
 
-rel:ga90 a owl:DatatypeProperty ;
+stat:ga90 a owl:DatatypeProperty ;
     rdfs:label "Goals Conceded Per 90 Minutes" ;
     rdfs:comment "Goals conceded per 90 minutes" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:double ;
     :statType :Goalkeeping .
 
-rel:saves a owl:DatatypeProperty ;
+stat:saves a owl:DatatypeProperty ;
     rdfs:label "Saves" ;
     rdfs:comment "Number of saves made" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Goalkeeping .
 
-rel:save_pct a owl:DatatypeProperty ;
+stat:save_pct a owl:DatatypeProperty ;
     rdfs:label "Save %" ;
     rdfs:comment "Percentage of shots saved" ;
     rdfs:domain :Player ;
     rdfs:range xsd:double ;
     :statType :Goalkeeping .
 
-rel:cs a owl:DatatypeProperty ;
+stat:cs a owl:DatatypeProperty ;
     rdfs:label "Clean Sheets" ;
     rdfs:comment "Number of clean sheets" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Goalkeeping .
 
-rel:cs_pct a owl:DatatypeProperty ;
+stat:cs_pct a owl:DatatypeProperty ;
     rdfs:label "Clean Sheet %" ;
     rdfs:comment "Percentage of clean sheets" ;
     rdfs:domain :Player ;
     rdfs:range xsd:double ;
     :statType :Goalkeeping .
 
-rel:pka a owl:DatatypeProperty ;
+stat:pka a owl:DatatypeProperty ;
     rdfs:label "Penalties Faced" ;
     rdfs:comment "Number of penalties faced" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Goalkeeping .
 
-rel:pksv a owl:DatatypeProperty ;
+stat:pksv a owl:DatatypeProperty ;
     rdfs:label "Penalties Saved" ;
     rdfs:comment "Number of penalties saved" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Goalkeeping .
 
-rel:crdy a owl:DatatypeProperty ;
+stat:crdy a owl:DatatypeProperty ;
     rdfs:label "Yellow Cards" ;
     rdfs:comment "Number of yellow cards received" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Miscellaneous .
 
-rel:crdr a owl:DatatypeProperty ;
+stat:crdr a owl:DatatypeProperty ;
     rdfs:label "Red Cards" ;
     rdfs:comment "Number of red cards received" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Miscellaneous .
 
-rel:fls a owl:DatatypeProperty ;
+stat:fls a owl:DatatypeProperty ;
     rdfs:label "Fouls Committed" ;
     rdfs:comment "Number of fouls committed" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Miscellaneous .
 
-rel:pkcon a owl:DatatypeProperty ;
+stat:pkcon a owl:DatatypeProperty ;
     rdfs:label "Penalties Conceded" ;
     rdfs:comment "Number of penalties conceded" ;
     rdfs:domain :Player ;
     rdfs:range xsd:integer ;
     :statType :Miscellaneous .
 
-rel:pkwon a owl:DatatypeProperty ;
+stat:pkwon a owl:DatatypeProperty ;
     rdfs:label "Penalties Won" ;
     rdfs:comment "Number of penalties won" ;
     rdfs:domain :Player ;
     rdfs:range xsd:integer ;
     :statType :Miscellaneous .
 
-rel:og a owl:DatatypeProperty ;
+stat:og a owl:DatatypeProperty ;
     rdfs:label "Own Goals" ;
     rdfs:comment "Number of own goals" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
     rdfs:range xsd:integer ;
     :statType :Miscellaneous .
 
-rel:off_stats_misc a owl:DatatypeProperty ;
+stat:off_stats_misc a owl:DatatypeProperty ;
     rdfs:label "Offsides" ;
     rdfs:comment "Number of times caught offside" ;
     rdfs:domain [ owl:unionOf ( :Player :Club ) ] ;
@@ -595,72 +595,17 @@ rel:off_stats_misc a owl:DatatypeProperty ;
 
 ##################### OWL RESTRICTIONS FOR INFERENCE ####################
 
-# Player inference: Anyone with a position, birth year, or club affiliation is a Player
+# Player inference: Entities with a position are Players
 :Player owl:equivalentClass [
     a owl:Class ;
     owl:unionOf (
         [ a owl:Restriction ;
           owl:onProperty rel:position ;
           owl:someValuesFrom xsd:string ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:born ;
-          owl:someValuesFrom xsd:integer ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:club ;
-          owl:someValuesFrom :Club ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:nation ;
-          owl:someValuesFrom :Country ]
     )
 ] .
 
-# Club inference: Entities with stadium, city, or league properties are Clubs
-:Club owl:equivalentClass [
-    a owl:Class ;
-    owl:unionOf (
-        [ a owl:Restriction ;
-          owl:onProperty rel:stadium ;
-          owl:someValuesFrom xsd:string ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:city ;
-          owl:someValuesFrom xsd:string ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:league ;
-          owl:someValuesFrom :League ]
-        [ a owl:Restriction ;
-          owl:onProperty rel:logo ;
-          owl:someValuesFrom xsd:string ]
-    )
-] .
-
-# Country inference: Entities with flag property or used as nation/country are Countries
-:Country owl:equivalentClass [
-    a owl:Class ;
-    owl:unionOf (
-        [ a owl:Restriction ;
-          owl:onProperty rel:flag ;
-          owl:someValuesFrom xsd:string ]
-        [ a owl:Class ;
-          owl:intersectionOf (
-              [ a owl:Restriction ;
-                owl:onProperty [ owl:inverseOf rel:nation ] ;
-                owl:someValuesFrom :Player ]
-              [ a owl:Restriction ;
-                owl:onProperty rel:abrv ;
-                owl:someValuesFrom xsd:string ]
-          ) ]
-    )
-] .
-
-# League inference: Entities that clubs participate in are Leagues
-:League owl:equivalentClass [
-    a owl:Class ;
-    owl:unionOf (
-        [ a owl:Restriction ;
-          owl:onProperty [ owl:inverseOf rel:league ] ;
-          owl:someValuesFrom :Club ]
-    )
-] .
+# Subclass inference always fails using Protégé reasoner (HermiT 1.4.3)
 
 # Goalkeeper inference: Tried many approaches, reasoner always fails
 # :Goalkeeper owl:equivalentClass [
@@ -682,6 +627,38 @@ rel:off_stats_misc a owl:DatatypeProperty ;
 #           owl:complementOf :Goalkeeper ]
 #     )
 # ] .
+
+# Club inference: Entities with  league properties are Clubs
+:Club owl:equivalentClass [
+    a owl:Class ;
+    owl:unionOf (
+        [ a owl:Restriction ;
+          owl:onProperty rel:league ;
+          owl:someValuesFrom :League ]
+    )
+] .
+
+# Country inference: Entities with flag property are Countries
+:Country owl:equivalentClass [
+    a owl:Class ;
+    owl:unionOf (
+        [ a owl:Restriction ;
+          owl:onProperty rel:flag ;
+          owl:someValuesFrom xsd:string ]
+    )
+] .
+
+# League inference: Entities that clubs participate in are Leagues
+:League owl:equivalentClass [
+    a owl:Class ;
+    owl:unionOf (
+        [ a owl:Restriction ;
+          owl:onProperty [ owl:inverseOf rel:league ] ;
+          owl:someValuesFrom :Club ]
+    )
+] .
+
+
 
 # Additional restrictions for more precise classification
 

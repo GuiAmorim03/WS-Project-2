@@ -319,15 +319,14 @@ def get_top_players_by_stat_query(stat_id, limit=10):
         ?alternateColor
         ?flag
     WHERE {{
-        VALUES ?stat {{ <http://football.org/ontology#{stat_id}> }} 
+        VALUES ?stat {{ <http://football.org/stat/{stat_id}> }} 
         
-        ?player_id rdf:type ?class ;
+        ?player_id rdf:type ont:Player ;
                 fut-rel:name ?name ;
                 ?stat ?stat_value ;
                 fut-rel:club ?club ;
                 fut-rel:nation/fut-rel:flag ?flag ;
-                ont:min ?min .
-        ?class rdfs:subClassOf* ont:Player .
+                fut-stat:min ?min .
         
         ?club fut-rel:name ?club_name ;
               fut-rel:logo ?club_logo ;
@@ -362,9 +361,9 @@ def get_top_clubs_by_stat_query(stat_id, limit=10):
         ?color
         ?alternateColor
     WHERE {{
-        VALUES ?stat {{ <http://football.org/ontology#{stat_id}> }} 
+        VALUES ?stat {{ <http://football.org/stat/{stat_id}> }} 
         
-        ?club_id rdf:type ?class ;
+        ?club_id rdf:type ont:Club ;
                 fut-rel:name ?name ;
                 ?stat ?stat_value ;
                 fut-rel:logo ?logo ;
@@ -372,7 +371,6 @@ def get_top_clubs_by_stat_query(stat_id, limit=10):
                 fut-rel:alternateColor ?alternateColor ;
                 fut-rel:country/fut-rel:flag ?flag ;
                 fut-rel:league/fut-rel:name ?league_name .
-        ?class rdfs:subClassOf* ont:Club .
         
         ?stat rdfs:label ?stat_name .
     }}
