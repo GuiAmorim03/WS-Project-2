@@ -1,0 +1,183 @@
+{% extends "layouts/entity.html" %}
+{% load humanize %}
+
+{% block content_inside %}
+
+<div class="card h-card">
+    <div class="card-header position-relative" style="background-color: #f8f9fa; color: #333; padding-right: 70px;">
+        <div class="row">
+            <div class="col-8">
+                <div class="d-flex align-items-center">
+                    {% if entity.name %}
+                    <h2 class="mt-5 me-2 p-name">{{ entity.name }}</h2>
+                    {% endif %}
+                </div>
+                {% if entity.hostCountries %}
+                <p class="m-1">
+                    <span class="me-2"><i class="fas fa-map-marker-alt me-1"></i> <span class="fw-bold">{{ entity.hostCountries }}</span></span>
+                </p>
+                {% endif %}
+
+                {% if entity.event_prev or entity.event_next %}
+                    {% if entity.event_prev %}
+                    <p class="m-1">
+                        <span class="me-2"><i class="fas fa-angle-double-left me-1"></i><a href="{% url 'event' entity.event_prev.url %}"> {{ entity.event_prev.name }} </a></span>
+                    </p>
+                    {% endif %}
+                    {% if entity.event_next %}
+                    <p class="m-1">
+                        <span class="me-2"><i class="fas fa-angle-double-right me-1"></i><a href="{% url 'event' entity.event_next.url %}"> {{ entity.event_next.name }} </a></span>
+                    </p>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-4 text-center">
+                <div class="logo-container p-2 rounded">
+                    {% if entity.image %}
+                    <img src="{{ entity.image }}" alt="{{ entity.name }}" class="img-fluid u-photo" style="max-height: 200px;">
+                    {% else %}
+                    <div class="d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                        <i class="fas fa-trophy fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="background-color: #fff;">
+        {% if entity.podium %}
+        <div class="mt-3">
+            <h5 class="mb-4">Tournament Podium</h5>
+            
+            <div class="podium-container mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="d-flex justify-content-center align-items-end">
+                            {% if entity.podium.1 %}
+                            <div class="podium-step mx-3 d-flex flex-column align-items-center" style="width: 120px;">
+                                <div class="country-flag rounded-circle mb-2 d-flex justify-content-center align-items-center shadow" 
+                                     style="width: 80px; height: 80px; background-color: #C0C0C0; border: 3px solid #A8A8A8; overflow: hidden; position: relative; z-index: 2;">
+                                    <span style="font-size: 1.5rem; font-weight: bold; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">{{ entity.podium.1 }}</span>
+                                </div>
+                                <div class="podium-block shadow" style="height: 70px; width: 100%; background-color: #d1d1d1; border-radius: 8px 8px 0 0; display: flex; justify-content: center; align-items: center;">
+                                    <span class="position-text" style="font-weight: bold; color: white; font-size: 1.8rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">2</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="podium-step mx-3 d-flex flex-column align-items-center" style="width: 140px; position: relative; z-index: 3;">
+                                <div class="country-flag rounded-circle mb-2 d-flex justify-content-center align-items-center shadow" 
+                                     style="width: 100px; height: 100px; background-color: #FFD700; border: 3px solid #DAA520; overflow: hidden;">
+                                    <span style="font-size: 1.8rem; font-weight: bold; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">{{ entity.podium.0 }}</span>
+                                </div>
+                                <div class="podium-block shadow" style="height: 100px; width: 100%; background-color: #f5ce50; border-radius: 8px 8px 0 0; display: flex; justify-content: center; align-items: center;">
+                                    <span class="position-text" style="font-weight: bold; color: white; font-size: 2.2rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">1</span>
+                                </div>
+                            </div>
+                            
+                            {% if entity.podium.2 %}
+                            <div class="podium-step mx-3 d-flex flex-column align-items-center" style="width: 120px;">
+                                <div class="country-flag rounded-circle mb-2 d-flex justify-content-center align-items-center shadow" 
+                                     style="width: 70px; height: 70px; background-color: #CD7F32; border: 3px solid #A05A2C; overflow: hidden; position: relative; z-index: 1;">
+                                    <span style="font-size: 1.3rem; font-weight: bold; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">{{ entity.podium.2 }}</span>
+                                </div>
+                                <div class="podium-block shadow" style="height: 50px; width: 100%; background-color: #e0a370; border-radius: 8px 8px 0 0; display: flex; justify-content: center; align-items: center;">
+                                    <span class="position-text" style="font-weight: bold; color: white; font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">3</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if entity.got or entity.pot or entity.ypot or entity.topScorer %}
+        <hr class="my-4">
+        <div class="mb-4">
+            <h5 class="mb-3">Individual Awards</h5>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% if entity.pot %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body d-flex">
+                            <div class="award-icon me-3 d-flex align-items-center justify-content-center" 
+                                 style="background-color: #f0f8ff; width: 50px; height: 50px; border-radius: 50%;">
+                                <i class="fas fa-user-alt" style="color: #4169e1; font-size: 1.3rem;"></i>
+                            </div>
+                            <div>
+                                <h6 class="card-title">Player of the Tournament</h6>
+                                <p class="card-text fw-bold mb-0">{{ entity.pot }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if entity.got %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body d-flex">
+                            <div class="award-icon me-3 d-flex align-items-center justify-content-center" 
+                                 style="background-color: #fff0f5; width: 50px; height: 50px; border-radius: 50%;">
+                                <i class="fas fa-hand-paper" style="color: #dc143c; font-size: 1.3rem;"></i>
+                            </div>
+                            <div>
+                                <h6 class="card-title">Goalkeeper of the Tournament</h6>
+                                <p class="card-text fw-bold mb-0">{{ entity.got }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if entity.ypot %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body d-flex">
+                            <div class="award-icon me-3 d-flex align-items-center justify-content-center" 
+                                 style="background-color: #f0fff0; width: 50px; height: 50px; border-radius: 50%;">
+                                <i class="fas fa-user-graduate" style="color: #228b22; font-size: 1.3rem;"></i>
+                            </div>
+                            <div>
+                                <h6 class="card-title">Young Player of the Tournament</h6>
+                                <p class="card-text fw-bold mb-0">{{ entity.ypot }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if entity.topScorer %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body d-flex">
+                            <div class="award-icon me-3 d-flex align-items-center justify-content-center" 
+                                 style="background-color: #fffacd; width: 50px; height: 50px; border-radius: 50%;">
+                                <i class="fas fa-futbol" style="color: #ffa500; font-size: 1.3rem;"></i>
+                            </div>
+                            <div>
+                                <h6 class="card-title">Top Scorer</h6>
+                                <p class="card-text fw-bold mb-0">{{ entity.topScorer }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if entity.description %}
+        <hr class="my-4">
+        <div class="mb-4">
+            <p style="text-align: justify;">{{ entity.description }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

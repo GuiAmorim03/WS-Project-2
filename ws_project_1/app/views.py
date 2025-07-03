@@ -9,7 +9,7 @@ from .utils.spin_client import (
     check_enhanced_player_connection
 )
 from .utils.wikidata_client import query_club_details_extra, query_stadium_details, query_league_details, query_league_winners
-from .utils.dbpedia_client import query_city_details
+from .utils.dbpedia_client import query_city_details, query_event_details
 from unidecode import unidecode
 
 # Global variable to track SPIN rules state
@@ -189,6 +189,11 @@ def city_detail(request, city_name):
     city_details["clubs"] = city_clubs
     city_details["spin_rules_active"] = SPIN_RULES_ACTIVE
     return render(request, "city.html", {"entity": city_details})
+
+def event_detail(request, event_name):
+
+    event_details = query_event_details(event_name)
+    return render(request, "event.html", {"entity": event_details})
 
 def dashboard(request):
     """
