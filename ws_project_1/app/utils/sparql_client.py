@@ -5,7 +5,7 @@ from datetime import datetime
 from .sparql_queries import (
     get_player_details_query, get_club_details_query, get_club_players_query,
     get_all_players_query, get_all_clubs_query, get_player_stats_query,
-    get_club_stats_query, get_graph_data_query, get_top_players_by_stat_query,
+    get_club_stats_query, get_city_clubs_query, get_graph_data_query, get_top_players_by_stat_query,
     get_top_clubs_by_stat_query, get_player_club_query, get_update_player_club_query,
     get_all_nations_query, get_create_player_query, get_add_player_position_query,
     get_player_connection_query, get_delete_player_query
@@ -451,6 +451,42 @@ def process_club_stats_results(results):
         })
     
     return sort_stats_categories(categories)
+
+def query_city_clubs(city_name, spin):
+    """
+    Query and process clubs in a specific city from the SPARQL endpoint.
+    
+    Args:
+        city_name: The name of the city to query clubs for
+        spin: Whether to apply SPIN rules to the query results
+        
+    Returns:
+        list: List of processed club data ready for template rendering
+    """
+    
+    return process_query(get_city_clubs_query(city_name, spin), process_func=process_city_clubs_results, additional_process_params={"spin": spin},
+                         error_message="Error querying clubs in city", success_message="Clubs in city queried successfully")
+
+def process_city_clubs_results(results, spin):
+    """Process the SPARQL query results for clubs in a city into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    clubs = []
+    for club in results["results"]["bindings"]:
+        club_id = club["club_id"]["value"].split("/")[-1]
+        success_index = club["success"]["value"] if "success" in club and spin else 0
+        
+        clubs.append({
+            "id": club_id,
+            "name": club["name"]["value"],
+            "logo": club["logo"]["value"],
+            "color": club["color"]["value"],
+            "alternateColor": club["alternateColor"]["value"],
+            "success": success_index,
+        })
+    
+    return clubs
 
 def query_graph_data(selected_node_id=None):
     """

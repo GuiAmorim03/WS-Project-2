@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
-from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection, delete_player
+from .utils.sparql_client import add_new_player_position, query_player_club, query_player_details, query_club_details, query_club_players, query_all_players, query_all_clubs, query_city_clubs, query_graph_data, query_top_players_by_stat, query_top_clubs_by_stat, query_all_nations, create_player, update_player_club, check_player_connection, delete_player
 from .utils.spin_client import (
     execute_spin_rules, clear_spin_inferences, query_enhanced_player_details, 
     query_enhanced_all_players, query_player_teammates, query_player_compatriots,
@@ -9,6 +9,7 @@ from .utils.spin_client import (
     check_enhanced_player_connection
 )
 from .utils.wikidata_client import query_club_details_extra, query_stadium_details, query_league_details, query_league_winners
+from .utils.dbpedia_client import query_city_details, query_event_details
 from unidecode import unidecode
 
 # Global variable to track SPIN rules state
@@ -180,6 +181,19 @@ def league_detail(request, league_name):
         league_data["winners"] = league_winners
 
     return render(request, "league.html", {"entity": league_data})
+
+def city_detail(request, city_name):
+
+    city_details = query_city_details(city_name)
+    city_clubs = query_city_clubs(city_name, SPIN_RULES_ACTIVE)
+    city_details["clubs"] = city_clubs
+    city_details["spin_rules_active"] = SPIN_RULES_ACTIVE
+    return render(request, "city.html", {"entity": city_details})
+
+def event_detail(request, event_name):
+
+    event_details = query_event_details(event_name)
+    return render(request, "event.html", {"entity": event_details})
 
 def dashboard(request):
     """

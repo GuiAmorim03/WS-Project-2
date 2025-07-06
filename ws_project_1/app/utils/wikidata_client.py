@@ -179,12 +179,27 @@ def process_stadium_details(details):
                     event_without_year = re.sub(r'\b' + year + r'\b', '', event).strip()
                     event_without_year = re.sub(r'\s+', ' ', event_without_year)
                     event_without_year = re.sub(r'^[,\s]+|[,\s]+$', '', event_without_year)
-                    event = f"{year} {event_without_year}"
+                    event_text = f"{year} {event_without_year}"
+                else:
+                    event_text = event.strip()
                 
-                events.append((int(year), event.strip()))
+                event_year = int(year)
+                
             else:
-                events.append((9999, event.strip()))
+                event_text = event.strip()
+                event_year = 9999
         
+            if "FIFA" in event_text:
+                event_url = event_text.replace(" ", "_")
+            elif "UEFA" in event_text:
+                event_url = f"UEFA_Euro_{event_year}"
+            else:
+                event_url = None
+            events.append((event_year, {
+                "name": event_text,
+                "url": event_url
+            }))
+
         events.sort()
         events = [event[1] for event in events]
 

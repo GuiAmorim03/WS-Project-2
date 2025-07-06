@@ -508,6 +508,13 @@ stat:off_stats_misc a owl:DatatypeProperty ;
     rdfs:range xsd:double ;
     :statType :Attacking .
 
+:successIndex a owl:DatatypeProperty ;
+    rdfs:label "Success Index" ;
+    rdfs:comment "Club success index based on statistics" ;
+    rdfs:domain :Club ;
+    rdfs:range xsd:double ;
+    :statType :Attacking .
+
 # RELATIONSHIPS
 
 :teammate a owl:ObjectProperty , owl:SymmetricProperty ;
