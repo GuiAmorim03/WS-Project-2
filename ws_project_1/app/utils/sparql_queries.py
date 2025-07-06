@@ -246,14 +246,14 @@ def get_city_clubs_query(city_name, spin):
         ?alternateColor
         ?success
     WHERE {{
-        ?club_id rdf:type ?class ;
+        ?club_id rdf:type ont:Club ;
                 fut-rel:name ?name ;
                 fut-rel:logo ?logo ;
                 fut-rel:color ?color ;
                 fut-rel:alternateColor ?alternateColor ;
                 fut-rel:city "{city_name}" .
         OPTIONAL {{ ?club_id ont:success ?success . }}
-        ?class rdfs:subClassOf* ont:Club .
+        
     }}
     {order}
     """

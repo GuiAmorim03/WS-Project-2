@@ -66,18 +66,18 @@ def get_club_success_index_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?club ont:success ?succ .
     }
     WHERE {
-        ?club rdf:type ?cClass .
-        ?cClass rdfs:subClassOf* ont:Club .
-        ?club ont:gls ?goals .
-        ?club ont:ga ?goalsConceded .
-        ?club ont:xg ?expectedGoals .
-        ?club ont:cs ?cleanSheets .
+        ?club rdf:type ont:Club .
+        ?club fut-stat:gls ?goals .
+        ?club fut-stat:ga ?goalsConceded .
+        ?club fut-stat:xg ?expectedGoals .
+        ?club fut-stat:cs ?cleanSheets .
         FILTER(?goals >= 0 && ?goalsConceded >= 0 && ?expectedGoals >= 0 && ?cleanSheets >= 0)
         BIND(ROUND((?goals - ?goalsConceded) * (?expectedGoals + ?cleanSheets) / 100.0 * 100) / 100 AS ?succ)
     }

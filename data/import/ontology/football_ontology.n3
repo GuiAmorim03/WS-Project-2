@@ -658,38 +658,6 @@ stat:off_stats_misc a owl:DatatypeProperty ;
     )
 ] .
 
-
-
-# Additional restrictions for more precise classification
-
-# Players must have at least a name and position
-:Player rdfs:subClassOf [
-    a owl:Restriction ;
-    owl:onProperty rel:name ;
-    owl:someValuesFrom xsd:string
-] .
-
-# Clubs must have at least a name
-:Club rdfs:subClassOf [
-    a owl:Restriction ;
-    owl:onProperty rel:name ;
-    owl:someValuesFrom xsd:string
-] .
-
-# Countries must have at least a name
-:Country rdfs:subClassOf [
-    a owl:Restriction ;
-    owl:onProperty rel:name ;
-    owl:someValuesFrom xsd:string
-] .
-
-# Leagues must have at least a name
-:League rdfs:subClassOf [
-    a owl:Restriction ;
-    owl:onProperty rel:name ;
-    owl:someValuesFrom xsd:string
-] .
-
 # Functional property restrictions for data integrity
 :Player rdfs:subClassOf [
     a owl:Restriction ;
