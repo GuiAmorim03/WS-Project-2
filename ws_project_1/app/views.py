@@ -21,7 +21,7 @@ def player_detail(request, player_id):
         enhanced_data = query_enhanced_player_details(player_id)
         if enhanced_data:
             # Merge enhanced data with base player data
-            player_data = query_player_details(player_id)
+            player_data = query_player_details(player_id, spin_rule=True)
             player_data["spin_inferences"] = enhanced_data["spin_inferences"]
             
             # Add efficiency as a stat if available
@@ -56,7 +56,6 @@ def player_detail(request, player_id):
             player_data["teammates"] = query_player_teammates(player_id)
             #player_data["compatriots"] = query_player_compatriots(player_id)
             player_data["past_teammates"] = query_past_teammates(player_id)
-            print("Past teammates count:", len(player_data["past_teammates"]))
         else:
             player_data = query_player_details(player_id)
     else:
