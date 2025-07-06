@@ -191,7 +191,7 @@ def process_stadium_details(details):
         
             if "FIFA" in event_text:
                 event_url = event_text.replace(" ", "_")
-            elif "UEFA" in event_text:
+            elif "UEFA Euro" in event_text:
                 event_url = f"UEFA_Euro_{event_year}"
             else:
                 event_url = None
