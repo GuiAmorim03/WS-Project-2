@@ -452,7 +452,7 @@ def get_all_nations_query():
         ?name
     WHERE {
         ?abrv rdf:type ?class ;
-                fut-rel:name ?name ;
+                fut-rel:name ?name .
         ?class rdfs:subClassOf* ont:Country .
     }
     ORDER BY ?name
