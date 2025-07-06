@@ -6,7 +6,7 @@ from .utils.spin_client import (
     execute_spin_rules, clear_spin_inferences, query_enhanced_player_details, 
     query_enhanced_all_players, query_player_teammates, query_player_compatriots,
     query_players_by_classification, query_club_rivals, query_efficiency_leaders,
-    check_enhanced_player_connection
+    check_enhanced_player_connection, query_past_teammates
 )
 from .utils.wikidata_client import query_club_details_extra, query_stadium_details, query_league_details, query_league_winners
 from .utils.dbpedia_client import query_city_details, query_event_details
@@ -54,7 +54,9 @@ def player_detail(request, player_id):
             
             # Add SPIN rule related data
             player_data["teammates"] = query_player_teammates(player_id)
-            player_data["compatriots"] = query_player_compatriots(player_id)
+            #player_data["compatriots"] = query_player_compatriots(player_id)
+            player_data["past_teammates"] = query_past_teammates(player_id)
+            print("Past teammates count:", len(player_data["past_teammates"]))
         else:
             player_data = query_player_details(player_id)
     else:

@@ -154,7 +154,7 @@
         </div>
     </div>
     
-    {% if entity.teammates or entity.compatriots %}
+    {% if entity.teammates or entity.past_teammates %}
     <div class="row">
         {% if entity.teammates %}
         <div class="col-md-6">
@@ -176,22 +176,22 @@
         </div>
         {% endif %}
         
-        {% if entity.compatriots %}
+        {% if entity.past_teammates %}
         <div class="col-md-6">
             <h4 style="color: var(--main-color);">
-                Compatriots 
+                Past Teammates 
                 <span class="badge bg-purple ms-2" style="font-size: 0.6em; background-color: #6f42c1 !important;">SPIN</span>
             </h4>
-            <div class="compatriots-container" style="max-height: 200px; overflow-y: auto;">
-                {% for compatriot in entity.compatriots %}
-                <div class="compatriot-item mb-2 p-2" style="display: flex; align-items: center; background-color: #f8f9fa; border-radius: 5px;">
-                    <img src="{{ compatriot.photo_url }}" class="me-2" alt="Compatriot" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;">
+            <div class="past-teammates-container" style="max-height: 200px; overflow-y: auto;">
+                {% for past_teammate in entity.past_teammates %}
+                <div class="past_teammate-item mb-2 p-2" style="display: flex; align-items: center; background-color: #f8f9fa; border-radius: 5px;">
+                    <img src="{{ past_teammate.photo_url }}" class="me-2" alt="Past Teammate" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;">
                     <div>
-                        <a href="{% url 'player' compatriot.id %}" style="text-decoration: none; color: inherit;">
-                            <span>{{ compatriot.name }}</span>
+                        <a href="{% url 'player' past_teammate.id %}" style="text-decoration: none; color: inherit;">
+                            <span>{{ past_teammate.name }}</span>
                         </a>
-                        {% if compatriot.current_club %}
-                        <small class="text-muted d-block">{{ compatriot.current_club }}</small>
+                        {% if past_teammate.current_club %}
+                        <small class="text-muted d-block">{{ past_teammate.current_club }}</small>
                         {% endif %}
                     </div>
                 </div>

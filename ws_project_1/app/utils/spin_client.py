@@ -9,7 +9,7 @@ from .spin_queries import (
     get_enhanced_player_details_query, get_enhanced_all_players_query,
     get_teammates_query, get_compatriots_query, get_players_by_classification_query,
     get_club_rivals_query, get_enhanced_player_connection_query,
-    get_efficiency_leaders_query
+    get_efficiency_leaders_query, get_past_teammates_query
 )
 
 # Configure your SPARQL endpoint
@@ -321,6 +321,64 @@ def process_compatriots_results(results):
         })
     
     return compatriots
+
+def query_past_teammates(player_id):
+    """
+    Query a player's past teammates using SPIN inferences.
+    
+    Args:
+        player_id: The ID of the player to query
+        
+    Returns:
+        list: List of past teammates with their details
+    """
+    sparql = get_sparql_query_client()
+    sparql.setQuery(get_past_teammates_query(player_id))
+    
+    try:
+        results = sparql.query().convert()
+        return process_past_teammates_results(results)
+    except Exception as e:
+        print(f"Error querying past teammates: {e}")
+        return []
+
+def process_past_teammates_results(results):
+    """Process past teammates query results."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    # Position mapping dictionary (same as used in sparql_client.py)
+    position_mapping = {
+        "GK": "Goalkeeper",
+        "DF": "Defender", 
+        "MF": "Midfielder",
+        "FW": "Forward",
+    }
+    
+    past_teammates = []
+    for teammate in results["results"]["bindings"]:
+        # Extract positions from comma-separated string and convert to full names
+        positions_str = teammate.get("positions", {}).get("value", "")
+        raw_positions = [pos.strip() for pos in positions_str.split(",") if pos.strip()]
+        
+        # Convert abbreviated positions to full names
+        formatted_positions = []
+        for pos in raw_positions:
+            if pos in position_mapping:
+                formatted_positions.append(f"{position_mapping[pos]} ({pos})")
+            else:
+                formatted_positions.append(pos)
+        
+        past_teammates.append({
+            "id": teammate["past_teammate_id"]["value"].split("/")[-1],
+            "name": teammate["name"]["value"],
+            "photo_url": teammate["photo_url"]["value"],
+            "positions": [pos.strip() for pos in teammate.get("positions", {}).get("value", "").split(",") if pos.strip()],
+            "current_club": teammate.get("currentClubName", {}).get("value", ""),
+            "club_logo": teammate.get("currentClubLogo", {}).get("value", "")
+        })
+    
+    return past_teammates
 
 def query_players_by_classification(classification):
     """

@@ -337,6 +337,7 @@ def get_past_teammates_rule():
 def get_clear_spin_inferences_query():
     """Clear all SPIN rule inferences"""
     return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX ont: <http://football.org/ontology#>
@@ -346,13 +347,19 @@ def get_clear_spin_inferences_query():
     }
     WHERE {
         ?s ?p ?o .
-        FILTER(?p IN (
-            ont:efficiency, ont:teammate, ont:compatriot, 
-            ont:currentAge, ont:veteranStatus, ont:youngProspect,
-            ont:penaltySpecialist, ont:playmaker, ont:goalThreat,
-            ont:disciplinaryRisk, ont:keyPlayer, ont:playerType,
-            ont:versatilePlayer, ont:cityRival, ont:pastTeammate
-        ))
+        FILTER(
+            # Delete all SPIN-generated properties
+            ?p IN (
+                ont:efficiency, ont:teammate, ont:compatriot, 
+                ont:currentAge, ont:veteranStatus, ont:youngProspect,
+                ont:penaltySpecialist, ont:playmaker, ont:goalThreat,
+                ont:disciplinaryRisk, ont:keyPlayer, ont:playerType,
+                ont:versatilePlayer, ont:cityRival, ont:pastTeammate,
+                ont:success, ont:risingAge
+            ) ||
+            # Delete specific rdf:type classifications
+            (?p = rdf:type && ?o IN (ont:Goalkeeper, ont:OutfieldPlayer))
+        )
     }
     """
 
@@ -527,6 +534,37 @@ def get_teammates_query(player_id):
     ORDER BY ?name
     """
 
+def get_past_teammates_query(player_id):
+    """Returns SPARQL query for fetching a player's past teammates using SPIN inferences."""
+    return f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
+
+    SELECT
+        ?past_teammate_id
+        ?name
+        ?photo_url
+        (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
+        ?currentClubName
+        ?currentClubLogo
+    WHERE {{
+        <http://football.org/ent/{player_id}> ont:pastTeammate ?past_teammate_id .
+        
+        ?past_teammate_id fut-rel:name ?name ;
+                fut-rel:position ?position ;
+                fut-rel:photo_url ?photo_url .
+        
+        OPTIONAL {{ 
+            ?past_teammate_id fut-rel:club ?currentClub .
+            ?currentClub fut-rel:name ?currentClubName ;
+                        fut-rel:logo ?currentClubLogo .
+        }}
+    }}
+    GROUP BY ?past_teammate_id ?name ?photo_url ?currentClubName ?currentClubLogo
+    ORDER BY ?name
+    """
+
 def get_compatriots_query(player_id):
     """Returns SPARQL query for fetching a player's compatriots using SPIN inferences."""
     return f"""
@@ -636,10 +674,10 @@ def get_enhanced_player_connection_query(connection_type, player1_id, player2_id
         base_query += f"""
         <http://football.org/ent/{player1_id}> ont:teammate <http://football.org/ent/{player2_id}> .
         """
-    elif connection_type == "compatriot":
-        base_query += f"""
-        <http://football.org/ent/{player1_id}> ont:compatriot <http://football.org/ent/{player2_id}> .
-        """
+    # elif connection_type == "compatriot":
+    #     base_query += f"""
+    #     <http://football.org/ent/{player1_id}> ont:compatriot <http://football.org/ent/{player2_id}> .
+    #     """
     elif connection_type == "same_player_type":
         base_query += f"""
         <http://football.org/ent/{player1_id}> ont:playerType ?type .
