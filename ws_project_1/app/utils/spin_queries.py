@@ -766,3 +766,44 @@ def get_outfield_player_classification_rule():
         FILTER(UCASE(?position) != "GK")
     }
     """
+
+def get_enchanced_player_stats_query(player_id):
+    """Returns enhanced SPARQL query for fetching player statistics based on player type."""
+    return f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    SELECT ?stat_category ?stat_name ?stat_value
+    WHERE {{
+        VALUES ?player_id {{ <http://football.org/ent/{player_id}> }}
+
+        ?player_id ?stat ?stat_value .
+        ?stat ont:statType/rdfs:label ?stat_category ;
+            rdfs:label ?stat_name .
+        
+        # Filter statistics based on player type
+        {{
+            # For Goalkeepers: Playing Time, Attacking, Goalkeeping, Miscellaneous
+            ?player_id rdf:type ont:Goalkeeper .
+            FILTER(?stat_category IN ("Playing Time", "Attacking", "Goalkeeping", "Miscellaneous"))
+        }}
+        UNION
+        {{
+            # For Outfield Players: Playing Time, Attacking, Defending, Passing & Creativity, Miscellaneous
+            ?player_id rdf:type ont:OutfieldPlayer .
+            FILTER(?stat_category IN ("Playing Time", "Attacking", "Defending", "Passing & Creativity", "Miscellaneous"))
+        }}
+        UNION
+        {{
+            # Fallback for players without specific type classification - show all stats
+            ?player_id rdf:type ont:Player .
+            FILTER NOT EXISTS {{ ?player_id rdf:type ont:Goalkeeper }}
+            FILTER NOT EXISTS {{ ?player_id rdf:type ont:OutfieldPlayer }}
+        }}
+    }}
+    ORDER BY ?stat_category ?stat_name
+    """
