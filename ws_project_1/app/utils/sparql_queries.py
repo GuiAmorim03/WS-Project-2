@@ -300,7 +300,7 @@ def get_graph_data_query(selected_node_id=None):
                 FILTER (?predicate != <http://football.org/rel/photo_url>)
             }}
         }}
-        LIMIT 450000
+        LIMIT 350000
         """
     else:
         return """
@@ -325,7 +325,7 @@ def get_graph_data_query(selected_node_id=None):
             FILTER (?predicate != <http://football.org/rel/photo_url>)
             FILTER (?predicate != <http://www.w3.org/2002/07/owl#inverseOf>)
         }
-        LIMIT 450000
+        LIMIT 350000
         """
 
 def get_top_players_by_stat_query(stat_id, limit=10):

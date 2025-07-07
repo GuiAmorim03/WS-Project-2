@@ -269,38 +269,38 @@
             setTimeout(checkSpinRulesStatus, 0);
         }
         
-        async function checkSpinRulesStatus() {
-            console.log('Checking SPIN rules status...');
-            try {
-                const response = await fetch('{% url "toggle_spin_rules" %}', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                });
-                
-                console.log('Response received:', response.status, response.statusText);
-                
-                const data = await response.json();
-                console.log('Response data:', data);
-                
-                if (data.success) {
-                    const newState = data.spin_rules_active;
-                    if (newState !== spinRulesActive) {
-                        spinRulesActive = newState;
-                        localStorage.setItem('spinRulesActive', spinRulesActive.toString());
-                        updateSpinButton();
-                    }
-                    console.log('SPIN rules status updated:', spinRulesActive);
-                } else {
-                    console.warn('Failed to get SPIN rules status:', data.message);
-                }
-            } catch (error) {
-                console.error('Error checking SPIN rules status:', error);
-                // Keep button visible even if status check fails
-            }
-        }
+        // async function checkSpinRulesStatus() {
+        //     console.log('Checking SPIN rules status...');
+        //     try {
+        //         const response = await fetch('{% url "toggle_spin_rules" %}', {
+        //             method: 'GET',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'X-CSRFToken': getCookie('csrftoken')
+        //             }
+        //         });
+        //         
+        //         console.log('Response received:', response.status, response.statusText);
+        //         
+        //         const data = await response.json();
+        //         console.log('Response data:', data);
+        //         
+        //         if (data.success) {
+        //             const newState = data.spin_rules_active;
+        //             if (newState !== spinRulesActive) {
+        //                 spinRulesActive = newState;
+        //                 localStorage.setItem('spinRulesActive', spinRulesActive.toString());
+        //                 updateSpinButton();
+        //             }
+        //             console.log('SPIN rules status updated:', spinRulesActive);
+        //         } else {
+        //             console.warn('Failed to get SPIN rules status:', data.message);
+        //         }
+        //     } catch (error) {
+        //         console.error('Error checking SPIN rules status:', error);
+        //         // Keep button visible even if status check fails
+        //     }
+        // }
         
         function showSpinButton() {
             const button = document.getElementById('spin-fab');
@@ -310,40 +310,40 @@
             }
         }
         
-        async function toggleSpinRules() {
-            if (isLoading) return; // Prevent multiple clicks during loading
-            
-            setLoadingState(true);
-            
-            try {
-                const response = await fetch('{% url "toggle_spin_rules" %}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    spinRulesActive = data.spin_rules_active;
-                    localStorage.setItem('spinRulesActive', spinRulesActive.toString());
-                    updateSpinButton();
-                    
-                    // Perform soft reload after a brief delay to show the updated button state
-                    setTimeout(() => {
-                        softReload();
-                    }, 500);
-                } else {
-                    console.error('Failed to toggle SPIN rules:', data.message);
-                    setLoadingState(false);
-                }
-            } catch (error) {
-                console.error('Error toggling SPIN rules:', error);
-                setLoadingState(false);
-            }
-        }
+        // async function toggleSpinRules() {
+        //     if (isLoading) return; // Prevent multiple clicks during loading
+        //     
+        //     setLoadingState(true);
+        //     
+        //     try {
+        //         const response = await fetch('{% url "toggle_spin_rules" %}', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'X-CSRFToken': getCookie('csrftoken')
+        //             }
+        //         });
+        //         
+        //         const data = await response.json();
+        //         
+        //         if (data.success) {
+        //             spinRulesActive = data.spin_rules_active;
+        //             localStorage.setItem('spinRulesActive', spinRulesActive.toString());
+        //             updateSpinButton();
+        //             
+        //             // Perform soft reload after a brief delay to show the updated button state
+        //             setTimeout(() => {
+        //                 softReload();
+        //             }, 500);
+        //         } else {
+        //             console.error('Failed to toggle SPIN rules:', data.message);
+        //             setLoadingState(false);
+        //         }
+        //     } catch (error) {
+        //         console.error('Error toggling SPIN rules:', error);
+        //         setLoadingState(false);
+        //     }
+        // }
         
         function softReload() {
             // Add a more sophisticated fade-out effect with blur
