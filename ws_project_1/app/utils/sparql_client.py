@@ -12,7 +12,7 @@ from .sparql_queries import (
 )
 
 from .spin_queries import (
-    get_enchanced_player_stats_query
+    get_enhanced_player_stats_query
 )
 
 # Configure your SPARQL endpoint
@@ -137,7 +137,7 @@ def process_player_results(results, player_id, spin_rule):
         "clubs": teams,
         "color": result["currentClubColor"]["value"],
         "alternate_color": result["currentClubAltColor"]["value"],
-        "stats": query_player_stats(player_id) if not spin_rule else query_enchanced_player_stats(player_id),
+        "stats": query_player_stats(player_id) if not spin_rule else query_enhanced_player_stats(player_id),
         "raw_positions": raw_positions
     }
 
@@ -366,7 +366,7 @@ def query_player_stats(player_id):
     return process_query(get_player_stats_query(player_id), process_func=process_player_stats_results,
                          error_message="Error querying player stats", success_message="Player stats queried successfully")
 
-def query_enchanced_player_stats(player_id):
+def query_enhanced_player_stats(player_id):
     """
     Query and process enhanced player statistics from the SPARQL endpoint.
     
@@ -377,7 +377,7 @@ def query_enchanced_player_stats(player_id):
         list: List of processed stats categories ready for template rendering
     """
     
-    return process_query(get_enchanced_player_stats_query(player_id), process_func=process_player_stats_results,
+    return process_query(get_enhanced_player_stats_query(player_id), process_func=process_player_stats_results,
                          error_message="Error querying enhanced player stats", success_message="Enhanced player stats queried successfully")
 
 def process_player_stats_results(results):
