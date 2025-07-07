@@ -72,7 +72,7 @@
     // Initialize the graph
     const Graph = ForceGraph()
       (document.getElementById('graph-container'))
-      .cooldownTicks(100) // Allow sufficient ticks for stabilization
+      .cooldownTicks(80) // Allow sufficient ticks for stabilization
       .graphData(graphData)
       .nodeLabel(node => `${node.label} (${node.type})`)
       .linkLabel(link => link.label)
@@ -90,7 +90,7 @@
           // Update node details panel
           updateNodeDetailsPanel(node);
       });
-      
+
     // Add force bounds to keep nodes within the container
     Graph.d3Force('center', d3.forceCenter(0, 0))
          .d3Force('charge').strength(-120)
@@ -107,15 +107,9 @@
              });
          });
     
-    // Ensure the graph is properly centered and fitted on initial load
-    setTimeout(() => {
-        // Pause the simulation while we center
-        Graph.pauseAnimation();
-        
-        // Reset camera position
-        Graph.centerAt(0, 0);
-        
-        // Calculate bounds to fit all nodes
+      
+    Graph.onEngineStop(() => {
+        // Compute bounds after layout settles
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
         Graph.graphData().nodes.forEach(node => {
             if (node.x < minX) minX = node.x;
@@ -123,30 +117,34 @@
             if (node.y < minY) minY = node.y;
             if (node.y > maxY) maxY = node.y;
         });
-        
-        // Center on the computed middle point
+
         const centerX = (minX + maxX) / 2;
         const centerY = (minY + maxY) / 2;
-        Graph.centerAt(centerX, centerY, 1000);
-        
-        // Calculate zoom level to fit all nodes
-        const containerRect = document.getElementById('graph-container').getBoundingClientRect();
+
+        // Center camera
+        Graph.centerAt(centerX - 20000, centerY - 20000, 400);
+        console.log(container.clientWidth);
+        console.log(container.clientHeight);
+
+        // Calculate optimal zoom
+        const container = document.getElementById('graph-container');
         const graphWidth = maxX - minX;
         const graphHeight = maxY - minY;
-        const scaleX = containerRect.width / (graphWidth * 1.2);  // 1.2 adds 20% margin
-        const scaleY = containerRect.height / (graphHeight * 1.2);
-        const scale = Math.min(scaleX, scaleY, 2);  // Cap zoom at 2x
-        
-        Graph.zoom(scale, 250);
-        
-        // Resume animation after centering
-        setTimeout(() => Graph.resumeAnimation(), 1100);
-    }, 1000);  // Wait for initial graph stabilization
+        const scaleX = container.clientWidth / (graphWidth * 1.2);
+        const scaleY = container.clientHeight / (graphHeight * 1.2);
+        const scale = Math.min(scaleX, scaleY, 2);
 
+        Graph.zoom(scale, 100);
+    });
+
+    let resizeTimeout;
     // Handle window resize to adjust graph bounds
     window.addEventListener('resize', () => {
-        Graph.width(document.getElementById('graph-container').clientWidth);
-        Graph.height(document.getElementById('graph-container').clientHeight);
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            Graph.with(document.getElementById('graph-container').clientWidth);
+            Graph.height(document.getElementById('graph-container').clientHeight);
+        }, 200)
     });
       
     // Function to update node details panel
@@ -170,9 +168,9 @@
         
         // Add a link to entity page if it's a Player or Club
         if (node.type === 'Player') {
-            html += `<p><a href="/players/${entityId}" class="btn btn-sm btn-outline-primary">View Player Details</a></p>`;
+            html += `<p><a href="/player/${entityId}" class="btn btn-sm btn-outline-primary">View Player Details</a></p>`;
         } else if (node.type === 'Club') {
-            html += `<p><a href="/clubs/${entityId}" class="btn btn-sm btn-outline-primary">View Club Details</a></p>`;
+            html += `<p><a href="/club/${entityId}" class="btn btn-sm btn-outline-primary">View Club Details</a></p>`;
         }
         
         detailsPanel.innerHTML = html;
