@@ -767,7 +767,7 @@ def get_outfield_player_classification_rule():
     }
     """
 
-def get_enchanced_player_stats_query(player_id):
+def get_enhanced_player_stats_query(player_id):
     """Returns enhanced SPARQL query for fetching player statistics based on player type."""
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
