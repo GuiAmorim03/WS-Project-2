@@ -150,7 +150,12 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-
+        document.querySelectorAll(".events-timeline a").forEach(function(link) {
+            link.addEventListener("click", function() {
+                // Show the loader
+                document.getElementById("eventLoader").style.setProperty("display", "flex", "important");
+            });
+        });
 
         const lat = document.getElementById('location-lat').textContent;
         const lng = document.getElementById('location-lng').textContent;
