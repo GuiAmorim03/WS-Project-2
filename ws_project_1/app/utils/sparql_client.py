@@ -16,7 +16,7 @@ from .spin_queries import (
 )
 
 # Configure your SPARQL endpoint
-ENDPOINT_URL = os.environ.get("GRAPHDB_ENDPOINT", "http://graphdb:7200") + "/repositories/football"
+ENDPOINT_URL = os.environ.get("GRAPHDB_ENDPOINT", "http://localhost:7200") + "/repositories/football"
 
 def get_sparql_client():
     """Returns a configured SPARQLWrapper instance."""
