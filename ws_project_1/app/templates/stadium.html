@@ -55,16 +55,33 @@
             <h3 class="mb-3">Notable Events</h3>
             <div class="events-timeline">
                 {% for event in entity.events %}
-                <div class="event-card mb-3 h-event">
+                <div class="event-card mb-3 h-event" {% if event.url %}style="cursor: pointer;"{% endif %}>
+                    {% if event.url %}
+                    <a href="{% url 'event' event.url %}" style="text-decoration: none; color: inherit;">
+                    {% endif %}
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div class="event-content">
-                                    <p class="mb-0 p-name">{{ event }}</p>
+                                    {% if event.url %}
+                                    <p class="mb-0 p-name gradient-text">
+                                        {{ event.name }}
+                                    </p>
+                                    {% else %}
+                                    <p class="mb-0 p-name">{{ event.name }}</p>
+                                    {% endif %}
                                 </div>
+                                {% if event.url %}
+                                <div class="ms-auto gradient-text">
+                                    <i class="fas fa-external-link-alt ms-2"></i>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
+                    {% if event.url %}
+                    </a>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
@@ -107,6 +124,10 @@
         transform: translateX(5px);
     }
     
+    .event-card a:hover {
+        text-decoration: none;
+    }
+    
     .event-icon {
         width: 32px;
         height: 32px;
@@ -117,11 +138,24 @@
         justify-content: center;
         border: 2px solid #e9ecef;
     }
+    
+    .gradient-text {
+        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 600;
+    }
 </style>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-
+        document.querySelectorAll(".events-timeline a").forEach(function(link) {
+            link.addEventListener("click", function() {
+                // Show the loader
+                document.getElementById("eventLoader").style.setProperty("display", "flex", "important");
+            });
+        });
 
         const lat = document.getElementById('location-lat').textContent;
         const lng = document.getElementById('location-lng').textContent;

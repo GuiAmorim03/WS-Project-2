@@ -13,9 +13,8 @@ def get_teammates_rule():
         ?player1 ont:teammate ?player2 .
     }
     WHERE {
-        ?player1 a ?class .
-        ?player2 a ?class .
-        ?class rdfs:subClassOf* ont:Player .
+        ?player1 a ont:Player .
+        ?player2 a ont:Player .
         ?player1 fut-rel:club ?club .
         ?player2 fut-rel:club ?club .
         FILTER(?player1 != ?player2)
@@ -33,9 +32,8 @@ def get_compatriots_rule():
         ?player1 ont:compatriot ?player2 .
     }
     WHERE {
-        ?player1 a ?class .
-        ?player2 a ?class .
-        ?class rdfs:subClassOf* ont:Player .
+        ?player1 a ont:Player .
+        ?player2 a ont:Player .
         ?player1 fut-rel:nation ?country .
         ?player2 fut-rel:nation ?country .
         FILTER(?player1 != ?player2)
@@ -47,19 +45,41 @@ def get_player_efficiency_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?player ont:efficiency ?eff .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:gls ?goals .
-        ?player ont:ast ?assists .
-        ?player ont:min ?minutes .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:gls ?goals .
+        ?player fut-stat:ast ?assists .
+        ?player fut-stat:min ?minutes .
         FILTER(?minutes > 0)
         BIND(ROUND((?goals + ?assists) * 90.0 / ?minutes * 100) / 100 AS ?eff)
+    }
+    """
+
+def get_club_success_index_rule():
+    """Calculate Club Success Index ((Goals - Goals Conceded) * (Expected Goals + Clean Sheets) / 100)"""
+    return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
+    PREFIX ont: <http://football.org/ontology#>
+    
+    INSERT {
+        ?club ont:success ?succ .
+    }
+    WHERE {
+        ?club rdf:type ont:Club .
+        ?club fut-stat:gls ?goals .
+        ?club fut-stat:ga ?goalsConceded .
+        ?club fut-stat:xg ?expectedGoals .
+        ?club fut-stat:cs ?cleanSheets .
+        FILTER(?goals >= 0 && ?goalsConceded >= 0 && ?expectedGoals >= 0 && ?cleanSheets >= 0)
+        BIND(ROUND((?goals - ?goalsConceded) * (?expectedGoals + ?cleanSheets) / 100.0 * 100) / 100 AS ?succ)
     }
     """
 
@@ -75,8 +95,7 @@ def get_veterans_rule():
         ?player ont:veteranStatus true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
+        ?player rdf:type ont:Player .
         ?player fut-rel:born ?birthYear .
         FILTER(2025 - ?birthYear >= 35)
     }
@@ -94,8 +113,7 @@ def get_young_prospects_rule():
         ?player ont:youngProspect true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
+        ?player rdf:type ont:Player .
         ?player fut-rel:born ?birthYear .
         FILTER(2025 - ?birthYear < 23)
     }
@@ -106,6 +124,7 @@ def get_penalty_specialists_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX fut-rel: <http://football.org/rel/>
     PREFIX ont: <http://football.org/ontology#>
     
@@ -113,10 +132,9 @@ def get_penalty_specialists_rule():
         ?player ont:penaltySpecialist true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:pk ?scored .
-        ?player ont:pkatt ?attempted .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:pk ?scored .
+        ?player fut-stat:pkatt ?attempted .
         FILTER(?attempted > 0 && (?scored * 1.0 / ?attempted) >= 0.9)
     }
     """
@@ -126,17 +144,17 @@ def get_playmakers_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?player ont:playmaker true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:ast ?assists .
-        ?player ont:kp ?keyPasses .
-        ?player ont:mp ?matches .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:ast ?assists .
+        ?player fut-stat:kp ?keyPasses .
+        ?player fut-stat:mp ?matches .
         FILTER(?matches > 0 && 
                (?assists * 1.0 / ?matches) >= 0.3 && 
                (?keyPasses * 1.0 / ?matches) >= 1.5)
@@ -148,16 +166,16 @@ def get_goal_threats_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?player ont:goalThreat true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:gls ?goals .
-        ?player ont:mp ?matches .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:gls ?goals .
+        ?player fut-stat:mp ?matches .
         FILTER(?matches > 0 && (?goals * 1.0 / ?matches) >= 0.5)
     }
     """
@@ -167,17 +185,17 @@ def get_disciplinary_risks_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?player ont:disciplinaryRisk true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:crdy ?yellowCards .
-        ?player ont:crdr ?redCards .
-        ?player ont:mp ?matches .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:crdy ?yellowCards .
+        ?player fut-stat:crdr ?redCards .
+        ?player fut-stat:mp ?matches .
         FILTER(?matches > 0 && 
                ((?yellowCards + ?redCards * 2) * 1.0 / ?matches) >= 0.3)
     }
@@ -188,16 +206,16 @@ def get_key_players_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?player ont:keyPlayer true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:min ?minutes .
-        ?player ont:mp ?matches .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:min ?minutes .
+        ?player fut-stat:mp ?matches .
         FILTER(?matches > 0 && (?minutes * 1.0 / ?matches) >= 70)
     }
     """
@@ -208,16 +226,16 @@ def get_striker_classification_rule():
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?player ont:playerType "Striker" .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:gls ?goals .
-        ?player ont:mp ?matches .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:gls ?goals .
+        ?player fut-stat:mp ?matches .
         ?player fut-rel:position ?pos .
         FILTER(?matches > 0 && 
                (?goals * 1.0 / ?matches) >= 0.4 &&
@@ -231,17 +249,17 @@ def get_defensive_midfielder_classification_rule():
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX ont: <http://football.org/ontology#>
     
     INSERT {
         ?player ont:playerType "Defensive Midfielder" .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:tkl ?tackles .
-        ?player ont:int ?interceptions .
-        ?player ont:mp ?matches .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:tkl ?tackles .
+        ?player fut-stat:int ?interceptions .
+        ?player fut-stat:mp ?matches .
         ?player fut-rel:position ?pos .
         FILTER(?matches > 0 && 
                ((?tackles + ?interceptions) * 1.0 / ?matches) >= 3.0 &&
@@ -254,6 +272,7 @@ def get_versatile_players_rule():
     return """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-stat: <http://football.org/stat/>
     PREFIX fut-rel: <http://football.org/rel/>
     PREFIX ont: <http://football.org/ontology#>
     
@@ -261,12 +280,11 @@ def get_versatile_players_rule():
         ?player ont:versatilePlayer true .
     }
     WHERE {
-        ?player rdf:type ?pClass .
-        ?pClass rdfs:subClassOf* ont:Player .
-        ?player ont:gls ?goals .
-        ?player ont:ast ?assists .
-        ?player ont:tkl ?tackles .
-        ?player ont:mp ?matches .
+        ?player rdf:type ont:Player .
+        ?player fut-stat:gls ?goals .
+        ?player fut-stat:ast ?assists .
+        ?player fut-stat:tkl ?tackles .
+        ?player fut-stat:mp ?matches .
         FILTER(?matches > 0 && 
                (?goals * 1.0 / ?matches) >= 0.1 &&
                (?assists * 1.0 / ?matches) >= 0.1 &&
@@ -286,10 +304,8 @@ def get_league_rivals_rule():
         ?club1 ont:cityRival ?club2 .
     }
     WHERE {
-        ?club1 rdf:type ?cClass1 .
-        ?cClass1 rdfs:subClassOf* ont:Club .
-        ?club2 rdf:type ?cClass2 .
-        ?cClass2 rdfs:subClassOf* ont:Club .
+        ?club1 rdf:type ont:Club .
+        ?club2 rdf:type ont:Club .
         ?club1 fut-rel:league ?league .
         ?club2 fut-rel:league ?league .
         ?club1 fut-rel:city ?city1 .
@@ -310,10 +326,8 @@ def get_past_teammates_rule():
         ?player1 ont:pastTeammate ?player2 .
     }
     WHERE {
-        ?player1 rdf:type ?pClass1 .
-        ?pClass1 rdfs:subClassOf* ont:Player .
-        ?player2 rdf:type ?pClass2 .
-        ?pClass2 rdfs:subClassOf* ont:Player .
+        ?player1 rdf:type ont:Player .
+        ?player2 rdf:type ont:Player .
         ?player1 fut-rel:past_club ?club .
         ?player2 fut-rel:past_club ?club .
         FILTER(?player1 != ?player2)
@@ -323,6 +337,7 @@ def get_past_teammates_rule():
 def get_clear_spin_inferences_query():
     """Clear all SPIN rule inferences"""
     return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX fut-rel: <http://football.org/rel/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX ont: <http://football.org/ontology#>
@@ -332,13 +347,19 @@ def get_clear_spin_inferences_query():
     }
     WHERE {
         ?s ?p ?o .
-        FILTER(?p IN (
-            ont:efficiency, ont:teammate, ont:compatriot, 
-            ont:currentAge, ont:veteranStatus, ont:youngProspect,
-            ont:penaltySpecialist, ont:playmaker, ont:goalThreat,
-            ont:disciplinaryRisk, ont:keyPlayer, ont:playerType,
-            ont:versatilePlayer, ont:cityRival, ont:pastTeammate
-        ))
+        FILTER(
+            # Delete all SPIN-generated properties
+            ?p IN (
+                ont:efficiency, ont:teammate, ont:compatriot, 
+                ont:currentAge, ont:veteranStatus, ont:youngProspect,
+                ont:penaltySpecialist, ont:playmaker, ont:goalThreat,
+                ont:disciplinaryRisk, ont:keyPlayer, ont:playerType,
+                ont:versatilePlayer, ont:cityRival, ont:pastTeammate,
+                ont:success, ont:risingAge
+            ) ||
+            # Delete specific rdf:type classifications
+            (?p = rdf:type && ?o IN (ont:Goalkeeper, ont:OutfieldPlayer))
+        )
     }
     """
 
@@ -346,6 +367,7 @@ def get_all_spin_rules():
     """Get all SPIN rules in order"""
     return [
         get_player_efficiency_rule(),
+        get_club_success_index_rule(),
         get_veterans_rule(),
         get_young_prospects_rule(),
         get_penalty_specialists_rule(),
@@ -359,7 +381,9 @@ def get_all_spin_rules():
         get_league_rivals_rule(),
         get_past_teammates_rule(),
         get_teammates_rule(),
-        get_compatriots_rule()
+        #get_compatriots_rule(),
+        get_goalkeeper_classification_rule(),
+        get_outfield_player_classification_rule()
     ]
 
 def get_enhanced_player_details_query(player_id):
@@ -400,14 +424,13 @@ def get_enhanced_player_details_query(player_id):
     WHERE {{
         VALUES ?player_id {{ <http://football.org/ent/{player_id}> }} 
         
-        ?player_id rdf:type ?pClass ;
+        ?player_id rdf:type ont:Player ;
                 fut-rel:name ?name ;
                 fut-rel:position ?position ;
                 fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
                 fut-rel:born ?born ;
                 fut-rel:photo_url ?photo_url ;
                 fut-rel:club ?currentClub .
-        ?pClass rdfs:subClassOf* ont:Player .
 
         ?currentClub fut-rel:name ?currentClubName ;
                     fut-rel:logo ?currentClubLogo ;
@@ -461,12 +484,11 @@ def get_enhanced_all_players_query():
         ?youngProspect
         ?keyPlayer
     WHERE { 
-        ?player_id rdf:type ?pClass ;
+        ?player_id rdf:type ont:Player ;
                 fut-rel:name ?name ;
                 fut-rel:position ?position ;
                 fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
                 fut-rel:born ?born .
-        ?pClass rdfs:subClassOf* ont:Player .
 
         OPTIONAL { 
             ?player_id fut-rel:club ?currentClub .
@@ -512,6 +534,37 @@ def get_teammates_query(player_id):
     ORDER BY ?name
     """
 
+def get_past_teammates_query(player_id):
+    """Returns SPARQL query for fetching a player's past teammates using SPIN inferences."""
+    return f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
+
+    SELECT
+        ?past_teammate_id
+        ?name
+        ?photo_url
+        (GROUP_CONCAT(DISTINCT ?position; separator=", ") AS ?positions)
+        ?currentClubName
+        ?currentClubLogo
+    WHERE {{
+        <http://football.org/ent/{player_id}> ont:pastTeammate ?past_teammate_id .
+        
+        ?past_teammate_id fut-rel:name ?name ;
+                fut-rel:position ?position ;
+                fut-rel:photo_url ?photo_url .
+        
+        OPTIONAL {{ 
+            ?past_teammate_id fut-rel:club ?currentClub .
+            ?currentClub fut-rel:name ?currentClubName ;
+                        fut-rel:logo ?currentClubLogo .
+        }}
+    }}
+    GROUP BY ?past_teammate_id ?name ?photo_url ?currentClubName ?currentClubLogo
+    ORDER BY ?name
+    """
+
 def get_compatriots_query(player_id):
     """Returns SPARQL query for fetching a player's compatriots using SPIN inferences."""
     return f"""
@@ -547,6 +600,7 @@ def get_players_by_classification_query(classification):
     """Returns SPARQL query for fetching players by SPIN rule classification."""
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ont: <http://football.org/ontology#>
     PREFIX fut-rel: <http://football.org/rel/>
 
     SELECT
@@ -561,12 +615,11 @@ def get_players_by_classification_query(classification):
         ?efficiency
     WHERE {{
         ?player_id fut-rel:{classification} true ;
-                rdf:type ?pClass ;
+                rdf:type ont:Player ;
                 fut-rel:name ?name ;
                 fut-rel:position ?position ;
                 fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
                 fut-rel:photo_url ?photo_url .
-        ?pClass rdfs:subClassOf* fut-rel:Player .
 
         OPTIONAL {{ 
             ?player_id fut-rel:club ?currentClub .
@@ -622,10 +675,10 @@ def get_enhanced_player_connection_query(connection_type, player1_id, player2_id
         base_query += f"""
         <http://football.org/ent/{player1_id}> ont:teammate <http://football.org/ent/{player2_id}> .
         """
-    elif connection_type == "compatriot":
-        base_query += f"""
-        <http://football.org/ent/{player1_id}> ont:compatriot <http://football.org/ent/{player2_id}> .
-        """
+    # elif connection_type == "compatriot":
+    #     base_query += f"""
+    #     <http://football.org/ent/{player1_id}> ont:compatriot <http://football.org/ent/{player2_id}> .
+    #     """
     elif connection_type == "same_player_type":
         base_query += f"""
         <http://football.org/ent/{player1_id}> ont:playerType ?type .
@@ -661,12 +714,11 @@ def get_efficiency_leaders_query(limit=10):
         ?nation
         ?flag
     WHERE {{
-        ?player_id rdf:type ?pClass ;
+        ?player_id rdf:type ont:Player ;
                 fut-rel:name ?name ;
                 ont:efficiency ?efficiency ;
                 fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
                 fut-rel:photo_url ?photo_url .
-        ?pClass rdfs:subClassOf* ont:Player .
 
         OPTIONAL {{ 
             ?player_id fut-rel:club ?currentClub .
@@ -678,4 +730,81 @@ def get_efficiency_leaders_query(limit=10):
     }}
     ORDER BY DESC(xsd:float(?efficiency))
     LIMIT {limit}
+    """
+
+def get_goalkeeper_classification_rule():
+    """Classify players as Goalkeepers based on position"""
+    return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
+    
+    INSERT {
+        ?player rdf:type ont:Goalkeeper .
+    }
+    WHERE {
+        ?player rdf:type ont:Player .
+        ?player fut-rel:position ?position .
+        FILTER(UCASE(?position) = "GK")
+    }
+    """
+
+def get_outfield_player_classification_rule():
+    """Classify players as OutfieldPlayers based on position (not GK)"""
+    return """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX ont: <http://football.org/ontology#>
+    
+    INSERT {
+        ?player rdf:type ont:OutfieldPlayer .
+    }
+    WHERE {
+        ?player rdf:type ont:Player .
+        ?player fut-rel:position ?position .
+        FILTER(UCASE(?position) != "GK")
+    }
+    """
+
+def get_enhanced_player_stats_query(player_id):
+    """Returns enhanced SPARQL query for fetching player statistics based on player type."""
+    return f"""
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX fut-rel: <http://football.org/rel/>
+    PREFIX fut-stat: <http://football.org/stat/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ont: <http://football.org/ontology#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    SELECT ?stat_category ?stat_name ?stat_value
+    WHERE {{
+        VALUES ?player_id {{ <http://football.org/ent/{player_id}> }}
+
+        ?player_id ?stat ?stat_value .
+        ?stat ont:statType/rdfs:label ?stat_category ;
+            rdfs:label ?stat_name .
+        
+        # Filter statistics based on player type
+        {{
+            # For Goalkeepers: Playing Time, Attacking, Goalkeeping, Miscellaneous
+            ?player_id rdf:type ont:Goalkeeper .
+            FILTER(?stat_category IN ("Playing Time", "Attacking", "Goalkeeping", "Miscellaneous"))
+        }}
+        UNION
+        {{
+            # For Outfield Players: Playing Time, Attacking, Defending, Passing & Creativity, Miscellaneous
+            ?player_id rdf:type ont:OutfieldPlayer .
+            FILTER(?stat_category IN ("Playing Time", "Attacking", "Defending", "Passing & Creativity", "Miscellaneous"))
+        }}
+        UNION
+        {{
+            # Fallback for players without specific type classification - show all stats
+            ?player_id rdf:type ont:Player .
+            FILTER NOT EXISTS {{ ?player_id rdf:type ont:Goalkeeper }}
+            FILTER NOT EXISTS {{ ?player_id rdf:type ont:OutfieldPlayer }}
+        }}
+    }}
+    ORDER BY ?stat_category ?stat_name
     """

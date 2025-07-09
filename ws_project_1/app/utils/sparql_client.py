@@ -5,14 +5,18 @@ from datetime import datetime
 from .sparql_queries import (
     get_player_details_query, get_club_details_query, get_club_players_query,
     get_all_players_query, get_all_clubs_query, get_player_stats_query,
-    get_club_stats_query, get_graph_data_query, get_top_players_by_stat_query,
+    get_club_stats_query, get_city_clubs_query, get_graph_data_query, get_top_players_by_stat_query,
     get_top_clubs_by_stat_query, get_player_club_query, get_update_player_club_query,
     get_all_nations_query, get_create_player_query, get_add_player_position_query,
     get_player_connection_query, get_delete_player_query
 )
 
+from .spin_queries import (
+    get_enhanced_player_stats_query
+)
+
 # Configure your SPARQL endpoint
-ENDPOINT_URL = os.environ.get("GRAPHDB_ENDPOINT", "http://graphdb:7200") + "/repositories/football"
+ENDPOINT_URL = os.environ.get("GRAPHDB_ENDPOINT", "http://localhost:7200") + "/repositories/football"
 
 def get_sparql_client():
     """Returns a configured SPARQLWrapper instance."""
@@ -48,7 +52,7 @@ def process_query(query, process_func=None, additional_process_params=None, erro
             print(f"SPARQL query error: {e}")
         return None
 
-def query_player_details(player_id):
+def query_player_details(player_id, spin_rule=False):
     """
     Query and process player details from the SPARQL endpoint.
     
@@ -59,10 +63,10 @@ def query_player_details(player_id):
         dict: Processed player data ready for template rendering
     """
     
-    return process_query(get_player_details_query(player_id), process_func=process_player_results, additional_process_params={"player_id": player_id}
+    return process_query(get_player_details_query(player_id), process_func=process_player_results, additional_process_params={"player_id": player_id, "spin_rule": spin_rule}
                          , error_message="Error querying player details", success_message="Player details queried successfully")
 
-def process_player_results(results, player_id):
+def process_player_results(results, player_id, spin_rule):
     """Process the SPARQL query results into the format needed for templates."""
     if not results["results"]["bindings"]:
         return get_default_player_data()
@@ -133,7 +137,7 @@ def process_player_results(results, player_id):
         "clubs": teams,
         "color": result["currentClubColor"]["value"],
         "alternate_color": result["currentClubAltColor"]["value"],
-        "stats": query_player_stats(player_id),
+        "stats": query_player_stats(player_id) if not spin_rule else query_enhanced_player_stats(player_id),
         "raw_positions": raw_positions
     }
 
@@ -362,6 +366,20 @@ def query_player_stats(player_id):
     return process_query(get_player_stats_query(player_id), process_func=process_player_stats_results,
                          error_message="Error querying player stats", success_message="Player stats queried successfully")
 
+def query_enhanced_player_stats(player_id):
+    """
+    Query and process enhanced player statistics from the SPARQL endpoint.
+    
+    Args:
+        player_id: The ID of the player to query stats for
+        
+    Returns:
+        list: List of processed stats categories ready for template rendering
+    """
+    
+    return process_query(get_enhanced_player_stats_query(player_id), process_func=process_player_stats_results,
+                         error_message="Error querying enhanced player stats", success_message="Enhanced player stats queried successfully")
+
 def process_player_stats_results(results):
     """
     Process the SPARQL query results for player stats into the format needed for templates.
@@ -451,6 +469,42 @@ def process_club_stats_results(results):
         })
     
     return sort_stats_categories(categories)
+
+def query_city_clubs(city_name, spin):
+    """
+    Query and process clubs in a specific city from the SPARQL endpoint.
+    
+    Args:
+        city_name: The name of the city to query clubs for
+        spin: Whether to apply SPIN rules to the query results
+        
+    Returns:
+        list: List of processed club data ready for template rendering
+    """
+    
+    return process_query(get_city_clubs_query(city_name, spin), process_func=process_city_clubs_results, additional_process_params={"spin": spin},
+                         error_message="Error querying clubs in city", success_message="Clubs in city queried successfully")
+
+def process_city_clubs_results(results, spin):
+    """Process the SPARQL query results for clubs in a city into the format needed for templates."""
+    if not results["results"]["bindings"]:
+        return []
+    
+    clubs = []
+    for club in results["results"]["bindings"]:
+        club_id = club["club_id"]["value"].split("/")[-1]
+        success_index = club["success"]["value"] if "success" in club and spin else 0
+        
+        clubs.append({
+            "id": club_id,
+            "name": club["name"]["value"],
+            "logo": club["logo"]["value"],
+            "color": club["color"]["value"],
+            "alternateColor": club["alternateColor"]["value"],
+            "success": success_index,
+        })
+    
+    return clubs
 
 def query_graph_data(selected_node_id=None):
     """

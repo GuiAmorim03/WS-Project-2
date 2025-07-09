@@ -235,3 +235,33 @@
         }
     """
 ] .
+
+# Rule 13: Infer goalkeeper classification
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player rdf:type :Goalkeeper .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :position ?position .
+            FILTER(UCASE(?position) = "GK")
+        }
+    """
+] .
+
+# Rule 14: Infer outfield player classification (not goalkeeper)
+:Player spin:rule [
+    a sp:Construct ;
+    sp:text """
+        CONSTRUCT {
+            ?player rdf:type :OutfieldPlayer .
+        }
+        WHERE {
+            ?player a :Player .
+            ?player :position ?position .
+            FILTER(UCASE(?position) != "GK")
+        }
+    """
+] .

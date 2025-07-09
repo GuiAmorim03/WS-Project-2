@@ -5,16 +5,16 @@ This project provides access to football (soccer) player and club statistics thr
 ## Prerequisites
 
 - [Git](https://git-scm.com/downloads)
-- [Docker](https://www.docker.com/get-started)
-- [Docker Compose](https://docs.docker.com/compose/install/) (included with Docker Desktop on Windows and Mac)
+- [Docker](https://www.docker.com/get-started) (optional)
+- [Docker Compose](https://docs.docker.com/compose/install/) (optional) (included with Docker Desktop on Windows and Mac)
 
 ## How to Run the Project (**WITH DOCKER**)
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/WS-Project-1.git
-cd WS-Project-1
+git clone https://github.com/yourusername/WS-Project-2.git
+cd WS-Project-2
 ```
 
 ### 2. Start the Docker Containers
@@ -52,7 +52,7 @@ docker compose down -v
 
 ### 1. Extract the zip file
 
-After downloading the project, extract the zip file and navigate to the project directory `Project-2`.
+After downloading the project, extract the zip file and navigate to the project directory `WS-Project-2`.
 
 ### 2. Set Up Django App
 
@@ -67,18 +67,27 @@ Before the next step make sure that **GraphDB** is running on [http://localhost:
 
 ### 3.Import Data and Create Repositories
 
-First you need to create a GraphDB repository for the football data. **IMPORTANT**: The repository name must be `football`.
+First, access the GraphDB workbench (accessible at http://localhost:7200) and create a GraphDB repository for the football data, named **”football”**, and set **OWL-Max (Optimized)** as the ruleset.
 
-After creating a repository in GraphDB, you need to import the RDF data.
+Once the repository is created, upload both the RDF data and the ontology (Import - Upload RDF files):
 - File `data/import/football_rdf_data.nt` contains the football data in RDF format.
 - File `data/import/ontology/football_ontology.n3` contains the ontology configuration for the football data.
 
 ### 4. Run Django
 
+Execute the following command:
+
 ```bash
-GRAPHDB_ENDPOINT=http://localhost:7200 python3 manage.py runserver
+python3 manage.py runserver
 ```
-The variable `GRAPHDB_ENDPOINT` should point to your GraphDB instance. So, if you are not running GraphDB on the default port, you need to change it accordingly.
+
+If this command does not work, or it shows that Django couldn't be imported, try the following command instead, which replaces *python3* with *python*:
+
+```bash
+python manage.py runserver
+```
+
+The application will be available at [http://localhost:8000](http://localhost:8000).
 
 ## Project Structure
 
