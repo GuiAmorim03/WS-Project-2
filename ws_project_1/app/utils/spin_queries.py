@@ -600,6 +600,7 @@ def get_players_by_classification_query(classification):
     """Returns SPARQL query for fetching players by SPIN rule classification."""
     return f"""
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ont: <http://football.org/ontology#>
     PREFIX fut-rel: <http://football.org/rel/>
 
     SELECT
@@ -614,7 +615,7 @@ def get_players_by_classification_query(classification):
         ?efficiency
     WHERE {{
         ?player_id fut-rel:{classification} true ;
-                rdf:type fut-rel:Player ;
+                rdf:type ont:Player ;
                 fut-rel:name ?name ;
                 fut-rel:position ?position ;
                 fut-rel:nation [ fut-rel:name ?nation ; fut-rel:flag ?flag ] ;
