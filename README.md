@@ -81,6 +81,14 @@ Execute the following command:
 python3 manage.py runserver
 ```
 
+If this command does not work, or it shows that Django couldn't be imported, try the following command instead, which replaces *python3* with *python*:
+
+```bash
+python manage.py runserver
+```
+
+The application will be available at [http://localhost:8000](http://localhost:8000).
+
 ## Project Structure
 
 - `data/`: Contains the RDF data and configuration files
